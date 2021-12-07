@@ -1,0 +1,46 @@
+stix-object
+	SCO: stix-core-object 
+		SDO: stix domain object
+			Attack Pattern
+			Campaign
+			Course of Action
+			Identity
+			Indicator
+			Infra
+			Location
+			Malware
+			Observed data
+			Threat actor
+			Tool
+		SCO: Stix cyber observable object
+			File
+			Windows registry key
+
+	stix meta object
+		external reference
+		kill chain phase
+
+stix core relation
+	delivery
+	target
+	...
+
+Marking Definitions
+	Language content
+	Data Markings
+		Statement Marking object type
+		TLP Marking object type
+			white
+			green
+			amber
+			red
+		Object Marking
+		Granular Marking
+
+
+
+
+
+
+
+

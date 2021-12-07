@@ -1,0 +1,336 @@
+# example from: https://oasis-open.github.io/cti-documentation/examples/identifying-a-threat-actor-profile
+# Identifying a Threat Actor Profile
+insert 
+$ta isa threat-actor, has name "Disco Team Threat Actor Group", 
+	has spec-version "2.1",
+	has stix-id "threat-actor--dfaa8d77-07e2-4e28-b2c8-92e9f7b04428",
+	has created "2014-11-19T23:39:03.893Z",
+	has modified "2014-11-19T23:39:03.893Z",
+	has alias "disco-team@stealthemail.com", 
+	has alias "Equipo del Discoteca",
+	has description "This organized threat actor group operates to create profit from all types of crime.",
+	has alias "Equipo del Discoteca",
+	has stix-role "agent",
+	has goals "Steal Credit Card Information", 
+	has sophistication "expert",
+	has resource-level "organization", 
+	has threat-actor-type "crime syndicate", 
+	has primary-motivation "personal-gain";
+$id isa organization, has name "Disco Team", has spec-version "2.1", 
+	has stix-id "identity--733c5838-34d9-4fbf-949c-62aba761184c",
+	has created "2016-08-23T18:05:49.307Z", has modified "2016-08-23T18:05:49.307Z",
+	has description "Disco Team is the name of an organized threat actor crime-syndicate.", 
+	has contact-information "disco-team@stealthemail.com"; 
+
+(source: $ta, target-identity: $id) isa attribution, has spec-version "2.1", 
+	has stix-id "relationship--a2e3efb5-351d-4d46-97a0-6897ee7c77a0",
+	has created "2020-02-29T18:01:28.577Z",
+	has modified "2020-02-29T18:01:28.577Z";
+
+# example from: https://oasis-open.github.io/cti-documentation/examples/indicator-for-malicious-url
+# Identicator for malicious URL
+insert 
+$in isa indicator, has name "Malicious site hosting downloader",
+	has spec-version "2.1", 
+	has description "This organized threat actor group operates to create profit from all types of crime.",
+	has created "2014-06-29T13:49:37.079Z",
+	has modified "2014-06-29T13:49:37.079Z",
+	has stix-id "indicator--d81f86b9-975b-4c0b-875e-810c5ad45a4f",
+	has pattern "[url:value = 'http://x4z9arb.cn/4712/']", 
+	has pattern-type "stix", 
+	has valid-from "2014-06-29T13:49:37.079Z",
+	has indicator-type "malicious-activity";
+$ma isa malware, has name "x4z9arb backdoor", 
+	has spec-version "2.1", 
+	has stix-id "malware--162d917e-766f-4611-b5d6-652791454fca", 
+	has created "2014-06-30T09:15:17.182Z", 
+	has modified "2014-06-30T09:15:17.182Z", 
+	has description "This malware attempts to download remote files after establishing a foothold as a backdoor.", 
+	has malware-type "backdoor",
+	has malware-type "remote-access-trojan",
+	has is-family false;
+$kill-chain-phase isa kill-chain-phase, 
+	has kill-chain-name "mandiant-attack-lifecycle-model",
+	has phase-name "establish-foothold"; 
+
+(kill-chain-used: $ma, kill-chain-using: $kill-chain-phase) isa kill-chain-usage;
+(indicating: $in, indicated: $ma) isa indication, has spec-version "2.1",
+	has stix-id "relationship--864af2ea-46f9-4d23-b3a2-1c2adf81c265", 
+	has created "2020-02-29T18:03:58.029Z",
+	has modified "2020-02-29T18:03:58.029Z";
+
+# Example from: https://oasis-open.github.io/cti-documentation/examples/malware-indicator-for-file-hash
+# Malware indicator for file hash
+insert
+$in isa indicator, has name "File hash for Poison Ivy variant", 
+	has spec-version "2.1", 
+	has stix-id "indicator--a932fcc6-e032-476c-826f-cb970a5a1ade", 
+	has created "2014-02-20T09:16:08.989Z", 
+	has modified "2014-02-20T09:16:08.989Z", 
+	has description "This file hash indicates that a sample of Poison Ivy is present.",
+	has indicator-type "malicious-activity",
+	has pattern "[file:hashes.'SHA-256' = 'ef537f25c895bfa782526529a9b63d97aa631564d5d789c2b765448c8635fb6c']", 
+	has pattern-type "stix",
+	has valid-from "2014-02-20T09:00:00Z";
+$m isa malware, has name "Poison Ivy",
+	has spec-version "2.1", 
+	has stix-id "malware--fdd60b30-b67c-41e3-b0b9-f01faf20d111", 
+	has created "2014-02-20T09:16:08.989Z", 
+	has modified "2014-02-20T09:16:08.989Z",
+	has malware-type "remote-access-trojan", 
+	has is-family false; 
+(indicating: $in, indicated: $m) isa indication, has spec-version "2.1", 
+	has stix-id "relationship--29dcdf68-1b0c-4e16-94ed-bcc7a9572f69", 
+	has created "2020-02-29T18:09:12.808Z",
+	has modified "2020-02-29T18:09:12.808Z";
+
+# https://oasis-open.github.io/cti-documentation/examples/sighting-of-an-indicator
+# Sighting of an Indicator
+insert
+$malicious-url isa indicator, has name "Malicious URL", 
+	has spec-version "2.1",
+	has stix-id "indicator--9299f726-ce06-492e-8472-2b52ccb53191", 
+	has created "2017-02-27T13:57:10.515Z", 
+	has modified "2017-02-27T13:57:10.515Z", 
+	has description "This URL is potentially associated with malicious activity and is listed on several blacklist sites.", 
+	has indicator-type "malicious-activity", 
+	has pattern "[url:value = 'http://paypa1.banking.com']", 
+	has pattern-type "stix", 
+	has valid-from "2015-06-29T09:10:15.915Z";
+$alpha isa organization, has name "Alpha Threat Analysis Org.", 
+	has spec-version "2.1",
+	has stix-id "identity--39012926-a052-44c4-ae48-caaf4a10ee6e", 
+	has created "2017-02-24T15:50:10.564Z", 
+	has modified "2017-02-24T15:50:10.564Z", 
+	has stix-role "Cyber Security", 
+	has sector "technology", 
+	has contact-information "info@alpha.org"; 
+$beta isa organization, has name "Beta Cyber Intelligence Company", 
+	has spec-version "2.1",
+	has stix-id "identity--5206ba14-478f-4b0b-9a48-395f690c20a2", 
+	has created "2017-02-26T17:55:10.442Z", 
+	has modified "2017-02-26T17:55:10.442Z", 
+	has stix-role "Cyber Security",  
+	has sector "technology", 
+	has contact-information "info@beta.com"; 
+(saw: $beta, sighting-of: $malicious-url) isa sighting; 
+(creator: $alpha, created: $malicious-url) isa creation; 
+
+# https://oasis-open.github.io/cti-documentation/examples/sighting-of-observed-data
+# Sighting of Observed Data
+insert
+$pym isa organization, has name "Pym Technologies", 
+	has spec-version "2.1",
+	has stix-id "identity--7865b6d2-a4af-45c5-b582-afe5ec376c33",
+	has created "2013-04-14T13:07:49.812Z", 
+	has modified "2013-04-14T13:07:49.812Z", 
+	has sector "technology",
+	has contact-information "hank@pymtech.com";
+$oscorp isa organization, has name "Oscorp Industries", 
+	has spec-version "2.1" , 
+	has stix-id "identity--987eeee1-413a-44ac-96cc-0a8acdcc2f2c", 
+	has created "2017-01-14T13:07:49.812Z", 
+	has modified "2017-01-14T13:07:49.812Z", 
+	has sector "technology", 
+	has contact-information "norman@oscorp.com";
+$malware isa malware, has name "Online Job Site Trojan", 
+	has spec-version "2.1", 
+	has stix-id "malware--ae560258-a5cb-4be8-8f05-013d6712295f", 
+	has created "2014-02-20T09:16:08.989Z", 
+	has modified "2014-02-20T09:16:08.989Z", 
+	has description "Trojan that is disguised as the executable file resume.pdf., it also creates a registry key.",
+	has malware-type "remote-access-trojan", 
+	has is-family false;
+$file isa file, 
+	has stix-id "file--364fe3e5-b1f4-5ba3-b951-ee5983b3538d",
+	has spec-version "2.1",
+	has size 83968, 
+	has name "resume.pdf",
+	has md5 "1717b7fff97d37a1e1a0029d83492de1",
+	has sha-1 "1717b7fff97d37a1e1a0029d83492de1";
+$data1 isa observed-data, 
+	has spec-version "2.1",
+	has stix-id "observed-data--cf8eaa41-6f4c-482e-89b9-9cd2d6a83cb1", 
+	has created "2017-02-28T19:37:11.213Z", 
+	has modified "2017-02-28T19:37:11.213Z",
+	has first-observed "2017-02-27T21:37:11.213Z", 
+	has last-observed "2017-02-27T21:37:11.213Z",
+	has number-observed 1;
+$key isa windows-registry-key,
+	has stix-id "windows-registry-key--16b80d14-d574-5620-abad-10ff304b1c26", 
+	has spec-version "2.1", 
+	has attribute-key "HKEY-LOCAL-MACHINE\\SYSTEM\\ControlSet001\\Services\\WSALG2";
+$data2 isa observed-data, 
+	has spec-version "2.1",
+	has stix-id "observed-data--a0d34360-66ad-4977-b255-d9e1080421c4", 
+	has created "2017-02-28T19:37:11.213Z", 
+	has modified "2017-02-28T19:37:11.213Z", 
+	has first-observed "2017-02-27T21:37:11.213Z", 
+	has last-observed "2017-02-27T21:37:11.213Z", 
+	has number-observed 1;
+(creator: $oscorp, created: $data2) isa creation;
+(creator: $oscorp, created: $data1) isa creation;
+(creator: $pym, created: $malware) isa creation;
+(sighting-of: $malware, saw: $oscorp, observed: $data1, observed: $data2) isa sighting,
+	has spec-version "2.1",
+	has stix-id "sighting--779c4ae8-e134-4180-baa4-03141095d971",
+	has created "2017-02-28T19:37:11.213Z", 
+	has modified "2017-02-28T19:37:11.213Z",
+	has first-seen "2017-02-28T19:07:24.856Z", 
+	has last-seen "2017-02-28T19:07:24.857Z",
+	has count 1;
+(referring: $data1, referred: $file) isa reference; 
+(referring: $data2, referred: $key) isa reference; 
+
+# https://oasis-open.github.io/cti-documentation/examples/threat-actor-leveraging-attack-patterns-and-malware
+# Threat Actor Leveraging Attack Patterns and Malware
+insert
+$bravo-ta isa threat-actor, 
+	has spec-version "2.1",
+	has stix-id "threat-actor--9a8a0d25-7636-429b-a99e-b2a73cd0f11f", 
+	has created "2015-05-07T14:22:14.760Z", 
+	has modified "2015-05-07T14:22:14.760Z", 
+	has name "Adversary Bravo", 
+	has description "Adversary Bravo is known to use phishing attacks to deliver remote access malware to the targets.",
+	has threat-actor-type "spy", 
+	has threat-actor-type "criminal";
+$poison-ivy isa malware,
+	has spec-version "2.1", 
+	has stix-id "malware--d1c612bc-146f-4b65-b7b0-9a54a14150a4",
+	has created "2015-04-23T11:12:34.760Z", 
+	has modified "2015-04-23T11:12:34.760Z", 
+	has name "Poison Ivy Variant d1c6", 
+	has is-family false, 
+	has malware-type "remote-access-trojan";
+$kill-chain-phase isa kill-chain-phase, 
+	has kill-chain-name "mandiant-attack-lifecycle-model",
+	has phase-name "initial-compromise"; 
+(kill-chain-used: $poison-ivy, kill-chain-using: $kill-chain-phase) isa kill-chain-usage;
+$phishing isa attack-pattern, 
+	has spec-version "2.1", 
+	has stix-id "attack-pattern--8ac90ff3-ecf8-4835-95b8-6aea6a623df5", 
+	has created "2015-05-07T14:22:14.760Z", 
+	has modified "2015-05-07T14:22:14.760Z", 
+	has name "Phishing", 
+	has description "Spear phishing used as a delivery mechanism for malware.";
+(kill-chain-used: $phishing, kill-chain-using: $kill-chain-phase) isa kill-chain-usage; 
+$capec isa external-reference, 
+	has source-name "capec", 
+	has description "phishing", 
+	has url "https://capec.mitre.org/data/definitions/98.html",
+	has external-id "CAPEC-98";
+(referenced: $capec, referencing: $phishing) isa external-referencing;
+$bravo-id isa id-unknown, 
+	has spec-version "2.1",
+	has stix-id "identity--1621d4d4-b67d-41e3-9670-f01faf20d111",
+	has created "2015-05-10T16:27:17.760Z", 
+	has modified "2015-05-10T16:27:17.760Z", 
+	has name "Adversary Bravo", 
+	has description "Adversary Bravo is a threat actor that utilizes phishing attacks.";
+(used-by: $bravo-ta, used: $poison-ivy) isa use, 
+	has spec-version "2.1",
+	has stix-id "relationship--d44019b6-b8f7-4cb3-837e-7fd3c5724b87",
+	has created "2020-02-29T18:18:08.661Z",
+	has modified "2020-02-29T18:18:08.661Z";
+(used-by: $bravo-ta, used: $phishing) isa use,
+	has spec-version "2.1",
+	has stix-id "relationship--3cd2d6f9-0ded-486b-8dca-606283a8997f", 
+	has created "2020-02-29T18:18:08.661Z",
+	has modified "2020-02-29T18:18:08.661Z";
+(source: $bravo-ta, target-identity: $bravo-id) isa attribution,
+	has spec-version "2.1",
+	has stix-id "relationship--56e5f1c8-08f3-4e24-9e8e-f87d844672ec", 
+	has created "2020-02-29T18:18:08.661Z", 
+	has modified "2020-02-29T18:18:08.661Z";
+
+# https://oasis-open.github.io/cti-documentation/examples/using-marking-definitions
+# Using Marking Definitions
+
+insert
+$stark isa organization, 
+	has spec-version "2.1",
+	has stix-id "identity--611d9d41-dba5-4e13-9b29-e22488058ffc", 
+	has created "2017-04-14T13:07:49.812Z", 
+	has modified "2017-04-14T13:07:49.812Z", 
+	has name "Stark Industries", 
+	has sector "defense", 
+	has contact-information "info@stark.com";
+$indicator isa indicator,
+	has spec-version "2.1",
+	has stix-id "indicator--33fe3b22-0201-47cf-85d0-97c02164528d", 
+	has created "2017-04-14T13:07:49.812Z", 
+	has modified "2017-04-14T13:07:49.812Z", 
+	has name "Known malicious IP Address", 
+	has description "Detected malicious activity from this address", 
+	has indicator-type "malicious-activity", 
+	has pattern "[ipv4-addr:value = '10.0.0.0']", 
+	has pattern-type "stix", 
+	has valid-from "2017-04-14T13:07:49.812Z";
+# $marking-definition isa marking-definition, 
+#	has spec-version "2.1", 
+#	has stix-id "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82", 
+#	has created "2017-01-20T00:00:00.000Z", 
+#	has definition-type "tlp",
+#	has name "TLP:AMBER";
+
+# https://oasis-open.github.io/cti-documentation/examples/using-granular-markings
+# Using Granular Markings
+
+insert 
+$gotham isa organization, 
+	has spec-version "2.1",
+	has stix-id "identity--b38dfe21-7477-40d1-aa90-5c8671ce51ca", 
+	has created "2017-04-27T16:18:24.318Z", 
+	has modified "2017-04-27T16:18:24.318Z", 
+	has name "Gotham National Bank", 
+	has sector "financial-services", # should be a relation? 
+	has contact-information "contact@gothamnational.com"; 
+$fake-email isa indicator, 
+	has spec-version "2.1", 
+	has stix-id "indicator--1ed8caa7-a708-4706-b651-f1186ede6ca1", 
+	has created "2017-04-27T16:18:24.318Z", 
+	has modified "2017-04-27T16:18:24.318Z", 
+	has name "Fake email address", 
+	has description $fake-email-desc, 
+	has indicator-type $fake-email-indicator-type-1, 
+	has indicator-type $fake-email-indicator-type-2, 
+	has pattern $fake-email-pattern1, 
+	has pattern-type "stix", 
+	has valid-from "2017-04-27T16:18:24.318Z"; 
+	$fake-email-desc "Known to be used by The Joker.";
+	$fake-email-indicator-type-2 "attribution";
+	$fake-email-indicator-type-1 "malicious-activity";
+	$fake-email-pattern1 "[email-message:from_ref.value MATCHES '.+\\\\banking@g0thamnatl\\\\.com$']";
+$the-joker isa threat-actor, 
+	has spec-version "2.1", 
+	has stix-id "threat-actor--8b6297fe-cae7-47c6-9256-5584b417849c", 
+	has created "2017-04-27T16:18:24.318Z", 
+	has modified "2017-04-27T16:18:24.318Z", 
+	has name "The Joker", 
+	has threat-actor-type "terrorist",
+	has threat-actor-type "criminal",
+	has alias "Joe Kerr", 
+	has alias "The Clown Prince of Crime", 
+	has stix-role "director",
+	has resource-level "team", 
+	has primary-motivation "personal-satisfaction";
+$indication (indicating: $fake-email, indicated: $the-joker) isa indication, 
+	has spec-version "2.1", 
+	has stix-id "relationship--3d1dd3cc-eb47-4704-9c77-ceff2971b95c", 
+	has created "2017-04-27T16:18:24.318Z", 
+	has modified "2017-04-27T16:18:24.318Z"; 
+$tlp-red isa tlp-red, 
+	has stix-id "marking-definition--5e57c739-391a-4eb3-b6be-7d15ca92d5ed";
+$tlp-amber isa tlp-amber, 
+	has stix-id "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82";
+$tlp-green isa tlp-green,
+	has stix-id "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da";
+(marked: $fake-email-desc, marking: $tlp-red) isa granular-marking; 
+(marked: $fake-email-indicator-type-2, marking: $tlp-amber) isa granular-marking;
+(marked: $fake-email-indicator-type-1, marked: $fake-email-pattern1, marked: $fake-email-indicator-type-1, marking: $tlp-green) isa granular-marking;
+(marked: $the-joker, marking: $tlp-red) isa object-marking; 
+(marked: $indication, marking: $tlp-red) isa object-marking; 
+(created: $fake-email, creator: $gotham) isa creation; 
+(created: $the-joker, creator: $gotham) isa creation; 
+
+

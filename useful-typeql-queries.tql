@@ -1,0 +1,9 @@
+
+# THis allows us to query for all the markings without specifying the type whether it's object or granular markings
+match $x isa data-marking; 
+
+# This query asks for anything htat has a tlp marking, without specifying which of the four they should be
+match 
+$tlp isa tlp-marking;
+$SDO isa stix-domain-object, has $attr, has pattern-type "stix";
+$dm ($attr, $tlp) isa data-marking; 

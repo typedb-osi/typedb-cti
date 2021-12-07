@@ -1,0 +1,17 @@
+# 2.11 Kill Chain Phase 
+#The kill-chain-phase represents a phase in a kill chain, which describes the various phases an attacker may undertake in order to achieve their objectives.
+
+# Example specifying the "reconnaissance" phase from the Lockheed Martin Cyber Kill Chain
+
+insert
+$kill-chain isa kill-chain-phase, 
+	has kill-chain-name "lockheed-martin-cyber-kill-chain",
+	has phase-name "reconnaissance	";
+
+# Example specifying the "pre-attack" phase from the "foo" kill-chain
+
+insert 
+$kill-chain isa kill-chain-phase, 
+	has kill-chain-name "foo",
+	has phase-name "pre-attack";
+
