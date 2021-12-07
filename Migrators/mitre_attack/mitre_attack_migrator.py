@@ -64,51 +64,53 @@ def createEntitiesQuery(files):
 	for f in files:
 		for obj in f: 
 
-			if obj['type'] != "relationship":
+			if obj['type'] != "relationship" and obj['id'] != "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5":
+
 				stix_type = entity_mapper(obj['type'])
 
-				has_marking = False
-				try: 
-					match_object_marking = "$marking isa marking-definition, has stix-id '" + obj['object_marking_refs'][0] + "'; "
-					insert_marking_rel = " (marked: $x, marking: $marking) isa object-marking;"
-					has_marking = True
-				except: 
-					pass
-
-				if stix_type['custom-type'] == True: 
-					query = "$x isa custom-object, has stix-type '" + stix_type['type'] + "',"
-					entities.append(stix_type['type'])
-
-				else: 
-					query = "$x isa " + stix_type['type'] + ","
-					entities.append(stix_type['type'])
-
-				list_of_attributes = fetchAttributes(obj)
-
-				for attr in list_of_attributes: 
-					for k, v in attr.items(): 
-						attribute_query = " has " + k + ' "' + v + '"' + ","
-						query = query + attribute_query
-
-				if has_marking == True:
-					query = match_object_marking + "insert " + query[:-1] + ";"	+ insert_marking_rel
-
+				if stix_type['ignore'] == False:
+					has_marking = False
 					try: 
-						created_by_refs_rel = "(created: $x, creator: $creator) isa creation;"
-						created_by_refs_match = "$creator isa thing, has stix-id '" + obj['created_by_ref'] + "';"
-						query = "match " + created_by_refs_match + query + created_by_refs_rel
-					except Exception: 
-						query = "match " + query
-				else: 
-					query = "insert " + query[:-1] + ";"
-					try: 
-						created_by_refs_rel = "(created: $x, creator: $creator) isa creation;"
-						created_by_refs_match = "$creator isa thing, has stix-id '" + obj['created_by_ref'] + "';"
-						query = "match " + created_by_refs_match + query + created_by_refs_rel
-					except Exception:
+						match_object_marking = "$marking isa marking-definition, has stix-id '" + obj['object_marking_refs'][0] + "'; "
+						insert_marking_rel = " (marked: $x, marking: $marking) isa object-marking;"
+						has_marking = True
+					except: 
 						pass
 
-				queries.append(query)
+					if stix_type['custom-type'] == True: 
+						query = "$x isa custom-object, has stix-type '" + stix_type['type'] + "',"
+						entities.append(stix_type['type'])
+
+					else: 
+						query = "$x isa " + stix_type['type'] + ","
+						entities.append(stix_type['type'])
+
+					list_of_attributes = fetchAttributes(obj)
+
+					for attr in list_of_attributes: 
+						for k, v in attr.items(): 
+							attribute_query = " has " + k + ' "' + v + '"' + ","
+							query = query + attribute_query
+
+					if has_marking == True:
+						query = match_object_marking + "insert " + query[:-1] + ";"	+ insert_marking_rel
+
+						try: 
+							created_by_refs_rel = "(created: $x, creator: $creator) isa creation;"
+							created_by_refs_match = "$creator isa thing, has stix-id '" + obj['created_by_ref'] + "';"
+							query = "match " + created_by_refs_match + query + created_by_refs_rel
+						except Exception: 
+							query = "match " + query
+					else: 
+						query = "insert " + query[:-1] + ";"
+						try: 
+							created_by_refs_rel = "(created: $x, creator: $creator) isa creation;"
+							created_by_refs_match = "$creator isa thing, has stix-id '" + obj['created_by_ref'] + "';"
+							query = "match " + created_by_refs_match + query + created_by_refs_rel
+						except Exception:
+							pass
+
+					queries.append(query)
 
 	# print(set(entities))
 	return queries
@@ -220,6 +222,8 @@ def createRelationQueries(file):
 
 				query = match_query + insert_query[:-1] + ";"
 				queries.append(query)
+
+
 
 	# print(set(relations))
 	return queries

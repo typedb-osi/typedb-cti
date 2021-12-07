@@ -50,7 +50,7 @@ stix-object sub entity,
 
 # 2.5 External Reference
 external-reference sub stix-meta-object,
-	# In addition to source-name, at least one of description, url or external-id must be present
+	# In addition to source-name, at least one of description, url or external-id must be present§
 	# Required
 	owns source-name, 
 

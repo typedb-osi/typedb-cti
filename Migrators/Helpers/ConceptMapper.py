@@ -1,18 +1,22 @@
 def entity_mapper(entity: str):
 
     mapper = {
-    	"attack-pattern": {"type": "attack-pattern", "custom-type": False},
-        "tool": {"type": "tool", "custom-type": False},
-        "identity": {"type": "identity", "custom-type": False},
-        "course-of-action": {"type": "course-of-action", "custom-type": False},
-        "malware": {"type": "malware", "custom-type": False},
-        "intrusion-set": {"type": "intrusion-set", "custom-type": False},
-        "marking-definition": {"type": "marking-definition", "custom-type": False}
+    	"attack-pattern": {"type": "attack-pattern", "custom-type": False, 'ignore': False},
+        "tool": {"type": "tool", "custom-type": False, 'ignore': False},
+        "identity": {"type": "identity", "custom-type": False, 'ignore': False},
+        "course-of-action": {"type": "course-of-action", "custom-type": False, 'ignore': False},
+        "malware": {"type": "malware", "custom-type": False, 'ignore': False},
+        "intrusion-set": {"type": "intrusion-set", "custom-type": False, 'ignore': False},
+        "marking_definition": {"type": "marking-definition", "custom-type": False, 'ignore': True}    
+
     }
     mapping = mapper.get(entity, {})
 
     if mapping == {}:
-        mapping = {"type": str(entity), 'custom-type': True}
+        mapping = {"type": str(entity), 'custom-type': True, 'ignore': False}
+    if mapping['type'] == "marking-definition":
+        mapping['ignore'] = True
+
     return mapping
 
 
