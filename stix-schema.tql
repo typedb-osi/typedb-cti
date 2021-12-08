@@ -435,7 +435,6 @@ duplicate sub relation, # in conceptMapper
 relatedness sub relation,# in conceptMapper
 	relates related-to; 
 
-
 ## INFERRED RELATIONS ## 
 
 kill-chain sub relation, 

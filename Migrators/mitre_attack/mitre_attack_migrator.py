@@ -17,7 +17,6 @@ def openFiles(data_folder):
 		with open (file) as f: 
 			for obj in json.load(f)['objects']:
 				data.append(obj)
-
 	return data
 
 def createdByRefs(files):
@@ -48,9 +47,9 @@ def createdByRefs(files):
 	return set(queries)
 
 
-def createMarkings(files):
+def createMarkings(file):
 	queries = []
-	for obj in files: 
+	for obj in file: 
 		if obj['type'] == "marking-definition":
 			if obj['definition_type'] == "statement":
 				query = "insert $x isa statement-marking, has stix-id '" + obj['id'] + "', has statement '" + obj['definition']['statement'] + "', has created '" + obj['created'] + "', has spec-version '" + obj['spec_version'] + "';"
@@ -58,21 +57,21 @@ def createMarkings(files):
 	return set(queries)
 	
 
-def createEntitiesQuery(files):
+def createEntitiesQuery(file):
 	queries = []
 	entities = []
-	for obj in files: 
+	marking_relations = []
+
+	for obj in file: 
 
 		if obj['type'] != "relationship" and obj['id'] != "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5":
 
 			stix_type = entity_mapper(obj['type'])
 
-			if stix_type['ignore'] == False:
-				has_marking = False
+			if stix_type['ignore'] == False:				
 				try: 
-					match_object_marking = "$marking isa marking-definition, has stix-id '" + obj['object_marking_refs'][0] + "'; "
-					insert_marking_rel = " (marked: $x, marking: $marking) isa object-marking;"
-					has_marking = True
+					obj['object_marking_refs'][0]
+					marking_relations.append(obj)
 				except: 
 					pass
 
@@ -88,30 +87,35 @@ def createEntitiesQuery(files):
 
 				for attr in list_of_attributes: 
 					for k, v in attr.items(): 
-						attribute_query = " has " + k + ' "' + v + '"' + ","
+						attribute_query = " has " + k + " '" + v + "'" + ","
 						query = query + attribute_query
 
-				if has_marking == True:
-					query = match_object_marking + "insert " + query[:-1] + ";"	+ insert_marking_rel
-
-					try: 
-						created_by_refs_rel = "(created: $x, creator: $creator) isa creation;"
-						created_by_refs_match = "$creator isa thing, has stix-id '" + obj['created_by_ref'] + "';"
-						query = "match " + created_by_refs_match + query + created_by_refs_rel
-					except Exception: 
-						query = "match " + query
-				else: 
-					query = "insert " + query[:-1] + ";"
-					try: 
-						created_by_refs_rel = "(created: $x, creator: $creator) isa creation;"
-						created_by_refs_match = "$creator isa thing, has stix-id '" + obj['created_by_ref'] + "';"
-						query = "match " + created_by_refs_match + query + created_by_refs_rel
-					except Exception:
-						pass
-
+				query = "insert " + query[:-1] + ";"
+				try: 
+					created_by_refs_rel = "(created: $x, creator: $creator) isa creation;"
+					created_by_refs_match = "$creator isa thing, has stix-id '" + obj['created_by_ref'] + "';"
+					query = "match " + created_by_refs_match + query + created_by_refs_rel
+				except Exception:
+					pass
+				
 				queries.append(query)
 
-	return set(queries)
+	queries = set(queries)
+	insertQueries(queries, uri, batch_size, num_threads)
+
+	createMarkingsRelations(marking_relations)
+	
+	return queries
+
+def createMarkingsRelations(marking_relations):
+	queries = []
+	for o in marking_relations:
+		match_marked_object = "$x isa thing, has stix-id '" + o['id'] + "'; "
+		match_object_marking = "$marking isa marking-definition, has stix-id '" + o['object_marking_refs'][0] + "'; "
+		insert_marking_rel = "(marked: $x, marking: $marking) isa object-marking;"
+		query = "match " + match_marked_object + match_object_marking + "insert " + insert_marking_rel
+		queries.append(query)
+	insertQueries(queries, uri, batch_size, num_threads)
 
 
 def fetchAttributes(obj):
@@ -132,7 +136,7 @@ def fetchAttributes(obj):
 	except:
 		pass
 	try: 
-		stix_description = {"description": obj['description'].replace('"', "'")}
+		stix_description = {"description": obj['description'].replace("'", "")}
 		list_of_attributes.append(stix_description)
 	except:
 		pass
@@ -221,21 +225,51 @@ def createRelationQueries(file):
 
 	return set(queries)
 
+def insertKillChainPhases(file, uri, batch_size, num_threads):
+	kill_chain_usage = []
+	for obj in file: 
+		try: 
+			for k in obj:
 
+				for kc in obj['kill_chain_phases']:
+					kc['id'] = obj['id']
+				kill_chain_usage.append(obj['kill_chain_phases'])	
+		except Exception:
+			pass
+
+	kill_chain_names = []
+	relation_queries = []
+	for k in kill_chain_usage: 
+		for i in k: 
+			kill_chain_names.append((i['kill_chain_name'], i['phase_name']))
+			relation_query = "match $x isa thing, has stix-id '" + i['id'] + "'; $kill-chain-phase isa kill-chain-phase, has kill-chain-name '" + i['kill_chain_name'] + "', has phase-name '" + i['phase_name'] + "'; insert (kill-chain-used: $x, kill-chain-using: $kill-chain-phase) isa kill-chain-usage;"
+			relation_queries.append(relation_query)
+	kill_chain_names = set(kill_chain_names)
+
+	entities_queries = []
+	for instances in kill_chain_names:
+		query = "insert $x isa kill-chain-phase, has kill-chain-name '" + instances[0] + "', has phase-name '" + instances[1] + "';"
+		entities_queries.append(query)
+	relation_queries = set(relation_queries)
+
+	insertQueries(entities_queries, uri, batch_size, num_threads)
+	insertQueries(relation_queries, uri, batch_size, num_threads)
 
 uri = "localhost:1729"
 data_folder = 'Data/'
 batch_size = 50
 num_threads = 8
-files = openFiles(data_folder)
-created_by = createdByRefs(files)
+file = openFiles(data_folder)
+created_by = createdByRefs(file)
 insertQueries(created_by, uri, batch_size, num_threads)
-markings = createMarkings(files)
+markings = createMarkings(file)
 insertQueries(markings, uri, batch_size, num_threads)
-entities = createEntitiesQuery(files)
-insertQueries(entities, uri, batch_size, num_threads)
-relations = createRelationQueries(files)
+createEntitiesQuery(file)
+relations = createRelationQueries(file)
 insertQueries(relations, uri, batch_size, num_threads)
+insertKillChainPhases(file, uri, batch_size, num_threads)
+
+
 
 
 
