@@ -3,6 +3,7 @@ stix-object sub entity,
 	# Required
 	owns stix-type,
 	owns stix-id,
+	owns custom-attribute,
 	plays stix-core-relationship:active-role,
 	plays stix-core-relationship:passive-role;
 
@@ -273,7 +274,6 @@ tool sub stix-domain-object, # TODO
 
 # 5.2 Sighting
 sighting sub stix-core-relationship, 
-	owns description,
 	owns first-seen,
 	owns last-seen,
 	owns count,
@@ -377,12 +377,15 @@ stix-core-relationship sub relation, # in conceptMapper
 	owns stix-type,
 
 	# Optional
-	# owns created-ref, -> TODO
+	owns description,
 	owns revoked,
 	owns labels,
 	owns confidence, 
 	owns langs,
 	owns extensions, 
+
+	owns custom-attribute,
+
 	relates active-role, 
 	relates passive-role,
 	plays object-marking:marked;
@@ -526,7 +529,10 @@ stix-attribute-boolean sub attribute, value boolean, abstract,
 	plays granular-marking:marked;
 	
 	is-family sub stix-attribute-boolean;
-	
+
+custom-attribute sub attribute, value string, 
+	owns attribute-type; 
+attribute-type sub attribute, value string; 
 
 ##### Rules #####
 

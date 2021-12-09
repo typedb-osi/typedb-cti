@@ -1,6 +1,6 @@
 import json
 from typedb.client import *
-from Migrators.Helpers.ConceptMapper import entity_mapper, relationship_mapper
+from Migrators.Helpers.ConceptMapper import entity_mapper, relationship_mapper, attribute_map
 from os import listdir
 from os.path import join, isfile
 from Migrators.Helpers.batchLoader import write_batch
@@ -33,14 +33,15 @@ def createdByRefs(files):
 	for obj in files: 
 		for c in created_by_refs:
 			if obj['id'] == c: 
-				query = "$x isa " + entity_mapper(obj['type'])['type'] + ","
 
-				list_of_attributes = fetchAttributes(obj)
+				ent_type = entity_mapper(obj['type'])['type']
+				
+				if entity_mapper(obj['type'])['type'] == "identity": 
+					ent_type = obj['identity_class']
 
-				for attr in list_of_attributes: 
-					for k, v in attr.items(): 
-						attribute_query = " has " + k + ' "' + v + '"' + ","
-						query = query + attribute_query
+				query = "$x isa " + ent_type + ","
+
+				query = attributeBuilder(obj, query)
 
 				query = "insert " + query[:-1] + ";"
 				queries.append(query)
@@ -76,19 +77,21 @@ def createEntitiesQuery(file):
 					pass
 
 				if stix_type['custom-type'] == True: 
+
 					query = "$x isa custom-object, has stix-type '" + stix_type['type'] + "',"
 					entities.append(stix_type['type'])
 
 				else: 
-					query = "$x isa " + stix_type['type'] + ","
+
+					if obj['type'] == "identity":
+						ent_type = obj['identity_class']
+					else: 
+						ent_type = obj['type']
+
+					query = "$x isa " + ent_type + ","
 					entities.append(stix_type['type'])
 
-				list_of_attributes = fetchAttributes(obj)
-
-				for attr in list_of_attributes: 
-					for k, v in attr.items(): 
-						attribute_query = " has " + k + " '" + v + "'" + ","
-						query = query + attribute_query
+				query = attributeBuilder(obj, query)
 
 				query = "insert " + query[:-1] + ";"
 				try: 
@@ -118,44 +121,24 @@ def createMarkingsRelations(marking_relations):
 	insertQueries(queries, uri, batch_size, num_threads)
 
 
-def fetchAttributes(obj):
+def attributeBuilder(obj, query):
 	list_of_attributes = []
-	try: 
-		stix_id = {"stix-id": obj['id']}
-		list_of_attributes.append(stix_id)
-	except: 
-		pass
-	try: 
-		stix_created = {"created": obj['created']}
-		list_of_attributes.append(stix_created)
-	except: 
-		pass
-	try: 
-		stix_modified = {"modified": obj['modified']}
-		list_of_attributes.append(stix_modified)
-	except:
-		pass
-	try: 
-		stix_description = {"description": obj['description'].replace("'", "")}
-		list_of_attributes.append(stix_description)
-	except:
-		pass
-	try: 
-		stix_name = {"name": obj['name']}
-		list_of_attributes.append(stix_name)
-	except: 
-		pass
-	try: 
-		stix_spec_version = {"spec-version": obj['spec_version']}
-		list_of_attributes.append(stix_spec_version)
-	except: 
-		pass
-	try: 
-		stix_hash = {"hashes": obj['hash']}
-		list_of_attributes.append(stix_hash)
-	except:
-		pass
-	return list_of_attributes
+	for k, v in attribute_map().items():
+		try: 
+			list_of_attributes.append({'type': v['type'], 'type_data':obj[k].replace("'", ""), "value": v['value']}) 
+			for attr in list_of_attributes: 
+				if attr['value'] == "string":
+					attribute_query = " has " + attr['type'] + " '" + attr['type_data'] + "'" + ","
+				if attr['value'] == 'boolean':
+					attribute_query = " has " + attr['type'] + " " + str(attr['type_data']).lower() + ","
+				if attr['value'] == "list":
+					attribute_query = ""
+					for l in attr['type_data']:
+						attribute_query = attribute_query + " has " + attr['type'] + " '" + l + "'" + ","
+			query = query + attribute_query
+		except Exception:
+			pass
+	return query
 
 
 def insertQueries(queries, uri, batch_size, num_threads):
@@ -192,33 +175,7 @@ def createRelationQueries(file):
 			else: 
 				insert_query = "insert $a (" + relation['active-role'] + ": $source, " + relation['passive-role'] + ": $target) isa " + relation['relation-name'] + ","
 
-			list_of_attributes = []
-
-			try: 
-				stix_id = {"stix-id": obj['id']}
-				list_of_attributes.append(stix_id)
-			except: 
-				pass
-			try: 
-				stix_created = {"created": obj['created']}
-				list_of_attributes.append(stix_created)
-			except: 
-				pass
-			try: 
-				stix_modified = {"modified": obj['modified']}
-				list_of_attributes.append(stix_modified)
-			except:
-				pass
-			try: 
-				stix_spec_version = {"spec-version": obj['spec_version']}
-				list_of_attributes.append(stix_spec_version)
-			except: 
-				pass
-
-			for attr in list_of_attributes: 
-				for k, v in attr.items(): 
-					attribute_query = " has " + k + ' "' + v + '"' + ","
-					insert_query = insert_query + attribute_query
+			insert_query = attributeBuilder(obj, insert_query)
 
 			query = match_query + insert_query[:-1] + ";"
 			queries.append(query)
@@ -255,6 +212,55 @@ def insertKillChainPhases(file, uri, batch_size, num_threads):
 	insertQueries(entities_queries, uri, batch_size, num_threads)
 	insertQueries(relation_queries, uri, batch_size, num_threads)
 
+def filterAttributeTypes(file):
+	all_attr = []
+	for obj in file: 
+		for k in obj: 
+			all_attr.append(k)
+
+	unique_list_of_attributes = sorted(set(all_attr))
+
+	for k, v in attribute_map().items():
+		try: 
+			unique_list_of_attributes.remove(k)
+		except Exception:
+			pass
+	unique_list_of_attributes.remove("created_by_ref")
+	unique_list_of_attributes.remove("definition")
+	unique_list_of_attributes.remove("definition_type")
+	unique_list_of_attributes.remove("external_references")
+	unique_list_of_attributes.remove("identity_class")
+	unique_list_of_attributes.remove("kill_chain_phases")
+	unique_list_of_attributes.remove("relationship_type")
+	unique_list_of_attributes.remove("source_ref")
+	unique_list_of_attributes.remove("target_ref")
+	unique_list_of_attributes.remove("type")
+	unique_list_of_attributes.remove("object_marking_refs")
+	unique_list_of_attributes.remove("tactic_refs")
+	return unique_list_of_attributes
+
+def insertCustomAttributes(file, uri, batch_size, num_threads): 
+	attributes = filterAttributeTypes(file)
+	queries = []
+	relations = []
+	for obj in file: 
+		match = "match $x isa thing, has stix-id '" + obj['id'] + "'; "
+		var = 0
+		attribute_query_1 = ""
+		attribute_query_2 = ""
+		for att in attributes: 
+			try: 
+				attribute_query_2 = attribute_query_2 + "$" + str(var) + " has attribute-type '" + att + "'; $" + str(var) + " '" + obj[att].replace("'","") + "'; "
+				attribute_query_1 = attribute_query_1 + "has custom-attribute $" + str(var) + ", "
+				var = var + 1
+			except Exception:
+				pass
+		query = match + "insert $x " + attribute_query_1[:-2] + "; " + attribute_query_2
+		queries.append(query)
+
+	insertQueries(queries, uri, batch_size, num_threads)
+
+
 uri = "localhost:1729"
 data_folder = 'Data/'
 batch_size = 50
@@ -268,6 +274,22 @@ createEntitiesQuery(file)
 relations = createRelationQueries(file)
 insertQueries(relations, uri, batch_size, num_threads)
 insertKillChainPhases(file, uri, batch_size, num_threads)
+insertCustomAttributes(file, uri, batch_size, num_threads)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

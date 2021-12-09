@@ -40,3 +40,40 @@ def relationship_mapper(relationship: str):
     if mapping == {}:
         mapping = {"relation-name": "stix-core-relationship", "active-role": "active-role", "passive-role": "passive-role", "stix-type": relationship}
     return mapping
+
+
+def attribute_map():
+    mapper = {
+        "id": {"type": "stix-id", "value": "string"},
+        "created": {"type": "created", "value": "string"},
+        "modified": {"type": "modified", "value": "string"},
+        "spec_version": {"type": "spec-version", "value": "string"},
+        "description": {"type": "description", "value": "string"},
+        "name": {"type": "name", "value": "string"},
+        "aliases": {"type": "alias", "value": "list"},
+        "revoked": {"type": "revoked", "value": "boolean"},
+        "is_family": {"type": "is-family", "value": "boolean"}
+    }
+    return mapper
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
