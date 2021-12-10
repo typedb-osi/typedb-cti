@@ -260,6 +260,47 @@ def insertCustomAttributes(file, uri, batch_size, num_threads):
 
 	insertQueries(queries, uri, batch_size, num_threads)
 
+def insertExternalReferences(file, uri, batch_size, num_threads):
+	external_references = []
+	for obj in file:
+		try: 
+			for e in obj['external_references']:
+				external_references.append(e)
+		except Exception:
+			pass
+
+	properties = []
+	for e in external_references: 
+		for k, v in e.items(): 
+			properties.append(k)
+	unique_properties = set(properties)
+
+
+	list_external_references_queries = []
+	insert_queries = []
+
+	for obj in file:
+		attributes = ''
+		try: 
+			match_query_1 = "match $x isa thing, has stix-id '" + obj['id'] + "';"
+			for e in obj['external_references']:
+				for p in unique_properties: 
+					mapping = attribute_map().get(p, {})
+					try: 
+						attributes = attributes + " has " + mapping['type'] + " '" + e[p].replace("'","") + "',"
+					except Exception:
+						pass
+				insert_rel_query = match_query_1 + ' $er isa external-reference,' + attributes[:-1] + '; insert (referencing: $x, referenced: $er) isa external-referencing;'
+			insert_ref_query = "insert $er isa external-reference," + attributes[:-1] + ';'
+			insert_queries.append(insert_rel_query)
+			list_external_references_queries.append(insert_ref_query)
+		except Exception:
+			pass
+	unique_list_external_references_queries = set(list_external_references_queries)
+
+	insertQueries(unique_list_external_references_queries, uri, batch_size, num_threads)
+	insertQueries(insert_queries, uri, batch_size, num_threads)
+
 
 uri = "localhost:1729"
 data_folder = 'Data/'
@@ -275,8 +316,10 @@ relations = createRelationQueries(file)
 insertQueries(relations, uri, batch_size, num_threads)
 insertKillChainPhases(file, uri, batch_size, num_threads)
 insertCustomAttributes(file, uri, batch_size, num_threads)
+insertExternalReferences(file, uri, batch_size, num_threads)
 
 
+# TODO create relations with x_mitre_tactic refs
 
 
 

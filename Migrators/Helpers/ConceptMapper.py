@@ -52,7 +52,10 @@ def attribute_map():
         "name": {"type": "name", "value": "string"},
         "aliases": {"type": "alias", "value": "list"},
         "revoked": {"type": "revoked", "value": "boolean"},
-        "is_family": {"type": "is-family", "value": "boolean"}
+        "is_family": {"type": "is-family", "value": "boolean"},
+        "source_name": {"type": "source-name", "value": "string"},
+        "url": {"type": "url", "value": "string"},
+        "external_id": {"type": "external-id", "value": "string"}
     }
     return mapper
 

@@ -388,7 +388,8 @@ stix-core-relationship sub relation, # in conceptMapper
 
 	relates active-role, 
 	relates passive-role,
-	plays object-marking:marked;
+	plays object-marking:marked, 
+	plays external-referencing:referencing;
 
 
 	delivery sub stix-core-relationship, # in conceptMapper
@@ -544,4 +545,13 @@ when {
 } then {
 	(participating-kill-chain-phase: $kill-chain-1, participating-kill-chain-phase: $kill-chain-2) isa kill-chain;
 };
+
+
+
+
+
+
+
+
+
 
