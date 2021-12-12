@@ -22,7 +22,7 @@ $id isa organization, has name "Disco Team", has spec-version "2.1",
 	has description "Disco Team is the name of an organized threat actor crime-syndicate.", 
 	has contact-information "disco-team@stealthemail.com"; 
 
-(source: $ta, target-identity: $id) isa attribution, has spec-version "2.1", 
+(attributing: $ta, attributed: $id) isa attribution, has spec-version "2.1", 
 	has stix-id "relationship--a2e3efb5-351d-4d46-97a0-6897ee7c77a0",
 	has created "2020-02-29T18:01:28.577Z",
 	has modified "2020-02-29T18:01:28.577Z";
@@ -237,7 +237,7 @@ $bravo-id isa id-unknown,
 	has stix-id "relationship--3cd2d6f9-0ded-486b-8dca-606283a8997f", 
 	has created "2020-02-29T18:18:08.661Z",
 	has modified "2020-02-29T18:18:08.661Z";
-(source: $bravo-ta, target-identity: $bravo-id) isa attribution,
+(attributing: $bravo-ta, attributed: $bravo-id) isa attribution,
 	has spec-version "2.1",
 	has stix-id "relationship--56e5f1c8-08f3-4e24-9e8e-f87d844672ec", 
 	has created "2020-02-29T18:18:08.661Z", 

@@ -28,7 +28,6 @@ def relationship_mapper(relationship: str):
         "delivers": {"relation-name": "delivery", "active-role": "delivering", "passive-role": "delivered"},
         "targets": {"relation-name": "target", "active-role": "targetting", "passive-role": "targetted"},
         "attributed-to": {"relation-name": "attribution", "active-role": "attributing", "passive-role": "attributed"},
-        "mitigates": {"relation-name": "mitigation", "active-role": "mitigating", "passive-role": "mitigated"},
         "indicates": {"relation-name": "indication", "active-role": "indicating", "passive-role": "indicated"},
         "uses": {"relation-name": "use", "active-role": "used-by", "passive-role": "used"},
         "derives": {"relation-name": "derivation", "active-role": "deriving", "passive-role": "derived-from"},
