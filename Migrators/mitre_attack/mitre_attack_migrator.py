@@ -58,7 +58,7 @@ def createMarkings(file):
 	return set(queries)
 	
 
-def createEntitiesQuery(file):
+def createEntitiesQuery(file, uri, batch_size, num_threads):
 	queries = []
 	entities = []
 	marking_relations = []
@@ -106,11 +106,11 @@ def createEntitiesQuery(file):
 	queries = set(queries)
 	insertQueries(queries, uri, batch_size, num_threads)
 
-	createMarkingsRelations(marking_relations)
+	createMarkingsRelations(marking_relations, uri, batch_size, num_threads)
 	
 	return queries
 
-def createMarkingsRelations(marking_relations):
+def createMarkingsRelations(marking_relations, uri, batch_size, num_threads):
 	queries = []
 	for o in marking_relations:
 		match_marked_object = "$x isa thing, has stix-id '" + o['id'] + "'; "
@@ -145,7 +145,7 @@ def insertQueries(queries, uri, batch_size, num_threads):
 	batch = []
 	batches = []
 	client = TypeDB.core_client(uri)
-	with client.session("stix", SessionType.DATA) as session:
+	with client.session("cti", SessionType.DATA) as session:
 		with session.transaction(TransactionType.WRITE) as tx:
 			for q in queries:
 				batch.append(q)
@@ -302,33 +302,19 @@ def insertExternalReferences(file, uri, batch_size, num_threads):
 	insertQueries(insert_queries, uri, batch_size, num_threads)
 
 
-uri = "localhost:1729"
-data_folder = 'Data/'
-batch_size = 50
-num_threads = 8
-file = openFiles(data_folder)
-created_by = createdByRefs(file)
-insertQueries(created_by, uri, batch_size, num_threads)
-markings = createMarkings(file)
-insertQueries(markings, uri, batch_size, num_threads)
-createEntitiesQuery(file)
-relations = createRelationQueries(file)
-insertQueries(relations, uri, batch_size, num_threads)
-insertKillChainPhases(file, uri, batch_size, num_threads)
-insertCustomAttributes(file, uri, batch_size, num_threads)
-insertExternalReferences(file, uri, batch_size, num_threads)
-
-
-# TODO create relations with x_mitre_tactic refs
-
-
-
-
-
-
-
-
-
+def migrate_mitre(uri, batch_size, num_threads):
+	data_folder = 'Data/'
+	file = openFiles(data_folder)
+	created_by = createdByRefs(file)
+	insertQueries(created_by, uri, batch_size, num_threads)
+	markings = createMarkings(file)
+	insertQueries(markings, uri, batch_size, num_threads)
+	createEntitiesQuery(file, uri, batch_size, num_threads)
+	relations = createRelationQueries(file)
+	insertQueries(relations, uri, batch_size, num_threads)
+	insertKillChainPhases(file, uri, batch_size, num_threads)
+	insertCustomAttributes(file, uri, batch_size, num_threads)
+	insertExternalReferences(file, uri, batch_size, num_threads)
 
 
 
