@@ -1,7 +1,12 @@
 
 # TypeDB - Data CTI
 
-**[Overview](#overview)** | **[Installation](#installation)** | **[STIX](#stix)** | **[ATT&CK STIX Data](#att%26ck%20stix%20data)** | **[Examples](#examples)**
+**[Overview](#overview)** | **[STIX](#stix)** | **[ATT&CK STIX Data](#att%26ck%20stix%20data)** | **[Installation](#installation)** | **[Examples](#examples)**
+
+[![Discord](https://img.shields.io/discord/665254494820368395?color=7389D8&label=chat&logo=discord&logoColor=ffffff)](https://vaticle.com/discord)
+[![Discussion Forum](https://img.shields.io/discourse/https/forum.vaticle.com/topics.svg)](https://forum.vaticle.com)
+[![Stack Overflow](https://img.shields.io/badge/stackoverflow-typedb-796de3.svg)](https://stackoverflow.com/questions/tagged/typedb)
+[![Stack Overflow](https://img.shields.io/badge/stackoverflow-typeql-3dce8c.svg)](https://stackoverflow.com/questions/tagged/typeql)
 
 ## Overview
 TypeDB - Data CTI is an open source knowledge graph for organisations to organise and manage their cyber threat intelligence knowledge. It's been created to enable CTI professionals to represent their disparate CTI information into one knowledge graph and find new insights about cyber threats. 
