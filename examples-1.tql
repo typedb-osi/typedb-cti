@@ -63,6 +63,13 @@ $in isa intrusion-set;
 match  $course isa course-of-action,  has name "Process Injection Mitigation";  
 $in isa intrusion-set;  (mitigated: $in, mitigating: $course) isa inferred-mitigation; 
 
+# Fast:
+match  $course has name "Process Injection Mitigation";  
+$in isa intrusion-set;  
+($in, $course);
+
+match  $course isa course-of-action,  has name "Process Injection Mitigation";    
+($in, $course);
 
 # Fast queries:
 match  

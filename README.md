@@ -65,7 +65,7 @@ Start the migrator script
 ```
 This will create a new database called `cti`, insert the schema file and ingest the MITRE ATTCK datasets; it will take one or two minutes to complete. 
 
-## Examples
+## Examples 
 
 Once the data is loaded, you can try these queries to start to explore the data. 
 
@@ -90,7 +90,6 @@ $y (used-by: $malware, used: $attack-pattern) isa use;
 $z (used-by: $intrusion, used: $$attack-pattern) isa use; 
 ```
 
-
 *Inference example*
 ```
 match  
@@ -100,4 +99,4 @@ $im (mitigated: $in, mitigating: $course) isa inferred-mitigation;
 ```
 
 ## Community
-If you need any technical support or want to engage with this community, you can join the #cti channel in the [TypeDB Discord server](https://vaticle.com/typedb). 
+If you need any technical support or want to engage with this community, you can join the *#cti* channel in the [TypeDB Discord server](https://vaticle.com/typedb). 
