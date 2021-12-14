@@ -750,7 +750,7 @@ when {
 	$course-of-action isa course-of-action, has name $name1;
 	$sdo isa stix-domain-object, has name $name2;
 	$intrusion-set isa intrusion-set, has name $name3;
-	$mitigation (mitigating: $course-of-action, mitigated: $2) isa mitigation;
+	$mitigation (mitigating: $course-of-action, mitigated: $sdo) isa mitigation;
 	$use (used: $sdo, used-by: $intrusion-set) isa use; 
 	
 } then {
