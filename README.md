@@ -2,7 +2,7 @@
 
 # TypeDB Data - CTI
 
-**[Overview](#overview)** | **[STIX](#stix)** | **[MITRE ATT&CK Data](#mitre%20att%26ck%20data)** | **[Installation](#installation)** | **[Examples](#examples)**
+**[Overview](#overview)** | **[STIX](#stix)** | **[MITRE ATT&CK Data](#mitre-attck-stix-data)** | **[Installation](#installation)** | **[Examples](#examples)**
 
 [![Discord](https://img.shields.io/discord/665254494820368395?color=7389D8&label=chat&logo=discord&logoColor=ffffff)](https://vaticle.com/discord)
 [![Discussion Forum](https://img.shields.io/discourse/https/forum.vaticle.com/topics.svg)](https://forum.vaticle.com)
