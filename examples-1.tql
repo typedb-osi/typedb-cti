@@ -61,7 +61,7 @@ $in isa intrusion-set;
 ($in, $course);
 
 match  $course isa course-of-action,  has name "Process Injection Mitigation";  
-$in isa intrusion-set;  (mitigated: $in, mitigating: $course) isa inferred-mitigation; 
+$in isa intrusion-set;  (mitigated: $in, mitigating: $course) isa mitigation; 
 
 # Fast:
 match  $course has name "Process Injection Mitigation";  
@@ -75,9 +75,9 @@ match  $course isa course-of-action,  has name "Process Injection Mitigation";
 match  
 $course isa course-of-action;
 $in isa intrusion-set, has name "BlackTech";  
-$im (mitigated: $in, mitigating: $course) isa inferred-mitigation; 
+$im (mitigated: $in, mitigating: $course) isa mitigation; 
 
 match  
 $course isa course-of-action, has name "Restrict File and Directory Permissions";
 $in isa intrusion-set, has name "BlackTech";  
-$im (mitigated: $in, mitigating: $course) isa inferred-mitigation;
+$im (mitigated: $in, mitigating: $course) isa mitigation;

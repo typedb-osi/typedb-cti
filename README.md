@@ -1,7 +1,8 @@
 
-# TypeDB - Data CTI
 
-**[Overview](#overview)** | **[STIX](#stix)** | **[ATT&CK STIX Data](#att%26ck%20stix%20data)** | **[Installation](#installation)** | **[Examples](#examples)**
+# TypeDB Data - CTI
+
+**[Overview](#overview)** | **[STIX](#stix)** | **[MITRE ATT&CK Data](#mitre%20att%26ck%20data)** | **[Installation](#installation)** | **[Examples](#examples)**
 
 [![Discord](https://img.shields.io/discord/665254494820368395?color=7389D8&label=chat&logo=discord&logoColor=ffffff)](https://vaticle.com/discord)
 [![Discussion Forum](https://img.shields.io/discourse/https/forum.vaticle.com/topics.svg)](https://forum.vaticle.com)
@@ -9,11 +10,11 @@
 [![Stack Overflow](https://img.shields.io/badge/stackoverflow-typeql-3dce8c.svg)](https://stackoverflow.com/questions/tagged/typeql)
 
 ## Overview
-TypeDB - Data CTI is an open source knowledge graph for organisations to organise and manage their cyber threat intelligence knowledge. It's been created to enable CTI professionals to represent their disparate CTI information into one knowledge graph and find new insights about cyber threats. 
+TypeDB Data - CTI is an open source knowledge graph for organisations to store and manage their cyber threat intelligence knowledge. It has been created to enable CTI professionals to bring together their disparate CTI information into one knowledge graph and find new insights about cyber threats.
 
-This repository provides a schema that is based on [STIX2](https://oasis-open.github.io/cti-documentation/), and contains the [MITRE ATT&CK](https://github.com/mitre-attack/attack-stix-data) dataset to make it easy to start working with TypeDB - Data CTI. In the future, we plan to incorporate other CTI data standards, in order to create an industry-wide knowledge graph that can be used to ingest CTI information in any type of standard. 
+This repository provides a schema that is based on [STIX2](https://oasis-open.github.io/cti-documentation/), and contains [MITRE ATT&CK](https://github.com/mitre-attack/attack-stix-data) as an example dataset to start exploring this CTI knowledge graph. In the future, we plan to incorporate other CTI standards and data sources, in order to create an industry-wide data specification in TypeQL that can be used to ingest any type of CTI data. 
 
-[insert screenshot]
+![TypeDB Studio](Images/query_0.png)
 
 
 ## STIX
@@ -24,17 +25,17 @@ STIX enables organizations to share CTI with one another in a consistent and mac
 
 STIX is designed to improve many different capabilities, such as collaborative threat analysis, automated threat exchange, automated detection and response, and more.
 
-The data model in TypeDB - Data CTI is based on the STIX standard (specifically STIX 2.1), which makes it possible to ingest heterogeneous CTI data into one unified standard. This makes it easy for different CTI analysts to describe their knowledge and share it with each other. 
+The data model in TypeDB Data - CTI is currently based on STIX (specifically STIX 2.1), offering a unified and consistent data model for CTI information from an operational to strategic level. This enables the ingestion of heterogeneous CTI data to provide analysts with a single common language to describe the data they work with.  
 
-To learn more, this [introduction](https://oasis-open.github.io/cti-documentation/stix/walkthrough) and [explanation of relationships](https://oasis-open.github.io/cti-documentation/examples/visualized-sdo-relationships) is a good place to start how STIX works and why TypeDB - Data CTI uses it. 
+To learn more about STIX, this [introduction](https://oasis-open.github.io/cti-documentation/stix/walkthrough) and [explanation](https://oasis-open.github.io/cti-documentation/examples/visualized-sdo-relationships) is a good place to start learning how STIX works and why TypeDB Data - CTI uses it. 
 
 An in-depth overview of the how the STIX2 model has been implemented in TypeDB will follow. 
 
-## ATT&CK STIX Data
+## MITRE ATT&CK STIX Data
 
 [MITRE ATT&CK](https://github.com/mitre-attack/attack-stix-data) is a globally-accessible knowledge base of adversary tactics and techniques based on real-world observations. The ATT&CK knowledge base is used as a foundation for the development of specific threat models and methodologies in the private sector, in government, and in the cybersecurity product and service community.
 
-The dataset includes a few custom types, which are prefixed with "x_type". For those types, we refrained from changing the "pure STIX2" model, and created a custom type and ingested the type as a separate attribute. 
+TypeDB Data - CTI includes a migrator to load MITRE ATT&CK STIX and serves as an example datasets to quickly start exploring the knowledge graph. 
 
 ## Installation 
 
@@ -50,7 +51,7 @@ Set up a virtual environment and install the dependencies:
 
 ```bash
     cd <path/to/typedb-data-cti>/
-    python3 -m venv .venv
+    python -m venv .venv
     source .venv/bin/activate
     pip install -r requirements.txt
 ```
@@ -65,11 +66,11 @@ Start the migrator script
 ```
 This will create a new database called `cti`, insert the schema file and ingest the MITRE ATTCK datasets; it will take one or two minutes to complete. 
 
-## Examples 
+## Examples
 
-Once the data is loaded, you can try these queries to start to explore the data. 
+Once the data is loaded, these queries can be used to explore the data. 
 
-*Find me all the attack patterns that are being used by the Malware "Tiktok Pro*
+1. *Find all the attack patterns used by the Malware "FakeSpy"*:
 ```
 match 
 $malware isa malware, has name "FakeSpy";
@@ -77,26 +78,43 @@ $attack-pattern isa attack-pattern, has name $apn;
 $use (used-by: $malware, used: $attack-pattern) isa use; 
 ```
 
-This will return 15 different `attack-patterns`, all of which have a relation of type `use` to the FakeSpy `malware`. This is how the query result looks like in TypeDB Studio: 
+Running this query will return 15 different `attack-patterns`, all of which have a relation of type `use` to the FakeSpy `malware`. This is how it is visualised in TypeDB Studio: 
 
-![query_1](Images/query_1.png)
+![TypeDB Studio](Images/query_1.png)
 
-*Traversal example for mitre*
+2. *What attack patterns are used by the malwares that were used by the intrusion set APT28?*
 ```
 match 
-$intrusion isa intrusion-set; $malware isa malware; $3 isa attack-pattern; 
-$x (used-by: $intrusion, used: $malware) isa use; 
-$y (used-by: $malware, used: $attack-pattern) isa use; 
-$z (used-by: $intrusion, used: $$attack-pattern) isa use; 
+$intrusion isa intrusion-set, has name "APT28"; 
+$malware isa malware, has name $n1; 
+$attack-pattern isa attack-pattern, has name $n2;
+$rel1 (used-by: $intrusion, used: $malware) isa use; 
+$rel2 (used-by: $malware, used: $attack-pattern) isa use; 
 ```
+This query asks for the entity type `intrusion-set` with name `APT28`. It then looks for all the `malwares` that are connected to the `intrusion-set` through the relation `use`. The query also fetches all the `attack-patterns` that are connected through the relation `use` to the `malwares`.
 
-*Inference example*
+The full answer returns 207 results. Two of those results can be visualised in TypeDB Studio like this: 
+
+![TypeDB Studio](Images/query_2.png)
+
+3. *Does the "Restrict File and Directory Permissions" course of action mitigate the "BlackTech" intrusion set, and if so, how?*
 ```
-match  
+match
 $course isa course-of-action, has name "Restrict File and Directory Permissions";
 $in isa intrusion-set, has name "BlackTech";  
-$im (mitigated: $in, mitigating: $course) isa inferred-mitigation;
+$mit (mitigating: $course, mitigated: $in) isa mitigation;
 ```
+This query returns a relation of type `inferred-mitigation` between the two entities: 
+ 
+![TypeDB Studio](Images/query_3.png)
+
+But the `inferred-mitigation` relation does not actually exist in the database, it was inferred at query runtime by TypeDB's reasoner. By double clicking on the inferred relation, the explanation shows that the `course-of-action` mitigates an `attack-pattern` with the name `Indicator Blocking`, which is then used by the `intrusion-set`.
+
+![TypeDB Studio](Images/query_4.png)
+
+However, the `use` relation between the `intrusion-set` and the `attack-pattern` is also inferred. Double clicking on it shows that the `attack-pattern` is not directly used by the `intrusion-set`. Instead, it is used by a `malware` called `Waterbear`, which is used by the `intrusion-set`.
+
+![TypeDB Studio](Images/query_5.png)
 
 ## Community
 If you need any technical support or want to engage with this community, you can join the *#cti* channel in the [TypeDB Discord server](https://vaticle.com/typedb). 

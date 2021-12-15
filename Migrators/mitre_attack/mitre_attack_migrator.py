@@ -133,7 +133,7 @@ def attributeBuilder(obj, query):
 					attribute_query = " has " + attr['type'] + " " + str(attr['type_data']).lower() + ","
 				if attr['value'] == "list":
 					attribute_query = ""
-					for l in attr['type_data']:
+					for l in attr['type_data']: # TODO: Check if this is inserting 
 						attribute_query = attribute_query + " has " + attr['type'] + " '" + l + "'" + ","
 			query = query + attribute_query
 		except Exception:
@@ -315,13 +315,3 @@ def migrate_mitre(uri, batch_size, num_threads):
 	insertKillChainPhases(file, uri, batch_size, num_threads)
 	insertCustomAttributes(file, uri, batch_size, num_threads)
 	insertExternalReferences(file, uri, batch_size, num_threads)
-
-
-
-
-
-
-
-
-
-
