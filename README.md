@@ -70,7 +70,7 @@ This will create a new database called `cti`, insert the schema file and ingest 
 
 Once the data is loaded, these queries can be used to explore the data. 
 
-1. *Find all the attack patterns used by the Malware "FakeSpy"*:
+1. What are the attack patterns used by the malware "FakeSpy"?
 ```
 match 
 $malware isa malware, has name "FakeSpy";
@@ -78,11 +78,11 @@ $attack-pattern isa attack-pattern, has name $apn;
 $use (used-by: $malware, used: $attack-pattern) isa use; 
 ```
 
-Running this query will return 15 different `attack-patterns`, all of which have a relation of type `use` to the FakeSpy `malware`. This is how it is visualised in TypeDB Studio: 
+Running this query will return 15 different `attack-patterns`, all of which have a relation of type `use` to the `malware`. This is how it is visualised in TypeDB Studio: 
 
 ![TypeDB Studio](Images/query_1.png)
 
-2. *What attack patterns are used by the malwares that were used by the intrusion set APT28?*
+2. What attack patterns are used by the malwares that were used by the intrusion set APT28?
 ```
 match 
 $intrusion isa intrusion-set, has name "APT28"; 
@@ -91,13 +91,13 @@ $attack-pattern isa attack-pattern, has name $n2;
 $rel1 (used-by: $intrusion, used: $malware) isa use; 
 $rel2 (used-by: $malware, used: $attack-pattern) isa use; 
 ```
-This query asks for the entity type `intrusion-set` with name `APT28`. It then looks for all the `malwares` that are connected to the `intrusion-set` through the relation `use`. The query also fetches all the `attack-patterns` that are connected through the relation `use` to the `malwares`.
+This query asks for the entity type `intrusion-set` with name `APT28`. It then looks for all the `malwares` that are connected to this `intrusion-set` through the relation `use`. The query also fetches all the `attack-patterns` that are connected through the relation `use` to these `malwares`.
 
 The full answer returns 207 results. Two of those results can be visualised in TypeDB Studio like this: 
 
 ![TypeDB Studio](Images/query_2.png)
 
-3. *Does the "Restrict File and Directory Permissions" course of action mitigate the "BlackTech" intrusion set, and if so, how?*
+3. Does the "Restrict File and Directory Permissions" course of action mitigate the "BlackTech" intrusion set, and if so, how?
 ```
 match
 $course isa course-of-action, has name "Restrict File and Directory Permissions";
@@ -108,11 +108,11 @@ This query returns a relation of type `inferred-mitigation` between the two enti
  
 ![TypeDB Studio](Images/query_3.png)
 
-But the `inferred-mitigation` relation does not actually exist in the database, it was inferred at query runtime by TypeDB's reasoner. By double clicking on the inferred relation, the explanation shows that the `course-of-action` mitigates an `attack-pattern` with the name `Indicator Blocking`, which is then used by the `intrusion-set`.
+But the `inferred-mitigation` relation does not actually exist in the database, it was inferred at query runtime by TypeDB's reasoner. By double clicking on the inferred relation, the explanation shows that the `course-of-action` actually mitigates an `attack-pattern` with the name `Indicator Blocking`, which has a `use` relation with the `intrusion-set`.
 
 ![TypeDB Studio](Images/query_4.png)
 
-However, the `use` relation between the `intrusion-set` and the `attack-pattern` is also inferred. Double clicking on it shows that the `attack-pattern` is not directly used by the `intrusion-set`. Instead, it is used by a `malware` called `Waterbear`, which is used by the `intrusion-set`.
+However, that `use` relation (between the `intrusion-set` and the `attack-pattern`) is also inferred. Double clicking on it shows that the `attack-pattern` is not directly used by the `intrusion-set`. Instead, it is used by a `malware` called `Waterbear`, which is used by the `intrusion-set`.
 
 ![TypeDB Studio](Images/query_5.png)
 

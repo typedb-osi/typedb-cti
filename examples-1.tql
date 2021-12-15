@@ -1,6 +1,3 @@
-# 2.11 Kill Chain Phase 
-#The kill-chain-phase represents a phase in a kill chain, which describes the various phases an attacker may undertake in order to achieve their objectives.
-
 # Example specifying the "reconnaissance" phase from the Lockheed Martin Cyber Kill Chain
 
 insert
@@ -14,70 +11,26 @@ insert
 $kill-chain isa kill-chain-phase, 
 	has kill-chain-name "foo",
 	has phase-name "pre-attack";
-
-
-
-
 #############
 
-# THis allows us to query for all the markings without specifying the type whether it's object or granular markings
+# This allows us to query for all the markings without specifying the type whether it's object or granular markings
 match $x isa data-marking; 
 
-# This query asks for anything htat has a tlp marking, without specifying which of the four they should be
+# This query asks for anything that has a TLP marking, without specifying which marking they should have
 match 
 $tlp isa tlp-marking;
 $SDO isa stix-domain-object, has $attr, has pattern-type "stix";
 $dm ($attr, $tlp) isa data-marking; 
 
 
-# With this query, we can ask for inferred usage relations
+# With this query, we can ask for inferred usage relations (using the transitive use relation)
 match 
-$intrusion isa intrusion-set; $malware isa malware; $3 isa attack-pattern; 
+$intrusion isa intrusion-set; 
+$malware isa malware; 
+$attack-pattern1 isa attack-pattern; 
+$attack-pattern2 isa attack-pattern; 
 $x (used-by: $intrusion, used: $malware) isa use; 
-$y (used-by: $malware, used: $attack-pattern) isa use; 
-$z (used-by: $intrusion, used: $$attack-pattern) isa use; 
-get $z; offset 0; limit 50;
+$y (used-by: $malware, used: $attack-pattern1) isa use; 
+$z (used-by: $intrusion, used: $attack-pattern2) isa use; 
+get $z;
 
-
-# What we see here is that an intrusion set is using a malware, which is using an attack pattern
-# But the attack pattern is mitigating that attack pattern
-# Therefore, we can infer that the course of action is mitigating the intrusion set "BlackTech"
-# The mitigate relationship refers to a response
-match 
-$1 isa course-of-action, has name "Process Injection Mitigation";
-$2 isa attack-pattern, has name $a2;
-$3 isa malware, has name $a3;
-$4 isa intrusion-set, has name $a4;
-$x (mitigating: $1, mitigated: $2) isa mitigation;
-$y (used: $2, used-by: $3) isa use; 
-$z (used: $3, used-by: $4) isa use; 
-
-# The inference for this is this: 
-# Against which intrusion sets is this course of action mitigating against? 
-
-# Slow queries:
-match  $course isa course-of-action,  has name "Process Injection Mitigation";  
-$in isa intrusion-set;  
-($in, $course);
-
-match  $course isa course-of-action,  has name "Process Injection Mitigation";  
-$in isa intrusion-set;  (mitigated: $in, mitigating: $course) isa mitigation; 
-
-# Fast:
-match  $course has name "Process Injection Mitigation";  
-$in isa intrusion-set;  
-($in, $course);
-
-match  $course isa course-of-action,  has name "Process Injection Mitigation";    
-($in, $course);
-
-# Fast queries:
-match  
-$course isa course-of-action;
-$in isa intrusion-set, has name "BlackTech";  
-$im (mitigated: $in, mitigating: $course) isa mitigation; 
-
-match  
-$course isa course-of-action, has name "Restrict File and Directory Permissions";
-$in isa intrusion-set, has name "BlackTech";  
-$im (mitigated: $in, mitigating: $course) isa mitigation;
