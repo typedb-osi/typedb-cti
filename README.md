@@ -44,25 +44,25 @@ TypeDB Data - CTI includes a migrator to load MITRE ATT&CK STIX and serves as an
 Clone this repo:
 
 ```bash 
-    git clone https://github.com/typedb-osi/typedb-data-cti
+git clone https://github.com/typedb-osi/typedb-data-cti
 ```
 
 Set up a virtual environment and install the dependencies:
 
 ```bash
-    cd <path/to/typedb-data-cti>/
-    python -m venv .venv
-    source .venv/bin/activate
-    pip install -r requirements.txt
+cd <path/to/typedb-data-cti>/
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 ```
 Start TypeDB
 ```bash 
-    typedb server
+typedb server
 ```
 Start the migrator script
 
 ```bash
-    python migrator.py
+python migrator.py
 ```
 This will create a new database called `cti`, insert the schema file and ingest the MITRE ATTCK datasets; it will take one or two minutes to complete. 
 
