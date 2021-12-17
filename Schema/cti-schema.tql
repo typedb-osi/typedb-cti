@@ -105,23 +105,25 @@ custom-object sub stix-domain-object,
 
 # 4.1 
 attack-pattern sub stix-domain-object,
-	# Attack Pattern Specific Properties
 	owns name,
 	owns description,
 	owns alias,
+
+	# Relations defined as properties in STIX
 	plays kill-chain-usage:kill-chain-used,
 
-	# Relations
+	# Common Relations
 	plays delivery:delivering,
 	plays target:targetting,
 	plays use:used-by,
 
-	# Reverse
+	# Reverse Relations
 	# plays indication:indicated, -> Defined in SDO
 	plays mitigation:mitigated,
 	plays use:used; 
 
 	# Embedded Relations
+	# Creation
 	# Object marking ref
 
 # 4.2 Campaign
@@ -133,20 +135,19 @@ campaign sub stix-domain-object,
 	owns last-seen,
 	owns objective, 
 
-
-	# Relations
+	# Common Relations
 	plays attribution:attributing,
 	plays compromise:compromising,
 	plays origination:originating,
 	plays target:targetting,
 	plays use:used-by;
 
-	# Reverse 
+	# Reverse Relations
 	# plays indication:indicated; -> Defined in SDO
 
 	# Embedded relations
-	# Object marking ref
-
+	# Creation
+	# Object marking
 
 # 4.3 Course of Action
 course-of-action sub stix-domain-object,
@@ -154,21 +155,34 @@ course-of-action sub stix-domain-object,
 	owns description, 
 	owns action,
 
-	# Relations
+	# Common Relations
 	plays investigation:investigating,
 	plays mitigation:mitigating,
 	plays remediation:remediating;
 
+	# Reverse Relations
+	# NA
+
 	# Embedded relations
+	# Creation
 	# Object marking ref
 
 # 4.4 Grouping 
 grouping sub stix-domain-object,
 	owns name, 
 	owns description, 
-	owns context;
+	owns context,
 
-	# TODO -> Object_refs
+	# Common Relations
+	# NA 
+
+	# Reverse Relations
+	# NA
+
+	# Embedded Relations
+	# Creation
+	# Object markings
+	plays reference:referring;
 
 # 4.5 Identity
 identity sub stix-domain-object,
@@ -178,18 +192,19 @@ identity sub stix-domain-object,
 	owns sector,  # should this perhaps be a relation?
 	owns contact-information,
 
-	# Relations
+	# Common Relations
 	plays located-at:locating,
 
-	# Reverse relations
+	# Reverse Relations
 	plays target:targetted,
 	plays attribution:attributed, 
+	plays impersonate:impersonated,
 
-	# Embedded relations
+	# Embedded Relations
 	plays creation:creator,
 	# Object marking ref
-
-	plays sighting:saw;
+	
+	plays sighting:saw; 
 
 	# 10.7 Identity Class Vocabulary
 	individual sub identity;
@@ -204,31 +219,40 @@ incident sub stix-domain-object,
 	owns name, 
 	owns description;
 
+ 	# Common Relations
+ 	# NA
+
+ 	# Reverse Relations
+ 	# NA
+
 	# Embedded relations
-	# Object marking ref;
+	# Creation
+	# Object Marking
 
 # 4.7 Indicator
 indicator sub stix-domain-object, 
 	owns name, 
 	owns description, 
-	owns indicator-type, # Should this be a relation to the open vocabulary?
-						 # anomalous-activity, anonymization, benign, compromised, malicious-activity, attribution, unknown
+	owns indicator-type,
 	owns pattern, 
-	owns pattern-type,   # should this open vocabulary be a relation? (stix, pcre, sigma, snort, suricata, yara)
+	owns pattern-type, 
 	owns pattern-version,
 	owns valid-from,
 	owns valid-until,
+
+	# Relations defined as properties in STIX
 	plays kill-chain-usage:kill-chain-used,
 
-	# Relations
+	# Common Relations
 	plays indication:indicating,
 	plays basing:basing-on,
 
-	# Reverse
+	# Reverse Relations
 	plays investigation:investigated,
 	plays mitigation:mitigated;
 
 	# Embedded Relations
+	# Creation
 	# Object marking ref
 
 # 4.8 Infrastructure 
@@ -241,7 +265,7 @@ infrastructure sub stix-domain-object,
 	owns first-seen,
 	owns last-seen,
 
-	# Relations
+	# Common Relations
 	plays communication:communicating,
 	plays consist:consisting,
 	plays control:controling,
@@ -278,7 +302,7 @@ intrusion-set sub stix-domain-object,
 	owns primary-motivation, 
 	owns secondary-motivations,
 
-	# Relations
+	# Common Relations
 	plays attribution:attributing,
 	plays compromise:compromising,
 	plays host:hosting,
@@ -292,10 +316,12 @@ intrusion-set sub stix-domain-object,
 	plays authorship:authored,
 	# plays indication:indicated; Already defined in SDO
 
+	# Embedded Relations
+	# Creation
+	# Object marking 
+
 	# Inferred role player
 	plays inferred-mitigation:mitigated;
-
-	# OBject marking 
 
 # 4.10 Location
 location sub stix-domain-object,
@@ -311,7 +337,7 @@ location sub stix-domain-object,
 	owns street-address,
 	owns postal-code,
 
-	# Relations
+	# Common Relations
 	# NA
 
 	# Reverse relations
@@ -319,31 +345,32 @@ location sub stix-domain-object,
 	plays origination:originated-from,
 	plays target:targetted;
 
+	# Embedded Relations
+	# Creation
 	# Object marking
 
 # 4.11 Malware
 malware sub stix-domain-object, 
 	owns name, 
 	owns description, 
-	owns malware-type, # Should this be a relation to define the type?
+	owns malware-type,
 	owns is-family, 
     owns alias,
-    plays kill-chain-usage:kill-chain-used,
     owns first-seen,
     owns last-seen,
-    
-    owns operating-system-refs, # Needs to be a relation to software
-    # The value of this property MUST be the identifier for a SCO software object. 
-    
     owns architecture-execution-envs,
     owns implementation-languages,
     owns capability,
     
-    owns sample-refs, # Needs to be a relation to file or artifact
+    # Relations defined as properties in STIX
+	plays kill-chain-usage:kill-chain-used,
+    owns operating-system-refs, # Needs to be a relation to software
+    # The value of this property MUST be the identifier for a SCO software object. 
+    owns sample-refs, # TODO Needs to be a relation to file or artifact
     # The sample_refs property specifies a list of identifiers of the SCO file 
     # or artifact objects associated with this malware instance(s) or family.
 
-    # Relations
+    # Common Relations
     plays authorship:authoring,
     plays beacon:beaconing-to,
     plays exfiltrate:exfiltrating-to,
@@ -357,7 +384,7 @@ malware sub stix-domain-object,
     plays use:used-by,
     plays variant:variant-source,
 
-   	# Reverse relations
+   	# Reverse Relations
    	plays variant:variant-target,
    	plays delivery:delivered,
    	plays mitigation:mitigated,
@@ -374,36 +401,119 @@ malware sub stix-domain-object,
     plays exploit:exploiting;
 
     # Embedded Relations
+    # Creation
     # Obejct marking
     # Sample ref
 
 
 # 4.12 Malware Analysis
 malware-analysis sub stix-domain-object,
+	owns product, 
+	owns version,
+	owns configuration-version,
+	owns module,
+	owns analysis-engine-version,
+	owns analysis-definition-version,
+	owns submitted,
+	owns analysis-started,
+	owns analysis-ended,
+	owns result-name,
+	owns result,
 
+	# Relations defined as properties in STIX
+	# host-vm, TODO - relation - The value of this property MUST be the identifier for a SCO software object.
+	# operating-system, TODO - relation - The value of this property MUST be the identifier for a SCO software object.
+	# installed-software, TODO - relation - The value of this property MUST be the identifier for a SCO software object.
+	# analysis-sco TODO - relation - This property contains the references to the STIX Cyber-observable Objects that were captured during the analysis process.
+	# sample-ref TODO - relation - This property contains the reference to the SCO file, network traffic or artifact object that this malware analysis was performed against.
+
+	# Common Relations
 	plays characterise:characterising,
 	plays av-analysis:analysing,
 	plays statis-analysis:analysing,
 	plays dynamic-analysis:analysing;
 
+	# Reverse Relations
+	# NA
+
+	# Embedded Relations
+	# Creation
+	# Object markingss
+	# host-vm
+	# operating-system
+	# installed-software
+	# analysis-sco
+	# sample-ref
+
+
 # 4.13 Note
-note sub stix-domain-object; #TODO
+note sub stix-domain-object, 
+	owns abstract-note, 
+	owns content, 
+	owns authors,
+
+	# Relations 
+	# NA
+
+	# Embedded Relations
+	# Creation
+	# Object marking
+	plays reference:referring;
 
 # 4.14
 observed-data sub stix-domain-object,
 	owns first-observed, 
 	owns last-observed, 
 	owns number-observed,
-	owns object,
-	plays sighting:observed,
-	plays reference:referring,
-	plays basing:based-on;
+
+	# Common Relations
+	# NA
+
+	# Reverse Relations
+	plays basing:based-on,
+	plays consist:consisted,
+
+	plays sighting:observed, # This is for SRO 5.2 sighting
+
+	# Embedded Relations
+	# Creation
+	# Object marking
+	plays reference:referring; # Object ref
 
 # 4.15 Opinion
-opinion sub stix-domain-object; #TODO
+opinion sub stix-domain-object, 
+	owns explanation,
+	owns authors,
+	owns opinion-enum, 
+
+	# Common Relations
+	# NA
+
+	# Reverse Relations
+	# NA
+
+	# Embedded relations
+	# Creation
+	# Object marking
+	plays reference:referring;
 
 # 4.16 Report
-report sub stix-domain-object; #TODO
+report sub stix-domain-object, 
+	owns name, 
+	owns description,
+	owns report-type, 
+	owns published, 
+
+	# Common Relations
+	# NA
+
+	# Reverse Relations
+	# NA
+
+	# Embedded relations
+	# Creation 
+	# Object Marking
+	plays reference:referring;
 
 # 4.17
 threat-actor sub stix-domain-object,
@@ -420,12 +530,26 @@ threat-actor sub stix-domain-object,
 	owns primary-motivation,
 	owns secondary-motivations,
 	owns personal-motivations,
-	plays compromise:compromising,
-	plays target:targetting,
+
+
+	# Common Relations
 	plays attribution:attributing,
-	plays attribution:attributed,
+	plays compromise:compromising,
+	plays host:hosting,
+	plays ownership:owning,
+	plays impersonate:impersonating,
+	plays located-at:locating,
+	plays target:targetting,
 	plays use:used-by,
-	plays located-at:locating;
+
+	# Reverse Relations
+	plays attribution:attributed,
+	plays authorship:authored;
+	# plays indication:indicated # defined in SDO
+
+	# Embedded relations
+	# Creation 
+	# Object Marking
 
 # 4.18 Tool
 tool sub stix-domain-object,
@@ -435,25 +559,49 @@ tool sub stix-domain-object,
 	owns alias, 
 	owns tool-version,
 
+	# Relations defined as properties in STIX
+	plays kill-chain-usage:kill-chain-used,
+
+	# Common Relations
 	plays delivery:delivering,
 	plays drop:dropping,
 	plays have:having,
 	plays target:targetting,
 	plays use:used-by,
-	plays use:used,
-	plays host:hosted,
+
+	# Reverse Relations
 	plays download:downloaded,
 	plays drop:dropped,
-	# plays indication:indicated, Already defined in SDO
+	plays host:hosted,
 	plays mitigation:mitigated,
-	plays kill-chain-usage:kill-chain-used;
+	plays use:used;
+	# plays indication:indicated, Already defined in SDO
+
+	# Embedded Relations
+	# Creation
+	# Object Marking
 
 # 4.19 Vulnerability TODO
 vulnerability sub stix-domain-object,
-	plays have:had,
+	owns name, 
+	owns description,
+
+	# Relations defined as properties in STIX
+	# plays external-referencing:referencing, Defined in SDO
+
+	# Common Relations
+	# NA
+
+	# Reverse Relations
  	plays target:targetted,
  	plays exploit:exploited,
- 	plays remediation:remediated;
+ 	plays mitigation:mitigated,
+ 	plays remediation:remediated,
+ 	plays have:had;
+
+ 	#Embedded Relations
+ 	# Creation
+ 	# Object Marking
 
 ##### 5 STIX™ Relationship Objects #####
 
@@ -708,6 +856,10 @@ stix-core-relationship sub relation, # in conceptMapper
 		statis-analysis sub analysis;
 		dynamic-analysis sub analysis;
 
+	impersonate sub stix-core-relationship,
+		relates impersonating,
+		relates impersonated;
+
 # 3.7 Common Relationships 
 # These are relation types that are shared by SDOs and SCOs
 
@@ -814,6 +966,22 @@ stix-attribute-string sub attribute, value string, abstract,
 	infrastructure-type sub stix-attribute-string;
 	context sub stix-attribute-string;
 
+	product sub stix-attribute-string;
+	version sub stix-attribute-string;
+	configuration-version sub stix-attribute-string;
+	module sub stix-attribute-string;
+	analysis-engine-version sub stix-attribute-string;
+	analysis-definition-version sub stix-attribute-string;
+	result-name sub stix-attribute-string;
+	result sub stix-attribute-string;
+
+	abstract-note sub stix-attribute-string;
+	content sub stix-attribute-string;
+	report-type sub stix-attribute-string;
+	explanation sub stix-attribute-string;
+	authors sub stix-attribute-string;
+	opinion-enum sub stix-attribute-string;
+
 stix-attribute-long sub attribute, value long, abstract,
 	plays granular-marking:marked;		
 
@@ -832,6 +1000,12 @@ stix-attribute-boolean sub attribute, value boolean, abstract,
 	plays granular-marking:marked;
 	
 	is-family sub stix-attribute-boolean;
+
+stix-attribute-timestamp sub attribute, value datetime, abstract;
+	submitted sub stix-attribute-timestamp;
+	analysis-started sub stix-attribute-timestamp;
+	analysis-ended sub stix-attribute-timestamp;
+	published sub stix-attribute-timestamp;
 
 custom-attribute sub attribute, value string, 
 	owns attribute-type; 
