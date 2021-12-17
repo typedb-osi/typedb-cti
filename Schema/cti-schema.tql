@@ -891,7 +891,6 @@ stix-attribute-string sub attribute, value string, abstract,
 	object-marking-refs sub stix-attribute-string;
 	created sub stix-attribute-string;
 	modified sub stix-attribute-string;
-	revoked sub stix-attribute-string;
 	labels sub stix-attribute-string;
 	confidence sub stix-attribute-string;
 	langs sub stix-attribute-string;
@@ -998,17 +997,22 @@ stix-attribute-double sub attribute, value double, abstract,
 
 stix-attribute-boolean sub attribute, value boolean, abstract, 
 	plays granular-marking:marked;
-	
+
+	revoked sub stix-attribute-boolean;
 	is-family sub stix-attribute-boolean;
 
-stix-attribute-timestamp sub attribute, value datetime, abstract;
+stix-attribute-timestamp sub attribute, value datetime, abstract, 
+	plays granular-marking:marked;
+
 	submitted sub stix-attribute-timestamp;
 	analysis-started sub stix-attribute-timestamp;
 	analysis-ended sub stix-attribute-timestamp;
 	published sub stix-attribute-timestamp;
 
 custom-attribute sub attribute, value string, 
+	plays granular-marking:marked,
 	owns attribute-type; 
+	
 attribute-type sub attribute, value string;
 
 ##### Rules #####

@@ -3,7 +3,7 @@ from typedb.client import *
 from Migrators.Helpers.ConceptMapper import entity_mapper, relationship_mapper, attribute_map
 from os import listdir
 from os.path import join, isfile
-from Migrators.Helpers.batchLoader import write_batch
+from Migrators.Helpers.BatchLoader import write_batch
 from multiprocessing.dummy import Pool as ThreadPool
 from functools import partial
 
@@ -125,18 +125,18 @@ def attributeBuilder(obj, query):
 	list_of_attributes = []
 	for k, v in attribute_map().items():
 		try: 
-			list_of_attributes.append({'type': v['type'], 'type_data':obj[k].replace("'", ""), "value": v['value']}) 
+			list_of_attributes.append({'type': v['type'], 'type_data':obj[k], "value": v['value']})
 			for attr in list_of_attributes: 
 				if attr['value'] == "string":
-					attribute_query = " has " + attr['type'] + " '" + attr['type_data'] + "'" + ","
+					attribute_query = " has " + attr['type'] + " '" + attr['type_data'].replace("'", "") + "'" + ","
 				if attr['value'] == 'boolean':
 					attribute_query = " has " + attr['type'] + " " + str(attr['type_data']).lower() + ","
 				if attr['value'] == "list":
 					attribute_query = ""
-					for l in attr['type_data']: # TODO: Check if this is inserting 
+					for l in attr['type_data']: 
 						attribute_query = attribute_query + " has " + attr['type'] + " '" + l + "'" + ","
 			query = query + attribute_query
-		except Exception:
+		except KeyError:
 			pass
 	return query
 
