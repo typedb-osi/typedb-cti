@@ -117,4 +117,4 @@ However, that `use` relation (between the `intrusion-set` and the `attack-patter
 ![TypeDB Studio](Images/query_5.png)
 
 ## Community
-If you need any technical support or want to engage with this community, you can join the *#cti* channel in the [TypeDB Discord server](https://vaticle.com/typedb). 
+If you need any technical support or want to engage with this community, you can join the *#typedb-data-cti* channel in the [TypeDB Discord server](https://vaticle.com/typedb). 

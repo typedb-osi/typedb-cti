@@ -303,6 +303,10 @@ def insertExternalReferences(file, uri, batch_size, num_threads):
 
 
 def migrate_mitre(uri, batch_size, num_threads):
+	print('.....')
+	print('Inserting data...')
+	print('.....')
+
 	data_folder = 'Data/'
 	file = openFiles(data_folder)
 	created_by = createdByRefs(file)
@@ -315,3 +319,7 @@ def migrate_mitre(uri, batch_size, num_threads):
 	insertKillChainPhases(file, uri, batch_size, num_threads)
 	insertCustomAttributes(file, uri, batch_size, num_threads)
 	insertExternalReferences(file, uri, batch_size, num_threads)
+
+	print('.....')
+	print('Successfully inserted data!')
+	print('.....')
