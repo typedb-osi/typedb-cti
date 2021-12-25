@@ -39,7 +39,8 @@ stix-object sub entity,
 				plays indication:indicated;
 
 			stix-cyber-observable-object sub stix-core-object,
-				owns defanged, 
+				owns defanged,
+				plays analysis:captured-sco,
 				plays reference:referred;
 
 	stix-meta-object sub stix-object, 
@@ -67,10 +68,18 @@ external-referencing sub relation,
 	relates referencing;
 
 # 2.7 Hash
-hash sub stix-attribute-string, abstract; 
-	hash-general sub hash;
+hash sub entity, 
+	owns hash-value, 
+	plays hash-association:contained-hash; 
+
 	md5 sub hash;
-	sha-1 sub hash;
+	sha-1 sub hash; 
+	sha-256 sub hash;
+	sha-512 sub hash; 
+	sha3-256 sub hash; 
+	sha3-512 sub hash;
+	ssdeep sub hash; 
+	tlsh sub hash; 
 
 # 2.11 Kill Chane Phase
 kill-chain-usage sub stix-core-relationship,
@@ -364,11 +373,8 @@ malware sub stix-domain-object,
     
     # Relations defined as properties in STIX
 	plays kill-chain-usage:kill-chain-used,
-    owns operating-system-refs, # Needs to be a relation to software
-    # The value of this property MUST be the identifier for a SCO software object. 
-    owns sample-refs, # TODO Needs to be a relation to file or artifact
-    # The sample_refs property specifies a list of identifiers of the SCO file 
-    # or artifact objects associated with this malware instance(s) or family.
+	plays execution:executed-malware, # operating_system_refs
+    plays malware-sample:associated-to, # ssample_refs
 
     # Common Relations
     plays authorship:authoring,
@@ -421,11 +427,9 @@ malware-analysis sub stix-domain-object,
 	owns result,
 
 	# Relations defined as properties in STIX
-	# host-vm, TODO - relation - The value of this property MUST be the identifier for a SCO software object.
-	# operating-system, TODO - relation - The value of this property MUST be the identifier for a SCO software object.
-	# installed-software, TODO - relation - The value of this property MUST be the identifier for a SCO software object.
-	# analysis-sco TODO - relation - This property contains the references to the STIX Cyber-observable Objects that were captured during the analysis process.
-	# sample-ref TODO - relation - This property contains the reference to the SCO file, network traffic or artifact object that this malware analysis was performed against.
+	# host_vm_ref, _operating_system_ref, instsalled_software_ref, analysis-sco are all defined as 
+	# playing roles in the analysis relation
+	plays malware-analysis-sample:associated-to, # sample_refs
 
 	# Common Relations
 	plays characterise:characterising,
@@ -605,6 +609,8 @@ vulnerability sub stix-domain-object,
 
 ##### 5 STIX™ Relationship Objects #####
 
+# 5.1 Specification-Defined Relatinoships Summary
+
 # 5.2 Sighting
 sighting sub stix-core-relationship, 
 	owns first-seen,
@@ -618,6 +624,9 @@ sighting sub stix-core-relationship,
 ##### 6 STIX™ Cyber-observable Objects ##### 
 
 # 6.1 Artifact Object
+artifact sub stix-cyber-observable-object,
+	plays malware-analysis-sample:sco-sample,
+	plays malware-sample:sco-sample;
 
 # 6.2 Autonomous System Object
 
@@ -634,11 +643,24 @@ domain-name sub stix-cyber-observable-object,
 # 6.7 File
 file sub stix-cyber-observable-object,
 	owns size,
-	owns name, 
-	owns hash-general,
-	owns md5,
-	owns sha-1,
+	# owns extensions, # defined in stix core object
+	plays hash-association:associated-file, # hash
+	owns size,
+	owns name,
+	owns name-enc,
+	owns magic-number-hex,
+	owns mime-type,
+	owns ctime,
+	owns mtime,
+	owns atime, 
 
+	# TODO
+	# parent_directory-ref # -> directory
+	# contains_refs # -> other Cyber observable objects
+	# content_ref # -> artifact
+
+	plays malware-analysis-sample:sco-sample,
+	plays malware-sample:sco-sample,
 	plays download:downloaded;
 
 # 6.8 IPv4 Address
@@ -653,11 +675,18 @@ ipv5-address sub stix-cyber-observable-object,
 
 # 6.11 Mutex
 
-# 6.12 Network Traffice
+# 6.12 Network Traffic
+network-traffic sub stix-cyber-observable-object,
+	plays malware-analysis-sample:sco-sample;
 
 # 6.13 Process 
 
 # 6.14 Software
+software sub stix-cyber-observable-object,
+	plays analysis:host-vm, 
+	plays analysis:operating-system,
+	plays analysis:installed-software,
+	plays execution:operating-system;
 
 # 6.15 URL
 url-object sub stix-cyber-observable-object,
@@ -706,13 +735,14 @@ data-marking sub relation,
 
 	object-marking sub data-marking; 
 
-	granular-marking sub data-marking; 
+	granular-marking sub data-marking;
 
 # 7.3 Extension Definition
 
+
 ##### RELATIONSHIPS - APENDIX B #####
 
-stix-core-relationship sub relation, # in conceptMapper
+stix-core-relationship sub relation,
 	# Required
 	owns spec-version,
 	owns stix-id, 
@@ -850,7 +880,12 @@ stix-core-relationship sub relation, # in conceptMapper
 
 	analysis sub stix-core-relationship,
 		relates analysing,
-		relates analysed;
+		relates analysed,
+
+		relates host-vm, 
+		relates operating-system,
+		relates installed-software,
+		relates captured-sco;
 
 		av-analysis sub analysis;
 		statis-analysis sub analysis;
@@ -859,6 +894,27 @@ stix-core-relationship sub relation, # in conceptMapper
 	impersonate sub stix-core-relationship,
 		relates impersonating,
 		relates impersonated;
+
+# Relations that are defined as properties in STIX
+sample sub relation, 
+	relates associated-to, 
+	relates sco-sample;
+
+	malware-sample sub sample;
+	malware-analysis-sample sub sample;
+
+execution sub relation,
+	relates host-vm,
+	relates operating-system, 
+	relates executed-malware;
+
+hash-association sub relation,
+	relates contained-hash,
+	relates associated-file;
+
+os-host sub relation,
+	relates installed-software,
+	relates os-system;
 
 # 3.7 Common Relationships 
 # These are relation types that are shared by SDOs and SCOs
@@ -980,6 +1036,11 @@ stix-attribute-string sub attribute, value string, abstract,
 	explanation sub stix-attribute-string;
 	authors sub stix-attribute-string;
 	opinion-enum sub stix-attribute-string;
+	hash-value sub stix-attribute-string;
+	hash-general sub stix-attribute-string;
+	magic-number-hex sub stix-attribute-string;
+	name-enc sub stix-attribute-string;
+	mime-type sub stix-attribute-string;
 
 stix-attribute-long sub attribute, value long, abstract,
 	plays granular-marking:marked;		
@@ -1004,15 +1065,18 @@ stix-attribute-boolean sub attribute, value boolean, abstract,
 stix-attribute-timestamp sub attribute, value datetime, abstract, 
 	plays granular-marking:marked;
 
+	atime sub stix-attribute-timestamp;
+	ctime sub stix-attribute-timestamp;
 	submitted sub stix-attribute-timestamp;
 	analysis-started sub stix-attribute-timestamp;
 	analysis-ended sub stix-attribute-timestamp;
 	published sub stix-attribute-timestamp;
+	mtime sub stix-attribute-timestamp;
 
 custom-attribute sub attribute, value string, 
 	plays granular-marking:marked,
 	owns attribute-type; 
-	
+
 attribute-type sub attribute, value string;
 
 ##### Rules #####
@@ -1108,4 +1172,3 @@ when {
 } then {
 	(mitigating: $course-of-action, mitigated: $intrusion-set) isa inferred-mitigation;
 };
-
