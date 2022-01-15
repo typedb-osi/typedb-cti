@@ -1,5 +1,6 @@
 
 
+
 # TypeDB Data - CTI
 
 **[Overview](#overview)** | **[STIX](#stix)** | **[MITRE ATT&CK Data](#mitre-attck-stix-data)** | **[Installation](#installation)** | **[Examples](#examples)**
@@ -10,12 +11,15 @@
 [![Stack Overflow](https://img.shields.io/badge/stackoverflow-typeql-3dce8c.svg)](https://stackoverflow.com/questions/tagged/typeql)
 
 ## Overview
-TypeDB Data - CTI is an open source knowledge graph for organisations to store and manage their cyber threat intelligence knowledge. It has been created to enable CTI professionals to bring together their disparate CTI information into one knowledge graph and find new insights about cyber threats.
+TypeDB Data - CTI is an open source knowledge graph for organisations to store and manage their cyber threat intelligence (CTI) knowledge. It enables CTI professionals to bring together their disparate CTI information into one knowledge graph and find new insights about cyber threats.
 
-This repository provides a schema that is based on [STIX2](https://oasis-open.github.io/cti-documentation/), and contains [MITRE ATT&CK](https://github.com/mitre-attack/attack-stix-data) as an example dataset to start exploring this CTI knowledge graph. In the future, we plan to incorporate other CTI standards and data sources, in order to create an industry-wide data specification in TypeQL that can be used to ingest any type of CTI data. 
+The benefits of using TypeDB for CTI: 
+1. TypeDB enables data to be modelled based on logical and object-oriented principles. This makes it easy to create complex schemas and ingest disparate and heterogeneous networks of CTI data, through concepts such as type hierarchies, nested relations and n-ary relations.
+2. TypeDB's ability to perform logical inference during query runtime enables the discovery of new insights from existing CTI data — for example, inferred transitive relations that indicate the attribution of a particular attack pattern to a state-owned entity. 
 
 ![TypeDB Studio](Images/query_0.png)
 
+This repository provides a schema that is based on [STIX2](https://oasis-open.github.io/cti-documentation/), and contains [MITRE ATT&CK](https://github.com/mitre-attack/attack-stix-data) as an example dataset to start exploring this CTI knowledge graph. In the future, we plan to incorporate other CTI standards and data sources, in order to create an industry-wide data specification in TypeQL that can be used to ingest any type of CTI data. 
 
 ## STIX
 
@@ -70,34 +74,7 @@ This will create a new database called `cti`, insert the schema file and ingest 
 
 Once the data is loaded, these queries can be used to explore the data. 
 
-1. What are the attack patterns used by the malware "FakeSpy"?
-```
-match 
-$malware isa malware, has name "FakeSpy";
-$attack-pattern isa attack-pattern, has name $apn;
-$use (used-by: $malware, used: $attack-pattern) isa use; 
-```
-
-Running this query will return 15 different `attack-patterns`, all of which have a relation of type `use` to the `malware`. This is how it is visualised in TypeDB Studio: 
-
-![TypeDB Studio](Images/query_1.png)
-
-2. What attack patterns are used by the malwares that were used by the intrusion set APT28?
-```
-match 
-$intrusion isa intrusion-set, has name "APT28"; 
-$malware isa malware, has name $n1; 
-$attack-pattern isa attack-pattern, has name $n2;
-$rel1 (used-by: $intrusion, used: $malware) isa use; 
-$rel2 (used-by: $malware, used: $attack-pattern) isa use; 
-```
-This query asks for the entity type `intrusion-set` with name `APT28`. It then looks for all the `malwares` that are connected to this `intrusion-set` through the relation `use`. The query also fetches all the `attack-patterns` that are connected through the relation `use` to these `malwares`.
-
-The full answer returns 207 results. Two of those results can be visualised in TypeDB Studio like this: 
-
-![TypeDB Studio](Images/query_2.png)
-
-3. Does the "Restrict File and Directory Permissions" course of action mitigate the "BlackTech" intrusion set, and if so, how?
+1. Does the "Restrict File and Directory Permissions" course of action mitigate the "BlackTech" intrusion set, and if so, how?
 ```
 match
 $course isa course-of-action, has name "Restrict File and Directory Permissions";
@@ -115,6 +92,34 @@ But the `inferred-mitigation` relation does not actually exist in the database, 
 However, that `use` relation (between the `intrusion-set` and the `attack-pattern`) is also inferred. Double clicking on it shows that the `attack-pattern` is not directly used by the `intrusion-set`. Instead, it is used by a `malware` called `Waterbear`, which is used by the `intrusion-set`.
 
 ![TypeDB Studio](Images/query_5.png)
+
+
+2. What attack patterns are used by the malwares that were used by the intrusion set APT28?
+```
+match 
+$intrusion isa intrusion-set, has name "APT28"; 
+$malware isa malware, has name $n1; 
+$attack-pattern isa attack-pattern, has name $n2;
+$rel1 (used-by: $intrusion, used: $malware) isa use; 
+$rel2 (used-by: $malware, used: $attack-pattern) isa use; 
+```
+This query asks for the entity type `intrusion-set` with name `APT28`. It then looks for all the `malwares` that are connected to this `intrusion-set` through the relation `use`. The query also fetches all the `attack-patterns` that are connected through the relation `use` to these `malwares`.
+
+The full answer returns 207 results. Two of those results can be visualised in TypeDB Studio like this: 
+
+![TypeDB Studio](Images/query_2.png)
+
+3. What are the attack patterns used by the malware "FakeSpy"?
+```
+match 
+$malware isa malware, has name "FakeSpy";
+$attack-pattern isa attack-pattern, has name $apn;
+$use (used-by: $malware, used: $attack-pattern) isa use; 
+```
+
+Running this query will return 15 different `attack-patterns`, all of which have a relation of type `use` to the `malware`. This is how it is visualised in TypeDB Studio: 
+
+![TypeDB Studio](Images/query_1.png)
 
 ## Community
 If you need any technical support or want to engage with this community, you can join the *#typedb-data-cti* channel in the [TypeDB Discord server](https://vaticle.com/typedb). 
