@@ -1663,6 +1663,7 @@ when {
 } then {
 	(participating-kill-chain-phase: $kill-chain-1, participating-kill-chain-phase: $kill-chain-2) isa kill-chain;
 };
+
 rule part-of-one-kill-chain-attribute-name:
 when {
 	$kill-chain-1 isa kill-chain-phase, has kill-chain-name $x;
@@ -1710,7 +1711,7 @@ when {
 # If an attack pattern, for example "spear fishing", has been attributed to a specific identity named "Bravo",
 # and if that attack pattern is targetting a location, for example New York, 
 # we can infer that the identiy "Bravo" is targeting the location New York
-rule attribution-when-targetting:
+rule attribution-when-targeting:
 when {
 	(attributing: $x, attributed: $y) isa attribution; 
 	(targetting: $y, targetted: $z) isa target; 

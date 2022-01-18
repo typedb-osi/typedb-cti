@@ -6,7 +6,7 @@ def initialise_database(client, database, force=False):
         if force:
             client.databases().get(database).delete()
         else:
-            raise ValueError("Database already exists")
+            raise ValueError(f"Database '{database}' already exists")
     client.databases().create(database)
     session = client.session(database, SessionType.SCHEMA)
     print('.....')

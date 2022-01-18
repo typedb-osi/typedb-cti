@@ -17,7 +17,7 @@ The benefits of using TypeDB for CTI:
 1. TypeDB enables data to be modelled based on logical and object-oriented principles. This makes it easy to create complex schemas and ingest disparate and heterogeneous networks of CTI data, through concepts such as type hierarchies, nested relations and n-ary relations.
 2. TypeDB's ability to perform logical inference during query runtime enables the discovery of new insights from existing CTI data — for example, inferred transitive relations that indicate the attribution of a particular attack pattern to a state-owned entity. 
 
-![TypeDB Studio](Images/query_0.png)
+![TypeDB Studio](images/query_0.png)
 
 This repository provides a schema that is based on [STIX2](https://oasis-open.github.io/cti-documentation/), and contains [MITRE ATT&CK](https://github.com/mitre-attack/attack-stix-data) as an example dataset to start exploring this CTI knowledge graph. In the future, we plan to incorporate other CTI standards and data sources, in order to create an industry-wide data specification in TypeQL that can be used to ingest any type of CTI data. 
 
@@ -43,7 +43,7 @@ TypeDB Data - CTI includes a migrator to load MITRE ATT&CK STIX and serves as an
 
 ## Installation 
 
-**Prerequesites**: Python >3.6,  [TypeDB Core 2.5.0](https://vaticle.com/download#core),  [TypeDB Python Client API 2.5.0](https://docs.vaticle.com/docs/client-api/python),  [TypeDB Studio 2.4.0-alpha-4](https://vaticle.com/download#typedb-studio).
+**Prerequesites**: Python >3.6,  [TypeDB Core 2.6.1](https://vaticle.com/download#core),  [TypeDB Python Client API 2.6.0](https://docs.vaticle.com/docs/client-api/python),  [TypeDB Studio 2.4.0-alpha-4](https://vaticle.com/download#typedb-studio).
 
 Clone this repo:
 
@@ -83,15 +83,15 @@ $mit (mitigating: $course, mitigated: $in) isa mitigation;
 ```
 This query returns a relation of type `inferred-mitigation` between the two entities: 
  
-![TypeDB Studio](Images/query_3.png)
+![TypeDB Studio](images/query_3.png)
 
 But the `inferred-mitigation` relation does not actually exist in the database, it was inferred at query runtime by TypeDB's reasoner. By double clicking on the inferred relation, the explanation shows that the `course-of-action` actually mitigates an `attack-pattern` with the name `Indicator Blocking`, which has a `use` relation with the `intrusion-set`.
 
-![TypeDB Studio](Images/query_4.png)
+![TypeDB Studio](images/query_4.png)
 
 However, that `use` relation (between the `intrusion-set` and the `attack-pattern`) is also inferred. Double clicking on it shows that the `attack-pattern` is not directly used by the `intrusion-set`. Instead, it is used by a `malware` called `Waterbear`, which is used by the `intrusion-set`.
 
-![TypeDB Studio](Images/query_5.png)
+![TypeDB Studio](images/query_5.png)
 
 
 2. What attack patterns are used by the malwares that were used by the intrusion set APT28?
@@ -107,7 +107,7 @@ This query asks for the entity type `intrusion-set` with name `APT28`. It then l
 
 The full answer returns 207 results. Two of those results can be visualised in TypeDB Studio like this: 
 
-![TypeDB Studio](Images/query_2.png)
+![TypeDB Studio](images/query_2.png)
 
 3. What are the attack patterns used by the malware "FakeSpy"?
 ```
@@ -119,7 +119,7 @@ $use (used-by: $malware, used: $attack-pattern) isa use;
 
 Running this query will return 15 different `attack-patterns`, all of which have a relation of type `use` to the `malware`. This is how it is visualised in TypeDB Studio: 
 
-![TypeDB Studio](Images/query_1.png)
+![TypeDB Studio](images/query_1.png)
 
 ## Community
 If you need any technical support or want to engage with this community, you can join the *#typedb-data-cti* channel in the [TypeDB Discord server](https://vaticle.com/typedb). 
