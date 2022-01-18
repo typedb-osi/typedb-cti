@@ -6,8 +6,7 @@ from os import listdir
 from typedb.client import *
 
 from migrators.helpers.BatchLoader import write_batch
-from migrators.mitre_attack.query_generators import queries_created_by_ref, createMarkings, createEntitiesQuery, \
-    createRelationQueries, insertKillChainPhases, insertCustomAttributes, insertExternalReferences
+from migrators.mitre_attack.query_generators import InsertQueriesGenerator
 
 
 def read_objects_json(data_folder):
@@ -23,11 +22,11 @@ def read_objects_json(data_folder):
     return data
 
 
-def insert_queries(queries, uri, batch_size, num_threads):
+def insert_queries(database, queries, uri, batch_size, num_threads):
     batch = []
     batches = []
     client = TypeDB.core_client(uri)
-    with client.session("cti", SessionType.DATA) as session:
+    with client.session(database, SessionType.DATA) as session:
         with session.transaction(TransactionType.WRITE) as tx:
             for q in queries:
                 batch.append(q)
@@ -42,23 +41,24 @@ def insert_queries(queries, uri, batch_size, num_threads):
             pool.join()
 
 
-def migrate_mitre(uri, batch_size, num_threads):
+def migrate_mitre(uri, database, batch_size, num_threads):
     print('.....')
     print('Inserting data...')
     print('.....')
 
     data_folder = 'data/'
     json_objects = read_objects_json(data_folder)
-    created_by = queries_created_by_ref(json_objects)
-    insert_queries(created_by, uri, batch_size, num_threads)
-    markings = createMarkings(json_objects)
-    insert_queries(markings, uri, batch_size, num_threads)
-    createEntitiesQuery(json_objects, uri, batch_size, num_threads)
-    relations = createRelationQueries(json_objects)
-    insert_queries(relations, uri, batch_size, num_threads)
-    insertKillChainPhases(json_objects, uri, batch_size, num_threads)
-    insertCustomAttributes(json_objects, uri, batch_size, num_threads)
-    insertExternalReferences(json_objects, uri, batch_size, num_threads)
+    queries_generator = InsertQueriesGenerator(json_objects)
+    created_by = queries_generator.created_by_refs()
+    insert_queries(database, created_by, uri, batch_size, num_threads)
+    # markings = createMarkings(json_objects)
+    # insert_queries(markings, uri, batch_size, num_threads)
+    # createEntitiesQuery(json_objects, uri, batch_size, num_threads)
+    # relations = createRelationQueries(json_objects)
+    # insert_queries(relations, uri, batch_size, num_threads)
+    # insertKillChainPhases(json_objects, uri, batch_size, num_threads)
+    # insertCustomAttributes(json_objects, uri, batch_size, num_threads)
+    # insertExternalReferences(json_objects, uri, batch_size, num_threads)
 
     print('.....')
     print('Successfully inserted data!')
