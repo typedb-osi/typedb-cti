@@ -17,6 +17,7 @@ start = timer()
 initialise_database(uri, database, True)  # TODO don't leave on force = True!!
 migrator = MitreMigrator(uri, database, batch_size, num_threads, data_path="data/")
 migrator.migrate()
+migrator.close()
 end = timer()
 time_in_sec = end - start
 print(f"Elapsed time: {time_in_sec} seconds.")

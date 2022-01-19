@@ -1,8 +1,8 @@
 import json
 import logging
+import os
 from functools import partial
 from multiprocessing.dummy import Pool as ThreadPool
-from os import listdir
 from timeit import default_timer as timer
 
 from typedb.client import *
@@ -35,13 +35,16 @@ class TypeDBInserter:
             pool.close()
             pool.join()
         end = timer()
-        logging.debug(f"Executed '{len(queries)}' inserts in {end - start} seconds")
+        logging.info(f"Executed '{len(queries)}' inserts in {end - start} seconds")
 
     def _insert_query_batch(self, session, batch):
         with session.transaction(TransactionType.WRITE) as tx:
             for query in batch:
                 tx.query().insert(query)
             tx.commit()
+
+    def close(self):
+        self.client.close()
 
 
 class MitreMigrator:
@@ -66,8 +69,8 @@ class MitreMigrator:
 
     def _read_mitre_objects_json(self):
         file_paths = []
-        for f in listdir(self.data_path):
-            file_paths.append(self.data_path + f)
+        for f in os.listdir(self.data_path):
+            file_paths.append(os.path.join(self.data_path, f))
 
         data = []
         for file in file_paths:
@@ -100,3 +103,6 @@ class MitreMigrator:
         # We must insert external references before relations to them
         self.inserter.insert(external_references["external_references"])
         self.inserter.insert(external_references["external_reference_relations"])
+
+    def close(self):
+        self.inserter.close()
