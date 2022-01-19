@@ -1,11 +1,11 @@
 import json
+import logging
 from functools import partial
 from multiprocessing.dummy import Pool as ThreadPool
 from os import listdir
 
 from typedb.client import *
 
-from migrators.helpers.BatchLoader import write_batch
 from migrators.mitre_attack.query_generators import InsertQueriesGenerator
 
 
@@ -45,6 +45,7 @@ class TypeDBInserter:
             pool.map(partial(self.write_batch, session), batches)
             pool.close()
             pool.join()
+        logging.debug(f"Executed '{len(queries)}' inserts")
 
     def write_batch(self, session, batch):
         with session.transaction(TransactionType.WRITE) as tx:
@@ -56,7 +57,7 @@ class TypeDBInserter:
 def migrate_mitre_objects(batch_inserter, queries_generator):
     referenced = queries_generator.mitre_objects_referenced()
     batch_inserter.insert(referenced["queries"])
-    markings = queries_generator.mitre_objects_markings_definition()
+    markings = queries_generator.statement_markings()
     batch_inserter.insert(markings["queries"])
     mitre_ids_processed = referenced["processed_ids"].union(markings["processed_ids"])
     mitre_and_markings = queries_generator.mitre_objects_and_marking_relations(exclude_ids=mitre_ids_processed)

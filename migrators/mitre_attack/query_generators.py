@@ -34,15 +34,15 @@ class InsertQueriesGenerator:
             "processed_ids": referenced_ids
         }
 
-    def mitre_objects_markings_definition(self):
+    def statement_markings(self):
         queries = set()
         processed_ids = set()
         for mitre_object in self.mitre_objects_json:
             if mitre_object['type'] == "marking-definition" and mitre_object['definition_type'] == "statement":
-                id = sanitise_string(mitre_object['id'])
-                processed_ids.add(id)
+                mitre_id = sanitise_string(mitre_object['id'])
+                processed_ids.add(mitre_id)
                 queries.add(f"insert $x isa statement-marking, "
-                            f"has stix-id '{id}', "
+                            f"has stix-id '{mitre_id}', "
                             f"has statement '{sanitise_string(mitre_object['definition']['statement'])}', "
                             f"has created '{sanitise_string(mitre_object['created'])}',"
                             f" has spec-version '{sanitise_string(mitre_object['spec_version'])}';")
@@ -53,7 +53,7 @@ class InsertQueriesGenerator:
         }
 
     def mitre_objects_and_marking_relations(self, exclude_ids):
-        queries = set()
+        mitre_entity_queries = set()
         mitre_objects_with_marking_refs = []
 
         for mitre_object in self.mitre_objects_json:
@@ -79,10 +79,22 @@ class InsertQueriesGenerator:
                         # we expect creating stix objects to be inserted before
                         match_creator = f"$creator isa thing, has stix-id '{mitre_object['created_by_ref']}';"
                         query = "match " + match_creator + query + insert_created_by_refs_relation
-                    queries.add(query)
+                    mitre_entity_queries.add(query)
 
         marking_relations_queries = self.markings_relations(mitre_objects_with_marking_refs)
-        return queries.union(marking_relations_queries)
+        queries = mitre_entity_queries.union(marking_relations_queries)
+        logging.debug(f"Generated {len(queries)} insert queries for mitre entities and marking relations")
+        return queries
+
+    def markings_relations(self, objects_with_marking_refs):
+        queries = set()
+        for mitre_object in objects_with_marking_refs:
+            match_marked_object = f"$x isa thing, has stix-id '{mitre_object['id']}'; "
+            match_object_marking = f"$marking isa marking-definition, has stix-id '{mitre_object['object_marking_refs'][0]}'; "
+            marking_rel = "(marked: $x, marking: $marking) isa object-marking;"
+            query = "match " + match_marked_object + match_object_marking + "insert " + marking_rel
+            queries.add(query)
+        return queries
 
     def attributes(self, mitre_object):
         query = ""
@@ -106,16 +118,6 @@ class InsertQueriesGenerator:
                     attribute_query = ""
                 query += attribute_query
         return query[:-1]
-
-    def markings_relations(self, objects_with_marking_refs):
-        queries = set()
-        for mitre_object in objects_with_marking_refs:
-            match_marked_object = f"$x isa thing, has stix-id '{mitre_object['id']}'; "
-            match_object_marking = f"$marking isa marking-definition, has stix-id '{mitre_object['object_marking_refs'][0]}'; "
-            marking_rel = "(marked: $x, marking: $marking) isa object-marking;"
-            query = "match " + match_marked_object + match_object_marking + "insert " + marking_rel
-            queries.add(query)
-        return queries
 
     #
     # def createRelationQueries(file):
