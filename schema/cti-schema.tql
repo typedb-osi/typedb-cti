@@ -2,7 +2,7 @@ define
 stix-object sub entity, 
 	# Required
 	owns stix-type,
-	owns stix-id,
+	owns stix-id, # TODO should be a key
 	owns custom-attribute,
 	plays stix-core-relationship:active-role,
 	plays stix-core-relationship:passive-role;

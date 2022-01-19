@@ -1,4 +1,4 @@
-def entity_mapper(entity: str):
+def mitre_object_entity_definitions(mitre_type: str):
     mapper = {
         "attack-pattern": {"type": "attack-pattern", "custom-type": False, 'ignore': False},
         "tool": {"type": "tool", "custom-type": False, 'ignore': False},
@@ -9,10 +9,10 @@ def entity_mapper(entity: str):
         "marking_definition": {"type": "marking-definition", "custom-type": False, 'ignore': True}
     }
 
-    mapping = mapper.get(entity, {})
+    mapping = mapper.get(mitre_type, {})
 
     if mapping == {}:
-        mapping = {"type": str(entity), 'custom-type': True, 'ignore': False}
+        mapping = {"type": str(mitre_type), 'custom-type': True, 'ignore': False}
     if mapping['type'] == "marking-definition":
         mapping['ignore'] = True
 
@@ -41,7 +41,7 @@ def relationship_mapper(relationship: str):
     return mapping
 
 
-def attribute_definitions():
+def mitre_object_attribute_definitions():
     mapper = {
         "id": {"type": "stix-id", "value": "string"},
         "created": {"type": "created", "value": "string"},

@@ -1,6 +1,10 @@
 import logging
 
-from migrators.mitre_attack.concept_mapper import entity_mapper, attribute_definitions
+from migrators.mitre_attack.concept_mapper import mitre_object_entity_definitions, mitre_object_attribute_definitions
+
+
+def sanitise_string(string_value):
+    return string_value.replace("'", "")
 
 
 class InsertQueriesGenerator:
@@ -8,127 +12,110 @@ class InsertQueriesGenerator:
     def __init__(self, mitre_objects_json):
         self.mitre_objects_json = mitre_objects_json
 
-    def created_by_refs(self):
-        created_by_refs = set()
+    def mitre_objects_referenced(self):
+        referenced_ids = set()
         for mitre_object in self.mitre_objects_json:
             if 'created_by_ref' in mitre_object:
-                created_by_refs.add(mitre_object['created_by_ref'])
+                referenced_ids.add(mitre_object['created_by_ref'])
 
         queries = set()
         for mitre_object in self.mitre_objects_json:
-            for referenced_id in created_by_refs:
+            for referenced_id in referenced_ids:
                 if mitre_object['id'] == referenced_id:
-                    entity_type = entity_mapper(mitre_object['type'])['type']
+                    entity_type = mitre_object_entity_definitions(mitre_object['type'])['type']
                     if entity_type == "identity":
                         entity_type = mitre_object['identity_class']
-                    query = "$x isa " + entity_type + ","
-                    query += self.attribute_builder(mitre_object)
-                    query = "insert " + query[:-1] + ";"
+                    query = "$x isa " + entity_type + "," + self.attributes(mitre_object)
+                    query = "insert " + query + ";"
                     queries.add(query)
         logging.debug(f"Generated {len(queries)} insert queries for created_by_refs")
-        return queries
+        return {
+            "queries": queries,
+            "processed_ids": referenced_ids
+        }
 
-    def attribute_builder(self, mitre_object):
+    def mitre_objects_markings_definition(self):
+        queries = set()
+        processed_ids = set()
+        for mitre_object in self.mitre_objects_json:
+            if mitre_object['type'] == "marking-definition" and mitre_object['definition_type'] == "statement":
+                id = sanitise_string(mitre_object['id'])
+                processed_ids.add(id)
+                queries.add(f"insert $x isa statement-marking, "
+                            f"has stix-id '{id}', "
+                            f"has statement '{sanitise_string(mitre_object['definition']['statement'])}', "
+                            f"has created '{sanitise_string(mitre_object['created'])}',"
+                            f" has spec-version '{sanitise_string(mitre_object['spec_version'])}';")
+        logging.debug(f"Generated {len(queries)} insert queries for markings")
+        return {
+            "queries": queries,
+            "processed_ids": processed_ids
+        }
+
+    def mitre_objects_and_marking_relations(self, exclude_ids):
+        queries = set()
+        mitre_objects_with_marking_refs = []
+
+        for mitre_object in self.mitre_objects_json:
+            mitre_object_type = mitre_object['type']
+            if mitre_object_type != "relationship" and not mitre_object['id'] in exclude_ids:
+                stix_type = mitre_object_entity_definitions(mitre_object_type)
+                if not stix_type['ignore']:
+                    if 'object_marking_refs' in mitre_object and len(mitre_object['object_marking_refs']) > 0:
+                        mitre_objects_with_marking_refs.append(mitre_object)
+
+                    if stix_type['custom-type']:
+                        query = f"$mitre isa custom-object, has stix-type '{stix_type['type']}'"
+                    else:
+                        if mitre_object['type'] == "identity":
+                            ent_type = mitre_object['identity_class']
+                        else:
+                            ent_type = mitre_object['type']
+                        query = f"$mitre isa {ent_type}"
+
+                    query = "insert " + query + "," + self.attributes(mitre_object) + ";"
+                    if 'created_by_ref' in mitre_object:
+                        insert_created_by_refs_relation = "(created: $mitre, creator: $creator) isa creation;"
+                        # we expect creating stix objects to be inserted before
+                        match_creator = f"$creator isa thing, has stix-id '{mitre_object['created_by_ref']}';"
+                        query = "match " + match_creator + query + insert_created_by_refs_relation
+                    queries.add(query)
+
+        marking_relations_queries = self.markings_relations(mitre_objects_with_marking_refs)
+        return queries.union(marking_relations_queries)
+
+    def attributes(self, mitre_object):
         query = ""
-        for mitre_key, typeql_definition in attribute_definitions().items():
-            try:
+        for mitre_key, typeql_definition in mitre_object_attribute_definitions().items():
+            if mitre_key in mitre_object:
                 typeql_attr_type = typeql_definition['type']
                 mitre_value_type = typeql_definition['value']
                 mitre_value = mitre_object[mitre_key]
                 if mitre_value_type == "string":
-                    string_value = mitre_value.replace("'", "")
+                    string_value = sanitise_string(mitre_value.replace("'", ""))
                     attribute_query = f" has {typeql_attr_type} '{string_value}',"
-                elif mitre_value_type == 'boolean':
+                elif mitre_value_type == "boolean":
                     boolean_value = str(mitre_value).lower()
                     attribute_query = f" has {typeql_attr_type} {boolean_value},"
                 elif mitre_value_type == "list":
                     attribute_query = ""
-                    for l in mitre_value:
-                        # TODO do we have to assume this is a string? If so, we should do the same ' replacement
-                        attribute_query += f" has {typeql_attr_type} '{l}',"
+                    for value in mitre_value:
+                        attribute_query += f" has {typeql_attr_type} '{sanitise_string(value)}',"
                 else:
                     logging.info(f"Unrecognised mitre attribute value type: '{mitre_value_type}'")
                     attribute_query = ""
                 query += attribute_query
-            except KeyError:
-                logging.info(f"Key error loading '{mitre_key}' from {mitre_object}")
-        return query
-    #
-    # def createMarkings(file):
-    #     queries = []
-    #     for obj in file:
-    #         if obj['type'] == "marking-definition":
-    #             if obj['definition_type'] == "statement":
-    #                 query = "insert $x isa statement-marking, has stix-id '" + obj['id'] + "', has statement '" + \
-    #                         obj['definition']['statement'] + "', has created '" + obj[
-    #                             'created'] + "', has spec-version '" + \
-    #                         obj['spec_version'] + "';"
-    #                 queries.append(query)
-    #     return set(queries)
-    #
-    # def createEntitiesQuery(file, uri, batch_size, num_threads):
-    #     queries = []
-    #     entities = []
-    #     marking_relations = []
-    #
-    #     for obj in file:
-    #
-    #         if obj['type'] != "relationship" and obj['id'] != "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5":
-    #
-    #             stix_type = entity_mapper(obj['type'])
-    #
-    #             if stix_type['ignore'] == False:
-    #                 try:
-    #                     obj['object_marking_refs'][0]
-    #                     marking_relations.append(obj)
-    #                 except:
-    #                     pass
-    #
-    #                 if stix_type['custom-type'] == True:
-    #
-    #                     query = "$x isa custom-object, has stix-type '" + stix_type['type'] + "',"
-    #                     entities.append(stix_type['type'])
-    #
-    #                 else:
-    #
-    #                     if obj['type'] == "identity":
-    #                         ent_type = obj['identity_class']
-    #                     else:
-    #                         ent_type = obj['type']
-    #
-    #                     query = "$x isa " + ent_type + ","
-    #                     entities.append(stix_type['type'])
-    #
-    #                 query = attributeBuilder(obj, query)
-    #
-    #                 query = "insert " + query[:-1] + ";"
-    #                 try:
-    #                     created_by_refs_rel = "(created: $x, creator: $creator) isa creation;"
-    #                     created_by_refs_match = "$creator isa thing, has stix-id '" + obj['created_by_ref'] + "';"
-    #                     query = "match " + created_by_refs_match + query + created_by_refs_rel
-    #                 except Exception:
-    #                     pass
-    #
-    #                 queries.append(query)
-    #
-    #     queries = set(queries)
-    #     insertQueries(queries, uri, batch_size, num_threads)
-    #
-    #     createMarkingsRelations(marking_relations, uri, batch_size, num_threads)
-    #
-    #     return queries
-    #
-    # def createMarkingsRelations(marking_relations, uri, batch_size, num_threads):
-    #     queries = []
-    #     for o in marking_relations:
-    #         match_marked_object = "$x isa thing, has stix-id '" + o['id'] + "'; "
-    #         match_object_marking = "$marking isa marking-definition, has stix-id '" + o['object_marking_refs'][
-    #             0] + "'; "
-    #         insert_marking_rel = "(marked: $x, marking: $marking) isa object-marking;"
-    #         query = "match " + match_marked_object + match_object_marking + "insert " + insert_marking_rel
-    #         queries.append(query)
-    #     insertQueries(queries, uri, batch_size, num_threads)
-    #
+        return query[:-1]
+
+    def markings_relations(self, objects_with_marking_refs):
+        queries = set()
+        for mitre_object in objects_with_marking_refs:
+            match_marked_object = f"$x isa thing, has stix-id '{mitre_object['id']}'; "
+            match_object_marking = f"$marking isa marking-definition, has stix-id '{mitre_object['object_marking_refs'][0]}'; "
+            marking_rel = "(marked: $x, marking: $marking) isa object-marking;"
+            query = "match " + match_marked_object + match_object_marking + "insert " + marking_rel
+            queries.add(query)
+        return queries
 
     #
     # def createRelationQueries(file):
