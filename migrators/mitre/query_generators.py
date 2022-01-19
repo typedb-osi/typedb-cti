@@ -1,6 +1,6 @@
 import logging
 
-from migrators.mitre_attack.mitre_typedb_mapping import mitre_entity_to_typedb, mitre_attributes_to_typedb, \
+from migrators.mitre.mitre_typedb_mapping import mitre_entity_to_typedb, mitre_attributes_to_typedb, \
     mitre_relation_to_typedb
 
 

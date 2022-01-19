@@ -7,7 +7,7 @@ from timeit import default_timer as timer
 
 from typedb.client import *
 
-from migrators.mitre_attack.query_generators import MitreInsertGenerator
+from migrators.mitre.query_generators import MitreInsertGenerator
 
 
 class TypeDBInserter:

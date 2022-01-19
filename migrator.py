@@ -3,12 +3,12 @@ from timeit import default_timer as timer
 
 from typedb.client import *
 
-from migrators.mitre_attack.mitre_attack_migrator import MitreMigrator
+from migrators.mitre.mitre_attack_migrator import MitreMigrator
 from schema.initialise import initialise_database
 
 # TODO allow setting via CLI run options
 uri = "localhost:1729"
-database = "cti"
+database = "cti-new"
 batch_size = 50
 num_threads = 16
 logging.basicConfig(level=logging.DEBUG)
