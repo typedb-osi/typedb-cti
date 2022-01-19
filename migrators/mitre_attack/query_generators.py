@@ -1,13 +1,14 @@
 import logging
 
-from migrators.mitre_attack.concept_mapper import mitre_object_entity_definitions, mitre_object_attribute_definitions
+from migrators.mitre_attack.mitre_typedb_mapping import mitre_entity_to_typedb, mitre_attributes_to_typedb, \
+    mitre_relation_to_typedb
 
 
 def sanitise_string(string_value):
     return string_value.replace("'", "")
 
 
-class InsertQueriesGenerator:
+class MitreInsertGenerator:
 
     def __init__(self, mitre_objects_json):
         self.mitre_objects_json = mitre_objects_json
@@ -22,13 +23,13 @@ class InsertQueriesGenerator:
         for mitre_object in self.mitre_objects_json:
             for referenced_id in referenced_ids:
                 if mitre_object['id'] == referenced_id:
-                    entity_type = mitre_object_entity_definitions(mitre_object['type'])['type']
+                    entity_type = mitre_entity_to_typedb(mitre_object['type'])['type']
                     if entity_type == "identity":
                         entity_type = mitre_object['identity_class']
-                    query = "$x isa " + entity_type + "," + self.attributes(mitre_object)
+                    query = "$x isa " + entity_type + "," + self._attributes(mitre_object)
                     query = "insert " + query + ";"
                     queries.add(query)
-        logging.debug(f"Generated {len(queries)} insert queries for created_by_refs")
+        logging.debug(f"Generated {len(queries)} insert queries for referenced mitre entities")
         return {
             "queries": queries,
             "processed_ids": referenced_ids
@@ -59,7 +60,7 @@ class InsertQueriesGenerator:
         for mitre_object in self.mitre_objects_json:
             mitre_object_type = mitre_object['type']
             if mitre_object_type != "relationship" and not mitre_object['id'] in exclude_ids:
-                stix_type = mitre_object_entity_definitions(mitre_object_type)
+                stix_type = mitre_entity_to_typedb(mitre_object_type)
                 if not stix_type['ignore']:
                     if 'object_marking_refs' in mitre_object and len(mitre_object['object_marking_refs']) > 0:
                         mitre_objects_with_marking_refs.append(mitre_object)
@@ -73,7 +74,7 @@ class InsertQueriesGenerator:
                             ent_type = mitre_object['type']
                         query = f"$mitre isa {ent_type}"
 
-                    query = "insert " + query + "," + self.attributes(mitre_object) + ";"
+                    query = "insert " + query + "," + self._attributes(mitre_object) + ";"
                     if 'created_by_ref' in mitre_object:
                         insert_created_by_refs_relation = "(created: $mitre, creator: $creator) isa creation;"
                         # we expect creating stix objects to be inserted before
@@ -81,12 +82,12 @@ class InsertQueriesGenerator:
                         query = "match " + match_creator + query + insert_created_by_refs_relation
                     mitre_entity_queries.add(query)
 
-        marking_relations_queries = self.markings_relations(mitre_objects_with_marking_refs)
+        marking_relations_queries = self._markings_relations(mitre_objects_with_marking_refs)
         queries = mitre_entity_queries.union(marking_relations_queries)
         logging.debug(f"Generated {len(queries)} insert queries for mitre entities and marking relations")
         return queries
 
-    def markings_relations(self, objects_with_marking_refs):
+    def _markings_relations(self, objects_with_marking_refs):
         queries = set()
         for mitre_object in objects_with_marking_refs:
             match_marked_object = f"$x isa thing, has stix-id '{mitre_object['id']}'; "
@@ -96,9 +97,9 @@ class InsertQueriesGenerator:
             queries.add(query)
         return queries
 
-    def attributes(self, mitre_object):
+    def _attributes(self, mitre_object):
         query = ""
-        for mitre_key, typeql_definition in mitre_object_attribute_definitions().items():
+        for mitre_key, typeql_definition in mitre_attributes_to_typedb().items():
             if mitre_key in mitre_object:
                 typeql_attr_type = typeql_definition['type']
                 mitre_value_type = typeql_definition['value']
@@ -119,155 +120,89 @@ class InsertQueriesGenerator:
                 query += attribute_query
         return query[:-1]
 
-    #
-    # def createRelationQueries(file):
-    #     queries = []
-    #     relations = []
-    #     for obj in file:
-    #         if obj['type'] == "relationship":
-    #
-    #             relations.append(obj['relationship_type'])
-    #             relation = relationship_mapper(obj['relationship_type'])
-    #
-    #             match_query = "match $source isa thing, has stix-id '" + obj[
-    #                 'source_ref'] + "'; $target isa thing, has stix-id '" + obj['target_ref'] + "'; "
-    #             if relation['relation-name'] == "stix-core-relationship":
-    #                 insert_query = "insert $a (" + relation['active-role'] + ": $source, " + relation[
-    #                     'passive-role'] + ": $target) isa " + relation['relation-name'] + ", has stix-type '" + \
-    #                                relation[
-    #                                    'stix-type'] + "',"
-    #             else:
-    #                 insert_query = "insert $a (" + relation['active-role'] + ": $source, " + relation[
-    #                     'passive-role'] + ": $target) isa " + relation['relation-name'] + ","
-    #
-    #             insert_query = attributeBuilder(obj, insert_query)
-    #
-    #             query = match_query + insert_query[:-1] + ";"
-    #             queries.append(query)
-    #
-    #     return set(queries)
-    #
-    # def insertKillChainPhases(file, uri, batch_size, num_threads):
-    #     kill_chain_usage = []
-    #     for obj in file:
-    #         try:
-    #             for k in obj:
-    #
-    #                 for kc in obj['kill_chain_phases']:
-    #                     kc['id'] = obj['id']
-    #                 kill_chain_usage.append(obj['kill_chain_phases'])
-    #         except Exception:
-    #             pass
-    #
-    #     kill_chain_names = []
-    #     relation_queries = []
-    #     for k in kill_chain_usage:
-    #         for i in k:
-    #             kill_chain_names.append((i['kill_chain_name'], i['phase_name']))
-    #             relation_query = "match $x isa thing, has stix-id '" + i[
-    #                 'id'] + "'; $kill-chain-phase isa kill-chain-phase, has kill-chain-name '" + i[
-    #                                  'kill_chain_name'] + "', has phase-name '" + i[
-    #                                  'phase_name'] + "'; insert (kill-chain-used: $x, kill-chain-using: $kill-chain-phase) isa kill-chain-usage;"
-    #             relation_queries.append(relation_query)
-    #     kill_chain_names = set(kill_chain_names)
-    #
-    #     entities_queries = []
-    #     for instances in kill_chain_names:
-    #         query = "insert $x isa kill-chain-phase, has kill-chain-name '" + instances[0] + "', has phase-name '" + \
-    #                 instances[1] + "';"
-    #         entities_queries.append(query)
-    #     relation_queries = set(relation_queries)
-    #
-    #     insertQueries(entities_queries, uri, batch_size, num_threads)
-    #     insertQueries(relation_queries, uri, batch_size, num_threads)
-    #
-    # def filterAttributeTypes(file):
-    #     all_attr = []
-    #     for obj in file:
-    #         for k in obj:
-    #             all_attr.append(k)
-    #
-    #     unique_list_of_attributes = sorted(set(all_attr))
-    #
-    #     for k, v in attribute_map().items():
-    #         try:
-    #             unique_list_of_attributes.remove(k)
-    #         except Exception:
-    #             pass
-    #     unique_list_of_attributes.remove("created_by_ref")
-    #     unique_list_of_attributes.remove("definition")
-    #     unique_list_of_attributes.remove("definition_type")
-    #     unique_list_of_attributes.remove("external_references")
-    #     unique_list_of_attributes.remove("identity_class")
-    #     unique_list_of_attributes.remove("kill_chain_phases")
-    #     unique_list_of_attributes.remove("relationship_type")
-    #     unique_list_of_attributes.remove("source_ref")
-    #     unique_list_of_attributes.remove("target_ref")
-    #     unique_list_of_attributes.remove("type")
-    #     unique_list_of_attributes.remove("object_marking_refs")
-    #     unique_list_of_attributes.remove("tactic_refs")
-    #     return unique_list_of_attributes
-    #
-    # def insertCustomAttributes(file, uri, batch_size, num_threads):
-    #     attributes = filterAttributeTypes(file)
-    #     queries = []
-    #     relations = []
-    #     for obj in file:
-    #         match = "match $x isa thing, has stix-id '" + obj['id'] + "'; "
-    #         var = 0
-    #         attribute_query_1 = ""
-    #         attribute_query_2 = ""
-    #         for att in attributes:
-    #             try:
-    #                 attribute_query_2 = attribute_query_2 + "$" + str(
-    #                     var) + " has attribute-type '" + att + "'; $" + str(
-    #                     var) + " '" + obj[att].replace("'", "") + "'; "
-    #                 attribute_query_1 = attribute_query_1 + "has custom-attribute $" + str(var) + ", "
-    #                 var = var + 1
-    #             except Exception:
-    #                 pass
-    #         query = match + "insert $x " + attribute_query_1[:-2] + "; " + attribute_query_2
-    #         queries.append(query)
-    #
-    #     insertQueries(queries, uri, batch_size, num_threads)
-    #
-    # def insertExternalReferences(file, uri, batch_size, num_threads):
-    #     external_references = []
-    #     for obj in file:
-    #         try:
-    #             for e in obj['external_references']:
-    #                 external_references.append(e)
-    #         except Exception:
-    #             pass
-    #
-    #     properties = []
-    #     for e in external_references:
-    #         for k, v in e.items():
-    #             properties.append(k)
-    #     unique_properties = set(properties)
-    #
-    #     list_external_references_queries = []
-    #     insert_queries = []
-    #
-    #     for obj in file:
-    #         attributes = ''
-    #         try:
-    #             match_query_1 = "match $x isa thing, has stix-id '" + obj['id'] + "';"
-    #             for e in obj['external_references']:
-    #                 for p in unique_properties:
-    #                     mapping = attribute_map().get(p, {})
-    #                     try:
-    #                         attributes = attributes + " has " + mapping['type'] + " '" + e[p].replace("'", "") + "',"
-    #                     except Exception:
-    #                         pass
-    #                 insert_rel_query = match_query_1 + ' $er isa external-reference,' + attributes[
-    #                                                                                     :-1] + '; insert (referencing: $x, referenced: $er) isa external-referencing;'
-    #             insert_ref_query = "insert $er isa external-reference," + attributes[:-1] + ';'
-    #             insert_queries.append(insert_rel_query)
-    #             list_external_references_queries.append(insert_ref_query)
-    #         except Exception:
-    #             pass
-    #     unique_list_external_references_queries = set(list_external_references_queries)
-    #
-    #     insertQueries(unique_list_external_references_queries, uri, batch_size, num_threads)
-    #     insertQueries(insert_queries, uri, batch_size, num_threads)
+    def mitre_relationships(self):
+        relations = set()
+        for mitre_object in self.mitre_objects_json:
+            if mitre_object['type'] == "relationship":
+                match = f"$source has stix-id '{sanitise_string(mitre_object['source_ref'])}'; " \
+                        f"$target has stix-id '{sanitise_string(mitre_object['target_ref'])}';"
+
+                relation = mitre_relation_to_typedb(mitre_object['relationship_type'])
+                if relation['type'] == "stix-core-relationship":
+                    insert = f"({relation['active-role']}: $source, {relation['passive-role']}: $target) " \
+                             f"isa {relation['type']}, has stix-type '{sanitise_string(relation['stix-type'])}', "
+                else:
+                    insert = f"({relation['active-role']}: $source, {relation['passive-role']}: $target) " \
+                             f"isa {relation['type']}, "
+                insert += self._attributes(mitre_object)
+                query = "match " + match + " insert " + insert + ";"
+                relations.add(query)
+        logging.debug(f"Generated {len(relations)} insert queries for mitre relationships")
+        return relations
+
+    def kill_chain_phases(self):
+        kill_chain_usages = []
+        kill_chain_usages_flattened = set()
+        for mitre_object in self.mitre_objects_json:
+            if 'kill_chain_phases' in mitre_object:
+                for kc in mitre_object['kill_chain_phases']:
+                    kill_chain_usages.append({
+                        "used_id": mitre_object['id'],
+                        "kill_chain": kc
+                    })
+                    kill_chain_usages_flattened.add((kc['kill_chain_name'], kc['phase_name']))
+
+        kill_chain_phase_entities = set()
+        for kill_chain_usage in kill_chain_usages_flattened:
+            query = f"insert $x isa kill-chain-phase, " \
+                    f"has kill-chain-name '{kill_chain_usage[0]}', " \
+                    f"has phase-name '{kill_chain_usage[1]}';"
+            kill_chain_phase_entities.add(query)
+
+        kill_chain_phase_usage_relations = set()
+        for kill_chain_usage in kill_chain_usages:
+            kill_chain_name = sanitise_string(kill_chain_usage["kill_chain"]['kill_chain_name'])
+            kill_chain_phase = sanitise_string(kill_chain_usage["kill_chain"]["phase_name"])
+            relation_query = f"match " \
+                             f"$x isa thing, has stix-id '{kill_chain_usage['used_id']}'; " \
+                             f"$kill-chain-phase isa kill-chain-phase, has kill-chain-name '{kill_chain_name}', " \
+                             f"has phase-name '{kill_chain_phase}'; " \
+                             f"insert (kill-chain-used: $x, kill-chain-using: $kill-chain-phase) isa kill-chain-usage;"
+            kill_chain_phase_usage_relations.add(relation_query)
+
+        logging.debug(f"Generated {len(kill_chain_phase_entities)} insert queries for kill chain phase entities")
+        logging.debug(
+            f"Generated {len(kill_chain_phase_usage_relations)} insert queries for kill chain phase usage relations"
+        )
+        return {
+            "kill_chain_phases": kill_chain_phase_entities,
+            "kill_chain_phase_usages": kill_chain_phase_usage_relations
+        }
+
+    def external_references(self):
+        attribute_mapping = mitre_attributes_to_typedb()
+        external_reference_entities = set()
+        external_reference_relations = set()
+        for mitre_object in self.mitre_objects_json:
+            if 'external_references' not in mitre_object:
+                continue
+            match_owner = f"match $x has stix-id '{mitre_object['id']}'"
+            for external_reference in mitre_object['external_references']:
+                external_reference_attrs = ""
+                for mitre_key, mitre_value in external_reference.items():
+                    if mitre_key in attribute_mapping:
+                        typeql_mapping = attribute_mapping.get(mitre_key, {})
+                        assert typeql_mapping["value"] == "string"
+                        external_reference_attrs += f" has {typeql_mapping['type']} '{sanitise_string(mitre_value)}',"
+                external_reference_entity = "insert $er isa external-reference," + external_reference_attrs[:-1] + ';'
+                external_reference_entities.add(external_reference_entity)
+                external_reference_relation = f"{match_owner}; " \
+                                              f"$er isa external-reference, {external_reference_attrs[:-1]}; " \
+                                              f"insert (referencing: $x, referenced: $er) isa external-referencing;"
+                external_reference_relations.add(external_reference_relation)
+        logging.debug(f"Generated {len(external_reference_entities)} insert queries for external reference entities")
+        logging.debug(f"Generated {len(external_reference_relations)} insert queries for external reference relations")
+        return {
+            "external_references": external_reference_entities,
+            "external_reference_relations": external_reference_relations
+        }

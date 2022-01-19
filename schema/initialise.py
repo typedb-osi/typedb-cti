@@ -1,7 +1,8 @@
 from typedb.client import *
 
 
-def initialise_database(client, database, force=False):
+def initialise_database(uri, database, force=False):
+    client = TypeDB.core_client(uri)
     if client.databases().contains(database):
         if force:
             client.databases().get(database).delete()
@@ -21,3 +22,4 @@ def initialise_database(client, database, force=False):
     print('Successfully committed schema!')
     print('.....')
     session.close()
+    client.close()

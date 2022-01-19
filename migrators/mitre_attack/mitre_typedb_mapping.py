@@ -1,4 +1,4 @@
-def mitre_object_entity_definitions(mitre_type: str):
+def mitre_entity_to_typedb(mitre_type: str):
     mapper = {
         "attack-pattern": {"type": "attack-pattern", "custom-type": False, 'ignore': False},
         "tool": {"type": "tool", "custom-type": False, 'ignore': False},
@@ -19,29 +19,27 @@ def mitre_object_entity_definitions(mitre_type: str):
     return mapping
 
 
-def relationship_mapper(relationship: str):
+def mitre_relation_to_typedb(mitre_relation_type: str):
     mapper = {
-        "uses": {"relation-name": "use", "active-role": "used-by", "passive-role": "used"},
-        "mitigates": {"relation-name": "mitigation", "active-role": "mitigating", "passive-role": "mitigated"},
-        "delivers": {"relation-name": "delivery", "active-role": "delivering", "passive-role": "delivered"},
-        "targets": {"relation-name": "target", "active-role": "targetting", "passive-role": "targetted"},
-        "attributed-to": {"relation-name": "attribution", "active-role": "attributing", "passive-role": "attributed"},
-        "indicates": {"relation-name": "indication", "active-role": "indicating", "passive-role": "indicated"},
-        "uses": {"relation-name": "use", "active-role": "used-by", "passive-role": "used"},
-        "derives": {"relation-name": "derivation", "active-role": "deriving", "passive-role": "derived-from"},
-        "duplicate-of": {"relation-name": "duplicate", "active-role": "duplicate-object",
-                         "passive-role": "duplicate-object"},
-        "related-to": {"relation-name": "relatedness", "active-role": "related-to", "passive-role": "related-to"}
+        "uses": {"type": "use", "active-role": "used-by", "passive-role": "used"},
+        "mitigates": {"type": "mitigation", "active-role": "mitigating", "passive-role": "mitigated"},
+        "delivers": {"type": "delivery", "active-role": "delivering", "passive-role": "delivered"},
+        "targets": {"type": "target", "active-role": "targetting", "passive-role": "targetted"},
+        "attributed-to": {"type": "attribution", "active-role": "attributing", "passive-role": "attributed"},
+        "indicates": {"type": "indication", "active-role": "indicating", "passive-role": "indicated"},
+        "derives": {"type": "derivation", "active-role": "deriving", "passive-role": "derived-from"},
+        "duplicate-of": {"type": "duplicate", "active-role": "duplicate-object", "passive-role": "duplicate-object"},
+        "related-to": {"type": "relatedness", "active-role": "related-to", "passive-role": "related-to"}
     }
 
-    mapping = mapper.get(relationship, {})
+    mapping = mapper.get(mitre_relation_type, {})
     if mapping == {}:
-        mapping = {"relation-name": "stix-core-relationship", "active-role": "active-role",
-                   "passive-role": "passive-role", "stix-type": relationship}
+        mapping = {"type": "stix-core-relationship", "active-role": "active-role",
+                   "passive-role": "passive-role", "stix-type": mitre_relation_type}
     return mapping
 
 
-def mitre_object_attribute_definitions():
+def mitre_attributes_to_typedb():
     mapper = {
         "id": {"type": "stix-id", "value": "string"},
         "created": {"type": "created", "value": "string"},
