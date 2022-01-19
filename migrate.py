@@ -18,7 +18,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-
+import argparse
 import logging
 from timeit import default_timer as timer
 
@@ -26,19 +26,23 @@ from schema.initialise import initialise_database
 from stix.migrator import StixMigrator
 from stix.typedb_inserter import data_count
 
-# TODO allow setting via CLI run options
-uri = "localhost:1729"
-database = "cti"
-batch_size = 50
-num_threads = 16
-logging.basicConfig(level=logging.INFO)
+parser = argparse.ArgumentParser(description='Demonstration STIX migrator using the MITRE dataset.')
+parser.add_argument('--uri', dest='uri', default='localhost:1729', help='URI of TypeDB server')
+parser.add_argument('--database', dest='database', default='cti', help='Database to migrate data to.')
+parser.add_argument('--batch_size', dest='batch_size', default=50, help='Transaction batch size during migration')
+parser.add_argument('--threads', dest='threads', default=16, help='Number of loading threads  with (recommend 2*cores)')
+parser.add_argument('--data-path', dest='data_path', default='data/mitre', help='Path to STIX-compliant data files')
+
+args = parser.parse_args()
+logging.basicConfig(level=logging.INFO)  # when debugging, set to logging.DEBUG
 
 start = timer()
-initialise_database(uri, database, True)  # TODO don't leave on force = True!!
-migrator = StixMigrator(uri, database, batch_size, num_threads)
-migrator.migrate(data_path="data/mitre")
+initialise_database(args.uri, args.database, False)
+migrator = StixMigrator(args.uri, args.database, args.batch_size, args.threads)
+migrator.migrate(data_path=args.data_path)
 migrator.close()
 end = timer()
 time_in_sec = end - start
-inserted = data_count(uri, database)
-print(f"Loaded data points: {inserted}. Elapsed time: {time_in_sec} seconds.")
+inserted = data_count(args.uri, args.database)
+print(f"Loaded data points: {inserted}.)")
+print(f"Elapsed time: {time_in_sec} seconds.")
