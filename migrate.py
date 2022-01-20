@@ -32,17 +32,19 @@ parser.add_argument('--database', dest='database', default='cti', help='Database
 parser.add_argument('--batch_size', dest='batch_size', default=50, help='Transaction batch size during migration')
 parser.add_argument('--threads', dest='threads', default=16, help='Number of loading threads  with (recommend 2*cores)')
 parser.add_argument('--data-path', dest='data_path', default='data/mitre', help='Path to STIX-compliant data files')
+parser.add_argument('--clean', dest='clean', default=False, action="store_true",
+                    help='Delete existing database if it exists before loading.')
 
 args = parser.parse_args()
 logging.basicConfig(level=logging.INFO)  # when debugging, set to logging.DEBUG
 
 start = timer()
-initialise_database(args.uri, args.database, False)
+initialise_database(args.uri, args.database, args.clean)
 migrator = StixMigrator(args.uri, args.database, args.batch_size, args.threads)
 migrator.migrate(data_path=args.data_path)
 migrator.close()
 end = timer()
 time_in_sec = end - start
 inserted = data_count(args.uri, args.database)
-print(f"Loaded data points: {inserted}.)")
+print(f"Loaded data points: {inserted}.")
 print(f"Elapsed time: {time_in_sec} seconds.")
