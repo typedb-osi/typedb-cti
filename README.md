@@ -127,4 +127,4 @@ Running this query will return 15 different `attack-patterns`, all of which have
 ![TypeDB Studio](images/query_1.png)
 
 ## Community
-If you need any technical support or want to engage with this community, you can join the *#typedb-data-cti* channel in the [TypeDB Discord server](https://vaticle.com/typedb). 
+If you need any technical support or want to engage with this community, you can join the **#typedb-data-cti** channel in the [TypeDB Discord server](https://vaticle.com/typedb). 
