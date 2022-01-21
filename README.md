@@ -71,9 +71,9 @@ typedb server
 Start the migrator script
 
 ```bash
-python migrator.py
+python migrate.py
 ```
-This will create a new database called `cti`, insert the schema file and ingest the MITRE ATTCK datasets; it will take one or two minutes to complete. 
+This will create a new database called `cti`, insert the schema file and ingest the MITRE ATT&CK datasets; it will take under one minutes to complete. 
 
 ## Examples
 
