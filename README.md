@@ -3,7 +3,11 @@
 
 # TypeDB Data - CTI
 
-**[Overview](#overview)** | **[STIX](#stix)** | **[MITRE ATT&CK Data](#mitre-attck-stix-data)** | **[Installation](#installation)** | **[Examples](#examples)**
+- [Overview](#overview)
+- [STIX](#stix)
+- [MITRE ATT&CK Data](#mitre-attck-stix-data)
+- [Installation](#installation)
+- [Examples](#examples)
 
 [![Discord](https://img.shields.io/discord/665254494820368395?color=7389D8&label=chat&logo=discord&logoColor=ffffff)](https://vaticle.com/discord)
 [![Discussion Forum](https://img.shields.io/discourse/https/forum.vaticle.com/topics.svg)](https://forum.vaticle.com)
@@ -43,7 +47,11 @@ TypeDB Data - CTI includes a migrator to load MITRE ATT&CK STIX and serves as an
 
 ## Installation 
 
-**Prerequesites**: Python >3.6,  [TypeDB Core 2.6.1](https://vaticle.com/download#core),  [TypeDB Python Client API 2.6.0](https://docs.vaticle.com/docs/client-api/python),  [TypeDB Studio 2.4.0-alpha-4](https://vaticle.com/download#typedb-studio).
+**Prerequesites**: 
+- Python >3.6
+- [TypeDB Core 2.6.1](https://vaticle.com/download#core)
+- [TypeDB Python Client API 2.6.0](https://docs.vaticle.com/docs/client-api/python)
+- [TypeDB Studio 2.4.0-alpha-4](https://vaticle.com/download#typedb-studio)
 
 Clone this repo:
 
