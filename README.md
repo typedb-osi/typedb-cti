@@ -17,6 +17,7 @@ TypeDB Data - CTI is an open source knowledge graph for organisations to store a
 The benefits of using TypeDB for CTI: 
 1. TypeDB enables data to be modelled based on logical and object-oriented principles. This makes it easy to create complex schemas and ingest disparate and heterogeneous networks of CTI data, through concepts such as type hierarchies, nested relations and n-ary relations.
 2. TypeDB's ability to perform logical inference during query runtime enables the discovery of new insights from existing CTI data — for example, inferred transitive relations that indicate the attribution of a particular attack pattern to a state-owned entity. 
+3. TypeDB enables links between hash values, IP addresses, or indeed any data value that is shared to be made by default, as uniqueness of attribute values is a database guarantee. When attributes are inserted, unique values for any data type are only stored once, and all other uses of that value are connected by relations.
 
 ![TypeDB Studio](images/query_0.png)
 

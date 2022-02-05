@@ -1,0 +1,16 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+grpcio = "==1.43.0"
+protobuf = "==3.15.5"
+six = "==1.16.0"
+typedb-client = "==2.6.0"
+typedb-protocol = "==2.6.0"
+
+[requires]
+python_version = "3.9"
