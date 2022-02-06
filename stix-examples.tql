@@ -152,7 +152,7 @@ $file isa file,
 	has spec-version "2.1",
 	has size 83968, 
 	has name "resume.pdf";
-# Reimplement hashes as entities
+# TODO: Reimplement hashes as entities
 #	has md5 "1717b7fff97d37a1e1a0029d83492de1", 
 #	has sha-1 "1717b7fff97d37a1e1a0029d83492de1"; 
 $data1 isa observed-data, 
@@ -250,39 +250,8 @@ $bravo-id isa id-unknown,
 	has created "2020-02-29T18:18:08.661Z", 
 	has modified "2020-02-29T18:18:08.661Z";
 
-# Example from: https://oasis-open.github.io/cti-documentation/examples/using-marking-definitions
-# Using Marking Definitions
-
-insert
-$stark isa organization, 
-	has spec-version "2.1",
-	has stix-id "identity--611d9d41-dba5-4e13-9b29-e22488058ffc", 
-	has created "2017-04-14T13:07:49.812Z", 
-	has modified "2017-04-14T13:07:49.812Z", 
-	has name "Stark Industries", 
-	has sector "defense", 
-	has contact-information "info@stark.com";
-$indicator isa indicator,
-	has spec-version "2.1",
-	has stix-id "indicator--33fe3b22-0201-47cf-85d0-97c02164528d", 
-	has created "2017-04-14T13:07:49.812Z", 
-	has modified "2017-04-14T13:07:49.812Z", 
-	has name "Known malicious IP Address", 
-	has description "Detected malicious activity from this address", 
-	has indicator-type "malicious-activity", 
-	has pattern "[ipv4-addr:value = '10.0.0.0']", 
-	has pattern-type "stix", 
-	has valid-from "2017-04-14T13:07:49.812Z";
-# $marking-definition isa marking-definition, 
-#	has spec-version "2.1", 
-#	has stix-id "marking-definition--f88d31f6-486f-44da-b317-01333bde0b82", 
-#	has created "2017-01-20T00:00:00.000Z", 
-#	has definition-type "tlp",
-#	has name "TLP:AMBER";
-
 # Example from: https://oasis-open.github.io/cti-documentation/examples/using-granular-markings
 # Using Granular Markings
-
 insert 
 $gotham isa organization, 
 	has spec-version "2.1",
