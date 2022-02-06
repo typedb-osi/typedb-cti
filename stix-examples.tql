@@ -1,4 +1,10 @@
-# example from: https://oasis-open.github.io/cti-documentation/examples/identifying-a-threat-actor-profile
+# These examples below demonstrate how to use STIX 2.1 concepts for common use cases. 
+# They are useful for linking multiple concepts together and provide more detail regarding STIX objects and properties.
+# Source: 
+# https://oasis-open.github.io/cti-documentation/stix/examples.html
+
+
+# Example from: https://oasis-open.github.io/cti-documentation/examples/identifying-a-threat-actor-profile
 # Identifying a Threat Actor Profile
 insert 
 $ta isa threat-actor, has name "Disco Team Threat Actor Group", 
@@ -27,7 +33,7 @@ $id isa organization, has name "Disco Team", has spec-version "2.1",
 	has created "2020-02-29T18:01:28.577Z",
 	has modified "2020-02-29T18:01:28.577Z";
 
-# example from: https://oasis-open.github.io/cti-documentation/examples/indicator-for-malicious-url
+# Example from: https://oasis-open.github.io/cti-documentation/examples/indicator-for-malicious-url
 # Identicator for malicious URL
 insert 
 $in isa indicator, has name "Malicious site hosting downloader",
@@ -84,7 +90,7 @@ $m isa malware, has name "Poison Ivy",
 	has created "2020-02-29T18:09:12.808Z",
 	has modified "2020-02-29T18:09:12.808Z";
 
-# https://oasis-open.github.io/cti-documentation/examples/sighting-of-an-indicator
+# Example from: https://oasis-open.github.io/cti-documentation/examples/sighting-of-an-indicator
 # Sighting of an Indicator
 insert
 $malicious-url isa indicator, has name "Malicious URL", 
@@ -116,7 +122,7 @@ $beta isa organization, has name "Beta Cyber Intelligence Company",
 (saw: $beta, sighting-of: $malicious-url) isa sighting; 
 (creator: $alpha, created: $malicious-url) isa creation; 
 
-# https://oasis-open.github.io/cti-documentation/examples/sighting-of-observed-data
+# Example from: https://oasis-open.github.io/cti-documentation/examples/sighting-of-observed-data
 # Sighting of Observed Data
 insert
 $pym isa organization, has name "Pym Technologies", 
@@ -145,9 +151,10 @@ $file isa file,
 	has stix-id "file--364fe3e5-b1f4-5ba3-b951-ee5983b3538d",
 	has spec-version "2.1",
 	has size 83968, 
-	has name "resume.pdf",
-	has md5 "1717b7fff97d37a1e1a0029d83492de1",
-	has sha-1 "1717b7fff97d37a1e1a0029d83492de1";
+	has name "resume.pdf";
+# Reimplement hashes as entities
+#	has md5 "1717b7fff97d37a1e1a0029d83492de1", 
+#	has sha-1 "1717b7fff97d37a1e1a0029d83492de1"; 
 $data1 isa observed-data, 
 	has spec-version "2.1",
 	has stix-id "observed-data--cf8eaa41-6f4c-482e-89b9-9cd2d6a83cb1", 
@@ -182,7 +189,7 @@ $data2 isa observed-data,
 (referring: $data1, referred: $file) isa reference; 
 (referring: $data2, referred: $key) isa reference; 
 
-# https://oasis-open.github.io/cti-documentation/examples/threat-actor-leveraging-attack-patterns-and-malware
+# Example from: https://oasis-open.github.io/cti-documentation/examples/threat-actor-leveraging-attack-patterns-and-malware
 # Threat Actor Leveraging Attack Patterns and Malware
 insert
 $bravo-ta isa threat-actor, 
@@ -243,7 +250,7 @@ $bravo-id isa id-unknown,
 	has created "2020-02-29T18:18:08.661Z", 
 	has modified "2020-02-29T18:18:08.661Z";
 
-# https://oasis-open.github.io/cti-documentation/examples/using-marking-definitions
+# Example from: https://oasis-open.github.io/cti-documentation/examples/using-marking-definitions
 # Using Marking Definitions
 
 insert
@@ -273,7 +280,7 @@ $indicator isa indicator,
 #	has definition-type "tlp",
 #	has name "TLP:AMBER";
 
-# https://oasis-open.github.io/cti-documentation/examples/using-granular-markings
+# Example from: https://oasis-open.github.io/cti-documentation/examples/using-granular-markings
 # Using Granular Markings
 
 insert 
