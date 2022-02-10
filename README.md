@@ -13,8 +13,6 @@
 
 ## Overview
 
-*Note: On 10th February we’re hosting a TypeDB Data — CTI webinar. You can sign up [here](https://us02web.zoom.us/webinar/register/6216442478022/WN_k6bJTZwvRWOsqQYRONUG0Q).*
-
 TypeDB Data - CTI is an open source knowledge graph for organisations to store and manage their cyber threat intelligence (CTI) knowledge. It enables CTI professionals to bring together their disparate CTI information into one knowledge graph and find new insights about cyber threats.
 
 The benefits of using TypeDB for CTI: 
