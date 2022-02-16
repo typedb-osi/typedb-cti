@@ -1,5 +1,1 @@
-grpcio==1.43.0
-protobuf==3.15.5
-six==1.16.0
-typedb-client==2.6.0
-typedb-protocol==2.6.0
+typedb-client==2.6.3
