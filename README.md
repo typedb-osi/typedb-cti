@@ -3,7 +3,7 @@
 [![Stack Overflow](https://img.shields.io/badge/stackoverflow-typedb-796de3.svg)](https://stackoverflow.com/questions/tagged/typedb)
 [![Stack Overflow](https://img.shields.io/badge/stackoverflow-typeql-3dce8c.svg)](https://stackoverflow.com/questions/tagged/typeql)
 
-# TypeDB CTI Knowledge Graph
+# TypeDB CTI: Open Source Threat Intelligence Platform
 
 - [Overview](#overview)
 - [STIX](#stix)
@@ -15,16 +15,16 @@
 
 *Watch our first community webinar [here](https://www.youtube.com/watch?v=xuiYorG8-1Q).*
 
-TypeDB Data - CTI is an open source knowledge graph for organisations to store and manage their cyber threat intelligence (CTI) knowledge. It enables CTI professionals to bring together their disparate CTI information into one knowledge graph and find new insights about cyber threats.
+TypeDB Data - CTI is an open source threat intelligence platform for organisations to store and manage their cyber threat intelligence (CTI) knowledge. It enables threat intel professionals to bring together their disparate CTI information into one database and find new insights about cyber threats.
 
 The benefits of using TypeDB for CTI: 
-1. TypeDB enables data to be modelled based on logical and object-oriented principles. This makes it easy to create complex schemas and ingest disparate and heterogeneous networks of CTI data, through concepts such as type hierarchies, nested relations and n-ary relations.
-2. TypeDB's ability to perform logical inference during query runtime enables the discovery of new insights from existing CTI data — for example, inferred transitive relations that indicate the attribution of a particular attack pattern to a state-owned entity. 
+1. TypeDB enables data to be modelled based on [logical and object-oriented principles](https://docs.vaticle.com/docs/schema/overview). This makes it easy to create complex schemas and ingest disparate and heterogeneous networks of CTI data, through concepts such as type hierarchies, nested relations and n-ary relations.
+2. TypeDB's ability to perform [logical inference](https://docs.vaticle.com/docs/schema/rules) during query runtime enables the discovery of new insights from existing CTI data — for example, inferred transitive relations that indicate the attribution of a particular attack pattern to a state-owned entity. 
 3. TypeDB enables links between hash values, IP addresses, or indeed any data value that is shared to be made by default, as uniqueness of attribute values is a database guarantee. When attributes are inserted, unique values for any data type are only stored once, and all other uses of that value are connected by relations.
 
 ![TypeDB Studio](images/query_0.png)
 
-This repository provides a schema that is based on [STIX2](https://oasis-open.github.io/cti-documentation/), and contains [MITRE ATT&CK](https://github.com/mitre-attack/attack-stix-data) as an example dataset to start exploring this CTI knowledge graph. In the future, we plan to incorporate other CTI standards and data sources, in order to create an industry-wide data specification in TypeQL that can be used to ingest any type of CTI data. 
+This repository provides a schema that is based on [STIX2](https://oasis-open.github.io/cti-documentation/), and contains [MITRE ATT&CK](https://github.com/mitre-attack/attack-stix-data) as an example dataset to start exploring this threat intelligence platform. In the future, we plan to incorporate other cyber threat intelligence standards and data sources, in order to create an industry-wide data specification in TypeQL that can be used to ingest any type of threat intel data. 
 
 ## STIX
 
@@ -44,7 +44,7 @@ An in-depth overview of the how the STIX2 model has been implemented in TypeDB w
 
 [MITRE ATT&CK](https://github.com/mitre-attack/attack-stix-data) is a globally-accessible knowledge base of adversary tactics and techniques based on real-world observations. The ATT&CK knowledge base is used as a foundation for the development of specific threat models and methodologies in the private sector, in government, and in the cybersecurity product and service community.
 
-TypeDB Data - CTI includes a migrator to load MITRE ATT&CK STIX and serves as an example datasets to quickly start exploring the knowledge graph. 
+TypeDB Data - CTI includes a migrator to load MITRE ATT&CK STIX and serves as an example datasets to quickly start exploring this threat intelligence database. 
 
 ## Installation 
 
@@ -131,4 +131,4 @@ Running this query will return 15 different `attack-patterns`, all of which have
 ![TypeDB Studio](images/query_1.png)
 
 ## Community
-If you need any technical support or want to engage with this community, you can join the **#typedb-data-cti** channel in the [TypeDB Discord server](https://vaticle.com/typedb). 
+If you need any technical support or want to engage with this community, you can join the **#typedb-cti** channel in the [TypeDB Discord server](https://vaticle.com/discord) or join our [Discussion Forum](https://forum.vaticle.com/).
