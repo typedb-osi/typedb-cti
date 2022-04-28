@@ -13,7 +13,7 @@
 
 ## Overview
 
-*Watch our first community webinar [here](https://www.youtube.com/watch?v=xuiYorG8-1Q).*
+*Watch our first community webinar [here](https://www.youtube.com/watch?v=xuiYorG8-1Q) or read [this blog](https://blog.vaticle.com/introducing-a-knowledge-graph-for-cyber-threat-intelligence-with-typedb-bdb559a92d2a) post for an introduction.*
 
 TypeDB Data - CTI is an open source threat intelligence platform for organisations to store and manage their cyber threat intelligence (CTI) knowledge. It enables threat intel professionals to bring together their disparate CTI information into one database and find new insights about cyber threats.
 
