@@ -50,9 +50,9 @@ TypeDB Data - CTI includes a migrator to load MITRE ATT&CK STIX and serves as an
 
 **Prerequesites**: 
 - Python >3.6
-- [TypeDB Core 2.6.4](https://vaticle.com/download#core)
-- [TypeDB Python Client API 2.6.3](https://docs.vaticle.com/docs/client-api/python)
-- [TypeDB Studio 2.4.0-alpha-4](https://vaticle.com/download#typedb-studio)
+- [TypeDB Core 2.10.0](https://vaticle.com/download#core)
+- [TypeDB Python Client API 2.9.0](https://docs.vaticle.com/docs/client-api/python)
+- [TypeDB Studio 2.10.0-alpha-4](https://vaticle.com/download#typedb-studio)
 
 Clone this repo:
 
