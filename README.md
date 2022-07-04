@@ -128,6 +128,21 @@ $use (used-by: $malware, used: $attack-pattern) isa use;
 
 Running this query will return 15 different `attack-patterns`, all of which have a relation of type `use` to the `malware`. This is how it is visualised in TypeDB Studio: 
 
+## Explorer
+
+This is a set of utilities to help analysts to attribute threat groups from indicators.
+
+For example assuming I have sighted T1189 and T1068 in a campaign in my environment I can see which APT groups are using those.
+
+```
+python explorer.py --infer_group --ttp T1189 T1068
+```
+
+For general stats:
+```
+python explorer.py --stats
+```
+
 ![TypeDB Studio](images/query_1.png)
 
 ## Community
