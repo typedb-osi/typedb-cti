@@ -128,6 +128,8 @@ $use (used-by: $malware, used: $attack-pattern) isa use;
 
 Running this query will return 15 different `attack-patterns`, all of which have a relation of type `use` to the `malware`. This is how it is visualised in TypeDB Studio: 
 
+![TypeDB Studio](images/query_1.png)
+
 ## Explorer
 
 This is a set of utilities to help analysts to attribute threat groups from indicators.
@@ -137,13 +139,40 @@ For example assuming I have sighted T1189 and T1068 in a campaign in my environm
 ```
 python explorer.py --infer_group --ttp T1189 T1068
 ```
+Result:
+
+```
+INFO:utils.queries:Total threat groups 36 
+INFO:utils.queries:Total nodes 34 
+INFO:utils.queries:
++-------------------+-------------+
+| Group Name        |   TTP count |
++===================+=============+
+| APT32             |           2 |
++-------------------+-------------+
+| PLATINUM          |           2 |
++-------------------+-------------+
+| Threat Group-3390 |           2 |
++-------------------+-------------+
+| Turla             |           2 |
++-------------------+-------------+
+
+```
 
 For general stats:
 ```
 python explorer.py --stats
 ```
+Result:
 
-![TypeDB Studio](images/query_1.png)
+```
+INFO:utils.queries:Total Intrusions Sets 138
+INFO:utils.queries:Total Attack Patterns 1626
+INFO:utils.queries:Total Mitre Techniques 659
+INFO:utils.queries:Total Mitre Sub Techniques 767
+INFO:utils.queries:Total Malware 577
+INFO:utils.queries:Total Tools 75
+```
 
 ## Community
 If you need any technical support or want to engage with this community, you can join the **#typedb-cti** channel in the [TypeDB Discord server](https://vaticle.com/discord) or join our [Discussion Forum](https://forum.vaticle.com/).
