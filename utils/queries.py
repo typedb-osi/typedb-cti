@@ -19,6 +19,7 @@
 # under the License.
 #
 
+from functools import reduce
 import json
 import os
 
@@ -30,19 +31,27 @@ import logging
 logger = logging.getLogger(__name__)
 
 class TiExplorer:
+    '''
+    This class contains basic exploration techniques to attribute tactics to threat groups
+    '''
 
     def __init__(self, uri, database):
         self.database = database
         self.client = TypeDB.core_client(uri)
 
     def ttp_to_intrusion(self,ttp_list):
-        with self.client.session("cti", SessionType.DATA) as session:
-            ## get various count stats
-            with session.transaction(TransactionType.READ) as read_transaction:
-                DG = nx.DiGraph()
+        # load a dictionary of all current TTP
+        self.get_all_ttp()
 
+        with self.client.session(self.database, SessionType.DATA) as session:
+            with session.transaction(TransactionType.READ) as read_transaction:
+                
+                # check the TTP are correct
+                for ttp_id in ttp_list:
+                    if ttp_id not in self._ttp:
+                        logger.error(f'TTP {ttp_id} not in database')
                 if len(ttp_list) == 1:
-                    or_conditions = f'has external-id "{ttp_list[0]}"'
+                    or_conditions = f'$e has external-id "{ttp_list[0]}"'
                 else:
                     fmt_cnd = ['{{$e has external-id "{0}";}}'.format(t) for t in ttp_list]
                     or_conditions = ' or '.join(fmt_cnd)
@@ -57,29 +66,50 @@ class TiExplorer:
                 get $an,$eid,$u,$i,$in; '.format(or_conditions)
                 
                 answer_iterator = read_transaction.query().match(q_ttp)
-                
+                DG = nx.DiGraph()
                 for q in answer_iterator:
                     #attack_id = q.get('a').get_iid()
                     attack_name = q.get('an').get_value()
                     ttp_id = q.get('eid').get_value()
                     group_name = q.get('in').get_value()
                     
-                    DG.add_node(ttp_id, type='ttp')
-                    DG.add_node(group_name, type='group')
+                    DG.add_node(ttp_id, type='attack-pattern')
+                    DG.add_node(group_name, type='intrusion-set')
                     DG.add_edge(ttp_id, group_name)
                     
-            logger.info('Total threat groups %d ' % len(DG.edges))
+            logger.info('Total links %d ' % len(DG.edges))
             logger.info('Total nodes %d ' % len(DG.nodes))
             
-            deg_counts = [(n_id,DG.degree(n_id)) for n_id,n_att in DG.nodes(data=True) if n_att['type']=='group']
+            deg_counts = [(n_id,DG.degree(n_id)) for n_id,n_att in DG.nodes(data=True) if n_att['type']=='intrusion-set']
             
+            match_all = list(filter(lambda deg: deg[1]==len(ttp_list), deg_counts))
 
-            match_all = filter(lambda deg: deg[1]==len(ttp_list), deg_counts)
-            
+
             logger.info('\n'+tabulate(match_all, ["Group Name", "TTP count"], tablefmt="grid"))    
+            logger.info('Total groups %d' % len(match_all))
+
+    def get_all_ttp(self):
+         with self.client.session(self.database, SessionType.DATA) as session:
+            ## get various count stats
+            with session.transaction(TransactionType.READ) as read_transaction:
+                q_ttp = 'match $e isa external-reference, has source-name "mitre-attack", has external-id like "T[0-9]+";\
+                $e has external-id $eid;$a isa attack-pattern, has name $an;\
+                $rel (referencing: $a, referenced: $e) isa external-referencing;\
+                get $an,$eid;'
+                
+                answer_iterator = read_transaction.query().match(q_ttp)
+
+                self._ttp= {}
+
+                for q in answer_iterator:
+                    attack_name = q.get('an').get_value()
+                    ttp_id = q.get('eid').get_value()
+
+                    self._ttp[ttp_id]=attack_name
+
 
     def get_stats(self):
-        with self.client.session("cti", SessionType.DATA) as session:
+        with self.client.session(self.database, SessionType.DATA) as session:
             ## get various count stats
             with session.transaction(TransactionType.READ) as read_transaction:
                 
