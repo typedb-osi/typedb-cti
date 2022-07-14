@@ -30,18 +30,34 @@ import os
 
 logging.basicConfig(level=logging.INFO) 
 
+import json
+
+def is_json(file:str):
+    try:
+        with open(file) as f:
+            json.load(f)
+    except ValueError as e:
+        return False
+    finally:
+        return True
+
 def download_file(url,folder):
     local_filename = os.path.join(folder,url.split('/')[-1])
-
+    chunk_size = 4096
     with requests.get(url, stream=True) as r:
         if r.status_code == 200:
             with open(local_filename, 'wb') as f:
-                shutil.copyfileobj(r.raw, f)
+                for chunk in r.iter_content(chunk_size): 
+                    if chunk:
+                        f.write(chunk)
         else:
             raise Exception('Remote file does not exist')
-    return local_filename
 
-URL_GIT = 'https://github.com/mitre-attack/attack-stix-data/blob/master/'
+    if is_json(local_filename):
+        return local_filename
+    else: raise Exception('Invalid JSON file')
+    
+URL_GIT = 'https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/'
 URL_ENTERPRISE = f'{URL_GIT}enterprise-attack/enterprise-attack.json'
 URL_MOBILE = f'{URL_GIT}enterprise-attack/mobile-attack.json'
 URL_ICS = f'{URL_GIT}enterprise-attack/ics-attack.json'
@@ -55,7 +71,7 @@ try:
     args = parser.parse_args()
 
     if args.type == 'enterprise':
-        logging.info('Downloading enterprise file...')
+        logging.info(f'Downloading enterprise file from {URL_ENTERPRISE}')
         if args.version == 'latest':
             file = download_file(URL_ENTERPRISE,args.folder)
         else:

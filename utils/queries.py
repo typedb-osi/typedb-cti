@@ -30,16 +30,21 @@ from tabulate import tabulate
 import logging
 logger = logging.getLogger(__name__)
 
+from operator import itemgetter
+
+
+
 class TiExplorer:
     '''
     This class contains basic exploration techniques to attribute tactics to threat groups
     '''
 
-    def __init__(self, uri, database):
+    def __init__(self, uri, database,ignoreRevoked=True):
         self.database = database
         self.client = TypeDB.core_client(uri)
+        self._ignoreRevoked = ignoreRevoked
 
-    def ttp_to_intrusion(self,ttp_list):
+    def ttp_to_intrusion(self,ttp_list:list):
         # load a dictionary of all current TTP
         self.get_all_ttp()
 
@@ -68,7 +73,6 @@ class TiExplorer:
                 answer_iterator = read_transaction.query().match(q_ttp)
                 DG = nx.DiGraph()
                 for q in answer_iterator:
-                    #attack_id = q.get('a').get_iid()
                     attack_name = q.get('an').get_value()
                     ttp_id = q.get('eid').get_value()
                     group_name = q.get('in').get_value()
@@ -84,13 +88,14 @@ class TiExplorer:
             
             match_all = list(filter(lambda deg: deg[1]==len(ttp_list), deg_counts))
 
-
             logger.info('\n'+tabulate(match_all, ["Group Name", "TTP count"], tablefmt="grid"))    
             logger.info('Total groups %d' % len(match_all))
 
     def get_all_ttp(self):
-         with self.client.session(self.database, SessionType.DATA) as session:
-            ## get various count stats
+        '''
+        Enumerate all TTP
+        '''
+        with self.client.session(self.database, SessionType.DATA) as session:
             with session.transaction(TransactionType.READ) as read_transaction:
                 q_ttp = 'match $e isa external-reference, has source-name "mitre-attack", has external-id like "T[0-9]+";\
                 $e has external-id $eid;$a isa attack-pattern, has name $an;\
@@ -107,6 +112,113 @@ class TiExplorer:
 
                     self._ttp[ttp_id]=attack_name
 
+    def get_all_subttp(self):
+        '''
+        Enumerate all sub TTP
+        '''
+        with self.client.session(self.database, SessionType.DATA) as session:
+            with session.transaction(TransactionType.READ) as read_transaction:
+                q_ttp = 'match $e isa external-reference, has source-name "mitre-attack", has external-id like "T[0-9]+\.[0-9]";\
+                $e has external-id $eid;$a isa attack-pattern, has name $an;\
+                $rel (referencing: $a, referenced: $e) isa external-referencing;\
+                get $an,$eid;'
+                
+                answer_iterator = read_transaction.query().match(q_ttp)
+
+                self._ttp= {}
+
+                for q in answer_iterator:
+                    attack_name = q.get('an').get_value()
+                    ttp_id = q.get('eid').get_value()
+
+                    self._subttp[ttp_id]=attack_name
+
+    def get_ttp_info(self,ttp_list:list):
+        with self.client.session(self.database, SessionType.DATA) as session:
+            ## get various count stats
+            with session.transaction(TransactionType.READ) as read_transaction:
+                
+                data = []
+                for ttp_id in ttp_list:
+                    
+                    '''
+                    q_ttp = f'match\
+                            $exref isa external-reference, has source-name "mitre-attack", has external-id "{ttp_id}";\
+                            $ap isa attack-pattern, has name $n,has description $d, has revoked $r;\
+                            $rel (referencing: $ap, referenced: $exref) isa external-referencing;\
+                            get $n,$d,$r;'
+
+                    answer_iterator = read_transaction.query().match(q_ttp)
+                    print(q_ttp)
+                    for q in answer_iterator:
+                        data.append([ttp_id,q.get('n').get_value(),q.get('d').get_value(),q.get('r').get_value()])
+                    '''
+                    q_ttp = f'match\
+                            $exref isa external-reference, has source-name "mitre-attack", has external-id "{ttp_id}";\
+                            $ap isa attack-pattern;\
+                            $rel (referencing: $ap, referenced: $exref) isa external-referencing;\
+                            get $ap;'
+
+                    answer_iterator = read_transaction.query().match(q_ttp)
+
+                    for q in answer_iterator:
+                        ap = q.get('ap')
+                        ap_r = ap.as_remote(read_transaction)
+                        print(ap.get_type())
+
+                        attrs = ap.as_remote(read_transaction).get_has()
+                        for x in attrs:
+                            print(x.label)
+                            print(x.get_value())
+                        break
+                
+                #logger.info('\n'+tabulate(data, ["TTP ID", "Name", "Description", "Revoked"], tablefmt="grid"))    
+
+
+    def get_ttp_intrusions(self,sort_by='asc',limit=5,threshold=None):
+        with self.client.session(self.database, SessionType.DATA) as session:
+            ## get various count stats
+            with session.transaction(TransactionType.READ) as read_transaction:
+
+                if self._ignoreRevoked:
+                    revoke_flag = '$ap has revoked false;'
+                else:
+                    revoke_flag = '\n'
+
+                query = f'match\
+                        $exref isa external-reference, has source-name "mitre-attack", has external-id like "T[0-9]+";\
+                        $exref has external-id $exid;\
+                        $ap isa attack-pattern, has name $ap_name;\
+                        {revoke_flag}\
+                        $in isa intrusion-set, has alias $in_alias;\
+                        $in has name $in_name;\
+                        $rel (referencing: $ap, referenced: $exref) isa external-referencing;\
+                        $use (used: $ap, used-by: $in) isa use;\
+                        get $ap_name,$exid,$in_name;\
+                        group $exid; count;'
+
+                groups_iter = read_transaction.query().match_group_aggregate(query)
+                data = []
+                for g in groups_iter:
+                    count_int = g.numeric().as_int()
+                    attribute_str = g.owner()
+                    logger.debug(f'Is a type {attribute_str.is_type()}')
+                    logger.debug(f'Is a thing {attribute_str.is_thing()}')
+                    logger.debug(f'Is a attribute {attribute_str.is_attribute()}')
+                    logger.debug(f'Get Type {attribute_str.get_type()}')
+                    logger.debug(f'TTP = {attribute_str.get_value()} Count = {count_int}')
+                    data.append([attribute_str.get_value(),count_int])
+                # sort the list
+                if sort_by == 'asc':
+                    data = sorted(data,key=itemgetter(1))
+                    if threshold: data = list(filter(lambda x: x[1]<=threshold, data))
+                elif sort_by == 'desc':
+                    data = sorted(data,key=itemgetter(1),reverse=True)
+                    if threshold: data = list(filter(lambda x: x[1]>=threshold, data))
+
+                else: raise Exception('Order is either asc or desc')
+
+                logger.info('\n'+tabulate(data[0:limit], ["TTP", "Intrusion counts"], tablefmt="grid"))  
 
     def get_stats(self):
         with self.client.session(self.database, SessionType.DATA) as session:

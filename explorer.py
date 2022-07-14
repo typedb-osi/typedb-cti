@@ -20,6 +20,7 @@
 #
 import argparse
 import logging
+from operator import truediv
 
 from utils.queries import TiExplorer
 
@@ -32,19 +33,41 @@ parser.add_argument('--stats', dest='stats', default=False, action="store_true",
 
 parser.add_argument('-ttp','--ttp', nargs='+', help='List of MITRE TTPs', required=False)
 
+parser.add_argument('-get_info','--info',default=False, action="store_true",help='Get TTP information.')
+
 parser.add_argument('--infer_group', dest='infer_group', default=False, action="store_true",
                     help='Infer group from relationships.')
+
+parser.add_argument('--ttp_scores', dest='ttp_scores', default=False, action="store_true",
+                    help='Infer group from relationships.')
+
+parser.add_argument('--sort', dest='sort', default='asc',help='Sort ascending or descending')
+
+parser.add_argument('--limit', dest='limit',type=int,default=100,help='Limit max rows')
+
+parser.add_argument('--threshold', dest='threshold',type=int, default=None,help='Filter by maximum threshold')
+
+parser.add_argument('--ignore_revoked', dest='revoked', default=truediv, action="store_true",
+                    help='Ignore revoked STIX entities')
 
 args = parser.parse_args()
 logging.basicConfig(level=logging.INFO)  # when debugging, set to logging.DEBUG
 
 if args.stats:
-    ti = TiExplorer(args.uri,args.database)
+    ti = TiExplorer(args.uri,args.database,ignoreRevoked=args.revoked)
     ti.get_stats()
 
+if args.info and args.ttp:
+    ti = TiExplorer(args.uri,args.database,ignoreRevoked=args.revoked)
+    ti.get_ttp_info(args.ttp)
+    
+if args.ttp_scores:
+    ti = TiExplorer(args.uri,args.database,ignoreRevoked=args.revoked)
+    ti.get_ttp_intrusions(sort_by=args.sort,limit=args.limit,threshold=args.threshold)
+    
 if args.infer_group:
     if args.ttp is None:
         logging.error('Provide list of MITRE TTP')
     else:
-        ti = TiExplorer(args.uri,args.database)
+        ti = TiExplorer(args.uri,args.database,ignoreRevoked=args.revoked)
         ti.ttp_to_intrusion(args.ttp)
