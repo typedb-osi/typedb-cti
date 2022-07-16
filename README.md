@@ -9,7 +9,8 @@
 - [STIX](#stix)
 - [MITRE ATT&CK Data](#mitre-attck-stix-data)
 - [Installation](#installation)
-- [Examples](#examples)
+- [Example Queries](#example-queries)
+- [Explorer Utility](#explorer-utility)
 
 ## Overview
 
@@ -79,7 +80,7 @@ python migrate.py
 ```
 This will create a new database called `cti`, insert the schema file and ingest the MITRE ATT&CK datasets; it will take under one minutes to complete. 
 
-## Examples
+## Example Queries
 
 Once the data is loaded, these queries can be used to explore the data. 
 
@@ -130,21 +131,20 @@ Running this query will return 15 different `attack-patterns`, all of which have
 
 ![TypeDB Studio](images/query_1.png)
 
-## Explorer
+## Explorer Utility
 
-This is a set of utilities to help analysts to attribute threat groups from indicators.
+TypeDB CTI provides the following Explorer Utility to help analysts attribute threat groups from indicators.
 
-### Attribution from TTP to Threat Groups.
+### Attributing TTPs to Threat Groups
 
-This requires a list of ATT&CK TTP that are observed during an intrusion and will list the set of threat groups that have been used those indicators.
+The following will list a set of threat groups that have been used in ATT&CK TTP indicators and observed during an intrusion. 
 
-
-For example assuming I have sighted T1189 and T1068 in a campaign in my environment I can see which APT groups are using those.
+For example, if T1189 and T1068 have been sighted in a campaign, the following command will show which APT groups are using these.
 
 ```
 python explorer.py --infer_group --ttp T1189 T1068
 ```
-Result:
+The result is: 
 
 ```
 INFO:utils.queries:Total links 36 
@@ -164,31 +164,28 @@ INFO:utils.queries:
 INFO:utils.queries:Total groups 4
 
 ```
-
-Statistically speaking if I have a shorter list of TTP there will be a greater chance to map to many more threat groups.
-For example:
+If fewer TTPs are supplied, then there's a greater chance to map TTPs to many more threat groups. For example, just looking at T1189 results in 24 different threat groups:
 
 ```
 python explorer.py --infer_group --ttp T1189
 ```
-Result in 24 groups.
-
-Please note that the utility will also check for existing TTP for example:
-
+The same command will also check if a TTP exists in TypeDB CTI. In this example, T1234 doesn't exist:
 ```
 python explorer.py --infer_group --ttp T1234
 ```
-doesn't exist and will throw an error.
+In this case, the Explorer Utility throws the following error: 
 
 ```
 ERROR:utils.queries:TTP T1234 not in database
 ```
 
-### General stats of key entities in the database
+### General Statistics of Key Entities
+The Explorer Utility also provides the ability to display general information about TypeDB CTI. 
+
 ```
 python explorer.py --stats
 ```
-Result:
+This command will list the number of instances for a few key entity types: 
 
 ```
 INFO:utils.queries:Total Intrusions Sets 138
