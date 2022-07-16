@@ -130,5 +130,74 @@ Running this query will return 15 different `attack-patterns`, all of which have
 
 ![TypeDB Studio](images/query_1.png)
 
+## Explorer
+
+This is a set of utilities to help analysts to attribute threat groups from indicators.
+
+### Attribution from TTP to Threat Groups.
+
+This requires a list of ATT&CK TTP that are observed during an intrusion and will list the set of threat groups that have been used those indicators.
+
+
+For example assuming I have sighted T1189 and T1068 in a campaign in my environment I can see which APT groups are using those.
+
+```
+python explorer.py --infer_group --ttp T1189 T1068
+```
+Result:
+
+```
+INFO:utils.queries:Total links 36 
+INFO:utils.queries:Total nodes 34 
+INFO:utils.queries:
++-------------------+-------------+
+| Group Name        |   TTP count |
++===================+=============+
+| APT32             |           2 |
++-------------------+-------------+
+| PLATINUM          |           2 |
++-------------------+-------------+
+| Threat Group-3390 |           2 |
++-------------------+-------------+
+| Turla             |           2 |
++-------------------+-------------+
+INFO:utils.queries:Total groups 4
+
+```
+
+Statistically speaking if I have a shorter list of TTP there will be a greater chance to map to many more threat groups.
+For example:
+
+```
+python explorer.py --infer_group --ttp T1189
+```
+Result in 24 groups.
+
+Please note that the utility will also check for existing TTP for example:
+
+```
+python explorer.py --infer_group --ttp T1234
+```
+doesn't exist and will throw an error.
+
+```
+ERROR:utils.queries:TTP T1234 not in database
+```
+
+### General stats of key entities in the database
+```
+python explorer.py --stats
+```
+Result:
+
+```
+INFO:utils.queries:Total Intrusions Sets 138
+INFO:utils.queries:Total Attack Patterns 1626
+INFO:utils.queries:Total Mitre Techniques 659
+INFO:utils.queries:Total Mitre Sub Techniques 767
+INFO:utils.queries:Total Malware 577
+INFO:utils.queries:Total Tools 75
+```
+
 ## Community
 If you need any technical support or want to engage with this community, you can join the **#typedb-cti** channel in the [TypeDB Discord server](https://vaticle.com/discord) or join our [Discussion Forum](https://forum.vaticle.com/).
