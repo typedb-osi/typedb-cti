@@ -133,7 +133,7 @@ class TiExplorer:
 
                     self._subttp[ttp_id]=attack_name
 
-    def get_ttp_info(self,ttp_list:list):
+    def get_ttp_info(self,ttp_list:list,labels=['name']):
         with self.client.session(self.database, SessionType.DATA) as session:
             ## get various count stats
             with session.transaction(TransactionType.READ) as read_transaction:
@@ -141,18 +141,6 @@ class TiExplorer:
                 data = []
                 for ttp_id in ttp_list:
                     
-                    '''
-                    q_ttp = f'match\
-                            $exref isa external-reference, has source-name "mitre-attack", has external-id "{ttp_id}";\
-                            $ap isa attack-pattern, has name $n,has description $d, has revoked $r;\
-                            $rel (referencing: $ap, referenced: $exref) isa external-referencing;\
-                            get $n,$d,$r;'
-
-                    answer_iterator = read_transaction.query().match(q_ttp)
-                    print(q_ttp)
-                    for q in answer_iterator:
-                        data.append([ttp_id,q.get('n').get_value(),q.get('d').get_value(),q.get('r').get_value()])
-                    '''
                     q_ttp = f'match\
                             $exref isa external-reference, has source-name "mitre-attack", has external-id "{ttp_id}";\
                             $ap isa attack-pattern;\
@@ -163,15 +151,12 @@ class TiExplorer:
 
                     for q in answer_iterator:
                         ap = q.get('ap')
-                        ap_r = ap.as_remote(read_transaction)
-                        print(ap.get_type())
-
+                        attr_dict = {}
                         attrs = ap.as_remote(read_transaction).get_has()
                         for x in attrs:
-                            print(x.label)
-                            print(x.get_value())
-                        break
-                
+                            attr_dict[str(x.get_type().get_label())]=str(x.get_value())             
+                        data.append(attr_dict)
+                logger.info(data[0])
                 #logger.info('\n'+tabulate(data, ["TTP ID", "Name", "Description", "Revoked"], tablefmt="grid"))    
 
 

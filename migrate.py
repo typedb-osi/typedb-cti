@@ -35,13 +35,23 @@ parser.add_argument('--data-path', dest='data_path', default='data/mitre', help=
 parser.add_argument('--clean', dest='clean', default=False, action="store_true",
                     help='Delete existing database if it exists before loading.')
 
+parser.add_argument('--mitre_deprecated', dest='ignore_deprecated_mitre', default=False, action="store_true",
+                    help='Delete existing database if it exists before loading.')
+
 args = parser.parse_args()
 logging.basicConfig(level=logging.INFO)  # when debugging, set to logging.DEBUG
 
 start = timer()
 initialise_database(args.uri, args.database, args.clean)
+
+if args.ignore_deprecated_mitre:
+    print(f"Ignoring mitre deprecated objects...")
+    ignore_conditions=[{'x_mitre_deprecated':True}]
+else:
+    ignore_conditions = []
+
 migrator = StixMigrator(args.uri, args.database, args.batch_size, args.threads)
-migrator.migrate(data_path=args.data_path)
+migrator.migrate(data_path=args.data_path,ignore_conditions=ignore_conditions)
 migrator.close()
 end = timer()
 time_in_sec = end - start

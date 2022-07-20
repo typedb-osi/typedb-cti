@@ -30,8 +30,9 @@ def sanitise_string(string_value):
 
 class StixInsertGenerator:
 
-    def __init__(self, stix_objects_json):
+    def __init__(self, stix_objects_json,ignore_conditions):
         self.stix_objects_json = stix_objects_json
+        self.ignore_conditions = ignore_conditions
 
     def referenced_stix_objects(self):
         referenced_ids = set()
@@ -75,9 +76,29 @@ class StixInsertGenerator:
     def stix_objects_and_marking_relations(self, exclude_ids):
         stix_entity_queries = set()
         stix_objects_with_marking_refs = []
-
+        ignored = []
         for stix_object in self.stix_objects_json:
             stix_object_type = stix_object['type']
+
+            skip_check = False
+            #skip the object if if deprecated which is default behaviour
+            for check in self.ignore_conditions:
+                # atomic filter check
+                conditions = []
+                for attr_name in check.keys():
+                    if attr_name in stix_object:
+                        atom_check = stix_object[attr_name] == check[attr_name]
+                        conditions.append(atom_check)
+                # we can skip the entire object
+                if all(conditions): 
+                    
+                    skip_check = True
+                    break
+            
+            if skip_check: 
+                ignored.append(stix_object['id'])
+                continue
+
             if stix_object_type != "relationship" and not stix_object['id'] in exclude_ids:
                 stix_type = stix_entity_to_typedb(stix_object_type)
                 if not stix_type['ignore']:
@@ -104,6 +125,7 @@ class StixInsertGenerator:
         marking_relations_queries = self._markings_relations(stix_objects_with_marking_refs)
         logging.debug(f"Generated {len(stix_entity_queries)} insert queries for stix entities")
         logging.debug(f"Generated {len(marking_relations_queries)} insert queries for marking relations")
+        print(f"Skipped {len(ignored)} objects based on conditions")
         return {
             "stix_entities": stix_entity_queries,
             "marking_relations": marking_relations_queries
