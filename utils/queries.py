@@ -32,6 +32,7 @@ logger = logging.getLogger(__name__)
 
 from operator import itemgetter
 
+import pandas as pd
 
 
 class TiExplorer:
@@ -47,18 +48,33 @@ class TiExplorer:
     def ttp_to_intrusion(self,ttp_list:list):
         # load a dictionary of all current TTP
         self.get_all_ttp()
+        self.get_all_subttp()
 
         with self.client.session(self.database, SessionType.DATA) as session:
             with session.transaction(TransactionType.READ) as read_transaction:
                 
+                valid_ttp_list = []
                 # check the TTP are correct
                 for ttp_id in ttp_list:
-                    if ttp_id not in self._ttp:
-                        logger.error(f'TTP {ttp_id} not in database')
-                if len(ttp_list) == 1:
-                    or_conditions = f'$e has external-id "{ttp_list[0]}"'
+                    if '.' not in ttp_id:
+                        if ttp_id in self._ttp:
+                            valid_ttp_list.append(ttp_id)
+                        else:
+                            logger.error(f'TTP {ttp_id} not in database')
+                    else:
+                        if ttp_id in self._subttp:
+                            valid_ttp_list.append(ttp_id)
+                        else:
+                            logger.error(f'TTP {ttp_id} not in database')
+
+                if len(valid_ttp_list) == 0:
+                    logger.error(f'All TTPs are invalid or not present')
+                    return
+
+                elif len(valid_ttp_list) == 1:
+                    or_conditions = f'$e has external-id "{valid_ttp_list[0]}"'
                 else:
-                    fmt_cnd = ['{{$e has external-id "{0}";}}'.format(t) for t in ttp_list]
+                    fmt_cnd = ['{{$e has external-id "{0}";}}'.format(t) for t in valid_ttp_list]
                     or_conditions = ' or '.join(fmt_cnd)
                     
                 q_ttp = 'match $e isa external-reference, has source-name "mitre-attack";\
@@ -118,14 +134,14 @@ class TiExplorer:
         '''
         with self.client.session(self.database, SessionType.DATA) as session:
             with session.transaction(TransactionType.READ) as read_transaction:
-                q_ttp = 'match $e isa external-reference, has source-name "mitre-attack", has external-id like "T[0-9]+\.[0-9]";\
+                q_ttp = 'match $e isa external-reference, has source-name "mitre-attack", has external-id like "T[0-9]+\.[0-9]+";\
                 $e has external-id $eid;$a isa attack-pattern, has name $an;\
                 $rel (referencing: $a, referenced: $e) isa external-referencing;\
                 get $an,$eid;'
                 
                 answer_iterator = read_transaction.query().match(q_ttp)
 
-                self._ttp= {}
+                self._subttp= {}
 
                 for q in answer_iterator:
                     attack_name = q.get('an').get_value()
@@ -133,7 +149,7 @@ class TiExplorer:
 
                     self._subttp[ttp_id]=attack_name
 
-    def get_ttp_info(self,ttp_list:list):
+    def get_ttp_info(self,ttp_list:list,verbose=False):
         with self.client.session(self.database, SessionType.DATA) as session:
             ## get various count stats
             with session.transaction(TransactionType.READ) as read_transaction:
@@ -141,18 +157,6 @@ class TiExplorer:
                 data = []
                 for ttp_id in ttp_list:
                     
-                    '''
-                    q_ttp = f'match\
-                            $exref isa external-reference, has source-name "mitre-attack", has external-id "{ttp_id}";\
-                            $ap isa attack-pattern, has name $n,has description $d, has revoked $r;\
-                            $rel (referencing: $ap, referenced: $exref) isa external-referencing;\
-                            get $n,$d,$r;'
-
-                    answer_iterator = read_transaction.query().match(q_ttp)
-                    print(q_ttp)
-                    for q in answer_iterator:
-                        data.append([ttp_id,q.get('n').get_value(),q.get('d').get_value(),q.get('r').get_value()])
-                    '''
                     q_ttp = f'match\
                             $exref isa external-reference, has source-name "mitre-attack", has external-id "{ttp_id}";\
                             $ap isa attack-pattern;\
@@ -163,16 +167,19 @@ class TiExplorer:
 
                     for q in answer_iterator:
                         ap = q.get('ap')
-                        ap_r = ap.as_remote(read_transaction)
-                        print(ap.get_type())
-
+                        attr_dict = {}
                         attrs = ap.as_remote(read_transaction).get_has()
                         for x in attrs:
-                            print(x.label)
-                            print(x.get_value())
-                        break
-                
-                #logger.info('\n'+tabulate(data, ["TTP ID", "Name", "Description", "Revoked"], tablefmt="grid"))    
+                            attr_dict[str(x.get_type().get_label())]=str(x.get_value())             
+                        data.append(attr_dict)
+
+                data_df = pd.DataFrame(data)
+                data_df['TTP']=ttp_id
+                if verbose == False:
+                    data_df = data_df[['TTP','name','created','modified']]
+
+                table_list = data_df.values.tolist()
+                logger.info('\n'+tabulate(table_list, data_df.columns, tablefmt="grid"))  
 
 
     def get_ttp_intrusions(self,sort_by='asc',limit=5,threshold=None):

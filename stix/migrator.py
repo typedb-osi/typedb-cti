@@ -31,12 +31,12 @@ class StixMigrator:
     def __init__(self, typedb_uri, database, batch_size, num_threads):
         self.inserter = TypeDBInserter(typedb_uri, database, batch_size=batch_size, num_threads=num_threads)
 
-    def migrate(self, data_path):
+    def migrate(self, data_path, ignore_conditions=[]):
         print('.....')
         print('Inserting data...')
         print('.....')
         stix_json_objects = self._read_stix_objects_json(data_path)
-        insert_generator = StixInsertGenerator(stix_json_objects)
+        insert_generator = StixInsertGenerator(stix_json_objects,ignore_conditions)
         self._migrate_stix_objects(insert_generator)
         self._migrate_stix_relationships(insert_generator)
         self._migrate_kill_chain_phases(insert_generator)

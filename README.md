@@ -164,7 +164,8 @@ INFO:utils.queries:
 INFO:utils.queries:Total groups 4
 
 ```
-If fewer TTPs are supplied, then there's a greater chance to map TTPs to many more threat groups. For example, just looking at T1189 results in 24 different threat groups:
+If fewer TTPs are supplied, then there's a greater chance to map TTPs to many more threat groups. 
+For example, just looking at T1189 results in 24 different threat groups:
 
 ```
 python explorer.py --infer_group --ttp T1189
@@ -172,11 +173,64 @@ python explorer.py --infer_group --ttp T1189
 The same command will also check if a TTP exists in TypeDB CTI. In this example, T1234 doesn't exist:
 ```
 python explorer.py --infer_group --ttp T1234
+
 ```
 In this case, the Explorer Utility throws the following error: 
 
 ```
 ERROR:utils.queries:TTP T1234 not in database
+```
+
+It is very important to understand the associations.
+
+For example, this query:
+
+```
+python explorer.py --infer_group --ttp T1189 T1068
+```
+
+Returns 5 groups including APT32.
+
+But when including the general technique T1222:
+```
+python explorer.py --infer_group --ttp T1189 T1068 T1222
+```
+No groups are returned. However, if the right sub-technique is specified: 
+
+```
+python explorer.py --infer_group --ttp T1189 T1068 T1222.002
+```
+
+APT32 is returned as the only possible threat group. 
+
+Basic information about a technique can be obtained with this command: 
+
+```
+python explorer.py -get_info -ttp T1548
+```
+
+```
+INFO:utils.queries:
++-------+-----------------------------------+--------------------------+--------------------------+
+| TTP   | name                              | created                  | modified                 |
++=======+===================================+==========================+==========================+
+| T1548 | Abuse Elevation Control Mechanism | 2020-01-30T13:58:14.373Z | 2022-05-11T14:00:00.188Z |
++-------+-----------------------------------+--------------------------+--------------------------+
+```
+
+Basic information of a sub-technique is returned with:
+
+```
+python explorer.py -get_info -ttp T1548.001
+```
+
+```
+INFO:utils.queries:
++-----------+-------------------+--------------------------+--------------------------+
+| TTP       | name              | created                  | modified                 |
++===========+===================+==========================+==========================+
+| T1548.001 | Setuid and Setgid | 2020-01-30T14:11:41.212Z | 2022-05-11T14:00:00.188Z |
++-----------+-------------------+--------------------------+--------------------------+
 ```
 
 ### General Statistics of Key Entities
@@ -185,6 +239,7 @@ The Explorer Utility also provides the ability to display general information ab
 ```
 python explorer.py --stats
 ```
+
 This command will list the number of instances for a few key entity types: 
 
 ```
@@ -194,6 +249,43 @@ INFO:utils.queries:Total Mitre Techniques 659
 INFO:utils.queries:Total Mitre Sub Techniques 767
 INFO:utils.queries:Total Malware 577
 INFO:utils.queries:Total Tools 75
+```
+
+### Unique techniques associated to intrusion sets
+
+This is a very good metric to assess how a TTP can refer to only one Intrusion Set.
+
+```
+python explorer.py --ttp_scores --limit 2 --sort as
+```
+
+```
+INFO:utils.queries:
++-------+--------------------+
+| TTP   |   Intrusion counts |
++=======+====================+
+| T1218 |                  1 |
++-------+--------------------+
+| T1621 |                  1 |
++-------+--------------------+
+
+```
+
+And viceversa which ones are more widely used.
+
+```
+python explorer.py --ttp_scores --limit 2 --sort desc
+```
+
+```
+INFO:utils.queries:
++-------+--------------------+
+| TTP   |   Intrusion counts |
++=======+====================+
+| T1105 |                 69 |
++-------+--------------------+
+| T1027 |                 67 |
++-------+--------------------+
 ```
 
 ## Community
