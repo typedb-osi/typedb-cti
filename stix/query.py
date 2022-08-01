@@ -81,15 +81,18 @@ class StixInsertGenerator:
             stix_object_type = stix_object['type']
 
             skip_check = False
-            #skip the object if if deprecated which is default behaviour
+            # Don't insert the the object if it's deprecated. Default behaviour is that deprecated objects get loaded.
             for check in self.ignore_conditions:
                 # atomic filter check
                 conditions = []
                 for attr_name in check.keys():
+                    # if mitre_deprecated is set to "true", then "attr_name" will be "x_mitre_deprecated"
+                    print(attr_name)
                     if attr_name in stix_object:
+                        print(check)
                         atom_check = stix_object[attr_name] == check[attr_name]
                         conditions.append(atom_check)
-                # we can skip the entire object
+                # if stix_object includes "x_mitre_deprecated=True", so we can skip the entire object
                 if all(conditions): 
                     
                     skip_check = True

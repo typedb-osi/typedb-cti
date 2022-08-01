@@ -182,7 +182,8 @@ ERROR:utils.queries:TTP T1234 not in database
 ```
 
 It is very important to understand the associations.
-For example this query:
+
+For example, this query:
 
 ```
 python explorer.py --infer_group --ttp T1189 T1068
@@ -190,19 +191,20 @@ python explorer.py --infer_group --ttp T1189 T1068
 
 Returns 5 groups including APT32.
 
-But if you include the general technique T1222:
+But when including the general technique T1222:
 ```
 python explorer.py --infer_group --ttp T1189 T1068 T1222
 ```
-There are no groups. But specify the right sub tecnique:
+No groups are returned. However, if the right sub-technique is specified: 
 
 ```
 python explorer.py --infer_group --ttp T1189 T1068 T1222.002
 ```
 
-And you wil find that APT32 is the only threat group possible.
+APT32 is returned as the only possible threat group. 
 
-You can get basic information about a technique:
+Basic information about a technique can be obtained with this command: 
+
 ```
 python explorer.py -get_info -ttp T1548
 ```
@@ -216,7 +218,7 @@ INFO:utils.queries:
 +-------+-----------------------------------+--------------------------+--------------------------+
 ```
 
-or of a sub technique:
+Basic information of a sub-technique is returned with:
 
 ```
 python explorer.py -get_info -ttp T1548.001
