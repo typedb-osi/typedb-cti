@@ -41,6 +41,9 @@ parser.add_argument('--infer_group', dest='infer_group', default=False, action="
 parser.add_argument('--ttp_scores', dest='ttp_scores', default=False, action="store_true",
                     help='Infer group from relationships.')
 
+parser.add_argument('--communities', dest='communities', default=False, action="store_true",
+                    help='Infer group from relationships.')
+
 parser.add_argument('--sort', dest='sort', default='asc',help='Sort ascending or descending')
 
 parser.add_argument('--limit', dest='limit',type=int,default=100,help='Limit max rows')
@@ -71,3 +74,7 @@ if args.infer_group:
     else:
         ti = TiExplorer(args.uri,args.database,ignoreRevoked=args.revoked)
         ti.ttp_to_intrusion(args.ttp)
+
+if args.communities:
+    ti = TiExplorer(args.uri,args.database,ignoreRevoked=args.revoked)
+    ti.get_communities(sort_by=args.sort,limit=args.limit)
