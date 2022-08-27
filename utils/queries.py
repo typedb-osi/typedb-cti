@@ -33,7 +33,8 @@ logger = logging.getLogger(__name__)
 from operator import itemgetter
 
 import pandas as pd
-
+import networkx.algorithms.community as nx_comm
+from networkx.algorithms import bipartite
 
 class TiExplorer:
     '''
@@ -261,4 +262,82 @@ class TiExplorer:
                 
                 total_tools = read_transaction.query().match_aggregate("match $x isa tool; get $x; count;").get().as_int()
                 logger.info('Total Tools %d' % total_tools)
+
+    def get_communities(self,sort_by ='desc',limit = 5):
+        with self.client.session(self.database, SessionType.DATA) as session:
+            ## get various count stats
+            with session.transaction(TransactionType.READ) as read_transaction:
+
+                if self._ignoreRevoked:
+                    revoke_flag = '$ap has revoked false;'
+                else:
+                    revoke_flag = '\n'
+
+                query = f'match\
+                        $exref isa external-reference, has source-name "mitre-attack", has external-id like "T[0-9]+";\
+                        $exref has external-id $exid;\
+                        $ap isa attack-pattern, has name $ap_name;\
+                        {revoke_flag}\
+                        $in isa intrusion-set, has alias $in_alias;\
+                        $in has name $in_name;\
+                        $rel (referencing: $ap, referenced: $exref) isa external-referencing;\
+                        $use (used: $ap, used-by: $in) isa use;\
+                        get $ap_name,$exid,$in_name;'
+
+                pairs_iter = read_transaction.query().match(query)
+
+                dg= nx.Graph()
+                    
+                for p in pairs_iter:
+                    t_name = p.get('ap_name').get_value()
+                    t_id = p.get('exid').get_value()
+                    group_name = p.get('in_name').get_value() 
+
+                    dg.add_node(t_id,name = t_name, type='attack-pattern', bipartite=0)
+                    dg.add_node(group_name, type='intrusion-set', bipartite=1)
+                    dg.add_edge(t_id, group_name)
+
+                logger.info('Total links %d ' % len(dg.edges))
+                logger.info('Total nodes %d ' % len(dg.nodes))
+
+                logger.info('Graph is connected %s ' % nx.is_connected(dg))
+                logger.info('Graph is bipartite %s ' % nx.is_bipartite(dg))
+                #logger.info('Graph is semiconnected %d ' % nx.is_semiconnected(dg.nodes))
+                #logger.info('Graph is biconnected %d ' % nx.is_biconnected(dg.nodes))
+
+                degree_dict=nx.degree_centrality(dg)
                 
+                centrality = []
+                for node in degree_dict.keys():
+                    if dg.nodes[node]['type'] == 'intrusion-set':
+                        centrality.append({'Threat Group':node,'Centrality':degree_dict[node] })
+
+                data_df = pd.DataFrame(centrality)
+                if sort_by == 'asc':
+                    data_df.sort_values(by='Centrality',inplace=True,ascending=True)
+                else:
+                    data_df.sort_values(by='Centrality',inplace=True,ascending=False)
+
+                table_list = data_df.head(limit).values.tolist()
+
+                cc = [len(c) for c in sorted(nx.connected_components(dg), key=len, reverse=True)]
+
+                logger.info('There are %d connected components' % len(cc))
+                logger.info('Total connected nodes %d' % sum(cc))
+
+                lv_comms = nx_comm.louvain_communities(dg, seed=1)
+
+                logger.info('Total communities %d' % len(lv_comms))
+
+                tec_nodes, group_nodes = bipartite.sets(dg)
+
+                logger.info('Total techniques %d' % len(tec_nodes))
+                logger.info('Total threat groups %d' % len(group_nodes))
+
+                logger.info('Bipartite density %.2f of techniques' % bipartite.density(dg, tec_nodes))
+                logger.info('Bipartite density %.2f of actors' % bipartite.density(dg, group_nodes))
+                logger.info('\n'+tabulate(table_list, data_df.columns, tablefmt="grid"))  
+
+                c = bipartite.color(dg)
+
+
