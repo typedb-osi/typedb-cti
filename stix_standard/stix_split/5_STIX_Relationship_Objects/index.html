@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html"/>
+<meta content="This document describes the STIX language for expressing cyber threat and observable information and defines its concepts and overall structure." name="description"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="Microsoft Word 15 (filtered)" name="Generator"/>
+<title>STIX Version 2.1</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Helvetica;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Courier;
+	panose-1:2 7 4 9 2 2 5 2 4 4;}
+@font-face
+	{font-family:"Tms Rmn";
+	panose-1:2 2 6 3 4 5 5 2 3 4;}
+@font-face
+	{font-family:Helv;
+	panose-1:2 11 6 4 2 2 2 3 2 4;}
+@font-face
+	{font-family:"New York";
+	panose-1:2 4 5 3 6 5 6 2 3 4;}
+@font-face
+	{font-family:System;
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:Batang;
+	panose-1:2 3 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Gothic";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:Dotum;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimHei;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:MingLiU;
+	panose-1:2 2 5 9 0 0 0 0 0 0;}
+@font-face
+	{font-family:Mincho;
+	panose-1:2 2 6 9 4 3 5 8 3 5;}
+@font-face
+	{font-family:Gulim;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:Century;
+	panose-1:2 4 6 4 5 5 5 2 3 4;}
+@font-face
+	{font-family:"Angsana New";
+	panose-1:2 2 6 3 5 4 5 2 3 4;}
+@font-face
+	{font-family:"Cordia New";
+	panose-1:2 11 3 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Mangal;
+	panose-1:2 4 5 3 5 2 3 3 2 2;}
+@font-face
+	{font-family:Latha;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Sylfaen;
+	panose-1:1 10 5 2 5 3 6 3 3 3;}
+@font-face
+	{font-family:Vrinda;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Raavi;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Shruti;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Sendnya;
+	panose-1:0 0 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Gautami;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Tunga;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:"Estrangelo Edessa";
+	panose-1:3 8 6 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Yu Gothic";
+	panose-1:2 11 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Calibri Light";
+	panose-1:2 15 3 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Palatino Linotype";
+	panose-1:2 4 5 2 5 5 5 3 3 4;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"Arial Unicode MS";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Segoe UI Emoji";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Liberation Sans";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+h1
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h2
+	{margin-top:.25in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h3
+	{margin-top:16.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:13.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h4
+	{margin-top:14.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h5
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h6
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	font-family:"Arial",sans-serif;
+	color:#666666;
+	font-weight:normal;
+	font-style:italic;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"Header Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"Footer Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+span.HeaderChar
+	{mso-style-name:"Header Char";
+	mso-style-link:Header;}
+span.FooterChar
+	{mso-style-name:"Footer Char";
+	mso-style-link:Footer;}
+span.msoIns
+	{mso-style-name:"";
+	text-decoration:underline;
+	color:red;}
+span.msoDel
+	{mso-style-name:"";
+	text-decoration:line-through;
+	color:green;}
+.MsoChpDefault
+	{font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+.MsoPapDefault
+	{line-height:115%;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+<body>
+<h1><a name="_cqhkqvhnlgfh"></a><span lang="EN">5 STIX Relationship Objects</span></h1>
+<p class="MsoNormal"><span lang="EN">STIX Relationship Objects (SROs) represent
+types of relationships used to describe CTI. The Generic Relationship SRO is
+used to describe many varied types of relationships, while the specific
+Sighting SRO contains additional properties to represent Sighting relationships.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Property information, relationship
+information, and examples are provided for each SRO defined below. Property
+information includes common properties as well as properties that are specific
+to each SRO. Because SROs cannot be the source or target of other SROs,
+relationship information is included but only to describe embedded
+relationships (e.g., </span><b><span lang="EN" style="font-family:Consolas">created_by_ref</span></b><span lang="EN">).</span></p>
+<h2><a name="_e2e1szrqfoan"></a><span lang="EN">5.1 Relationship</span></h2>
+<p class="MsoNormal"><b><span lang="EN">Type Name:</span></b><span lang="EN"> </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">relationship</span></p>
+<p class="MsoNormal"><span lang="EN" style="color:white;background:#9900FF"> </span></p>
+<p class="MsoNormal"><span lang="EN">The Relationship object is used to link
+together two SDOs or SCOs in order to describe how they are related to each
+other. If SDOs and SCOs are considered "nodes" or
+"vertices" in the graph, the Relationship Objects (SROs) represent
+"edges".</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">STIX defines many relationship types to link
+together SDOs and SCOs. These relationships are contained in the "Relationships"
+table under each SDO and SCO definition. Relationship types defined in the
+specification <b>SHOULD </b>be used to ensure consistency. An example of a
+specification-defined relationship is that an </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">indicator</span><span lang="EN"> </span><span lang="EN" style="font-family:Consolas;color:#073763;
+background:#CFE2F3">indicates</span><span lang="EN"> a </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">campaign</span><span lang="EN">. That relationship type is listed in the Relationships section of the
+Indicator SDO definition.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">STIX also allows relationships from any SDO or
+SCO to any SDO or SCO that have not been defined in this specification. These
+relationships <b>MAY </b>use the </span><span lang="EN" style="font-family:Consolas;
+color:#073763;background:#CFE2F3">related-to</span><span lang="EN"> relationship
+type or <b>MAY </b>use a user-defined relationship type. As an example, a user
+might want to link </span><span lang="EN" style="font-family:Consolas;color:#C7254E;
+background:#F9F2F4">malware</span><span lang="EN"> directly to a </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">tool</span><span lang="EN">. They can do so using </span><span lang="EN" style="font-family:Consolas;
+color:#073763;background:#CFE2F3">related-to</span><span lang="EN"> to say that
+the Malware is related to the Tool but not describe how, or they could use </span><span lang="EN" style="font-family:Consolas;color:#073763;background:#CFE2F3">delivered-by</span><span lang="EN"> (a user-defined name they determined) to indicate more detail.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Note that some relationships in STIX may seem
+like "shortcuts". For example, an Indicator doesn't really detect a
+Campaign: it detects activity (Attack Patterns, Malware, Infrastructure, etc.)
+that are often used by that campaign. While some analysts might want all of the
+source data and think that shortcuts are misleading, in many cases it's helpful
+to provide just the key points (shortcuts) and leave out the low-level details.
+In other cases, the low-level analysis may not be known or sharable, while the
+high-level analysis is. For these reasons, relationships that might appear to
+be "shortcuts" are not excluded from STIX.</span></p>
+<h3><a name="_sypzg7rvdvc1"></a><span lang="EN">5.1.1 Specification-Defined
+Relationships Summary</span></h3>
+<p class="MsoNormal"><span lang="EN">A relationship summary table for all
+specification-defined relationships can be found In Appendix B of this document
+The relationship summary table is provided as a convenience. If there is a
+discrepancy between the table and the relationships defined with each of the SDOs,
+then the relationships defined with the SDOs <b>MUST</b> be viewed as
+authoritative.​</span></p>
+<h3><a name="_al0fb8fcd9e7"></a><span lang="EN">5.1.2 Properties</span></h3>
+<table border="1" cellpadding="0" cellspacing="0" class="afff0" style="border-collapse:collapse;border:none" width="624">
+<tr>
+<td colspan="3" style="width:6.5in;border:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Required Common
+  Properties</span></b></p>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="width:6.5in;border:solid black 1.0pt;
+  border-top:none;background:#CFE2F3;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;color:black">type</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:
+  Consolas;color:black">spec_version</span></b><span lang="EN" style="color:black">,
+  </span><b><span lang="EN" style="font-family:Consolas;color:black">id</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:
+  Consolas;color:black">created</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:Consolas;color:black">modified</span></b></p>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="width:6.5in;border:solid black 1.0pt;
+  border-top:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Optional Common
+  Properties</span></b></p>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="width:6.5in;border:solid black 1.0pt;
+  border-top:none;background:#CFE2F3;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;color:black">created_by_ref</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:
+  Consolas;color:black">revoked</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:Consolas;color:black">labels</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:
+  Consolas;color:black">confidence</span></b><span lang="EN" style="color:black">,
+  </span><b><span lang="EN" style="font-family:Consolas;color:black">lang</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:
+  Consolas;color:black">external_references</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:Consolas;
+  color:black">object_marking_refs</span></b><span lang="EN" style="color:black">,
+  </span><b><span lang="EN" style="font-family:Consolas;color:black">granular_markings</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:
+  Consolas;color:black">extensions</span></b></p>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="width:6.5in;border:solid black 1.0pt;
+  border-top:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Not Applicable Common
+  Properties</span></b></p>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="width:6.5in;border:solid black 1.0pt;
+  border-top:none;background:#CFE2F3;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;color:black">defanged</span></b></p>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="width:6.5in;border:solid black 1.0pt;
+  border-top:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Relationship Specific
+  Properties</span></b></p>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="width:6.5in;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">relationship_type</span></b><span lang="EN">, </span><b><span lang="EN" style="font-family:Consolas">description</span></b><span lang="EN">, </span><b><span lang="EN" style="font-family:Consolas">source_ref</span></b><span lang="EN">, </span><b><span lang="EN" style="font-family:Consolas">target_ref</span></b><span lang="EN">, </span><b><span lang="EN" style="font-family:Consolas">start_time</span></b><span lang="EN">, </span><b><span lang="EN" style="font-family:Consolas">stop_time</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.25pt;border:solid black 1.0pt;
+  border-top:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="195">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Property Name</span></b></p>
+</td>
+<td style="width:114.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="153">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Type</span></b></p>
+</td>
+<td style="width:207.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="276">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Description</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.25pt;border:solid black 1.0pt;
+  border-top:none;background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="195">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;color:black">type</span></b><span lang="EN" style="color:black"> (required)</span></p>
+</td>
+<td style="width:114.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="153">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">string</span></p>
+</td>
+<td style="width:207.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="276">
+<p class="MsoNormal"><span lang="EN" style="color:black">The value of this
+  property <b>MUST</b> be </span><span lang="EN" style="font-family:Consolas;
+  color:#073763;background:#CFE2F3">relationship</span><span lang="EN" style="color:black">.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.25pt;border:solid black 1.0pt;
+  border-top:none;background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="195">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;color:black">relationship_type</span></b><span lang="EN" style="color:black"> (required)</span></p>
+</td>
+<td style="width:114.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="153">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">string</span></p>
+</td>
+<td style="width:207.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="276">
+<p class="MsoNormal"><span lang="EN" style="color:black">The name used to
+  identify the type of Relationship. This value <b>SHOULD </b>be an exact value
+  listed in the relationships for the source and target SDO, but <b>MAY </b>be
+  any string. The value of this property <b>MUST </b>be in ASCII and is limited
+  to characters az (lowercase ASCII), 09, and hyphen (-).</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.25pt;border:solid black 1.0pt;
+  border-top:none;background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="195">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;color:black">description</span></b><span lang="EN" style="color:black"> (optional)</span></p>
+</td>
+<td style="width:114.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="153">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">string</span></p>
+</td>
+<td style="width:207.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="276">
+<p class="MsoNormal"><span lang="EN" style="color:black">A description that
+  provides more details and context about the Relationship, potentially
+  including its purpose and its key characteristics.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.25pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="195">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">source_ref</span></b><span lang="EN"> (required)</span></p>
+</td>
+<td style="width:114.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="153">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">identifier</span></p>
+</td>
+<td style="width:207.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="276">
+<p class="MsoNormal"><span lang="EN">The </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> of the source (from)
+  object. The value <b>MUST</b> be an ID reference to an SDO or SCO (i.e., it
+  cannot point to an SRO, Bundle, Language Content, or Marking Definition).</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.25pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="195">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">target_ref</span></b><span lang="EN"> (required)</span></p>
+</td>
+<td style="width:114.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="153">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">identifier</span></p>
+</td>
+<td style="width:207.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="276">
+<p class="MsoNormal"><span lang="EN">The </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> of the target (to)
+  object. The value <b>MUST</b> be an ID reference to an SDO or SCO (i.e., it
+  cannot point to an SRO, Bundle, Language Content, or Marking Definition).</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.25pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="195">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">start_time</span></b><span lang="EN"> (optional)</span></p>
+</td>
+<td style="width:114.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="153">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">timestamp</span></p>
+</td>
+<td style="width:207.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="276">
+<p class="MsoNormal"><span lang="EN">This optional timestamp represents the earliest
+  time at which the Relationship between the objects exists. If this property
+  is a future timestamp, at the time the </span><b><span lang="EN" style="font-family:Consolas">start_time</span></b><span lang="EN"> property is
+  defined, then this represents an estimate by the producer of the intelligence
+  of the earliest time at which relationship will be asserted to be true. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">If it is not specified, then the earliest
+  time at which the relationship between the objects exists is not defined.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.25pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="195">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">stop_time</span></b><span lang="EN"> (optional)</span></p>
+</td>
+<td style="width:114.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="153">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">timestamp</span></p>
+</td>
+<td style="width:207.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="276">
+<p class="MsoNormal"><span lang="EN">The latest time at which the Relationship
+  between the objects exists. If this property is a future timestamp, at the
+  time the </span><b><span lang="EN" style="font-family:Consolas">stop_time</span></b><span lang="EN"> property is defined, then this represents an estimate by the
+  producer of the intelligence of the latest time at which relationship will be
+  asserted to be true. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">If </span><b><span lang="EN" style="font-family:
+  Consolas">start_time</span></b><span lang="EN"> and </span><b><span lang="EN" style="font-family:Consolas">stop_time</span></b><span lang="EN"> are both
+  defined, then </span><b><span lang="EN" style="font-family:Consolas">stop_time</span></b><span lang="EN"> <b>MUST</b> be later than the </span><b><span lang="EN" style="font-family:Consolas">start_time</span></b><span lang="EN"> value. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">If </span><b><span lang="EN" style="font-family:
+  Consolas">stop_time</span></b><span lang="EN"> is not specified, then the
+  latest time at which the relationship between the objects exists is either
+  not known, not disclosed, or has no defined stop time.</span></p>
+</td>
+</tr>
+</table>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<h3><a name="_pw1glqtz6mh2"></a><span lang="EN">5.1.3 Relationships</span></h3>
+<p class="MsoNormal"><span lang="EN">There are no relationships explicitly defined
+between the Relationship object and other STIX Objects, other than the embedded
+relationships listed below. These embedded relationships are listed by property
+name along with their corresponding target. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">The only type of relationship that can point
+to a Relationship Object is the embedded relationship on the Note, Opinion, and
+Language Content Objects.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<table border="0" cellpadding="0" cellspacing="0" class="afff1" style="border-collapse:collapse" width="623">
+<tr>
+<td colspan="2" style="width:467.0pt;border:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="623">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Embedded
+  Relationships</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:187.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="249">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">created_by_ref</span></b></p>
+</td>
+<td style="width:280.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="373">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">identifier</span><span lang="EN"> (of type </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">identity</span><span lang="EN">)</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:187.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="249">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">object_marking_refs</span></b></p>
+</td>
+<td style="width:280.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="373">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">list</span><span lang="EN"> of type </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">identifier</span><span lang="EN"> (of type </span><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">marking-definition</span><span lang="EN">)</span></p>
+</td>
+</tr>
+</table>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<h2><a name="_a795guqsap3r"></a><span lang="EN">5.2 Sighting</span></h2>
+<p class="MsoNormal"><b><span lang="EN">Type Name:</span></b><span lang="EN"> </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">sighting</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">A Sighting denotes the belief that something
+in CTI (e.g., an indicator, malware, tool, threat actor, etc.) was seen.
+Sightings are used to track who and what are being targeted, how attacks are
+carried out, and to track trends in attack behavior.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">The Sighting relationship object is a special
+type of SRO; it is a relationship that contains extra properties not present on
+the Generic Relationship object. These extra properties are included to
+represent data specific to sighting relationships (e.g., </span><b><span lang="EN" style="font-family:Consolas">count</span></b><span lang="EN">,
+representing how many times something was seen), but for other purposes a
+Sighting can be thought of as a Relationship with a name of
+"sighting-of". Sighting is captured as a relationship because you
+cannot have a sighting unless you have something that has been sighted.
+Sighting does not make sense without the relationship to what was sighted.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Sighting relationships relate three aspects of
+the sighting:</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">What was sighted, such as the Indicator, Malware, Campaign, or other
+SDO (</span><b><span lang="EN" style="font-family:Consolas">sighting_of_ref</span></b><span lang="EN">)</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">Who sighted it and/or where it was sighted, represented as an Identity
+(</span><b><span lang="EN" style="font-family:Consolas">where_sighted_refs</span></b><span lang="EN">)</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">What was actually seen on systems and networks, represented as Observed
+Data (</span><b><span lang="EN" style="font-family:Consolas">observed_data_refs</span></b><span lang="EN">)</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">What was sighted is required; a sighting does
+not make sense unless you say what you saw. Who sighted it, where it was
+sighted, and what was actually seen are optional. In many cases it is not
+necessary to provide that level of detail in order to provide value.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Sightings are used whenever any SDO has been
+"seen". In some cases, the object creator wishes to convey very
+little information about the sighting; the details might be sensitive, but the
+fact that they saw a malware instance or threat actor could still be very
+useful. In other cases, providing the details may be helpful or even necessary;
+saying exactly which of the 1000 IP addresses in an indicator were sighted is
+helpful when tracking which of those IPs is still malicious.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Sighting is distinct from Observed Data in
+that Sighting is an intelligence assertion ("I saw this threat
+actor") while Observed Data is simply information ("I saw this
+file"). When you combine them by including the linked Observed Data (</span><b><span lang="EN" style="font-family:Consolas">observed_data_refs</span></b><span lang="EN">) from a Sighting, you can say "I saw this file, and that makes me
+think I saw this threat actor".</span></p>
+<h3><a name="_7p0n81ikux8f"></a><span lang="EN">5.2.1 Properties</span></h3>
+<table border="1" cellpadding="0" cellspacing="0" class="afff2" style="border-collapse:collapse;border:none" width="624">
+<tr>
+<td colspan="3" style="width:467.95pt;border:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Required Common
+  Properties</span></b></p>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="width:467.95pt;border:solid black 1.0pt;
+  border-top:none;background:#CFE2F3;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;color:black">type</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:
+  Consolas;color:black">spec_version</span></b><span lang="EN" style="color:black">,
+  </span><b><span lang="EN" style="font-family:Consolas;color:black">id</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:
+  Consolas;color:black">created</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:Consolas;color:black">modified</span></b></p>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="width:467.95pt;border:solid black 1.0pt;
+  border-top:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Optional Common
+  Properties</span></b></p>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="width:467.95pt;border:solid black 1.0pt;
+  border-top:none;background:#CFE2F3;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;color:black">created_by_ref</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:
+  Consolas;color:black">revoked</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:Consolas;color:black">labels</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:
+  Consolas;color:black">confidence</span></b><span lang="EN" style="color:black">,
+  </span><b><span lang="EN" style="font-family:Consolas;color:black">lang</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:
+  Consolas;color:black">external_references</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:Consolas;
+  color:black">object_marking_refs</span></b><span lang="EN" style="color:black">,
+  </span><b><span lang="EN" style="font-family:Consolas;color:black">granular_markings</span></b><span lang="EN" style="color:black">, </span><b><span lang="EN" style="font-family:
+  Consolas;color:black">extensions</span></b></p>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="width:467.95pt;border:solid black 1.0pt;
+  border-top:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Not Applicable Common
+  Properties</span></b></p>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="width:467.95pt;border:solid black 1.0pt;
+  border-top:none;background:#CFE2F3;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;color:black">defanged</span></b></p>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="width:467.95pt;border:solid black 1.0pt;
+  border-top:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Sighting Specific
+  Properties</span></b></p>
+</td>
+</tr>
+<tr>
+<td colspan="3" style="width:467.95pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="624">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">description</span></b><span lang="EN">, </span><b><span lang="EN" style="font-family:Consolas">first_seen</span></b><span lang="EN">, </span><b><span lang="EN" style="font-family:Consolas">last_seen</span></b><span lang="EN">, </span><b><span lang="EN" style="font-family:Consolas">count</span></b><span lang="EN">, </span><b><span lang="EN" style="font-family:Consolas">sighting_of_ref</span></b><span lang="EN">, </span><b><span lang="EN" style="font-family:Consolas">observed_data_refs</span></b><span lang="EN">, </span><b><span lang="EN" style="font-family:Consolas">where_sighted_refs</span></b><span lang="EN">, </span><b><span lang="EN" style="font-family:Consolas">summary</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.95pt;border:solid black 1.0pt;
+  border-top:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="196">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Property Name</span></b></p>
+</td>
+<td style="width:127.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="170">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Type</span></b></p>
+</td>
+<td style="width:193.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="258">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Description</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.95pt;border:solid black 1.0pt;
+  border-top:none;background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="196">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;color:black">type</span></b><span lang="EN" style="color:black"> (required)</span></p>
+</td>
+<td style="width:127.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="170">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">string</span></p>
+</td>
+<td style="width:193.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="258">
+<p class="MsoNormal"><span lang="EN" style="color:black">The value of this
+  property <b>MUST</b> be </span><span lang="EN" style="font-family:Consolas;
+  color:#073763;background:#CFE2F3">sighting</span><span lang="EN" style="color:black">.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.95pt;border:solid black 1.0pt;
+  border-top:none;background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="196">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;color:black">description</span></b><span lang="EN" style="color:black"> (optional)</span></p>
+</td>
+<td style="width:127.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="170">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">string</span></p>
+</td>
+<td style="width:193.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="258">
+<p class="MsoNormal"><span lang="EN" style="color:black">A description that
+  provides more details and context about the Sighting.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.95pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="196">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">first_seen</span><span lang="EN"> </span></b><span lang="EN">(optional)</span></p>
+</td>
+<td style="width:127.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="170">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">timestamp</span></p>
+</td>
+<td style="width:193.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="258">
+<p class="MsoNormal"><span lang="EN">The beginning of the time window during
+  which the SDO referenced by the </span><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">sighting_of_ref</span><span lang="EN">
+  property was sighted.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.95pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="196">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">last_seen</span></b><span lang="EN"> (optional)</span></p>
+</td>
+<td style="width:127.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="170">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">timestamp</span></p>
+</td>
+<td style="width:193.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="258">
+<p class="MsoNormal"><span lang="EN">The end of the time window during which the
+  SDO referenced by the </span><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">sighting_of_ref</span><span lang="EN">
+  property was sighted.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">If this property and the </span><b><span lang="EN" style="font-family:Consolas">first_seen</span></b><span lang="EN">
+  property are both defined, then this property <b>MUST</b> be greater than or
+  equal to the timestamp in the </span><b><span lang="EN" style="font-family:
+  Consolas">first_seen</span></b><span lang="EN"> property.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.95pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="196">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">count</span></b><span lang="EN"> (optional)</span></p>
+</td>
+<td style="width:127.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="170">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">integer</span></p>
+</td>
+<td style="width:193.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="258">
+<p class="MsoNormal"><span lang="EN">If present, this <b>MUST</b> be an integer
+  between 0 and 999,999,999 inclusive and represents the number of times the
+  SDO referenced by the </span><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">sighting_of_ref</span><span lang="EN">
+  property was sighted.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Observed Data has a similar property called </span><b><span lang="EN" style="font-family:Consolas">number_observed</span></b><span lang="EN">,
+  which refers to the number of times the data was observed. These counts refer
+  to different concepts and are distinct.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">For example, a single sighting of a DDoS bot
+  might have many millions of observations of the network traffic that it
+  generates. Thus, the Sighting </span><b><span lang="EN" style="font-family:
+  Consolas">count</span></b><span lang="EN"> would be 1 (the bot was observed
+  once) but the Observed Data </span><b><span lang="EN" style="font-family:Consolas">number_observed</span></b><span lang="EN"> would be much higher.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">As another example, a sighting with a count
+  of 0 can be used to express that an indicator was not seen at all.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.95pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="196">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">sighting_of_ref</span></b><span lang="EN"> (required)</span></p>
+</td>
+<td style="width:127.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="170">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">identifier</span></p>
+</td>
+<td style="width:193.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="258">
+<p class="MsoNormal"><span lang="EN">An ID reference to the SDO that was sighted
+  (e.g., Indicator or Malware). </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">For example, if this is a Sighting of an
+  Indicator, that Indicators ID would be the value of this property.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">This property <b>MUST </b>reference only an
+  SDO.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.95pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="196">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">observed_data_refs</span></b><span lang="EN"> (optional)</span></p>
+</td>
+<td style="width:127.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="170">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">list</span><span lang="EN"> of type </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">identifier </span></p>
+</td>
+<td style="width:193.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="258">
+<p class="MsoNormal"><span lang="EN">A list of ID references to the Observed Data
+  objects that contain the raw cyber data for this Sighting.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">For example, a Sighting of an Indicator with
+  an IP address could include the Observed Data for the network connection that
+  the Indicator was used to detect.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">This property <b>MUST </b>reference only
+  Observed Data SDOs.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.95pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="196">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">where_sighted_refs</span></b><span lang="EN"> (optional)</span></p>
+</td>
+<td style="width:127.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="170">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">list</span><span lang="EN"> of type </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">identifier</span></p>
+</td>
+<td style="width:193.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="258">
+<p class="MsoNormal"><span lang="EN">A list of ID references to the Identity or
+  Location objects describing the entities or types of entities that saw the
+  sighting.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Omitting the </span><b><span lang="EN" style="font-family:Consolas">where_sighted_refs</span></b><span lang="EN">
+  property does not imply that the sighting was seen by the object creator. To
+  indicate that the sighting was seen by the object creator, an Identity
+  representing the object creator should be listed in </span><b><span lang="EN" style="font-family:Consolas">where_sighted_refs</span></b><span lang="EN">.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">This property <b>MUST </b>reference only
+  Identity or Location SDOs.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:146.95pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="196">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">summary</span></b><span lang="EN"> (optional)</span></p>
+</td>
+<td style="width:127.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="170">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">boolean</span></p>
+</td>
+<td style="width:193.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="258">
+<p class="MsoNormal"><span lang="EN">The </span><b><span lang="EN" style="font-family:Consolas">summary</span></b><span lang="EN"> property
+  indicates whether the Sighting should be considered summary data. Summary
+  data is an aggregation of previous Sightings reports and should not be
+  considered primary source data. Default value is </span><span lang="EN" style="font-family:Consolas;color:#073763;background:#CFE2F3">false</span><span lang="EN">.</span></p>
+</td>
+</tr>
+</table>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<h3><a name="_jwntpfv8ddt4"></a><span lang="EN">5.2.2 Relationships</span></h3>
+<p class="MsoNormal"><span lang="EN">There are no relationships explicitly defined
+between the Sighting object and other STIX Objects, other than the embedded
+relationships listed below. These embedded relationships are listed by property
+name along with their corresponding target. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">The only type of relationship that can point
+to a Sighting Object is the embedded relationship on the Note, Opinion, and
+Language Content Objects.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<table border="0" cellpadding="0" cellspacing="0" class="afff3" style="border-collapse:collapse" width="608">
+<tr>
+<td colspan="2" style="width:456.0pt;border:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="608">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Embedded
+  Relationships</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:156.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="208">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">created_by_ref</span></b></p>
+</td>
+<td style="width:300.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="400">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">identifier</span><span lang="EN"> (of type </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">identity</span><span lang="EN">)</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:156.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="208">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">object_marking_refs</span></b></p>
+</td>
+<td style="width:300.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="400">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">list</span><span lang="EN"> of type </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">identifier</span><span lang="EN"> (of type </span><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">marking-definition</span><span lang="EN">)</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:156.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="208">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">sighting_of_ref</span></b></p>
+</td>
+<td style="width:300.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="400">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">identifier</span><span lang="EN"> (of type SDO)</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:156.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="208">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">observed_data_refs</span></b></p>
+</td>
+<td style="width:300.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="400">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">list</span><span lang="EN"> of type </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">identifier</span><span lang="EN"> (of type </span><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">observed-data</span><span lang="EN">)</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:156.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="208">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">where_sighted_refs</span></b></p>
+</td>
+<td style="width:300.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="400">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">list</span><span lang="EN"> of type </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">identifier</span><span lang="EN"> (of type </span><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">identity</span><span lang="EN">)</span></p>
+</td>
+</tr>
+</table>
+<p class="MsoNormal"><span lang="EN">​</span></p>
+<p class="MsoNormal"><b><span lang="EN">Examples</span></b></p>
+<p class="MsoNormal"><span lang="EN">Sighting of Indicator, without Observed Data</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "type":
+"sighting",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "id":
+"sighting--ee20065d-2555-424f-ad9e-0f8428623c75",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"created_by_ref":
+"identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "created":
+"2016-04-06T20:08:31.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "modified":
+"2016-04-06T20:08:31.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"sighting_of_ref":
+"indicator--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;background:#CFE2F3"> </span></p>
+<p class="MsoNormal"><span lang="EN">Sighting of Indicator, with Observed Data
+(what exactly was seen) and where it was seen</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">[</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  {</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "type":
+"sighting",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "id":
+"sighting--ee20065d-2555-424f-ad9e-0f8428623c75",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"created_by_ref":
+"identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "created":
+"2016-04-06T20:08:31.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "modified":
+"2016-04-06T20:08:31.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "first_seen":
+"2015-12-21T19:00:00Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "last_seen":
+"2015-12-21T19:00:00Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "count": 50,</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"sighting_of_ref":
+"indicator--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"observed_data_refs":
+["observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"],</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "where_sighted_refs":
+["identity--b67d30ff-02ac-498a-92f9-32f845f448ff"]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  },</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  {</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "type":
+"observed-data",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "id":
+"observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"created_by_ref":
+"identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "created":
+"2016-04-06T19:58:16.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "modified":
+"2016-04-06T19:58:16.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"first_observed": "2015-12-21T19:00:00Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"last_observed": "2016-04-06T19:58:16Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"number_observed": 50,</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"object_refs": [</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">     
+"file--30038539-3eb6-44bc-a59e-d0d3fe84695a"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    ]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">]</span></p>
+<span lang="EN" style='font-size:10.0pt;line-height:115%;font-family:"Arial",sans-serif'><br clear="all" style="page-break-before:always"/>
+</span>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<div align="center" class="MsoNormal" style="text-align:center"><span lang="EN">
+<hr align="center" size="2" width="100%"/>
+</span></div>
+
+</body>
+</html>

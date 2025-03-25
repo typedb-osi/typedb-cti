@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html"/>
+<meta content="This document describes the STIX language for expressing cyber threat and observable information and defines its concepts and overall structure." name="description"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="Microsoft Word 15 (filtered)" name="Generator"/>
+<title>STIX Version 2.1</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Helvetica;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Courier;
+	panose-1:2 7 4 9 2 2 5 2 4 4;}
+@font-face
+	{font-family:"Tms Rmn";
+	panose-1:2 2 6 3 4 5 5 2 3 4;}
+@font-face
+	{font-family:Helv;
+	panose-1:2 11 6 4 2 2 2 3 2 4;}
+@font-face
+	{font-family:"New York";
+	panose-1:2 4 5 3 6 5 6 2 3 4;}
+@font-face
+	{font-family:System;
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:Batang;
+	panose-1:2 3 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Gothic";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:Dotum;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimHei;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:MingLiU;
+	panose-1:2 2 5 9 0 0 0 0 0 0;}
+@font-face
+	{font-family:Mincho;
+	panose-1:2 2 6 9 4 3 5 8 3 5;}
+@font-face
+	{font-family:Gulim;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:Century;
+	panose-1:2 4 6 4 5 5 5 2 3 4;}
+@font-face
+	{font-family:"Angsana New";
+	panose-1:2 2 6 3 5 4 5 2 3 4;}
+@font-face
+	{font-family:"Cordia New";
+	panose-1:2 11 3 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Mangal;
+	panose-1:2 4 5 3 5 2 3 3 2 2;}
+@font-face
+	{font-family:Latha;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Sylfaen;
+	panose-1:1 10 5 2 5 3 6 3 3 3;}
+@font-face
+	{font-family:Vrinda;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Raavi;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Shruti;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Sendnya;
+	panose-1:0 0 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Gautami;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Tunga;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:"Estrangelo Edessa";
+	panose-1:3 8 6 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Yu Gothic";
+	panose-1:2 11 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Calibri Light";
+	panose-1:2 15 3 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Palatino Linotype";
+	panose-1:2 4 5 2 5 5 5 3 3 4;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"Arial Unicode MS";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Segoe UI Emoji";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Liberation Sans";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+h1
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h2
+	{margin-top:.25in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h3
+	{margin-top:16.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:13.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h4
+	{margin-top:14.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h5
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h6
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	font-family:"Arial",sans-serif;
+	color:#666666;
+	font-weight:normal;
+	font-style:italic;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"Header Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"Footer Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+span.HeaderChar
+	{mso-style-name:"Header Char";
+	mso-style-link:Header;}
+span.FooterChar
+	{mso-style-name:"Footer Char";
+	mso-style-link:Footer;}
+span.msoIns
+	{mso-style-name:"";
+	text-decoration:underline;
+	color:red;}
+span.msoDel
+	{mso-style-name:"";
+	text-decoration:line-through;
+	color:green;}
+.MsoChpDefault
+	{font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+.MsoPapDefault
+	{line-height:115%;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+<body>
+<h1><a name="_p2sz1mp7z524"></a><span lang="EN">11 Customizing STIX (Deprecated)</span></h1>
+<p class="MsoNormal" style="border:none"><i><span lang="EN">The recommended method
+to extend STIX is defined by the STIX Extension mechanisms described in Section
+</span></i><span lang="EN"><a href="#_32j232tfvtly"><i><span style="color:#1155CC">7.3</span></i></a><i>.
+These new mechanisms replace the customization mechanisms defined in this section
+including three means to customize STIX: Custom Properties, Custom Objects and
+Custom Extensions. </i></span></p>
+<p class="MsoNormal" style="border:none"><b><i><span lang="EN">These mechanisms are
+retained for backward-compatibility and should not be used to implement any new
+extensions of the specification.</span></i></b></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">Custom Properties provide
+a mechanism and requirements for adding properties not defined by this
+specification to existing STIX Objects. Custom Objects, on the other hand,
+provides a mechanism and requirements to create custom STIX Objects (objects
+not defined by this specification). Custom Extensions provide a mechanism and
+requirements for the specification of extensions not defined by this
+specification on SCOs.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">A consumer that receives
+STIX content containing Custom Properties, Objects, or Extensions it does not
+understand <b>MAY</b> refuse to process the content or <b>MAY</b> ignore those
+properties or objects and continue processing the content.</span></p>
+<p class="MsoNormal" style="border:none"><i><span lang="EN"> </span></i></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">Producers of STIX content
+that contain Custom Properties, Objects or Extensions should recognize that
+consumers may not understand them and may ignore them. Producers should define
+any Custom Properties, Objects and Extensions they use, along with any rules
+for processing them, and make these definitions and rules accessible to any
+potential consumers. This specification does not specify a process for doing
+this. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Custom Properties <b>SHOULD</b> be used for
+cases where it is necessary to add one or more simple additional properties
+(i.e. key/value pairs) on an SCO. On the other hand, Custom Extensions <b>SHOULD</b>
+be used for cases where it is necessary to describe more complex additional
+properties (i.e., those with potentially multiple levels of hierarchy). As an
+example, a vendor-specific property that expresses some custom threat score for
+a File object should be added directly to the SCO as a custom property, whereas
+a set of properties that represent metadata around a new file system to the
+File object should be done as a custom extension.</span></p>
+<h2><a name="_8072zpptza86"></a><span lang="EN">11.1 Custom Properties
+(Deprecated)</span></h2>
+<p class="MsoNormal"><i><span lang="EN">Custom properties <b>SHOULD</b> be defined
+using the STIX Extension mechanism for <b>property-extension</b> as described
+in Section </span></i><span lang="EN"><a href="#_32j232tfvtly"><i><span style="color:#1155CC">7.3</span></i></a><i>.</i> </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">There will be cases where
+certain information exchanges can be improved by adding properties to STIX
+Objects and STIX Cyber Observable (SCO) Extensions that are neither specified
+nor reserved in this specification; these properties are called <b>Custom
+Properties</b>. This section provides guidance and requirements for how
+producers can use Custom Properties and how consumers should interpret them in
+order to extend STIX in an interoperable manner.</span></p>
+<h3><a name="_3a2x3jdr23tq"></a><span lang="EN">11.1.1 Requirements (Deprecated)</span></h3>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">A STIX Object <b>MAY</b> have any number of STIX
+Extensions containing one or more properties.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">Custom Property names <b>MUST</b> be in ASCII and <b>MUST</b>
+only contain the characters az (lowercase ASCII), 09, and underscore (_).</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">Custom Property names <b>SHOULD</b> start with
+"x_" followed by a source unique identifier (such as a domain name
+with dots replaced by underscores), an underscore and then the name. For
+example, </span><b><span lang="EN" style="font-family:Consolas">x_example_com_customfield</span></b><span lang="EN">. </span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">Custom Property names <b>MUST</b> have a minimum
+length of 3 ASCII characters.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">Custom Property names <b>MUST</b> be no longer than
+250 ASCII characters in length.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">Custom Property names that do not start with
+"x_" may be used in a future version of the specification for a
+different meaning. If compatibility with future versions of this specification
+is required, the "x_" prefix <b>MUST</b> be used.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">Custom Properties <b>SHOULD </b>only be used when
+there are no existing properties defined by the STIX specification that fulfils
+that need.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">For Custom Properties that use the </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">hex</span><span lang="EN"> type, the property name <b>MUST</b> end with '_hex'.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">For Custom Properties that use the </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">binary</span><span lang="EN"> type, the property name <b>MUST</b> end with '_bin'.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><b><span lang="EN">Examples</span></b></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">  ...,</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+"x_acme_org_risk_score": 10,</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+"x_acme_org_scoring": {</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">   
+"impact": "high",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">   
+"probability": "low"</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">  },</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">  ...</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+<h2><a name="_7f3c4jgkyhl3"></a><span lang="EN">11.2 Custom Objects (Deprecated)</span></h2>
+<p class="MsoNormal"><i><span lang="EN">Custom objects <b>SHOULD</b> be defined
+using the STIX Extension mechanism for <b>new SDO, new SCO or new SRO</b> as
+described in Section </span></i><span lang="EN"><a href="#_32j232tfvtly"><i><span style="color:#1155CC">7.3</span></i></a><i>. </i></span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">There will be cases where
+certain information exchanges can be improved by adding objects that are not
+specified nor reserved in this specification; these objects are called <b>Custom
+Objects</b>. This section provides guidance and requirements for how producers can
+use Custom Objects and how consumers should interpret them in order to extend
+STIX in an interoperable manner.</span></p>
+<h3><a name="_u7ks5xud8vj0"></a><span lang="EN">11.2.1 Requirements (Deprecated)</span></h3>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">Producers <b>MAY</b> include any number of Custom
+Objects in STIX content.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">Custom Objects <b>MUST</b> support the Common Properties
+as defined in section <a href="#_xzbicbtscatx"><span style="color:#1155CC">3.2</span></a>.
+</span></p>
+<p class="MsoNormal" style="margin-left:1.0in;text-indent:-.25in;border:none"><span lang="EN">○<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">Common property names <b>MUST NOT </b>be reused to
+represent the custom properties in the object.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">A Custom Object <b>MUST</b> have one or more properties.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">The name of a property of a Custom Object <b>MUST</b> be in ASCII and <b>MUST</b>
+only contain the characters az (lowercase ASCII), 09, and underscore (_). The
+"x_" prefix as described in section <a href="#_3a2x3jdr23tq"><span style="color:#1155CC">11.1.1</span></a> <b>MAY</b> be used.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">The name of a property of a Custom Object <b>MUST</b> have a minimum
+length of 3 ASCII characters.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">The name of a property of a Custom Object <b>MUST</b> be no longer than
+250 ASCII characters in length.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">The </span><b><span lang="EN" style="font-family:
+Consolas">type</span></b><span lang="EN"> property in a Custom Object <b>MUST</b>
+be in ASCII and <b>MUST</b> only contain the characters az (lowercase ASCII),
+09, and hyphen (-).</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">The </span><b><span lang="EN" style="font-family:
+Consolas">type</span></b><span lang="EN"> property <b>MUST NOT</b> contain a
+hyphen (-) character immediately following another hyphen (-) character.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">Custom Object names <b>MUST</b> have a minimum
+length of 3 ASCII characters.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">Custom Object names <b>MUST</b> be no longer than
+250 ASCII characters in length.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">The value of the </span><b><span lang="EN" style="font-family:Consolas">type</span></b><span lang="EN"> property in a Custom
+Object <b>SHOULD</b> start with "x-" followed by a source unique
+identifier (like a domain name with dots replaced by hyphens), a hyphen and
+then the name. For example, </span><span lang="EN" style="font-family:Consolas;
+color:#C7254E;background:#F9F2F4">x-example-com-customobject</span><span lang="EN">.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">A Custom Object whose name is not prefixed with
+"x-" may be used in a future version of the specification with a
+different meaning. Therefore, if compatibility with future versions of this
+specification is required, the "x-" prefix <b>MUST</b> be used.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">The value of the </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> property in a Custom
+Object <b>MUST</b> use the same format as the </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">identifier</span><span lang="EN"> type, namely, </span><span lang="EN" style="font-size:9.0pt;line-height:
+115%;font-family:Consolas;color:black;background:#EFEFEF">[object-type]--[UUID]</span><span lang="EN">.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">Custom Objects <b>SHOULD </b>only be used when
+there is no existing STIX Object defined by the STIX specification that fulfils
+that need.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><b><span lang="EN">Examples</span></b></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+"type": "bundle",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+"id": "bundle--f37aa79d-f5f5-4af7-874b-734d32c08c10",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+"objects": [</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">    {</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">     
+"type": "x-example-com-customobject",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">     
+"id":
+"x-example-com-customobject--4527e5de-8572-446a-a57a-706f15467461",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">     
+"created": "2016-08-01T00:00:00.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">     
+"modified": "2016-08-01T00:00:00.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">     
+"some_custom_stuff": 14,</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">     
+"other_custom_stuff": "hello"</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">    }</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">  ]</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}​</span></p>
+<h2><a name="_ct36xlv6obo7"></a><span lang="EN">11.3 Custom Object Extensions
+(Deprecated)</span></h2>
+<p class="MsoNormal"><i><span lang="EN">Custom Object Extensions <b>SHOULD</b> be
+defined using the STIX Extension mechanism for <b>property-extension</b> as
+described in Section </span></i><span lang="EN"><a href="#_32j232tfvtly"><i><span style="color:#1155CC">7.3</span></i></a><i>.</i> </span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><span lang="EN">In addition to the Predefined Cyber Observable
+Object extensions, STIX supports user-defined custom extensions for STIX
+Cyber-observable Objects (SCO). As with Predefined Object Extensions, custom
+extension data <b>MUST</b> be conveyed under the extensions property. Note,
+custom extensions can only be used with SCOs.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<h3><a name="_jqavxfc9er64"></a><span lang="EN">11.3.1 Requirements (Deprecated)</span></h3>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">A SCO <b>MAY</b> have any number of Custom Extensions.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">Custom Extension names <b>MUST</b> be in ASCII and are limited to
+characters a-z (lowercase ASCII), 0-9, and hyphen (-).</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">Custom Extension names <b>MUST</b> end with "-ext".</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">Custom Extension names <b>SHOULD</b> start with "x-" followed
+by a source unique identifier (like a domain name), a hyphen and then the name.
+For example: </span><span lang="EN" style="font-family:Consolas;color:#C7254E;
+background:#F9F2F4">x-example-com-customextension</span><span lang="EN">.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">Custom Extension names <b>MUST</b> have a minimum length of 3 ASCII
+characters.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">Custom Extension names <b>MUST</b> be no longer than 250 ASCII
+characters in length.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">Custom Extension names that are not prefixed with "x-" may be
+used in a future version of the specification for a different meaning. If
+compatibility with future versions of this specification is required, the
+"x-" prefix <b>MUST</b> be used.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">Custom Extensions <b>SHOULD</b> only be used when there is no existing
+extension defined by the STIX 2.1 specification that fulfills that need.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">A Custom Extension <b>MUST</b> have one or more properties.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">The name of a property of a Custom Object Extension <b>MUST</b> be in
+ASCII and <b>MUST</b> only contain the characters az (lowercase ASCII), 09,
+and underscore (_). The "x_" prefix as described in section <a href="#_3a2x3jdr23tq"><span style="color:#1155CC">11.1.1</span></a> <b>MAY</b>
+be used.</span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><b><span lang="EN">Examples</span></b></p>
+<p class="MsoNormal"><i><span lang="EN">Custom File object extension</span></i></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "type":
+"file",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "hashes": {</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "SHA-256":
+"effb46bba03f6c8aea5c653f9cf984f170dcdd3bbbe2ff6843c3e5da0e698766"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  },</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "extensions":
+{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"x-example-com-foo": {</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">      "foo_val":
+"foo",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">      "bar_val":
+"bar"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+<span lang="EN" style='font-size:10.0pt;line-height:115%;font-family:"Arial",sans-serif'><br clear="all" style="page-break-before:always"/>
+</span>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<div align="center" class="MsoNormal" style="text-align:center"><span lang="EN">
+<hr align="center" size="2" width="100%"/>
+</span></div>
+
+</body>
+</html>

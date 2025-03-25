@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html"/>
+<meta content="This document describes the STIX language for expressing cyber threat and observable information and defines its concepts and overall structure." name="description"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="Microsoft Word 15 (filtered)" name="Generator"/>
+<title>STIX Version 2.1</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Helvetica;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Courier;
+	panose-1:2 7 4 9 2 2 5 2 4 4;}
+@font-face
+	{font-family:"Tms Rmn";
+	panose-1:2 2 6 3 4 5 5 2 3 4;}
+@font-face
+	{font-family:Helv;
+	panose-1:2 11 6 4 2 2 2 3 2 4;}
+@font-face
+	{font-family:"New York";
+	panose-1:2 4 5 3 6 5 6 2 3 4;}
+@font-face
+	{font-family:System;
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:Batang;
+	panose-1:2 3 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Gothic";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:Dotum;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimHei;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:MingLiU;
+	panose-1:2 2 5 9 0 0 0 0 0 0;}
+@font-face
+	{font-family:Mincho;
+	panose-1:2 2 6 9 4 3 5 8 3 5;}
+@font-face
+	{font-family:Gulim;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:Century;
+	panose-1:2 4 6 4 5 5 5 2 3 4;}
+@font-face
+	{font-family:"Angsana New";
+	panose-1:2 2 6 3 5 4 5 2 3 4;}
+@font-face
+	{font-family:"Cordia New";
+	panose-1:2 11 3 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Mangal;
+	panose-1:2 4 5 3 5 2 3 3 2 2;}
+@font-face
+	{font-family:Latha;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Sylfaen;
+	panose-1:1 10 5 2 5 3 6 3 3 3;}
+@font-face
+	{font-family:Vrinda;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Raavi;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Shruti;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Sendnya;
+	panose-1:0 0 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Gautami;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Tunga;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:"Estrangelo Edessa";
+	panose-1:3 8 6 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Yu Gothic";
+	panose-1:2 11 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Calibri Light";
+	panose-1:2 15 3 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Palatino Linotype";
+	panose-1:2 4 5 2 5 5 5 3 3 4;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"Arial Unicode MS";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Segoe UI Emoji";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Liberation Sans";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+h1
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h2
+	{margin-top:.25in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h3
+	{margin-top:16.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:13.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h4
+	{margin-top:14.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h5
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h6
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	font-family:"Arial",sans-serif;
+	color:#666666;
+	font-weight:normal;
+	font-style:italic;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"Header Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"Footer Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+span.HeaderChar
+	{mso-style-name:"Header Char";
+	mso-style-link:Header;}
+span.FooterChar
+	{mso-style-name:"Footer Char";
+	mso-style-link:Footer;}
+span.msoIns
+	{mso-style-name:"";
+	text-decoration:underline;
+	color:red;}
+span.msoDel
+	{mso-style-name:"";
+	text-decoration:line-through;
+	color:green;}
+.MsoChpDefault
+	{font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+.MsoPapDefault
+	{line-height:115%;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+<body>
+<h1><a name="_difggtnnudht"></a><span lang="EN">12 Conformance</span></h1>
+<h2><a name="_2c6m6fwix6p8"></a><span lang="EN">12.1 STIX Object Producers and
+Consumers</span></h2>
+<p class="MsoNormal" style="border:none"><span lang="EN">A "STIX 2.1
+Producer" is any software that can create STIX 2.1 content and conforms to
+the following normative requirements:</span></p>
+<ol start="1" style="margin-top:0in" type="1">
+<li class="MsoNormal" style="border:none"><span lang="EN">It <b>MUST </b>be able
+     to create content encoded as JSON.</span></li>
+<li class="MsoNormal" style="border:none"><span lang="EN">All properties marked
+     required in the property table for the STIX Object or type <b>MUST </b>be
+     present in the created content.</span></li>
+<li class="MsoNormal" style="border:none"><span lang="EN">All properties <b>MUST </b>conform
+     to the data type and normative requirements for that property.</span></li>
+<li class="MsoNormal" style="border:none"><span lang="EN">It <b>MUST </b>support
+     at least one STIX Object.</span></li>
+<li class="MsoNormal" style="border:none"><span lang="EN">It <b>MUST </b>support
+     all features listed in section <a href="#_afah9h2pxi28"><span style="color:#1155CC">12,2</span></a>, Mandatory Features.</span></li>
+<li class="MsoNormal" style="border:none"><span lang="EN">It <b>MAY </b>support
+     any features listed in section <a href="#_vdnporb6fgle"><span style="color:#1155CC">12.3</span></a>, Optional Features. Software
+     supporting an optional feature <b>MUST </b>comply with the normative
+     requirements of that feature.</span></li>
+<li class="MsoNormal"><span lang="EN">It <b>MUST</b> support JSON as a
+     serialization format and <b>MAY</b> support serializations other than
+     JSON.</span></li>
+</ol>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:14.0pt;
+line-height:115%;color:#434343"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">A "STIX 2.1
+Consumer" is any software that can consume STIX 2.1 content and conforms
+to the following normative requirements:</span></p>
+<ol start="1" style="margin-top:0in" type="1">
+<li class="MsoNormal" style="border:none"><span lang="EN">It <b>MUST </b>support
+     parsing all required properties for the content that it consumes.</span></li>
+<li class="MsoNormal" style="border:none"><span lang="EN">It <b>MUST </b>support
+     all features listed in section <a href="#_afah9h2pxi28"><span style="color:#1155CC">12.2</span></a>, Mandatory Features.</span></li>
+<li class="MsoNormal" style="border:none"><span lang="EN">It <b>MAY </b>support
+     any features listed in section <a href="#_vdnporb6fgle"><span style="color:#1155CC">12.3</span></a>, Optional Features. Software
+     supporting an optional feature <b>MUST </b>comply with the normative
+     requirements of that feature.</span></li>
+<li class="MsoNormal"><span lang="EN">It <b>MUST</b> support JSON as a
+     serialization format and <b>MAY</b> support serializations other than
+     JSON.</span></li>
+</ol>
+<h2><a name="_afah9h2pxi28"></a><span lang="EN">12.2 STIX Object Mandatory
+Features</span></h2>
+<h3><a name="_gygtg7mt1jza"></a><span lang="EN">12.2.1 Versioning</span></h3>
+<p class="MsoNormal" style="border:none"><span lang="EN">A STIX 2.1 Producer or
+STIX 2.1 Consumer <b>MUST </b>support versioning by following the normative
+requirements listed in section <a href="#_rye5q2hkacu"><span style="color:#1155CC">3.6</span></a>.</span></p>
+<h2><a name="_vdnporb6fgle"></a><span lang="EN">12.3 STIX Object Optional
+Features</span></h2>
+<h3><a name="_ymvi1pwwcv6h"></a><span lang="EN">12.3.1 Object-Level Data Markings</span></h3>
+<p class="MsoNormal" style="border:none"><span lang="EN">A STIX 2.1 Producer or
+STIX 2.1 Consumer <b>MAY </b>support "Object-Level Data Markings".
+Software claiming to support "Object-Level Data Markings" <b>MUST</b>
+follow the normative requirements listed in sections <a href="#_k5fndj2c7c1k"><span style="color:#1155CC">7.2.1</span></a> and <a href="#_bnienmcktc0n"><span style="color:#1155CC">7.2.2</span></a>.</span></p>
+<h3><a name="_464quh5445k6"></a><span lang="EN">12.3.2 Granular Data Markings</span></h3>
+<p class="MsoNormal" style="border:none"><span lang="EN">A STIX 2.1 Producer or
+STIX 2.1 Consumer <b>MAY </b>support "Granular Data Markings".
+Software claiming to support "Granular Data Markings" <b>MUST</b>
+follow the normative requirements listed in sections <a href="#_k5fndj2c7c1k"><span style="color:#1155CC">7.2.1</span></a> and <a href="#_robezi5egfdr"><span style="color:#1155CC">7.2.3</span></a>.</span></p>
+<h3><a name="_wlzv4529wxnv"></a><span lang="EN">12.3.3 STIX Extensions</span></h3>
+<p class="MsoNormal"><span lang="EN">A STIX 2.1 Producer or STIX 2.1 Consumer <b>MAY
+</b>support STIX Extensions as defined in section <a href="#_32j232tfvtly"><span style="color:#1155CC">7.3</span></a>. Software claiming to support STIX
+Extensions <b>MUST</b> follow the normative requirements defined in section <a href="#_32j232tfvtly"><span style="color:#1155CC">7.3</span></a>.</span></p>
+<h2><a name="_6ejnb3le2n0v"></a><span lang="EN">12.4 STIX Patterning Conformance</span></h2>
+<p class="MsoNormal"><span lang="EN">Implementers of the STIX Patterning language
+are not required to support the full capabilities provided by the language.
+Rather, implementers are strongly encouraged to support as much of STIX
+Patterning as feasible, given the capabilities of their products, but only
+required to support the minimum conformance level (defined below) necessary for
+their particular use cases. For example, the vendor of a network intrusion
+detection system (NIDS) that looks for malicious network traffic may only need
+to implement the Comparison Operators and support basic Observation Expressions
+to explicitly match against network traffic and IP addresses.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">While the STIX Patterning language
+specification is tightly coupled with the STIX Cyber-observable Object data
+models, it is understood that in many (or even most) implementations STIX
+Patterns will be used as an abstraction layer for transcoding into other
+proprietary query formats. STIX Patterns may be evaluated directly against a
+corpus of STIX Observed Data instances, but they may also, for example, be
+translated into some query syntax for a packet inspection device. In this
+second case, the STIX Patterns are in fact evaluated in the context of data
+passing on the wire, not in the form of STIX Cyber Observables.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">The STIX Patterning language's Observation
+Operators allow for the creation of patterns that explicitly match across
+multiple Observations; however, the language purposefully does not specify
+anything about the source of the underlying data for each Observation. For
+example, depending on a particular patterning implementation, the data for a
+pattern that matches on network traffic could come from an endpoint or from a
+NIDS. It is incumbent upon implementers to ascertain the appropriate data
+sources (where applicable) for each Observation within a given pattern. </span></p>
+<h2><a name="_bebgt1w3w0vg"></a><span lang="EN">12.5 STIX Pattern Producer</span></h2>
+<p class="MsoNormal"><span lang="EN">Software that creates STIX patterns is known
+as a "Pattern Producer". Such software <b>MUST</b> support the
+creation of patterns that conform to all normative statements and formatting
+rules in this document. Pattern Producers <b>MUST</b> specify their conformance
+in terms of the conformance levels defined in section <a href="#_rpnxf75280eq"><span style="color:#1155CC">12.7</span></a>.</span></p>
+<h2><a name="_p9rrqbu81ohi"></a><span lang="EN">12.6 STIX Pattern Consumer</span></h2>
+<p class="MsoNormal"><span lang="EN">Software that consumes STIX patterns is known
+as a "Pattern Consumer". Such software MUST support the consumption
+of patterns that conform to all normative statements and formatting rules in this
+document. Pattern Consumers <b>MUST</b> specify their conformance in terms of
+the conformance levels defined in section <a href="#_rpnxf75280eq"><span style="color:#1155CC">12.7</span></a>.</span></p>
+<h2><a name="_rpnxf75280eq"></a><span lang="EN">12.7 STIX Patterning Conformance
+Levels</span></h2>
+<h3><a name="_mk7wr7irtrih"></a><span lang="EN">12.7.1 Level 1: Basic Conformance</span></h3>
+<p class="MsoNormal"><span lang="EN">Software that conforms to the minimum required
+aspects of the patterning specification, is known as a "Level 1 STIX
+Patterning Implementation".</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Such software <b>MUST</b> support the
+following features by conforming to all normative statements and behaviors in
+the referenced sections:</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">Single Observation Expressions (omitting Qualifiers), as described in <span style="background:white">section section </span><a href="#_oxfmsowx7p3y"><span style="color:#1155CC;background:white">9.4</span></a></span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">All Comparison Operators, as described in <span style="background:white">section
+</span><a href="#_boiciucr9smf"><span style="color:#1155CC;background:white">9.6</span></a></span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">This level of conformance is intended
+primarily for software that is deployed at endpoints or network boundaries and
+which is architecturally unable to maintain state, as would be required in order
+to support Qualifiers such as </span><span lang="EN" style="font-family:Consolas;
+color:#073763;background:#CFE2F3">WITHIN</span><span lang="EN">.</span></p>
+<h3><a name="_9lql9s26oz8s"></a><span lang="EN">12.7.2 Level 2: Basic Conformance
+plus Observation Operators</span></h3>
+<p class="MsoNormal"><span lang="EN">Software that supports the minimum required
+aspects of the patterning specification but can operate on multiple
+Observations, is known as a "Level 2 STIX Patterning Implementation".</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Such software <b>MUST</b> support the
+following features by conforming to all normative statements and behaviors in
+the referenced sections:</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">Single and Compound Observation Expressions (omitting Qualifiers) as
+described in section <a href="#_oxfmsowx7p3y"><span style="color:#1155CC">9.4</span></a></span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">The </span><span lang="EN" style="font-family:Consolas;color:#073763;
+background:#CFE2F3">AND</span><span lang="EN"> Observation Operator, as described
+in <span style="background:white">section </span><a href="#_x1nsjyy75wtq"><span style="color:#1155CC;background:white">9.5</span></a></span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">The </span><span lang="EN" style="font-family:Consolas;color:#073763;
+background:#CFE2F3">OR</span><span lang="EN"> Observation Operator, as described
+in <span style="background:white">section </span><a href="#_x1nsjyy75wtq"><span style="color:#1155CC;background:white">9.5</span></a></span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN" style="background:white">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">All Comparison Operators, as described in <span style="background:white">section </span><a href="#_boiciucr9smf"><span style="color:#1155CC;background:white">9.6</span></a></span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">This level of conformance is intended
+primarily for software such as HIDS that can detect patterns across separate
+Observations but may not support temporal-based patterning.</span></p>
+<h3><a name="_p4ytvrw2xmhk"></a><span lang="EN">12.7.3 Level 3: Full Conformance</span></h3>
+<p class="MsoNormal"><span lang="EN">Software that is fully conformant with <b>all</b>
+of the capabilities of the patterning specification is known as a "Level 3
+STIX Patterning Implementation".</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Such software <b>MUST</b> support the
+following features by conforming to all normative statements and behaviors in
+the referenced sections:</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">​Section <a href="#_r80k3nm8z2we"><span style="color:#1155CC">9.1</span></a>.​
+Definitions</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">​Section <a href="#_me3pzm77qfnf"><span style="color:#1155CC">9.3</span></a>.​
+STIX Patterns</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN" style="color:#545454;background:white">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">Section <a href="#_oxfmsowx7p3y"><span style="color:#1155CC">9.4</span></a>.​ Pattern Expressions</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">Section <a href="#_x1nsjyy75wtq"><span style="color:#1155CC">9.5</span></a>.​
+Observation Expressions</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">Section <a href="#_boiciucr9smf"><span style="color:#1155CC">9.6</span></a>.​
+Comparison Expressions</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN" style="color:#545454;background:white">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">​Section <a href="#_i7kzkq2evwxj"><span style="color:#1155CC">9.7</span></a>.​ Object Path Syntax</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">This level of conformance is intended
+primarily for software such as SIEMs that support temporal-based patterning and
+can also aggregate and detect patterns across multiple and disparate sources of
+Observations.</span></p>
+<span lang="EN" style='font-size:10.0pt;line-height:115%;font-family:"Arial",sans-serif'><br clear="all" style="page-break-before:always"/>
+</span>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<div align="center" class="MsoNormal" style="text-align:center"><span lang="EN">
+<hr align="center" size="2" width="100%"/>
+</span></div>
+
+</body>
+</html>

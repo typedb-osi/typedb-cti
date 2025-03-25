@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html"/>
+<meta content="This document describes the STIX language for expressing cyber threat and observable information and defines its concepts and overall structure." name="description"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="Microsoft Word 15 (filtered)" name="Generator"/>
+<title>STIX Version 2.1</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Helvetica;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Courier;
+	panose-1:2 7 4 9 2 2 5 2 4 4;}
+@font-face
+	{font-family:"Tms Rmn";
+	panose-1:2 2 6 3 4 5 5 2 3 4;}
+@font-face
+	{font-family:Helv;
+	panose-1:2 11 6 4 2 2 2 3 2 4;}
+@font-face
+	{font-family:"New York";
+	panose-1:2 4 5 3 6 5 6 2 3 4;}
+@font-face
+	{font-family:System;
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:Batang;
+	panose-1:2 3 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Gothic";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:Dotum;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimHei;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:MingLiU;
+	panose-1:2 2 5 9 0 0 0 0 0 0;}
+@font-face
+	{font-family:Mincho;
+	panose-1:2 2 6 9 4 3 5 8 3 5;}
+@font-face
+	{font-family:Gulim;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:Century;
+	panose-1:2 4 6 4 5 5 5 2 3 4;}
+@font-face
+	{font-family:"Angsana New";
+	panose-1:2 2 6 3 5 4 5 2 3 4;}
+@font-face
+	{font-family:"Cordia New";
+	panose-1:2 11 3 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Mangal;
+	panose-1:2 4 5 3 5 2 3 3 2 2;}
+@font-face
+	{font-family:Latha;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Sylfaen;
+	panose-1:1 10 5 2 5 3 6 3 3 3;}
+@font-face
+	{font-family:Vrinda;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Raavi;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Shruti;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Sendnya;
+	panose-1:0 0 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Gautami;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Tunga;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:"Estrangelo Edessa";
+	panose-1:3 8 6 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Yu Gothic";
+	panose-1:2 11 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Calibri Light";
+	panose-1:2 15 3 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Palatino Linotype";
+	panose-1:2 4 5 2 5 5 5 3 3 4;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"Arial Unicode MS";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Segoe UI Emoji";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Liberation Sans";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+h1
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h2
+	{margin-top:.25in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h3
+	{margin-top:16.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:13.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h4
+	{margin-top:14.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h5
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h6
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	font-family:"Arial",sans-serif;
+	color:#666666;
+	font-weight:normal;
+	font-style:italic;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"Header Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"Footer Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+span.HeaderChar
+	{mso-style-name:"Header Char";
+	mso-style-link:Header;}
+span.FooterChar
+	{mso-style-name:"Footer Char";
+	mso-style-link:Footer;}
+span.msoIns
+	{mso-style-name:"";
+	text-decoration:underline;
+	color:red;}
+span.msoDel
+	{mso-style-name:"";
+	text-decoration:line-through;
+	color:green;}
+.MsoChpDefault
+	{font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+.MsoPapDefault
+	{line-height:115%;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+<body>
+<h1><a name="_ha77jftyxqcx"></a><span lang="EN">1 Introduction</span></h1>
+<p class="MsoNormal"><span lang="EN">Structured Threat Information Expression
+(STIX) is a language and serialization format used to exchange cyber threat
+intelligence (CTI). STIX enables organizations to share CTI with one another in
+a consistent and machine-readable manner, allowing security communities to better
+understand what computer-based attacks they are most likely to see and to
+anticipate and/or respond to those attacks faster and more effectively. STIX is
+designed to improve many different capabilities, such as collaborative threat
+analysis, automated threat exchange, automated detection and response, and
+more.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">The objects and features added for inclusion
+in STIX 2.1 represent an iterative approach to fulfilling basic consumer and
+producer requirements for CTI sharing. Objects and properties not included in
+this version of STIX, but deemed necessary by the community, will be included
+in future releases.</span></p>
+<h2><a name="_eeb5g5wkvryu"></a><span lang="EN">1.1 Document Conventions</span></h2>
+<p class="MsoNormal" style="margin-bottom:12.0pt"><span lang="EN">The following
+color, font and font style conventions are used in this document:</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">The </span><span lang="EN" style="font-family:Consolas">Consolas</span><span lang="EN"> font is used for all type names, property names and literals.</span></p>
+<p class="MsoNormal" style="margin-left:1.0in;text-indent:-.25in"><span lang="EN" style="color:black">○<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">type names are in red with a light red background 
+</span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">threat-actor</span></p>
+<p class="MsoNormal" style="margin-left:1.0in;text-indent:-.25in"><span lang="EN" style="color:black">○<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">property names are in bold style  </span><b><span lang="EN" style="font-family:Consolas">created_at</span></b></p>
+<p class="MsoNormal" style="margin-left:1.0in;text-indent:-.25in"><span lang="EN" style="color:black">○<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">literals (values) are in blue with a blue
+background  </span><span lang="EN" style="font-family:Consolas;color:#073763;
+background:#CFE2F3">malicious-activity</span></p>
+<p class="MsoNormal" style="margin-left:1.0in;text-indent:-.25in"><span lang="EN" style="color:black">○<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN">All relationship types are string literals;
+therefore, they will also appear in blue with a blue background  </span><span lang="EN" style="font-family:Consolas;color:#073763;background:#CFE2F3">related-to</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">In an object's property table, if a common property is being redefined
+in some way, then the background is dark grey.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">All examples in this document are expressed in JSON. They are in </span><span lang="EN" style="font-family:Consolas">Consolas</span><span lang="EN"> 9-point
+font, with straight quotes, black text and a </span><span lang="EN" style="font-size:9.0pt;line-height:115%;font-family:Consolas;color:black;
+background:#EFEFEF">light grey background</span><span lang="EN">, and using
+2-space indentation. JSON examples in this document are representations of JSON
+objects [<a href="#kix.1vpz7s4usd1"><span style="color:#1155CC">RFC8259</span></a>].
+They should not be interpreted as string literals. The ordering of object keys
+is insignificant. Whitespace before or after JSON structural characters in the
+examples are insignificant [<a href="#kix.1vpz7s4usd1"><span style="color:#1155CC">RFC8259</span></a>].</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">Parts of the example may be omitted for conciseness and clarity. These
+omitted parts are denoted with the ellipses (...).</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">The term "hyphen" is used throughout this document to refer
+to the ASCII hyphen or minus character, which in Unicode is
+"hyphen-minus", U+002D.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<h2><a name="_klv9fmnhjhrc"></a><span lang="EN">1.2 Overview</span></h2>
+<p class="MsoNormal"><span lang="EN">STIX is a schema that defines a taxonomy of
+cyber threat intelligence that is represented by the following objects:</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<table border="1" cellpadding="0" cellspacing="0" class="a" style="border-collapse:
+ collapse;border:none" width="624">
+<tr>
+<td colspan="6" style="width:401.1pt;border:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="535">
+<p align="center" class="MsoNormal" style="text-align:center;border:none"><b><span lang="EN" style="color:white">STIX Objects</span></b></p>
+</td>
+<td rowspan="3" style="width:66.85pt;border:solid black 1.0pt;
+  border-left:none;background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="89">
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p align="center" class="MsoNormal" style="text-align:center"><span lang="EN" style="color:black">STIX Bundle Object</span></p>
+</td>
+</tr>
+<tr style="height:20.0pt">
+<td colspan="3" style="width:200.55pt;border:solid black 1.0pt;
+  border-top:none;background:#CFE2F3;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:20.0pt" valign="top" width="267">
+<p align="center" class="MsoNormal" style="text-align:center;border:none"><b><span lang="EN" style="color:black">STIX Core Objects</span></b></p>
+</td>
+<td colspan="3" style="width:200.55pt;border-top:none;
+  border-left:none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#CFE2F3;padding:5.0pt 5.0pt 5.0pt 5.0pt;height:20.0pt" valign="top" width="267">
+<p align="center" class="MsoNormal" style="text-align:center"><b><span lang="EN" style="color:black">STIX Meta Objects (SMO)</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:66.85pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="89">
+<p align="center" class="MsoNormal" style="text-align:center;border:none"><span lang="EN">STIX Domain Objects <br/>
+  (SDO)</span></p>
+</td>
+<td style="width:66.85pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="89">
+<p align="center" class="MsoNormal" style="text-align:center;border:none"><span lang="EN">STIX Cyber-observable Objects<br/>
+  (SCO)</span></p>
+</td>
+<td style="width:66.85pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="89">
+<p align="center" class="MsoNormal" style="text-align:center"><span lang="EN">STIX
+  Relationship Objects<br/>
+  (SRO)</span></p>
+</td>
+<td style="width:66.85pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="89">
+<p align="center" class="MsoNormal" style="text-align:center;border:none"><span lang="EN">Extension Definition Objects</span></p>
+</td>
+<td style="width:66.85pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="89">
+<p align="center" class="MsoNormal" style="text-align:center;border:none"><span lang="EN">Language Content Objects</span></p>
+</td>
+<td style="width:66.85pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="89">
+<p align="center" class="MsoNormal" style="text-align:center;border:none"><span lang="EN">Marking Definition Objects</span></p>
+</td>
+</tr>
+<tr height="0">
+<td style="border:none" width="89"></td>
+<td style="border:none" width="89"></td>
+<td style="border:none" width="89"></td>
+<td style="border:none" width="89"></td>
+<td style="border:none" width="89"></td>
+<td style="border:none" width="89"></td>
+<td style="border:none" width="89"></td>
+</tr>
+</table>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><b><span lang="EN">STIX Core Objects</span></b></p>
+<p class="MsoNormal"><span lang="EN">Any SDO, SCO, or SRO.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><b><span lang="EN">STIX Domain Objects</span></b></p>
+<p class="MsoNormal"><span lang="EN">Higher Level Intelligence Objects that
+represent behaviors and constructs that threat analysts would typically create
+or work with while understanding the threat landscape.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><b><span lang="EN">STIX Cyber-observable Objects</span></b></p>
+<p class="MsoNormal"><span lang="EN">Objects that represent observed facts about a
+network or host that may be used and related to higher level intelligence to
+form a more complete understanding of the threat landscape.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><b><span lang="EN">STIX Relationship Objects</span></b></p>
+<p class="MsoNormal"><span lang="EN">Objects that connect STIX Domain Objects
+together, STIX Cyber-observable Objects together, and connect STIX Domain
+Objects and STIX Cyber-observable Objects together to form a more complete
+understanding of the threat landscape.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><b><span lang="EN">STIX Meta Objects (SMO)</span></b></p>
+<p class="MsoNormal"><span lang="EN">A STIX Object that provides the necessary glue
+and associated metadata to enrich or extend STIX Core Objects to support user
+and system workflows.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><b><span lang="EN">STIX Bundle Object</span></b></p>
+<p class="MsoNormal"><span lang="EN">An object that provides a wrapper mechanism
+for packaging arbitrary STIX content together.</span></p>
+<h3><a name="_i6q50siqb2l6"></a><span lang="EN">1.2.1 Graph-Based Model</span></h3>
+<p class="MsoNormal"><span lang="EN">STIX is a connected graph of nodes and edges.
+STIX Domain Objects and STIX Cyber-observable Objects define the graph nodes
+and STIX relationships (including both external STIX Relationship Objects and
+embedded relationships) define the edges. This graph-based language conforms to
+common analysis approaches and allows for flexible, modular, structured, and
+consistent representations of CTI.</span></p>
+<h3><a name="_1j0vun2r7rgb"></a><span lang="EN">1.2.2 STIX Domain Objects</span></h3>
+<p class="MsoNormal"><span lang="EN">STIX defines a set of STIX Domain Objects
+(SDOs): Attack Pattern, Campaign, Course of Action, Grouping, Identity,
+Indicator, Infrastructure, Intrusion Set, Location, Malware, Malware Analysis,
+Note, Observed Data, Opinion, Report, Threat Actor, Tool, and Vulnerability.
+Each of these objects corresponds to a concept commonly used in CTI.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">STIX Domain Objects are defined in section <a href="#_nrhq5e9nylke"><span style="color:#1155CC">4</span></a>. </span></p>
+<h3><a name="_rosvg2qjx4h4"></a><span lang="EN">1.2.3 STIX Cyber-observable
+Objects</span></h3>
+<p class="MsoNormal"><span lang="EN">STIX defines a set of STIX Cyber-observable
+Objects (SCOs) for characterizing host-based and network-based information.
+SCOs are used by various STIX Domain Objects (SDOs) to provide supporting
+context. The Observed Data SDO, for example, indicates that the raw data was
+observed at a particular time.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">STIX Cyber-observable Objects (SCOs) document
+the facts concerning what happened on a network or host, and do not capture the
+who, when, or why. By associating SCOs with STIX Domain Objects (SDOs), it is
+possible to convey a higher-level understanding of the threat landscape, and to
+potentially provide insight as to the who and the why particular intelligence
+may be relevant to an organization. For example, information about a file that
+existed, a process that was observed running, or that network traffic occurred
+between two IPs can all be captured as SCOs.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">STIX Cyber-observable Objects (SCOs) are
+defined in section <a href="#_mlbmudhl16lr"><span style="color:#1155CC">6</span></a>.
+</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Previously, in STIX 2.0, Cyber-observable
+Objects could only exist as objects within an Observed Data object. It is still
+possible to represent Cyber-observable Objects in this way, but this method has
+been deprecated. See section <a href="#_w7dxdcevq8da"><span style="color:#1155CC">2.13</span></a>.</span></p>
+<h3><a name="_o3xe01pbsgzj"></a><span lang="EN">1.2.4 STIX Relationships</span></h3>
+<p class="MsoNormal"><span lang="EN">A relationship is a link between STIX Domain
+Objects (SDOs), STIX Cyber-observable Objects (SCOs), or between an SDO and a
+SCO that describes the way in which the objects are related. Relationships can be
+represented using an external STIX Relationship Object (SRO) or, in some cases,
+through certain properties which store an identifier reference that comprises
+an embedded relationship, (for example the </span><b><span lang="EN" style="font-family:Consolas">created_by_ref</span></b><span lang="EN"> property).</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">The generic STIX Relationship Object (SRO) is
+one of two SROs and is used for most relationships in STIX. This generic SRO
+contains a property called </span><b><span lang="EN" style="font-family:Consolas">relationship_type</span></b><span lang="EN"> to describe more specifically what the relationship represents. This
+specification defines a set of known terms to use for the </span><b><span lang="EN" style="font-family:Consolas">relationship_type</span></b><span lang="EN">
+property between SDOs of specific types. For example, the Indicator SDO defines
+a relationship from itself to Malware via a </span><b><span lang="EN" style="font-family:Consolas">relationship_type</span></b><span lang="EN"> of </span><span lang="EN" style="font-family:Consolas;color:#073763;background:#CFE2F3">indicates</span><span lang="EN"> to describe how the Indicator can be used to detect the presence of the
+corresponding Malware. In addition to the terms defined in the specification,
+STIX also allows for user-defined terms to be used as the relationship type.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Currently the only other SRO (besides a
+generic Relationship) is the Sighting SRO. The Sighting object is used to
+capture cases where an entity has "seen" an SDO, such as sighting an
+indicator. Sighting is a separate SRO because it contains additional properties
+such as </span><b><span lang="EN" style="font-family:Consolas">count</span></b><span lang="EN"> that are only applicable to Sighting relationships. Other SROs may be
+defined in future versions of STIX if new relationships are identified that
+also require additional properties not present on the generic Relationship
+object.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">In addition to relationships created using the
+SROs (Relationship and Sighting), STIX also uses ID references to represent
+embedded relationships. Embedded relationships are simply ID reference
+properties on STIX Objects that contain the ID of a different STIX Object.
+Embedded relationships are used when the property is an inherent part of the
+object and not something that a third party might add or something that might
+require the inclusion of a confidence score. Because they represent an inherent
+linkage and have no other properties, an SRO is not needed to represent them.
+An embedded relationship can only be asserted by the creator of the object
+("object creator") it is contained in.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">For example, the entity that created a STIX
+Object is an inherent, factual part of that object and therefore that
+information is captured in an embedded relationship contained in the </span><b><span lang="EN" style="font-family:Consolas">created_by_ref</span></b><span lang="EN">
+property rather than through the use of an SRO.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Embedded relationships (ID references) are
+described in section <a href="#_v9ggtuvpqkfm"><span style="color:#1155CC">3.3</span></a>
+and STIX Relationship Objects (SROs) are defined in section <a href="#_cqhkqvhnlgfh"><span style="color:#1155CC">5</span></a>.</span></p>
+<h3><a name="_vfv4kjmsf2dn"></a><span lang="EN">1.2.5 STIX Cyber Observable
+Observed Data Relationships (Deprecated)</span></h3>
+<p class="MsoNormal"><span lang="EN">While refining STIX for the 2.1 specification,
+the CTI TC reached consensus that the STIX 2.0 Cyber Observable Container (see
+section <a href="#_w7dxdcevq8da"><span style="color:#1155CC">2.13</span></a>)
+and the Observed Data object's graph within a graph model was insufficient to
+support critical CTI use cases. Consequently, in STIX 2.1, the Cyber Observable
+Container is deprecated, and implementers are encouraged to use STIX
+Relationship Objects (SROs) instead. Within the context of the (deprecated) Cyber
+Observable Container's graph within a graph model, an object relationship is a
+reference linking two (or more) related SCOs and these relationships are
+constrained to SCOs contained within the same Cyber Observable Container. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">A Cyber Observable Container relationship
+should not be confused with STIX Relationship Objects (SROs) that are defined
+in section <a href="#_cqhkqvhnlgfh"><span style="color:#1155CC">5</span></a>.</span></p>
+<h3><a name="_hdwfenduqtuh"></a><span lang="EN">1.2.6 STIX Patterning</span></h3>
+<p class="MsoNormal"><span lang="EN">The STIX Patterning language enables the
+detection of activity on networks and endpoints. This language allows matching
+against time stamped cyber observable data collected by a threat intelligence
+platform or other similar system. STIX Patterning is currently only used by the
+STIX Indicator object, but it can be employed in other use cases.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Before undertaking work on STIX Patterning, a
+thorough effort to evaluate existing patterning languages (e.g., Snort or Yara)
+was performed. This effort identified that no existing patterning language
+solves or supports the STIX use cases. Extending other languages was ruled out
+as unfeasible, both from a technical perspective as well as taking into
+consideration that from a licensing/IPR perspective, extending an existing
+language under the auspices of OASIS would have been problematic.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">STIX Patterning was primarily designed to
+support STIX Indicators. As such it is a mechanism for communicating how to
+find malicious code and/or threat actors active within a given network or
+endpoint. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">This language release is focused on supporting
+a common set of use cases and therefore allows for the expression of an initial
+set of patterns that producers and consumers of STIX can utilize. As more
+complex patterns are deemed necessary, the STIX patterning language will be
+extended in future releases to improve its effectiveness as an automated
+detection/remediation method. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">STIX Patterning is defined in section <a href="#_e8slinrhxcc9"><span style="color:#1155CC">9</span></a>. </span></p>
+<h3><a name="_disnqa06jm5"></a><span lang="EN">1.2.7 STIX Patterning ANTLR
+Grammar</span></h3>
+<p class="MsoNormal"><span lang="EN">The latest ANTLR grammar for the patterning
+specification can be found on Github in the Pattern Grammar repository<b> </b>[<a href="#kix.3tvxy42eglcz"><span style="color:#1155CC">Pattern Grammar</span></a>].
+Note that this grammar is non-normative and is intended solely as an aid to
+implementers.</span></p>
+<h3><a name="_ble33ropuhb8"></a><span lang="EN">1.2.8 STIX Common Properties</span></h3>
+<p class="MsoNormal"><span lang="EN">STIX Domain Objects (SDOs) and Relationship
+Objects (SROs) all share a common set of properties which provide core
+capabilities such as versioning and data markings (representing how data can be
+shared and used). All STIX Cyber-observable Objects (SCOs) likewise share a
+common set of properties that are applicable for all SCOs. Similarly, STIX Meta
+Objects (SMOs) use some but not all of the common properties.</span></p>
+<h3><a name="_vbsdt43uxrv0"></a><span lang="EN">1.2.9 STIX Open Vocabularies and
+Enumerations</span></h3>
+<p class="MsoNormal"><span lang="EN">Some STIX properties are defined using open
+vocabularies or enumerations. Enumerations and open vocabularies are defined in
+STIX in order to enhance interoperability by increasing the likelihood that
+different entities use the same exact string to represent the same concept. If
+used consistently, open vocabularies make it less likely that one entity refers
+to the energy sector as "Energy" and another as "Energy
+Sector", thereby making comparison and correlation easier.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">While using predefined values from STIX
+vocabularies is strongly encouraged, in some cases this may not be feasible. To
+address this, producers are permitted to use values outside of the open
+vocabulary. In the case of enumerations, producers are required to use only the
+values defined within the STIX specification.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">STIX open vocabularies and enumerations are
+defined in section <a href="#_izngjy1g98l2"><span style="color:#1155CC">10</span></a>.
+<span style="background:white">Properties that are defined as open vocabularies
+identify a suggested vocabulary from that section. For example, the Threat
+Actor </span></span><b><span lang="EN" style="font-family:Consolas">sophistication</span></b><span lang="EN" style="background:white"> property, as defined in section </span><span lang="EN"><a href="#_k017w16zutw"><span style="color:#1155CC;background:white">4.17</span></a><span style="background:white">, uses the Threat Actor Sophistication vocabulary as
+defined in section </span><a href="#_8jm676xbnggg"><span style="color:#1155CC;
+background:white">10.25</span></a><span style="background:white">.</span></span></p>
+<h3><a name="_o7shtmc9olax"></a><span lang="EN">1.2.10 Reserved Names</span></h3>
+<p class="MsoNormal"><span lang="EN">Reserved property names are marked with a type
+called </span><span lang="EN" style="font-family:Consolas;color:#C7254E;
+background:#F9F2F4">RESERVED</span><span lang="EN"> and a description text of
+"RESERVED FOR FUTURE USE". For more information please see section <a href="#_p54wxsxz1lsm"><span style="color:#1155CC">3.8</span></a>.</span></p>
+<h3><a name="_vj2dopx186bb"></a><span lang="EN">1.2.11 Serialization</span></h3>
+<p class="MsoNormal"><span lang="EN">STIX is defined independent of any specific
+storage or serialization. However, the mandatory-to-implement (MTI)
+serialization for STIX 2.1 is UTF-8 encoded JSON as defined in [<a href="#kix.z9pk4hcspdlz"><span style="color:#1155CC">RFC7493</span></a>] and [<a href="#kix.1vpz7s4usd1"><span style="color:#1155CC">RFC8259</span></a>], which
+uses the JSON Object type described within when representing all STIX Objects.
+In other words, all STIX-conformant tools have to implement support for JSON
+but can implement support for other serializations.</span></p>
+<h3><a name="_65z4ktwggddy"></a><span lang="EN">1.2.12 Transporting STIX</span></h3>
+<p class="MsoNormal"><span lang="EN">STIX 2.1 is transport-agnostic, i.e., the
+structures and serializations do not rely on any specific transport mechanism.
+A companion CTI specification, <a href="#f8b4ia7wsgac"><span style="color:#1155CC">TAXII</span></a>,
+is designed specifically to transport STIX Objects. STIX provides a Bundle (see
+section <a href="#_gms872kuzdmg"><span style="color:#1155CC">8</span></a>) as a
+container for STIX Objects to allow for transportation of bulk STIX data,
+especially over non-TAXII communication mechanisms.</span></p>
+<h3><a name="_i9bdhfw0v22b"></a><span lang="EN">1.2.13 JSON Schemas</span></h3>
+<p class="MsoNormal"><span lang="EN">JSON schemas have been developed by members of
+the Cyber Threat Intelligence Technical Committee and are available in the
+cti-stix2-json-schemas OASIS Open Repository [<a href="#kix.449cgskhflzl"><span style="color:#1155CC">JSON Schema</span></a>]. The JSON schemas are informative
+and serve as a best effort attempt to validate that STIX 2.1 content meets the
+structural requirements identified in this specification. This specification is
+the normative description of STIX 2.1.</span></p>
+<h2><a name="_am3e79x6zc1p"></a><span lang="EN">1.3 Changes From Earlier Versions</span></h2>
+<p class="MsoNormal"><span lang="EN">This section lists all of the major changes
+from the previous 2.0 version of STIX.</span></p>
+<h3><a name="_e8lf9o3a33jj"></a><span lang="EN">1.3.1 STIX 2.1 Major Changes and
+Additions</span></h3>
+<p class="MsoNormal"><span lang="EN">STIX 2.1 differs from STIX 2.0 in the
+following ways:</span></p>
+<ol start="1" style="margin-top:0in" type="1">
+<li class="MsoNormal"><span lang="EN">New objects: Grouping, Infrastructure,
+     Language-Content (internationalization), Location, Malware-Analysis, Note,
+     Opinion</span></li>
+<li class="MsoNormal"><span lang="EN">Objects that have undergone significant
+     change: Malware, all SCOs</span></li>
+<li class="MsoNormal"><span lang="EN">New concepts: Confidence </span></li>
+<li class="MsoNormal"><span lang="EN">STIX Cyber-observable Objects can now be
+     directly related using STIX Relationship Objects</span></li>
+<li class="MsoNormal"><span lang="EN">Renamed conflicting properties on Directory
+     Object, File Object, Process Object, and Windows Registry Key Object. </span></li>
+<li class="MsoNormal"><span lang="EN">Added relationship from Indicator to
+     Observed Data called "based-on". </span></li>
+<li class="MsoNormal"><span lang="EN">Added a description to Sighting and added a
+     name to Location. </span></li>
+<li class="MsoNormal"><span lang="EN">Made some SCO relationships external on
+     Domain-Name, IPv4-Addr, and IPv6-Addr.</span></li>
+<li class="MsoNormal"><span lang="EN">Added STIX Extension mechanisms and
+     deprecated custom properties, objects, and extensions.</span></li>
+</ol>
+<h2><a name="_ct2yy95xayj4"></a><span lang="EN">1.4 Glossary</span></h2>
+<p class="MsoNormal"><b><span lang="EN">AV</span></b><span lang="EN"> - Anti-Virus /
+Anti-Malware solution</span></p>
+<p class="MsoNormal"><b><span lang="EN">CAPEC</span></b><span lang="EN"> - Common
+Attack Pattern Enumeration and Classification</span></p>
+<p class="MsoNormal"><b><span lang="EN">Consumer</span></b><span lang="EN"> - Any
+entity that receives STIX content</span></p>
+<p class="MsoNormal"><b><span lang="EN">CTI</span></b><span lang="EN"> - Cyber Threat
+Intelligence</span></p>
+<p class="MsoNormal"><b><span lang="EN">Deprecated</span></b><span lang="EN"> - STIX
+features or properties that are in the process of being replaced by newer ones.</span></p>
+<p class="MsoNormal"><b><span lang="EN">Embedded Relationship</span></b><span lang="EN"> - A link (an "edge" in a graph) between one STIX Object and
+another represented as a property on one object containing the ID of another
+object</span></p>
+<p class="MsoNormal"><b><span lang="EN">Entity</span></b><span lang="EN"> - Anything
+that has a separately identifiable existence (e.g., organization, person,
+group, etc.)</span></p>
+<p class="MsoNormal"><b><span lang="EN">IEP</span></b><span lang="EN"> - FIRST (Forum
+of Incident Response and Security Teams) Information Exchange Policy</span></p>
+<p class="MsoNormal"><b><span lang="EN">Instance</span></b><span lang="EN"> - <span style="color:#222222;background:white">A single occurrence of a STIX Object
+version</span></span></p>
+<p class="MsoNormal"><b><span lang="EN">MTI</span></b><span lang="EN"> - Mandatory To
+Implement</span></p>
+<p class="MsoNormal"><b><span lang="EN">Object Creator </span></b><span lang="EN">-
+The entity that created or updated a STIX Object (see section <a href="#_gckz8qcky97t"><span style="color:#1155CC">3.5</span></a>)</span></p>
+<p class="MsoNormal"><b><span lang="EN">Object Representation</span></b><span lang="EN"> - An instance of an object version that is serialized as STIX</span></p>
+<p class="MsoNormal"><b><span lang="EN">Producer </span></b><span lang="EN">- Any
+entity that distributes STIX content, including object creators as well as
+those passing along existing content</span></p>
+<p class="MsoNormal"><b><span lang="EN">SCO</span></b><span lang="EN"> - STIX
+Cyber-observable Object</span></p>
+<p class="MsoNormal"><b><span lang="EN">SDO - </span></b><span lang="EN">STIX Domain
+Object (a "node" in a graph)</span></p>
+<p class="MsoNormal"><b><span lang="EN">SMO</span></b><span lang="EN"> - STIX Meta
+Object</span></p>
+<p class="MsoNormal"><b><span lang="EN">SRO</span></b><span lang="EN"> - STIX
+Relationship Object (one mechanism to represent an "edge" in a graph)</span></p>
+<p class="MsoNormal"><b><span lang="EN">STIX</span></b><span lang="EN"> - Structured
+Threat Information Expression</span></p>
+<p class="MsoNormal"><b><span lang="EN">STIX Content </span></b><span lang="EN">-
+STIX documents, including STIX Objects, STIX Objects grouped as bundles, etc.</span></p>
+<p class="MsoNormal"><b><span lang="EN">STIX Object</span></b><span lang="EN"> - A
+STIX Domain Object (SDO), STIX Cyber Observable Object (SCO), STIX Relationship
+Object (SRO), or STIX Meta Object (SMO).</span></p>
+<p class="MsoNormal"><b><span lang="EN">STIX Relationship</span></b><span lang="EN">
+- A link (an "edge" in a graph) between two STIX Objects represented
+by either an SRO or an embedded relationship</span></p>
+<p class="MsoNormal"><b><span lang="EN">STIX Extension</span></b><span lang="EN"> - A
+set of mechanisms supporting adding new objects and updating existing objects
+in a standard way. </span></p>
+<p class="MsoNormal"><b><span lang="EN">TAXII</span></b><span lang="EN"> - An
+application layer protocol for the communication of cyber threat information</span></p>
+<p class="MsoNormal"><b><span lang="EN">TLP</span></b><span lang="EN"> - Traffic
+Light Protocol</span></p>
+<p class="MsoNormal"><b><span lang="EN">TTP</span></b><span lang="EN"> - Tactic,
+technique, or procedure; behaviors and resources that attackers use to carry
+out their attacks</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<span lang="EN" style='font-size:10.0pt;line-height:115%;font-family:"Arial",sans-serif'><br clear="all" style="page-break-before:always"/>
+</span>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<div align="center" class="MsoNormal" style="text-align:center"><span lang="EN">
+<hr align="center" size="2" width="100%"/>
+</span></div>
+
+</body>
+</html>

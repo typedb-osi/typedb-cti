@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html"/>
+<meta content="This document describes the STIX language for expressing cyber threat and observable information and defines its concepts and overall structure." name="description"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="Microsoft Word 15 (filtered)" name="Generator"/>
+<title>STIX Version 2.1</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Helvetica;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Courier;
+	panose-1:2 7 4 9 2 2 5 2 4 4;}
+@font-face
+	{font-family:"Tms Rmn";
+	panose-1:2 2 6 3 4 5 5 2 3 4;}
+@font-face
+	{font-family:Helv;
+	panose-1:2 11 6 4 2 2 2 3 2 4;}
+@font-face
+	{font-family:"New York";
+	panose-1:2 4 5 3 6 5 6 2 3 4;}
+@font-face
+	{font-family:System;
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:Batang;
+	panose-1:2 3 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Gothic";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:Dotum;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimHei;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:MingLiU;
+	panose-1:2 2 5 9 0 0 0 0 0 0;}
+@font-face
+	{font-family:Mincho;
+	panose-1:2 2 6 9 4 3 5 8 3 5;}
+@font-face
+	{font-family:Gulim;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:Century;
+	panose-1:2 4 6 4 5 5 5 2 3 4;}
+@font-face
+	{font-family:"Angsana New";
+	panose-1:2 2 6 3 5 4 5 2 3 4;}
+@font-face
+	{font-family:"Cordia New";
+	panose-1:2 11 3 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Mangal;
+	panose-1:2 4 5 3 5 2 3 3 2 2;}
+@font-face
+	{font-family:Latha;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Sylfaen;
+	panose-1:1 10 5 2 5 3 6 3 3 3;}
+@font-face
+	{font-family:Vrinda;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Raavi;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Shruti;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Sendnya;
+	panose-1:0 0 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Gautami;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Tunga;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:"Estrangelo Edessa";
+	panose-1:3 8 6 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Yu Gothic";
+	panose-1:2 11 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Calibri Light";
+	panose-1:2 15 3 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Palatino Linotype";
+	panose-1:2 4 5 2 5 5 5 3 3 4;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"Arial Unicode MS";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Segoe UI Emoji";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Liberation Sans";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+h1
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h2
+	{margin-top:.25in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h3
+	{margin-top:16.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:13.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h4
+	{margin-top:14.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h5
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h6
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	font-family:"Arial",sans-serif;
+	color:#666666;
+	font-weight:normal;
+	font-style:italic;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"Header Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"Footer Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+span.HeaderChar
+	{mso-style-name:"Header Char";
+	mso-style-link:Header;}
+span.FooterChar
+	{mso-style-name:"Footer Char";
+	mso-style-link:Footer;}
+span.msoIns
+	{mso-style-name:"";
+	text-decoration:underline;
+	color:red;}
+span.msoDel
+	{mso-style-name:"";
+	text-decoration:line-through;
+	color:green;}
+.MsoChpDefault
+	{font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+.MsoPapDefault
+	{line-height:115%;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+<body>
+<h1><a name="_wwok3b866yjl"></a><span lang="EN">Appendix C. Additional Examples</span></h1>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<h2><a name="_gzzjw0r54gax"></a><span lang="EN">C.1 Infrastructure Additional
+Examples</span></h2>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<h3><a name="_juc9mo4crict"></a><span lang="EN">C.1.1 Malware &amp; Target List
+Hosting Domain</span></h3>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"><img border="0" height="207" id="image2.png" src="stix-v2.1-os_files/image004.png" width="391"/></span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"infrastructure",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"infrastructure--d09c50cf-5bab-465e-9e2d-543912148b73",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2016-11-22T09:22:30.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2016-11-22T09:22:30.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "name":
+"Example Target List Host",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "infrastructure_types":
+["hosting-target-lists"]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"relationship",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"relationship--37ac0c8d-f86d-4e56-aee9-914343959a4c",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2016-11-23T08:17:27.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2016-11-23T08:17:27.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "relationship_type":
+"uses",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "source_ref":
+"malware--3a41e552-999b-4ad3-bedc-332b6d9ff80c",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "target_ref":
+"infrastructure--d09c50cf-5bab-465e-9e2d-543912148b73"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"malware",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"malware--3a41e552-999b-4ad3-bedc-332b6d9ff80c",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2016-11-12T14:31:09.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2016-11-12T14:31:09.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "is_family":
+true,</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "malware_types":
+[</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   "bot"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> ],</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "name":
+"IMDDOS"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">}, </span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"relationship",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"relationship--81f12913-1372-4c96-85ec-E9034ac98aba",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2016-11-23T10:42:39.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2016-11-23T10:42:39.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "relationship_type":
+"consists-of",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "source_ref":
+"infrastructure--d09c50cf-5bab-465e-9e2d-543912148b73",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "target_ref":
+"domain-name--3c10e93f-798e-5a26-a0c1-08156efab7f5"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"domain-name--3c10e93f-798e-5a26-a0c1-08156efab7f5",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"domain-name",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "value":
+"example.com"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+<h3><a name="_nuyv023oe1ig"></a><span lang="EN">C.1.2 Malware Botnet
+Infrastructure</span></h3>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"><img border="0" height="248" id="image7.png" src="stix-v2.1-os_files/image005.png" width="386"/></span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"infrastructure",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"infrastructure--78cc7b4b-c6ab-40d1-82eb-95a3059641da",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2017-03-15T04:22:30.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2017-03-15T04:22:30.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "name":
+"Malware Botnet Example",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "infrastructure_types":
+["botnet"]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"relationship",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1", </span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"relationship--edce6fe8-2ac7-49d6-bd57-3973a4f819b8",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2017-03-16T22:17:27.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2017-03-16T22:17:27.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "relationship_type":
+"uses",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "source_ref":
+"malware--496cac0a-77ea-4da0-b913-88e553483c8d",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "target_ref":
+"infrastructure--78cc7b4b-c6ab-40d1-82eb-95a3059641da"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"malware",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"malware--496cac0a-77ea-4da0-b913-88e553483c8d",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2017-03-10T07:31:09.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2017-03-10T07:31:09.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "is_family":
+true,</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "malware_types":
+[</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   "bot"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> ],</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "name":
+"Asprox"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"relationship",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"relationship--7aebe2f0-28d6-48a2-9c3e-b0aaa60266ef",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2017-03-16T10:19:23.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2017-03-16T10:19:23.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "relationship_type":
+"consists-of",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "source_ref":
+"infrastructure--78cc7b4b-c6ab-40d1-82eb-95a3059641da",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "target_ref":
+"ipv4-addr--4d22aae0-2bf9-5427-8819-e4f6abf20a53"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"ipv4-addr--4d22aae0-2bf9-5427-8819-e4f6abf20a53",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type": "ipv4-addr",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "value":
+"198.51.100.2"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"relationship",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"relationship--2168b17d-f0ba-4c2e-920b-276ad803c5f3",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2017-03-16T10:29:55.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2017-03-16T10:29:55.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "relationship_type":
+"consists-of",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "source_ref":
+"infrastructure--78cc7b4b-c6ab-40d1-82eb-95a3059641da",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "target_ref":
+"ipv4-addr--2ccfc50f-b0f0-5e06-ba9b-2aa51e23af61"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"ipv4-addr--2ccfc50f-b0f0-5e06-ba9b-2aa51e23af61",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"ipv4-addr",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "value":
+"198.51.100.4"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"relationship",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"relationship--2e48e1aa-469d-4473-a110-a128280db964",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2017-03-16T10:33:14.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2017-03-16T10:33:14.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "relationship_type":
+"consists-of",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "source_ref":
+"infrastructure--78cc7b4b-c6ab-40d1-82eb-95a3059641da",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "target_ref":
+"ipv4-addr--3073f2be-0e15-5f42-b81d-495938860cd5"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"ipv4-addr--3073f2be-0e15-5f42-b81d-495938860cd5",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"ipv4-addr",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "value":
+"198.51.100.7"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+<h3><a name="_m7kgn8ikoagr"></a><span lang="EN">C.1.3 Related/Component Botnet
+Infrastructure</span></h3>
+<p class="MsoNormal"><span lang="EN" style='font-size:9.0pt;line-height:115%;
+font-family:"Courier New"'><img border="0" height="286" id="image6.png" src="stix-v2.1-os_files/image006.png" width="624"/></span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"infrastructure",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"infrastructure--767ed805-f00a-4603-9bd8-5b5a006b56fa",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2016-11-21T09:22:30.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2016-11-21T09:22:30.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "name":
+"Example Target List Host 2",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "infrastructure_types":
+["hosting-target-lists"]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"relationship",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"relationship--81f12913-1372-4c96-85ec-E9034ac98aba",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2016-11-23T10:42:39.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2016-11-23T10:42:39.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "relationship_type":
+"consists-of",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "source_ref":
+"infrastructure--767ed805-f00a-4603-9bd8-5b5a006b56fa",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "target_ref":
+"domain-name--3c10e93f-798e-5a26-a0c1-08156efab7f5"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"domain-name--3c10e93f-798e-5a26-a0c1-08156efab7f5",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"domain-name",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "value":
+"example.com"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"infrastructure",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"infrastructure--e4ed271e-e023-45db-99e6-1f912e79bd06",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2016-11-22T11:04:18.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2016-11-22T11:04:18.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "name":
+"Control.Example command-and-control",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "infrastructure_types":
+["command-and-control"]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"relationship",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"relationship--2f340a76-edef-443d-a203-bede067c0bb0",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2016-11-25T09:46:09.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2016-11-25T09:46:09.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "relationship_type":
+"consists-of",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "source_ref":
+"infrastructure--e4ed271e-e023-45db-99e6-1f912e79bd06",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "target_ref":
+"domain-name--a56780a5-93a5-5047-97ab-6900d2441bca"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"domain-name--a56780a5-93a5-5047-97ab-6900d2441bca",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"domain-name",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "value":
+"control.example.com"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"infrastructure",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"infrastructure--a3536537-456a-47b5-84dc-fb7c340959e8",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2016-11-18T04:22:30.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2016-11-18T04:22:30.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "name":
+"Botnet Example",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "infrastructure_types":
+["botnet"]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"relationship",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"relationship--3263dfe0-6bf4-42eb-bab9-5fc9edc6e443",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2016-11-18T08:27:37.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2016-11-18T08:27:37.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "relationship_type":
+"consists-of",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "source_ref":
+"infrastructure--a3536537-456a-47b5-84dc-fb7c340959e8",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "target_ref":
+"ipv4-addr--182726c7-ba5e-5f77-97ef-378365bd0b79"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"ipv4-addr--182726c7-ba5e-5f77-97ef-378365bd0b79",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"ipv4-addr",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "value":
+"198.51.100.8"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"relationship",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"relationship--80d9ba7d-893b-4286-96f9-32225060a730",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2016-11-18T06:22:31.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2016-11-18T06:22:31.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "relationship_type":
+"consists-of",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "source_ref":
+"infrastructure--a3536537-456a-47b5-84dc-fb7c340959e8",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "target_ref":
+"ipv4-addr--d7177770-fc12-586b-9244-426596a7008e"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"ipv4-addr--d7177770-fc12-586b-9244-426596a7008e",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"ipv4-addr",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "value":
+"198.51.100.9"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"relationship",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"relationship--43f753d8-61e2-472e-918e-d7c58e2463e7",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2016-11-25T13:37:27.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2017-11-25T13:37:27.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "relationship_type":
+"uses",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "source_ref":
+"infrastructure--a3536537-456a-47b5-84dc-fb7c340959e8",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "target_ref":
+"infrastructure--767ed805-f00a-4603-9bd8-5b5a006b56fa"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"relationship",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"relationship--8386f241-b583-4c59-9056-a3b0db596d93",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2016-11-25T13:37:27.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2017-11-25T13:37:27.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "relationship_type":
+"controls",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "source_ref":
+"infrastructure--e4ed271e-e023-45db-99e6-1f912e79bd06",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "target_ref":
+"infrastructure--a3536537-456a-47b5-84dc-fb7c340959e8"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+<h3><a name="_7v60jzaz0vjz"></a><span lang="EN">C.1.4 Malware Instance Hosted on
+Compromised Domain</span></h3>
+<p class="MsoNormal"><span lang="EN" style='font-size:9.0pt;line-height:115%;
+font-family:"Courier New"'> </span></p>
+<p class="MsoNormal"><span lang="EN" style='font-size:9.0pt;line-height:115%;
+font-family:"Courier New"'><img border="0" height="199" id="image1.png" src="stix-v2.1-os_files/image007.png" width="253"/></span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "type":
+"infrastructure",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "id":
+"infrastructure--33588e0e-2bab-430e-9073-cacf704ea1e7",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "created":
+"2017-04-04T13:01:21.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "modified":
+"2017-04-04T13:01:21.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "name":
+"Malware hosted on compromised domain",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "infrastructure_types":
+["hosting-malware"]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "type":
+"relationship",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "id":
+"relationship--409244ac-01cd-4465-ad30-3f92a226f59f",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "created":
+"2016-11-25T09:46:09.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "modified":
+"2016-11-25T09:46:09.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "relationship_type":
+"consists-of",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "source_ref":
+"infrastructure--33588e0e-2bab-430e-9073-cacf704ea1e7",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "target_ref":
+"domain-name--224dd5a2-d2db-5b8d-91f9-124a0c0c8546"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "id":
+"domain-name--224dd5a2-d2db-5b8d-91f9-124a0c0c8546",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "type":
+"domain-name",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "value":
+"foo.example.com"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "type":
+"relationship",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "id":
+"relationship--b3ab5ba1-e6d6-46b0-8ebe-91fc91978c85",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "created":
+"2017-04-05T13:37:27.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "modified":
+"2017-04-05T13:37:27.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "relationship_type":
+"delivers",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "source_ref":
+"infrastructure--33588e0e-2bab-430e-9073-cacf704ea1e7",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3"> "target_ref":
+"malware--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#F3F3F3">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "type":
+"malware",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "spec_version":
+"2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "id":
+"malware--0c7b5b88-8ff7-4a4d-aa9d-feb398cd0061",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "created":
+"2016-05-12T08:17:27.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "modified":
+"2016-05-12T08:17:27.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "name":
+"SpyEye",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "is_family":
+false,</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> "malware_types":
+[</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   "trojan"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> ]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<h2><a name="_6d9v48cvb0gx"></a><span lang="EN">C.2 Extension Definition
+Additional Examples</span></h2>
+<h3><a name="_qu1ts24o7lat"></a><span lang="EN">C.2.1 Create a new object type
+with a copyright marking definition</span></h3>
+<p class="MsoNormal"><span lang="EN">In this example one can see a new SDO object
+type being created with the STIX extension mechanism. This example also
+includes a copyright marking definition and an instance of the new SDO object
+type. This new SDO object type defines three properties, </span><b><span lang="EN" style="font-family:Consolas">name</span></b><span lang="EN">, </span><b><span lang="EN" style="font-family:Consolas">some_property_name1</span></b><span lang="EN">, and </span><b><span lang="EN" style="font-family:Consolas">some_property_name2</span></b><span lang="EN">.</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "type":
+"marking-definition",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "id":
+"marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "created":
+"2016-08-01T00:00:00.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"definition_type": "statement",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "definition":
+{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "statement":
+"Copyright 2019, Example Corp"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "id":
+"extension-definition--04b2d3ef-d061-4912-ab77-6bbe807a5bd5",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "type":
+"extension-definition",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "created":
+"2014-02-20T09:16:08.989000Z",<br/>
+  "modified": "2014-02-20T09:16:08.989000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"created_by_ref":
+"identity--11b76a96-5d2b-45e0-8a5a-f6994f370731",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "name":
+"New SDO 2",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "description":
+"This schema creates a new object type called my-favorite-sdo-2",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "schema":
+"https://www.example.com/schema-my-favorite-sdo-2/v1/",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "version":
+"1.2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"object_marking_refs":
+["marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"],</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"extension_types": [ "new-sdo" ]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{<br/>
+  "type": "my-favorite-sdo",<br/>
+  "spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "id":
+"my-favorite-sdo--64b8f076-a336-4d08-a0a3-fa6bd4ccc7c6",<br/>
+  "created": "2014-02-20T09:16:08.989000Z",<br/>
+  "modified": "2014-02-20T09:16:08.989000Z",<br/>
+  "name": "This is the name of my favorite",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"some_property_name1": "value1",<br/>
+  "some_property_name2": "value2",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "extensions":
+{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"extension-definition--04b2d3ef-d061-4912-ab77-6bbe807a5bd5" : {</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">     
+"extension_type": "new-sdo"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">}</span><span lang="EN"> </span></p>
+<h3><a name="_8pkgf1nvk4m2"></a><span lang="EN">C.2.2 Adding properties to an
+existing an STIX object instance</span></h3>
+<p class="MsoNormal"><span lang="EN">This example adds the properties </span><b><span lang="EN" style="font-family:Consolas">rank</span></b><span lang="EN"> and </span><b><span lang="EN" style="font-family:Consolas">toxicity</span></b><span lang="EN"> to the </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">indicator</span><span lang="EN"> object.</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "id":
+"extension-definition--d83fce45-ef58-4c6c-a3f4-1fbc32e98c6e",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "type":
+"extension-definition",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "name":
+"Extension Foo 1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "description":
+"This schema adds two properties to a STIX object",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "created":
+"2014-02-20T09:16:08.989000Z",<br/>
+  "modified": "2014-02-20T09:16:08.989000Z",<br/>
+  "created_by_ref":
+"identity--11b76a96-5d2b-45e0-8a5a-f6994f370731",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "schema":
+"https://www.example.com/schema-foo-1/v1/",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "version":
+"1.2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"extension_types": [ "property-extension" ]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{<br/>
+  "type": "indicator",<br/>
+  "spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "id":
+"indicator--e97bfccf-8970-4a3c-9cd1-5b5b97ed5d0c",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "created":
+"2014-02-20T09:16:08.989000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "modified":
+"2014-02-20T09:16:08.989000Z",<br/>
+  "name": "File hash for Poison Ivy variant",<br/>
+  "description": "This file hash indicates that a sample of
+Poison Ivy is present.",<br/>
+  "labels": [<br/>
+       "malicious-activity"<br/>
+  ],<br/>
+  "pattern": "[file:hashes.'SHA-256' =
+'ef537f25c895bfa782526529a9b63d97aa631564d5d789c2b765448c8635fb6c']",<br/>
+  "pattern_type": "stix",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "valid_from":
+"2014-02-20T09:00:00.000000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "extensions":
+{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"extension-definition--d83fce45-ef58-4c6c-a3f4-1fbc32e98c6e" : {</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">     
+"extension_type": "property-extension",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">      "rank": 5,</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">      "toxicity":
+8</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><span lang="EN">This example shows how one can also add the
+same extension (properties </span><b><span lang="EN" style="font-family:Consolas">rank</span></b><span lang="EN"> and </span><b><span lang="EN" style="font-family:Consolas">toxicity)</span></b><span lang="EN"> to the </span><span lang="EN" style="font-family:Consolas;color:#C7254E;
+background:#F9F2F4">artifact</span><span lang="EN"> object.</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "type":
+"artifact",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "id":
+"artifact--6f437177-6e48-5cf8-9d9e-872a2bddd641",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "mime_type":
+"application/zip",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "payload_bin":
+"ZX7HIBWPQA99NSUhEUgAAADI== ...",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"encryption_algorithm": "mime-type-indicated",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"decryption_key": "My voice is my passport",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "extensions":
+{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"extension-definition--d83fce45-ef58-4c6c-a3f4-1fbc32e98c6e" : {</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">     
+"extension_type": "property-extension",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">      "rank" :5,</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">     
+"toxicity": 8</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+<h3><a name="_xqm1th5yz7ae"></a><span lang="EN">C.2.3 Adding properties to an
+existing an STIX relationship object instance</span></h3>
+<p class="MsoNormal"><span lang="EN">This example adds the property </span><b><span lang="EN" style="font-family:Consolas">mysightingprop</span></b><span lang="EN"> to
+the </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:
+#F9F2F4">sighting</span><span lang="EN"> object.</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "id":
+"extension-definition--a19a6f0a-93dc-4f34-ac9f-83a0141261de",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "type":
+"extension-definition",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "name":
+"Extension Foo 2",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "description":
+"This schema adds a property to the sighting object",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "created":
+"2014-02-20T09:16:08.989000Z",<br/>
+  "modified": "2014-02-20T09:16:08.989000Z",<br/>
+  "created_by_ref":
+"identity--11b76a96-5d2b-45e0-8a5a-f6994f370731",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "schema":
+"https://www.example.com/schema-foo-2/v1/",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "version":
+"1.2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"extension_types": [ "property-extension" ]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "type":
+"sighting",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "id":
+"sighting--ee20065d-2555-424f-ad9e-0f8428623c75",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"created_by_ref":
+"identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "created":
+"2016-04-06T20:08:31.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "modified":
+"2016-04-06T20:08:31.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"sighting_of_ref":
+"indicator--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "extensions":
+{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"extension-definition--a19a6f0a-93dc-4f34-ac9f-83a0141261de" : {</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">     
+"extension_type": "property-extension",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">     
+"mysightingprop" : "life is a bunch of bananas"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+<h3><a name="_l3nl12k8erhs"></a><span lang="EN">C.2.4 Adding properties to an
+existing STIX marking definition object instance</span></h3>
+<p class="MsoNormal"><span lang="EN">This example adds the properties </span><b><span lang="EN" style="font-family:Consolas">additional_marking_prop</span></b><span lang="EN"> and </span><b><span lang="EN" style="font-family:Consolas">required_data_storage_hash</span></b><span lang="EN"> to the </span><span lang="EN" style="font-family:Consolas;color:#C7254E;
+background:#F9F2F4">marking-definition</span><span lang="EN"> object.</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "id":
+"extension-definition--9ef47f81-1443-4632-8497-8b2878f8ac21",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "type":
+"extension-definition",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "name":
+"Extension Foo 3",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "description":
+"This schema adds properties to the marking definition object",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "created":
+"2014-02-20T09:16:08.989000Z",<br/>
+  "modified": "2014-02-20T09:16:08.989000Z",<br/>
+  "created_by_ref": "identity--11b76a96-5d2b-45e0-8a5a-f6994f370731",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "schema":
+"https://www.example.com/schema-markingfoo-1/v1/",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "version":
+"1.2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"extension_types": [ "property-extension" ]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "type":
+"marking-definition",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "id":
+"marking-definition--7adc34dc-f5c7-4b7c-a7da-28fc4dd716cc",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "created":
+"2016-08-01T00:00:00.000Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "extensions":
+{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"extension-definition--9ef47f81-1443-4632-8497-8b2878f8ac21" : {</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">     
+"extension_type": "property_extension",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">     
+"additional_marking_prop" : "if this data is leaked then the
+world will end",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">     
+"required_data_storage_hash" : "sha1024"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+<h3><a name="_unn9yjtes0vy"></a><span lang="EN">C.2.5 Adding properties to an
+existing STIX language content object instance</span></h3>
+<p class="MsoNormal"><span lang="EN">This example adds the property </span><b><span lang="EN" style="font-family:Consolas">translation_engine</span></b><span lang="EN"> to the </span><span lang="EN" style="font-family:Consolas;color:#C7254E;
+background:#F9F2F4">language-content</span><span lang="EN"> object.</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "id":
+"extension-definition--b63766f9-b39e-4a4f-9396-e5e753722df0",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "type":
+"extension-definition",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "name":
+"Extension Foo 4",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "description":
+"This schema adds translation engines to the language content
+object",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "created":
+"2014-02-20T09:16:08.989000Z",<br/>
+  "modified": "2014-02-20T09:16:08.989000Z",<br/>
+  "created_by_ref":
+"identity--11b76a96-5d2b-45e0-8a5a-f6994f370731",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "schema":
+"https://www.example.com/schema-langfoo-1/v1/",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "version":
+"1.2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"extension_types": [ "property-extension" ]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">},</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "type":
+"language-content",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "id":
+"language-content--0911f616-727f-48cb-a4c5-9420299562a4",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "created":
+"2019-06-08T21:31:22.007Z",<br/>
+  "modified": "2019-07-08T21:31:22.007Z",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "object_ref":
+"threat-actor--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "contents": {</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "de": {</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">      "goals":
+["Bankgeld stehlen", "Kreditkarten stehlen"]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    },</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "fr": {</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">      "goals":
+["Voler de l'argent en banque", ""]</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  },</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "extensions":
+{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">   
+"extension-definition--b63766f9-b39e-4a4f-9396-e5e753722df0" : {</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">     
+"extension_type": "property-extension",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">     
+"translation_engine" : "babblefish"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<span lang="EN" style='font-size:10.0pt;line-height:115%;font-family:"Arial",sans-serif'><br clear="all" style="page-break-before:always"/>
+</span>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<div align="center" class="MsoNormal" style="text-align:center"><span lang="EN">
+<hr align="center" size="2" width="100%"/>
+</span></div>
+
+</body>
+</html>

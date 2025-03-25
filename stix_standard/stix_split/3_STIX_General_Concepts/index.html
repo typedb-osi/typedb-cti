@@ -1,0 +1,2675 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html"/>
+<meta content="This document describes the STIX language for expressing cyber threat and observable information and defines its concepts and overall structure." name="description"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="Microsoft Word 15 (filtered)" name="Generator"/>
+<title>STIX Version 2.1</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Helvetica;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Courier;
+	panose-1:2 7 4 9 2 2 5 2 4 4;}
+@font-face
+	{font-family:"Tms Rmn";
+	panose-1:2 2 6 3 4 5 5 2 3 4;}
+@font-face
+	{font-family:Helv;
+	panose-1:2 11 6 4 2 2 2 3 2 4;}
+@font-face
+	{font-family:"New York";
+	panose-1:2 4 5 3 6 5 6 2 3 4;}
+@font-face
+	{font-family:System;
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:Batang;
+	panose-1:2 3 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Gothic";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:Dotum;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimHei;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:MingLiU;
+	panose-1:2 2 5 9 0 0 0 0 0 0;}
+@font-face
+	{font-family:Mincho;
+	panose-1:2 2 6 9 4 3 5 8 3 5;}
+@font-face
+	{font-family:Gulim;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:Century;
+	panose-1:2 4 6 4 5 5 5 2 3 4;}
+@font-face
+	{font-family:"Angsana New";
+	panose-1:2 2 6 3 5 4 5 2 3 4;}
+@font-face
+	{font-family:"Cordia New";
+	panose-1:2 11 3 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Mangal;
+	panose-1:2 4 5 3 5 2 3 3 2 2;}
+@font-face
+	{font-family:Latha;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Sylfaen;
+	panose-1:1 10 5 2 5 3 6 3 3 3;}
+@font-face
+	{font-family:Vrinda;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Raavi;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Shruti;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Sendnya;
+	panose-1:0 0 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Gautami;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Tunga;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:"Estrangelo Edessa";
+	panose-1:3 8 6 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Yu Gothic";
+	panose-1:2 11 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Calibri Light";
+	panose-1:2 15 3 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Palatino Linotype";
+	panose-1:2 4 5 2 5 5 5 3 3 4;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"Arial Unicode MS";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Segoe UI Emoji";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Liberation Sans";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+h1
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h2
+	{margin-top:.25in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h3
+	{margin-top:16.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:13.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h4
+	{margin-top:14.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h5
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h6
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	font-family:"Arial",sans-serif;
+	color:#666666;
+	font-weight:normal;
+	font-style:italic;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"Header Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"Footer Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+span.HeaderChar
+	{mso-style-name:"Header Char";
+	mso-style-link:Header;}
+span.FooterChar
+	{mso-style-name:"Footer Char";
+	mso-style-link:Footer;}
+span.msoIns
+	{mso-style-name:"";
+	text-decoration:underline;
+	color:red;}
+span.msoDel
+	{mso-style-name:"";
+	text-decoration:line-through;
+	color:green;}
+.MsoChpDefault
+	{font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+.MsoPapDefault
+	{line-height:115%;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+<body>
+<h1><a name="_tw7zgjxxr1xi"></a><span lang="EN">3 STIX General Concepts</span></h1>
+<h2><a name="_6khi84u7y58g"></a><span lang="EN">3.1 Property Names and String
+Literals</span></h2>
+<p class="MsoNormal"><span lang="EN">All type names, property names, and literals <b>MUST</b>
+be in lowercase, except when referencing canonical names defined in another
+standard (e.g., literal values from an IANA registry). Lowercase is defined by
+the locality conventions. Type names and property names <b>MUST</b> begin with
+a letter character (for example - in ASCII that would be a through z). Words in
+property names <b>MUST</b> be separated with an underscore (_), while words in
+type names and string enumerations <b>MUST</b> be separated with a hyphen (-).
+Dictionary key and hash algorithm names <b>MAY</b> have underscores (_) or
+hyphens (-). All type names, property names, object names, and vocabulary terms
+<b>MUST</b> be between three and 250 characters long.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Certain names of properties <b>MUST</b> have
+specific suffixes. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">If the value of the property contains an ID reference for embedded
+relationships it <b>MUST</b> end in </span><b><span lang="EN" style="font-family:
+Consolas">_ref</span></b></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">If the value of the property contains a list of embedded relationships
+it <b>MUST</b> end in </span><b><span lang="EN" style="font-family:Consolas">_refs</span></b><span lang="EN">.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">If the value of the property contains a binary value, it <b>MUST</b>
+end in </span><b><span lang="EN" style="font-family:Consolas">_bin</span></b><span lang="EN">.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">If the value of the property contains a hexadecimal value, it <b>MUST</b>
+end in </span><b><span lang="EN" style="font-family:Consolas">_hex</span></b><span lang="EN">.</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>      </span></span><span lang="EN">A property might contain a string with an alternative encoding. Some
+object types will define an additional optional property to specify this
+encoding. The name of the additional property <b>MUST</b> end in </span><b><span lang="EN" style="font-family:Consolas">_enc</span></b><span lang="EN">. For
+example, the </span><b><span lang="EN" style="font-family:Consolas">name</span></b><span lang="EN"> property might contain text in an alternative encoding, and the <b>name_enc</b>
+property would be used to specify which encoding is used. The encoding property
+<b>MUST NOT</b> be present when the original property is not present.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">In the JSON serialization all property names
+and string literals <b>MUST</b> be exactly the same, including case, as the
+names listed in the property tables in this specification. For example, the SDO
+common property </span><b><span lang="EN" style="font-family:Consolas">created_by_ref</span></b><span lang="EN"> must result in the JSON key name "created_by_ref".
+Properties marked required in the property tables <b>MUST</b> be present in the
+JSON serialization. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Some properties may be designated as
+"deprecated". These properties are in the process of being removed or
+replaced and implementers should consider using the newer designs. </span></p>
+<h2><a name="_xzbicbtscatx"></a><span lang="EN">3.2 Common Properties</span></h2>
+<p class="MsoNormal"><span lang="EN">This section defines the common properties
+that <b>MAY</b> exist on a STIX Objects. While some STIX Objects use all of
+these common properties, not all object types do. Each type of STIX Object
+defines which common properties are required, which are optional, and which are
+not in use. A comparison summary table is provided below in this section. This
+information can also be found at the start of the properties table for each
+object. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<table border="1" cellpadding="0" cellspacing="0" class="a3" style="border-collapse:collapse;border:none" width="624">
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white">Property
+  Name</span></b></p>
+</td>
+<td style="width:109.5pt;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white">Type</span></b></p>
+</td>
+<td style="width:243.0pt;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white">Description</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="font-family:
+  Consolas">type</span></b></p>
+</td>
+<td style="width:109.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">string</span></p>
+</td>
+<td style="width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal" style="border:none"><span lang="EN">The </span><b><span lang="EN" style="font-family:Consolas">type</span></b><span lang="EN"> property
+  identifies the type of STIX Object. The value of the </span><b><span lang="EN" style="font-family:Consolas">type</span></b><span lang="EN"> property <b>MUST</b>
+  be the name of one of the types of STIX Objects defined in sections <a href="#_nrhq5e9nylke"><span style="color:#1155CC">4</span></a>, <a href="#_cqhkqvhnlgfh"><span style="color:#1155CC">5</span></a>, <a href="#_mlbmudhl16lr"><span style="color:#1155CC">6</span></a>, and <a href="#_mq8oo9k9rb2"><span style="color:#1155CC">7</span></a> (e.g., </span><span lang="EN" style="font-family:Consolas;color:#073763;background:#CFE2F3">indicator</span><span lang="EN">) or the name of a Custom Object as defined by section <a href="#_7f3c4jgkyhl3"><span style="color:#1155CC">11.2</span></a>.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="font-family:
+  Consolas">spec_version</span></b></p>
+</td>
+<td style="width:109.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">string</span></p>
+</td>
+<td style="width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal" style="border:none"><span lang="EN">The version of the STIX
+  specification used to represent this object.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">The value of this
+  property <b>MUST</b> be </span><span lang="EN" style="font-family:Consolas;
+  color:#073763;background:#CFE2F3">2.1</span><span lang="EN"> for STIX Objects
+  defined according to this specification.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">If objects are found
+  where this property is not present, the implicit value for all STIX Objects
+  other than SCOs is </span><span lang="EN" style="font-family:Consolas;
+  color:#073763;background:#CFE2F3">2.0</span><span lang="EN">. Since SCOs are
+  now top-level objects in STIX 2.1, the default value for SCOs is </span><span lang="EN" style="font-family:Consolas;color:#073763;background:#CFE2F3">2.1</span><span lang="EN">.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="font-family:
+  Consolas">id</span></b></p>
+</td>
+<td style="width:109.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">identifier</span></p>
+</td>
+<td style="width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal" style="border:none"><span lang="EN">The </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> property
+  uniquely identifies this object. </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">For objects that support
+  versioning, all objects with the same </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> are considered
+  different versions of the same object and the version of the object is
+  identified by its </span><b><span lang="EN" style="font-family:Consolas;
+  color:black">modified</span></b><span lang="EN"> property.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="font-family:
+  Consolas">created_by_ref</span></b></p>
+</td>
+<td style="width:109.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">identifier</span></p>
+</td>
+<td style="width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal" style="border:none"><span lang="EN">The </span><b><span lang="EN" style="font-family:Consolas">created_by_ref</span></b><span lang="EN">
+  property specifies the </span><b><span lang="EN" style="font-family:Consolas;
+  color:black">id</span></b><span lang="EN"> property of the </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">identity</span><span lang="EN"> object that describes the entity that created this object.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">If this attribute is
+  omitted, the source of this information is undefined. This may be used by object
+  creators who wish to remain anonymous.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="font-family:
+  Consolas">created</span></b></p>
+</td>
+<td style="width:109.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">timestamp</span></p>
+</td>
+<td style="width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal" style="border:none"><span lang="EN">The </span><b><span lang="EN" style="font-family:Consolas">created</span></b><span lang="EN">
+  property represents the time at which the object was originally created. </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">The object creator can
+  use the time it deems most appropriate as the time the object was created.
+  The minimum precision <b>MUST</b> be milliseconds (three digits after the
+  decimal place in seconds), but <b>MAY</b> be more precise.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">The </span><b><span lang="EN" style="font-family:Consolas">created</span></b><span lang="EN">
+  property <b>MUST NOT</b> be changed when creating a new version of the
+  object.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">See section <a href="#_rye5q2hkacu"><span style="color:#1155CC">3.6</span></a> for further
+  definition of versioning.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="font-family:
+  Consolas">modified</span></b></p>
+</td>
+<td style="width:109.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">timestamp</span></p>
+</td>
+<td style="width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal" style="border:none"><span lang="EN">The </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN">
+  property is only used by STIX Objects that support versioning and represents
+  the time that this particular version of the object was last modified. </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">The object creator can
+  use the time it deems most appropriate as the time this version of the object
+  was modified. The minimum precision <b>MUST</b> be milliseconds (three digits
+  after the decimal place in seconds), but <b>MAY</b> be more precise.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">If the </span><b><span lang="EN" style="font-family:Consolas">created</span></b><span lang="EN">
+  property is defined, then the value of the </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> property for a
+  given object version <b>MUST</b> be later than or equal to the value of the </span><b><span lang="EN" style="font-family:Consolas">created</span></b><span lang="EN">
+  property.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">Object creators <b>MUST </b>set
+  the </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> property when creating a new version of an object if the </span><b><span lang="EN" style="font-family:Consolas">created</span></b><span lang="EN">
+  property was set.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">See section <a href="#_rye5q2hkacu"><span style="color:#1155CC">3.6</span></a> for further
+  definition of versioning.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="font-family:
+  Consolas">revoked</span></b></p>
+</td>
+<td style="width:109.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">boolean</span></p>
+</td>
+<td style="width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal" style="border:none"><span lang="EN">The </span><b><span lang="EN" style="font-family:Consolas">revoked</span></b><span lang="EN">
+  property is only used by STIX Objects that support versioning and indicates
+  whether the object has been revoked. </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">Revoked objects are no
+  longer considered valid by the object creator. Revoking an object is
+  permanent; future versions of the object with this </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> <b>MUST NOT </b>be
+  created. </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">The default value of
+  this property is </span><span lang="EN" style="font-family:Consolas;color:#073763;
+  background:#CFE2F3">false</span><span lang="EN">.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">See section <a href="#_rye5q2hkacu"><span style="color:#1155CC">3.6</span></a> for further
+  definition of versioning.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  border-top:none;background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="font-family:
+  Consolas;color:black">labels</span></b></p>
+</td>
+<td style="width:109.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">list</span><span lang="EN" style="color:black">
+  of type </span><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">string</span></p>
+</td>
+<td style="width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="color:black">The </span><b><span lang="EN" style="font-family:Consolas;color:black">labels</span></b><span lang="EN" style="color:black"> property specifies a set of terms used to
+  describe this object. The terms are user-defined or trust-group defined and
+  their meaning is outside the scope of this specification and <b>MAY</b> be
+  ignored.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="color:black">Where
+  an object has a specific property defined in the specification for
+  characterizing subtypes of that object, the labels property <b>MUST NOT</b>
+  be used for that purpose. </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="color:black">For
+  example, the Malware SDO has a property </span><b><span lang="EN" style="font-family:Consolas;color:black">malware_types</span></b><span lang="EN" style="color:black"> that contains a list of Malware subtypes
+  (dropper, RAT, etc.). In this example, the labels property cannot be used to
+  describe these Malware subtypes.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">confidence</span></b></p>
+</td>
+<td style="width:109.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">integer</span></p>
+</td>
+<td style="width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal"><span lang="EN">The </span><b><span lang="EN" style="font-family:Consolas">confidence</span></b><span lang="EN"> property
+  identifies the confidence that the creator has in the correctness of their
+  data. The confidence value <b>MUST</b> be a number in the range of 0-100. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN"><a href="#_1v6elyto0uqg"><span style="color:#1155CC">Appendix A</span></a> contains a table of normative
+  mappings to other confidence scales that <b>MUST</b> be used when presenting
+  the confidence value in one of those scales. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">If the confidence property is not present,
+  then the confidence of the content is unspecified.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;background:
+  white">lang</span></b></p>
+</td>
+<td style="width:109.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">string</span></p>
+</td>
+<td style="width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal"><span lang="EN" style="background:white">The </span><b><span lang="EN" style="font-family:Consolas;background:white">lang</span></b><span lang="EN" style="background:white"> property identifies the language of the
+  text content in this object. When present, it <b>MUST</b> be a language code
+  conformant to [</span><span lang="EN"><a href="#kix.1js008hntuzu"><span style="color:#1155CC;background:white">RFC5646</span></a><span style="background:white">]. If the property is not present, then the language
+  of the content is </span></span><span lang="EN" style="font-family:Consolas;
+  color:#073763;background:#CFE2F3">en</span><span lang="EN" style="background:
+  white"> (English).</span></p>
+<p class="MsoNormal"><span lang="EN" style="background:white"> </span></p>
+<p class="MsoNormal"><span lang="EN" style="background:white">This property <b>SHOULD</b>
+  be present if the object type contains translatable text properties (e.g.
+  name, description).</span></p>
+<p class="MsoNormal"><span lang="EN" style="background:white"> </span></p>
+<p class="MsoNormal"><span lang="EN" style="background:white">The language of
+  individual fields in this object <b>MAY </b>be overridden by the </span><b><span lang="EN" style="font-family:Consolas;background:white">lang</span></b><span lang="EN" style="background:white"> property in granular markings (see section </span><span lang="EN"><a href="#_robezi5egfdr"><span style="color:#1155CC;background:white">7.2.3</span></a><span style="background:white">).</span></span></p>
+</td>
+</tr>
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  border-top:none;background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="font-family:
+  Consolas;color:black">external_references</span></b></p>
+</td>
+<td style="width:109.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">list</span><span lang="EN" style="font-family:
+  Consolas;color:black"> </span><span lang="EN" style="color:black">of type</span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">
+  external-reference</span></p>
+</td>
+<td style="width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="color:black">The </span><b><span lang="EN" style="font-family:Consolas;color:black">external_references</span></b><span lang="EN" style="color:black"> property specifies a list of external references
+  which refers to non-STIX information. This property is used to provide one or
+  more URLs, descriptions, or IDs to records in other systems.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="font-family:
+  Consolas">object_marking_refs</span></b></p>
+</td>
+<td style="width:109.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">list</span><span lang="EN" style="font-family:
+  Consolas"> </span><span lang="EN">of type </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">identifier</span></p>
+</td>
+<td style="width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal" style="border:none"><span lang="EN">The </span><b><span lang="EN" style="font-family:Consolas">object_marking_refs</span></b><span lang="EN"> property specifies a list of </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> properties of </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">marking-definition</span><span lang="EN"> objects that apply to this object. </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">In some cases, though
+  uncommon, marking definitions themselves may be marked with sharing or
+  handling guidance. In this case, this property <b>MUST NOT</b> contain any
+  references to the same Marking Definition object (i.e., it cannot contain any
+  circular references).</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">See section <a href="#_95gfoglikdzh"><span style="color:#1155CC">7.2</span></a> for further
+  definition of data markings.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="font-family:
+  Consolas">granular_markings</span></b></p>
+</td>
+<td style="width:109.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas;
+  color:#C7254E;background:#F9F2F4">list</span><span lang="EN" style="font-family:
+  Consolas"> </span><span lang="EN">of type</span><span lang="EN" style="font-family:
+  Consolas"> <span style="color:#C7254E;background:#F9F2F4">granular-marking</span></span></p>
+</td>
+<td style="width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal" style="border:none"><span lang="EN">The </span><b><span lang="EN" style="font-family:Consolas">granular_markings</span></b><span lang="EN"> property specifies a list of granular markings applied to this
+  object. </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">In some cases, though
+  uncommon, marking definitions themselves may be marked with sharing or
+  handling guidance. In this case, this property <b>MUST NOT</b> contain any
+  references to the same Marking Definition object (i.e., it cannot contain any
+  circular references).</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">See section <a href="#_95gfoglikdzh"><span style="color:#1155CC">7.2</span></a> for further
+  definition of data markings.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  border-top:none;background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;color:black">defanged</span></b></p>
+</td>
+<td style="width:109.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">boolean</span></p>
+</td>
+<td style="width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal"><span lang="EN" style="color:black">This property defines
+  whether or not the data contained within the object has been defanged.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN" style="color:black">The default value for
+  this property is </span><span lang="EN" style="font-family:Consolas;color:#073763;
+  background:#CFE2F3">false</span><span lang="EN" style="color:black">.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN" style="color:black;background:white">This
+  property <b>MUST NOT</b> be used on any STIX Objects other than SCOs. </span></p>
+</td>
+</tr>
+<tr>
+<td style="width:115.5pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="154">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">extensions</span></b></p>
+</td>
+<td style="width:109.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="146">
+<p class="MsoNormal"><span lang="EN" style="font-family:Consolas;color:#C7254E;
+  background:#F9F2F4">dictionary</span></p>
+</td>
+<td style="width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="324">
+<p class="MsoNormal"><span lang="EN">Specifies any extensions of the object, as a
+  dictionary. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Dictionary keys <b>SHOULD </b>be the id of a
+  STIX Extension object or the name of a predefined object extension found in
+  this specification, depending on the type of extension being used.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">The corresponding dictionary values <b>MUST</b>
+  contain the contents of the extension instance.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Each extension dictionary <b>MAY</b> contain
+  the property </span><b><span lang="EN" style="font-family:Consolas">extension_type</span></b><span lang="EN">. The value of this property <b>MUST </b>come from the </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">extension-type-enum</span><span lang="EN"> enumeration. If the </span><b><span lang="EN" style="font-family:Consolas">extension_type</span></b><span lang="EN"> property is not present, then this is a predefined extension which
+  does not use the extension facility described in section <a href="#_iy12xibn6u83"><span style="color:#1155CC">7.3</span></a>. When this
+  extension facility is used the </span><b><span lang="EN" style="font-family:
+  Consolas">extension_type</span></b><span lang="EN"> property <b>MUST</b> be
+  present.</span></p>
+</td>
+</tr>
+</table>
+<p class="MsoNormal"><span lang="EN" style="font-size:11.0pt;line-height:115%"> </span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:11.0pt;line-height:115%">This
+table lists all common properties and how they are used for each type of STIX
+Object. The following table is informational, and the body of the spec is
+normative and the definitive reference.</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:11.0pt;line-height:115%"> </span></p>
+<table border="1" cellpadding="0" cellspacing="0" class="a4" style="border-collapse:collapse;border:none" width="641">
+<tr style="height:20.0pt">
+<td style="width:96.75pt;border:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt;height:20.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="color:white"> </span></b></p>
+</td>
+<td colspan="3" style="width:135.0pt;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:20.0pt" valign="top" width="180">
+<p align="center" class="MsoNormal" style="text-align:center"><b><span lang="EN" style="color:white">STIX Core Objects</span></b></p>
+</td>
+<td colspan="3" style="width:176.25pt;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:20.0pt" valign="top" width="235">
+<p align="center" class="MsoNormal" style="text-align:center"><b><span lang="EN" style="color:white">STIX Meta Objects</span></b></p>
+</td>
+<td style="width:72.75pt;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt;
+  height:20.0pt" valign="top" width="97">
+<p class="MsoNormal" style="line-height:normal"><b><span lang="EN" style="color:white"> </span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="color:white">Property Name</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p align="center" class="MsoNormal" style="text-align:center"><b><span lang="EN" style="color:white">SDOs</span></b></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="62">
+<p align="center" class="MsoNormal" style="text-align:center"><b><span lang="EN" style="color:white">SROs</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p align="center" class="MsoNormal" style="text-align:center"><b><span lang="EN" style="color:white">SCOs</span></b></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="80">
+<p align="center" class="MsoNormal" style="text-align:center"><b><span lang="EN" style="color:white">Extension</span></b></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="81">
+<p align="center" class="MsoNormal" style="text-align:center"><b><span lang="EN" style="color:white">Language</span></b></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="74">
+<p align="center" class="MsoNormal" style="text-align:center"><b><span lang="EN" style="color:white">Markings</span></b></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="97">
+<p align="center" class="MsoNormal" style="text-align:center"><b><span lang="EN" style="color:white">Bundle</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">type</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="62">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="80">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="81">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="74">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="97">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">spec_version</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="62">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="80">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="81">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="74">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="97">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">id</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="62">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="80">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="81">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="74">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="97">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">created_by_ref</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="62">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="80">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="81">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="74">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="97">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">created</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="62">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="80">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="81">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="74">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="97">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">modified</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="62">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="80">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#F4CCCC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="81">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Required</span></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="74">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="97">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">revoked</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="62">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="80">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="81">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="74">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="97">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+</tr>
+<tr style="height:19.0pt">
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt;height:19.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;color:black">labels</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt;height:19.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt;height:19.0pt" valign="top" width="62">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt;height:19.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt;height:19.0pt" valign="top" width="80">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt;height:19.0pt" valign="top" width="81">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt;height:19.0pt" valign="top" width="74">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt;height:19.0pt" valign="top" width="97">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">confidence</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="62">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="80">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="81">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="74">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="97">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;background:
+  white">lang</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="62">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="80">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="81">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="74">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="97">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;background:white;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas;color:black">external_references</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="62">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="80">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="81">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="74">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="97">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">object_marking_refs</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="62">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="80">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="81">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="74">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="97">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">granular_markings</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="62">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="80">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="81">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="74">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="97">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">defanged</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="62">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="80">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="81">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="74">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="97">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:96.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="129">
+<p class="MsoNormal"><b><span lang="EN" style="font-family:Consolas">extensions</span></b></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:46.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="62">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:44.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="59">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:60.0pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="80">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+<td style="width:60.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="81">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:55.5pt;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:
+  #FFF2CC;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="74">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">Optional</span></p>
+</td>
+<td style="width:72.75pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  background:#D9D9D9;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="97">
+<p class="MsoNormal"><span lang="EN" style="font-size:8.0pt;line-height:115%;
+  color:black">N/A</span></p>
+</td>
+</tr>
+</table>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<h2><a name="_v9ggtuvpqkfm"></a><span lang="EN">3.3 Object IDs and References</span></h2>
+<p class="MsoNormal" style="border:none"><span lang="EN">All STIX Objects and the
+STIX Bundle Object have an </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> property that uniquely identifies each instance of the object. This </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> <b>MUST </b>meet
+the requirements of the </span><span lang="EN" style="font-family:Consolas;
+color:#C7254E;background:#F9F2F4">identifier</span><span lang="EN"> type (see
+section <a href="#_64yvzeku5a5c"><span style="color:#1155CC">2.9</span></a>). </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">The </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">identifier</span><span lang="EN"> type is also used as an ID reference to define a relationship to other
+STIX Objects. Resolving<b> </b>an ID reference is the process of identifying
+and obtaining the actual object referred to by the ID reference property. ID
+references resolve to an object when the value of the ID reference property
+(e.g., </span><b><span lang="EN" style="font-family:Consolas">created_by_ref</span></b><span lang="EN">) is an exact match with the </span><b><span lang="EN" style="font-family:
+Consolas">id</span></b><span lang="EN"> property of another object. If a consumer
+has access to multiple versions of an object, the consumer <b>SHOULD</b>
+interpret any references to that object as referring to the latest version as
+defined in section <a href="#_rye5q2hkacu"><span style="color:#1155CC">3.6</span></a>.
+ID references can refer to objects to which the consumer/producer may not
+currently have. This specification does not address the implementation of ID
+reference resolution.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Some ID references (embedded relationships)
+may be restricted to a subset of object types, as specified in the description
+of the property that defines the relationship. For example, the </span><b><span lang="EN" style="font-family:Consolas">object_marking_refs</span></b><span lang="EN"> common property specifies that the only valid target of the
+relationship is one or more </span><span lang="EN" style="font-family:Consolas;
+color:#C7254E;background:#F9F2F4">marking-definition</span><span lang="EN">
+objects.</span></p>
+<h2><a name="_q6l05xzpcdf"></a><span lang="EN">3.4 SCO Deterministic ID Creation</span></h2>
+<p class="MsoNormal"><span lang="EN">To enable deterministic IDs for STIX
+Cyber-observable Objects (SCOs), each SCO defines a set of one or more
+properties named "ID Contributing Properties". These properties <b>MAY</b>
+be used in the default calculation of the </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> when creating a SCO.
+In some cases, additional selection of extension properties that contribute to
+the ID may be described in the ID Contributing Properties section listed on
+each SCO. The default algorithm that creates the SCO ID based on those named
+properties is a UUIDv5 as defined in Section <a href="#_64yvzeku5a5c"><span style="color:#1155CC">2.9</span></a>, however, other algorithms for creating
+the SCO ID <b>MAY</b> be used. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Deterministic IDs (UUIDv5) in the example SCOs
+contained in this specification were computed using the algorithm defined in
+section <a href="#_64yvzeku5a5c"><span style="color:#1155CC">2.9</span></a>.
+Every attempt was made for these IDs to be accurate. Certain IDs which were
+used in reference properties of the examples did not include the actual object,
+and therefore it was impossible to accurately compute the appropriate UUIDv5.
+In these cases, a UUIDv4 was generated.</span></p>
+<h2><a name="_gckz8qcky97t"></a><span lang="EN">3.5 Object Creator</span></h2>
+<p class="MsoNormal" style="border:none"><span lang="EN">The object creator is the
+entity (e.g., system, organization, instance of a tool) that generates the </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> property for a
+given object. Object creators are represented as Identity objects. Some STIX
+Objects allow this designation (see Section <a href="#_xzbicbtscatx"><span style="color:#1155CC">3.2</span></a>). An embedded relationship to the Identity
+object representing the object creator <b>SHOULD</b> be captured in the </span><b><span lang="EN" style="font-family:Consolas">created_by_ref</span></b><span lang="EN">
+property (or that property can be omitted, meaning the object creator is anonymous).
+</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">Entities that re-publish
+an object from another entity without making any changes to the object, and
+thus maintaining the original </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN">,<b> </b>are not considered the object creator and <b>MUST NOT</b>
+change the </span><b><span lang="EN" style="font-family:Consolas">created_by_ref</span></b><span lang="EN"> property. An entity that accepts objects and republishes them with
+modifications, additions, or omissions <b>MUST</b> create a new </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> for the
+object. They are considered the object creator of the new object for purposes
+of versioning.</span></p>
+<h2><a name="_rye5q2hkacu"></a><span lang="EN">3.6 Versioning</span></h2>
+<p class="MsoNormal" style="border:none"><span lang="EN">Versioning is the
+mechanism that object creators use to update and revoke the STIX Objects that
+they create. This section describes the versioning process and normative rules
+for performing versioning and revocation. STIX Objects that are versioned <b>MUST</b>
+use the property names </span><b><span lang="EN" style="font-family:Consolas">created_by_ref</span></b><span lang="EN">, </span><b><span lang="EN" style="font-family:Consolas">created</span></b><span lang="EN">, </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN">, and </span><b><span lang="EN" style="font-family:Consolas">revoked</span></b><span lang="EN">. SCOs are not versioned and thus do not have the four versioning
+properties. See the properties table in section <a href="#_xzbicbtscatx"><span style="color:#1155CC">3.2</span></a> for full definitions and normative usage
+of those properties.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">STIX Objects <b>MAY</b> be
+versioned in order to update, add, or remove information. A version of a STIX
+Object is identified uniquely by the combination of its </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> and </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN">
+properties. The first version of the object <b>MUST</b> have the same timestamp
+for the </span><b><span lang="EN" style="font-family:Consolas">created</span></b><span lang="EN"> and </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> properties. More recent values of the </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> property
+indicate later versions of the object. Implementations <b>MUST</b> consider the
+version of the STIX Object with the most recent </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> value to be the
+most recent state of the object. For every new version of an object, the </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> property
+<b>MUST</b> be updated to represent the time that the new version was created.
+If a consumer receives two objects that are different, but have the same </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> and </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN">
+timestamp, it is not defined how the consumer handles the objects. This
+specification does not address how implementations should handle versions of
+the object that are not current.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">STIX Objects have a single
+<i>object creator</i>, the entity that generates the </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> for the object and
+creates the first version. The object creator <b>MAY</b> (but not necessarily
+will) be identified in the </span><b><span lang="EN" style="font-family:Consolas;
+color:black">created_by_ref</span></b><span lang="EN"> property of the object.
+Only the object creator is permitted to create new versions of a STIX Object.
+Producers other than the object creator <b>MUST NOT </b>create new versions of
+that object. If a producer other than the object creator wishes to create a new
+version, they <b>MUST </b>instead create a new object with a new </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN">. They <b>SHOULD</b>
+additionally create a </span><span lang="EN" style="font-family:Consolas;
+color:#073763;background:#CFE2F3">derived-from</span><span lang="EN">
+Relationship object to relate their new object to the original object that it
+was derived from.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">Every representation (each
+time the object version is serialized and shared) of a version of an object
+(identified by the object's </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> and </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> properties) <b>MUST</b> always have the same set of properties and the
+same values for each property. If a property has the same value as the default,
+it <b>MAY</b> be omitted from a representation, and this does not represent a
+change to the object. In order to change the value of any property, or to add
+or remove properties, the </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> property <b>MUST</b> be updated with the time of the change to
+indicate a new version.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">Objects can also be
+revoked, which means that they are no longer considered valid by the object creator.
+As with issuing a new version, only the object creator is permitted to revoke a
+STIX Object. A value of </span><span lang="EN" style="font-family:Consolas;
+color:#073763;background:#CFE2F3">true</span><span lang="EN"> in the </span><b><span lang="EN" style="font-family:Consolas">revoked</span></b><span lang="EN"> property
+indicates that an object (including the current version and all past versions)
+has been revoked. Revocation is permanent: once an object is marked as revoked,
+later versions of that object <b>MUST NOT</b> be created. Changing the </span><b><span lang="EN" style="font-family:Consolas">revoked</span></b><span lang="EN"> property
+to indicate that an object is revoked is an update to the object, and therefore
+its </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> property <b>MUST</b> be updated at the same time. This specification
+does not address how implementations should handle revoked data.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">It should be noted that if a producer versions
+a SCO (assigns value to these four properties) that no other producer would be
+allowed to create or modify the same SCO with an equivalent deterministic <b>id</b>,
+as that would conflict with the strict versioning rules defined in STIX2.
+Therefore, for interoperability and sharing, producers versioning SCOs <b>MUST
+NOT</b> use the default namespace for deterministic ID creation. Otherwise
+multiple different producers will conflict with each other if producing the
+same SCO intelligence. </span></p>
+<h3><a name="_wc24wqtv2k5l"></a><span lang="EN">3.6.1 Versioning Timestamps</span></h3>
+<p class="MsoNormal" style="border:none"><span lang="EN">There are two timestamp
+properties used to indicate when STIX Objects were created and modified: </span><b><span lang="EN" style="font-family:Consolas">created</span></b><span lang="EN"> and </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN">. The </span><b><span lang="EN" style="font-family:Consolas">created</span></b><span lang="EN"> property
+indicates the time the first version of the object was created. The </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> property
+indicates the time the specific version of the object was created. The </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> time <b>MUST
+NOT</b> be earlier than the </span><b><span lang="EN" style="font-family:Consolas">created</span></b><span lang="EN"> time. This specification does not address the specifics of how
+implementations should determine the value of <span style="color:#333333;
+background:white">the </span><span style="background:white">creation and
+modification times for <span style="color:#333333">use in the </span></span></span><b><span lang="EN" style="font-family:Consolas">created</span></b><span lang="EN" style="color:#333333;background:white"> and </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN" style="color:
+#333333;background:white"> properties </span><span lang="EN" style="background:
+white">(e.g., one system might use when the object is first added to the local
+database as the creation time, while another might use the time when the object
+is first distributed as STIX).</span></p>
+<h3><a name="_vy23e1urdh0"></a><span lang="EN">3.6.2 New Version or New Object?</span></h3>
+<p class="MsoNormal" style="border:none"><span lang="EN">Eventually an
+implementation will encounter a case where a decision must be made regarding
+whether a change is a new version of an existing object or is different enough
+that it is a new object. This is generally considered a data quality problem
+and therefore this specification does not provide any normative text.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style='font-family:"Times New Roman",serif'> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">However, to assist
+implementers and promote consistency across implementations, some rules of
+thumb are provided. Any time a change indicates a <i>material change</i> to the
+meaning of the object, a new object with a different </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> should be used. A
+material change is any change that the object creator believes substantively
+changes the meaning of the object. As an example, an object creator might
+consider changing a Threat Actor from one country to another is a material
+change. These decisions are always made by the object creator. The object
+creator should also think about relationships to the object when deciding if a
+change is material. If the change would invalidate the usefulness of
+relationships to the object, then the change is considered material and a new
+object </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> should be used.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><b><span lang="EN">Examples</span></b></p>
+<p class="MsoNormal" style="border:none"><i><span lang="EN">Example of a new
+version</span></i></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">One object creator has
+decided that the previous name they used for an SDO is incorrect. They consider
+that change as an update to the object.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><i><span lang="EN">Note: the IDs in the
+example below use a simplified format to help illustrate the changing IDs more
+clearly.</span></i></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<table border="1" cellpadding="0" cellspacing="0" class="a5" style="border-collapse:collapse;border:none" width="624">
+<tr>
+<td style="width:46.0pt;border:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="61">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white;
+  background:#073763">Step #</span></b></p>
+</td>
+<td style="width:263.0pt;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="351">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white;
+  background:#073763">STIX Object</span></b></p>
+</td>
+<td style="width:159.0pt;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="212">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white;
+  background:#073763">Object Creator Action</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:46.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="61">
+<p class="MsoNormal" style="border:none"><span lang="EN">1</span></p>
+</td>
+<td style="width:263.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="351">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "type": "example",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "id": "example--1",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "created": "2016-05-01T06:13:14.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "modified": "2016-05-01T06:13:14.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "name": "attention",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "description": "this is the description"</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+</td>
+<td style="width:159.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="212">
+<p class="MsoNormal" style="border:none"><span lang="EN">Original version of an
+  object is created.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:46.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="61">
+<p class="MsoNormal" style="border:none"><span lang="EN">2</span></p>
+</td>
+<td style="width:263.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="351">
+<p class="MsoNormal" style="border:none"><span lang="EN">N/A, STIX is not
+  involved in this step</span></p>
+</td>
+<td style="width:159.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="212">
+<p class="MsoNormal" style="border:none"><span lang="EN">Object creator changes
+  the name in their internal database.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:46.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="61">
+<p class="MsoNormal" style="border:none"><span lang="EN">3</span></p>
+</td>
+<td style="width:263.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="351">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "type": "example",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "id": "example--1",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "created": "2016-05-01T06:13:14.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "modified": "2016-05-08T03:43:44.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "name": "Attention!",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "description": "this is the description"</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+</td>
+<td style="width:159.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="212">
+<p class="MsoNormal" style="border:none"><span lang="EN">Object creator updates
+  the </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> property.</span></p>
+</td>
+</tr>
+</table>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><i><span lang="EN">Example of derived
+object</span></i></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">One object creator has
+decided that the previous name they used for an SDO is incorrect. They consider
+that change fundamental to the meaning of the object and therefore revoke the
+object and issue a new one.</span></p>
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="font-family:
+Consolas"> </span></b></p>
+<table border="1" cellpadding="0" cellspacing="0" class="a6" style="border-collapse:collapse;border:none" width="624">
+<tr>
+<td style="width:45.75pt;border:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="61">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white;
+  background:#073763">Step #</span></b></p>
+</td>
+<td style="width:260.25pt;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="347">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white;
+  background:#073763">STIX Object</span></b></p>
+</td>
+<td style="width:2.25in;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="216">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white;
+  background:#073763">Object Creator Action</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:45.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="61">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas">1</span></p>
+</td>
+<td style="width:260.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="347">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "type": "example",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "id": "example--2",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "created": "2016-05-01T06:13:14.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "modified": "2016-05-01T06:13:14.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "name": "attention",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "description": "this is the description"</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+</td>
+<td style="width:2.25in;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="216">
+<p class="MsoNormal" style="border:none"><span lang="EN">Original object created
+  (via new id and setting </span><b><span lang="EN" style="font-family:Consolas">created</span></b><span lang="EN"> and </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> to the same value).</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:45.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="61">
+<p class="MsoNormal" style="border:none"><span lang="EN">2</span></p>
+</td>
+<td style="width:260.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="347">
+<p class="MsoNormal" style="border:none"><span lang="EN">N/A, STIX is not
+  involved in this step</span></p>
+</td>
+<td style="width:2.25in;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="216">
+<p class="MsoNormal" style="border:none"><span lang="EN">Object creator changes
+  the name in their internal database.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:45.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="61">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas">3</span></p>
+</td>
+<td style="width:260.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="347">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "type": "example",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "id": "example--2",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "created": "2016-05-01T06:13:14.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "modified": "2016-05-08T03:43:44.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "name": "attention",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "description": "this is the description",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "revoked": true</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+</td>
+<td style="width:2.25in;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="216">
+<p class="MsoNormal" style="border:none"><span lang="EN">Object creator revokes
+  the existing object by setting <b>revoked</b> to </span><span lang="EN" style="font-family:Consolas;color:#073763;background:#CFE2F3">true</span><span lang="EN">. The </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> property is updated.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:45.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="61">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas">4</span></p>
+</td>
+<td style="width:260.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="347">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "type": "example",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "id": "example--3",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "created": "2016-05-08T03:43:44.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "modified": "2016-05-08T03:43:44.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "name": "Something completely different",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "description": "this is the description"</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+</td>
+<td style="width:2.25in;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="216">
+<p class="MsoNormal" style="border:none"><span lang="EN">Object creator creates a
+  new object (with a new </span><b><span lang="EN" style="font-family:Consolas">id</span></b><span lang="EN"> and setting </span><b><span lang="EN" style="font-family:Consolas">created</span></b><span lang="EN"> and </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> to the same value).</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:45.75pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="61">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas">5</span></p>
+</td>
+<td style="width:260.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="347">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "type": "relationship",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "id": "relationship--4",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "created": "2016-05-08T03:43:44.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "modified": "2016-05-08T03:43:44.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "relationship_type": "derived-from",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "source_ref": "example--2",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "target_ref": "example--3"</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+</td>
+<td style="width:2.25in;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="216">
+<p class="MsoNormal" style="border:none"><span lang="EN">(Optional) Object
+  creator creates a new Relationship indicating that the new object is derived
+  from the old object.</span></p>
+</td>
+</tr>
+</table>
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="font-family:
+Consolas"> </span></b></p>
+<p class="MsoNormal" style="border:none"><i><span lang="EN">Example of consumer
+workflow</span></i></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">This section describes an
+example workflow where a consumer receives multiple updates to a particular
+object. (In this example, the STIX Objects have been truncated for brevity.)</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<table border="1" cellpadding="0" cellspacing="0" class="a7" style="border-collapse:collapse;border:none" width="624">
+<tr>
+<td style="width:51.0pt;border:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="68">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white;
+  background:#073763">Step #</span></b></p>
+</td>
+<td style="width:254.0pt;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="339">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white;
+  background:#073763">Received STIX Object</span></b></p>
+</td>
+<td style="width:163.0pt;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="217">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white;
+  background:#073763">Recipient Action</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:51.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="68">
+<p class="MsoNormal" style="border:none"><span lang="EN">1</span></p>
+</td>
+<td style="width:254.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="339">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "type": "example",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "id": "example--5",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "created": "2016-05-01T06:13:14.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "modified": "2016-05-01T06:13:14.000Z"</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+</td>
+<td style="width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="217">
+<p class="MsoNormal" style="border:none"><span lang="EN">Consumer stores example
+  object because this is the first time they have seen the object.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:51.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="68">
+<p class="MsoNormal" style="border:none"><span lang="EN">2</span></p>
+</td>
+<td style="width:254.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="339">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "type": "example",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "id": "example--5",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "created": "2016-05-01T06:13:14.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "modified": "2016-05-08T03:43:44.000Z"</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+</td>
+<td style="width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="217">
+<p class="MsoNormal" style="border:none"><span lang="EN">Consumer updates example
+  object because the received </span><b><span lang="EN" style="font-family:Consolas">modified</span></b><span lang="EN"> property is later than the object that is currently stored.</span></p>
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="font-family:
+  Consolas"> </span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:51.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="68">
+<p class="MsoNormal" style="border:none"><span lang="EN">3</span></p>
+</td>
+<td style="width:254.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="339">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "type": "example",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "id": "example--5",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "created": "2016-05-01T06:13:14.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "modified": "2016-05-06T06:23:45.000Z"</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+</td>
+<td style="width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="217">
+<p class="MsoNormal" style="border:none"><span lang="EN">Consumer ignores this
+  object because they already have a newer version of the object.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">Note: consumer might
+  choose to store meta-information about received objects, including versions
+  that were received out-of-order. The consumer also may choose to store a copy
+  for reference.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:51.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="68">
+<p class="MsoNormal" style="border:none"><span lang="EN">4</span></p>
+</td>
+<td style="width:254.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="339">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "type": "example",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "id": "example--5",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "created": "2016-05-01T06:13:14.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "modified": "2016-05-11T06:41:21.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "revoked": true</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+</td>
+<td style="width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="217">
+<p class="MsoNormal" style="border:none"><span lang="EN">Consumer receives
+  revoked version and decides to delete example object but keeps some metadata
+  regarding the object.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:51.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="68">
+<p class="MsoNormal" style="border:none"><span lang="EN">5</span></p>
+</td>
+<td style="width:254.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="339">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "type": "example",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "id": "example--5",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "created": "2016-05-01T06:13:14.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "modified": "2016-05-10T17:28:54.000Z"</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+</td>
+<td style="width:163.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="217">
+<p class="MsoNormal" style="border:none"><span lang="EN">Consumer ignores this
+  object because they already have a newer version of the object (the revoked
+  version).</span></p>
+</td>
+</tr>
+</table>
+<p class="MsoNormal" style="border:none"><span lang="EN">​</span></p>
+<p class="MsoNormal" style="border:none"><i><span lang="EN">Example of object
+creator workflow</span></i></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">This section describes an
+example workflow where an object creator publishes multiple updates to a
+particular object. This scenario assumes a human using a STIX implementation.
+(In this example, the STIX Objects have been truncated for brevity.) </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<table border="1" cellpadding="0" cellspacing="0" class="a8" style="border-collapse:collapse;border:none" width="624">
+<tr>
+<td style="width:51.0pt;border:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="68">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white;
+  background:#073763">Step #</span></b></p>
+</td>
+<td style="width:273.0pt;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="364">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white;
+  background:#073763">STIX Object</span></b></p>
+</td>
+<td style="width:2.0in;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="192">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white;
+  background:#073763">User Action</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:51.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="68">
+<p class="MsoNormal" style="border:none"><span lang="EN">1</span></p>
+</td>
+<td style="width:273.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="364">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="background:white">N/A
+   STIX is not involved in this scenario.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="background:white"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="background:white">(Tools
+  <i>could </i>choose to create and track STIX versions for internal changes,
+  but it is not required by the specification.)</span></p>
+</td>
+<td style="width:2.0in;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:1.0pt 1.0pt 1.0pt 1.0pt" valign="top" width="192">
+<p class="MsoNormal" style="border:none"><span lang="EN">User clicks a create
+  button in the user interface, creates an SDO, then clicks save. This action
+  causes information to be stored in the products database.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+</td>
+</tr>
+<tr>
+<td style="width:51.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="68">
+<p class="MsoNormal" style="border:none"><span lang="EN">2</span></p>
+</td>
+<td style="width:273.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="364">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "type": "example",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "id": "example--6",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "created": "2016-05-01T06:13:14.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "modified": "2016-05-01T06:13:14.000Z"</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+</td>
+<td style="width:2.0in;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:1.0pt 1.0pt 1.0pt 1.0pt" valign="top" width="192">
+<p class="MsoNormal" style="border:none"><span lang="EN">The user clicks the
+  "share" button, delivering the intelligence to sharing partners.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+</td>
+</tr>
+<tr>
+<td style="width:51.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="68">
+<p class="MsoNormal" style="border:none"><span lang="EN">3</span></p>
+</td>
+<td style="width:273.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="364">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="background:white">N/A
+   STIX is not involved in this scenario.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="background:white"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="background:white">(Tools
+  <i>could </i>choose to create and track STIX versions for internal changes,
+  but it is not required by the specification.)</span></p>
+</td>
+<td style="width:2.0in;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:1.0pt 1.0pt 1.0pt 1.0pt" valign="top" width="192">
+<p class="MsoNormal" style="border:none"><span lang="EN">The user performs
+  additional analysis within the STIX implementation, performing multiple
+  modifications and saving their work multiple times.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:51.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="68">
+<p class="MsoNormal" style="border:none"><span lang="EN">4</span></p>
+</td>
+<td style="width:273.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="364">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "type": "example",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "id": "example--6",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "created": "2016-05-01T06:13:14.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "modified": "2016-05-03T16:33:51.000Z"</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+</td>
+<td style="width:2.0in;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:1.0pt 1.0pt 1.0pt 1.0pt" valign="top" width="192">
+<p class="MsoNormal" style="border:none"><span lang="EN">The user, happy with the
+  status of their work, decides to provide an update to some properties of the
+  previously published object (not shown).</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:51.0pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="68">
+<p class="MsoNormal" style="border:none"><span lang="EN">5</span></p>
+</td>
+<td style="width:273.0pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="364">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "type": "example",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "id": "example--6",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "created": "2016-05-01T06:13:14.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "modified": "2016-05-08T13:35:12.000Z",</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF"> 
+  "revoked": true</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-size:9.0pt;
+  line-height:115%;font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+</td>
+<td style="width:2.0in;border-top:none;border-left:none;
+  border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;padding:1.0pt 1.0pt 1.0pt 1.0pt" valign="top" width="192">
+<p class="MsoNormal" style="border:none"><span lang="EN">The user receives lots
+  of negative feedback regarding the quality of their work and decides to
+  retract the object by pressing the "revoke" button.</span></p>
+</td>
+</tr>
+</table>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<h2><a name="_f3dx2rhc3vl"></a><span lang="EN">3.7 Common Relationships</span></h2>
+<p class="MsoNormal" style="border:none"><span lang="EN">Each SDO and SCO has its
+own set of relationship types that are specified in the definition of that SDO
+or SCO. The following common relationship types are defined for all SDOs and
+SCOs. See section <a href="#_o3xe01pbsgzj"><span style="color:#1155CC">1.6.4</span></a>
+for more information about relationships.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<table border="0" cellpadding="0" cellspacing="0" class="a9" style="border-collapse:collapse" width="642">
+<tr>
+<td style="width:86.25pt;border:solid black 1.0pt;
+  background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="115">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white">Relationship
+  Type</span></b></p>
+</td>
+<td style="width:100.5pt;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="134">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white">Source</span></b></p>
+</td>
+<td style="width:101.25pt;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="135">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white">Target</span></b></p>
+</td>
+<td style="width:193.5pt;border:solid black 1.0pt;
+  border-left:none;background:#073763;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="258">
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="color:white">Description</span></b></p>
+</td>
+</tr>
+<tr>
+<td style="width:86.25pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="115">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas;
+  color:#073763;background:#CFE2F3">derived-from</span></p>
+</td>
+<td style="width:100.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="134">
+<p class="MsoNormal" style="border:none"><i><span lang="EN" style="font-family:
+  Consolas;color:#C7254E;background:#F9F2F4">&lt;SDO or SCO of same type as
+  target&gt;</span></i></p>
+</td>
+<td style="width:101.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="135">
+<p class="MsoNormal" style="border:none"><i><span lang="EN" style="font-family:
+  Consolas;color:#C7254E;background:#F9F2F4">&lt;SDO or SCO of same type as
+  source&gt;</span></i></p>
+</td>
+<td style="width:193.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="258">
+<p class="MsoNormal" style="border:none"><span lang="EN">The information in the
+  target object is based on information from the source object.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas;
+  color:#073763;background:#CFE2F3">derived-from</span><span lang="EN"> is an
+  explicit relationship between two separate objects and <b>MUST NOT</b> be
+  used as a substitute for the versioning process defined in section <a href="#_rye5q2hkacu"><span style="color:#1155CC">3.6</span></a>.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:86.25pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="115">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas;
+  color:#073763;background:#CFE2F3">duplicate-of</span></p>
+</td>
+<td style="width:100.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="134">
+<p class="MsoNormal" style="border:none"><i><span lang="EN" style="font-family:
+  Consolas;color:#C7254E;background:#F9F2F4">&lt;SDO or SCO of same type as
+  target&gt;</span></i></p>
+</td>
+<td style="width:101.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="135">
+<p class="MsoNormal" style="border:none"><i><span lang="EN" style="font-family:
+  Consolas;color:#C7254E;background:#F9F2F4">&lt;SDO or SCO of same type as
+  source&gt;</span></i></p>
+</td>
+<td style="width:193.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="258">
+<p class="MsoNormal" style="border:none"><span lang="EN">The referenced source
+  and target objects are semantically duplicates of each other.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">This specification does
+  not address whether the source or the target object is the duplicate object
+  or what action, if any, a consumer should take when receiving an instance of
+  this relationship.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">As an example, a
+  Campaign object from one organization could be marked as a </span><span lang="EN" style="font-family:Consolas;color:#073763;background:#CFE2F3">duplicate-of</span><span lang="EN"> a Campaign object from another organization if they both described
+  the same campaign.</span></p>
+</td>
+</tr>
+<tr>
+<td style="width:86.25pt;border:solid black 1.0pt;
+  border-top:none;padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="115">
+<p class="MsoNormal" style="border:none"><span lang="EN" style="font-family:Consolas;
+  color:#073763;background:#CFE2F3">related-to</span></p>
+</td>
+<td style="width:100.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="134">
+<p class="MsoNormal" style="border:none"><i><span lang="EN" style="font-family:
+  Consolas;color:#C7254E;background:#F9F2F4">&lt;SDO or SCO of any type&gt;</span></i></p>
+</td>
+<td style="width:101.25pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="135">
+<p class="MsoNormal" style="border:none"><i><span lang="EN" style="font-family:
+  Consolas;color:#C7254E;background:#F9F2F4">&lt;SDO or SCO of any type&gt;</span></i></p>
+</td>
+<td style="width:193.5pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:5.0pt 5.0pt 5.0pt 5.0pt" valign="top" width="258">
+<p class="MsoNormal" style="border:none"><span lang="EN">Asserts a non-specific
+  relationship between two SDOs. This relationship can be used when none of the
+  other predefined relationships are appropriate, and a user-defined one is not
+  needed. </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">As an example, a Malware
+  object describing a piece of malware could be marked as a </span><span lang="EN" style="font-family:Consolas;color:#073763;background:#CFE2F3">related-to</span><span lang="EN"> a Tool if they are commonly used together. That relationship is not
+  common enough to standardize but may be useful to some analysts.</span></p>
+</td>
+</tr>
+</table>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<h2><a name="_p54wxsxz1lsm"></a><span lang="EN">3.8 Reserved Names</span></h2>
+<p class="MsoNormal" style="border:none"><span lang="EN">This section defines
+property names that are reserved for future revisions of this document. The
+property names defined in this section and any property name that is marked as </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">RESERVED</span><span lang="EN"> <b>MUST NOT</b> be used for the name of any Custom Property or be
+present in any STIX content conforming to this version of the specification.</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN">Properties that are
+currently reserved across all STIX Objects are: </span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN" style="font-family:Consolas;color:#C7254E;
+background:#F9F2F4">severity</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN" style="font-family:Consolas;color:#C7254E;
+background:#F9F2F4">username</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in;border:none"><span lang="EN">●<span style='font:7.0pt "Times New Roman"'>     
+</span></span><span lang="EN" style="font-family:Consolas;color:#C7254E;
+background:#F9F2F4">phone_number</span></p>
+<p class="MsoNormal" style="margin-left:.5in;text-indent:-.25in"><span lang="EN" style="font-family:Consolas">●<span style='font:7.0pt "Times New Roman"'>   
+</span></span><span lang="EN" style="font-family:Consolas;color:#C7254E;
+background:#F9F2F4">action</span></p>
+<h2><a name="_mqdyq1mo042h"></a><span lang="EN">3.9 Object Property Metadata</span></h2>
+<h3><a name="_vgowxu5eb0h5"></a><span lang="EN">3.9.1 SCO String Encoding</span></h3>
+<p class="MsoNormal"><span lang="EN">Capturing the observed encoding of a
+particular STIX Cyber-observable Object (SCO) string is useful for attribution,
+the creation of indicators, and related use cases.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Certain string properties in STIX
+Cyber-observable Objects may contain an additional sibling property with the
+same base name and a suffix of </span><b><span lang="EN" style="font-family:Consolas">_enc</span></b><span lang="EN"> that captures the name of the original observed encoding of the
+property value. All </span><b><span lang="EN" style="font-family:Consolas">_enc </span></b><span lang="EN">properties <b>MUST</b> specify their encoding using the corresponding
+name from the IANA character set registry [<a href="#kix.n1e6xo8zqkup"><span style="color:#1155CC">Character Sets</span></a>] . If the preferred MIME name
+for a character set is defined, this value <b>MUST</b> be used; if it is not
+defined, then the Name value from the registry <b>MUST</b> be used instead.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><b><span lang="EN">Examples</span></b></p>
+<p class="MsoNormal"><i><span lang="EN">File with Unicode representation of the
+filename and a corresponding encoding specification</span></i></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "type":
+"file",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "id":
+"file-1389b98d-a3d3-5190-a996-716fd444059a",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "hashes": {</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "SHA-256":
+"effb46bba03f6c8aea5c653f9cf984f170dcdd3bbbe2ff6843c3e5da0e698766"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  },</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "name":
+"quêry.dll",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "name_enc":
+"windows-1252"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;background:#CFE2F3"> </span></p>
+<h2><a name="_5fzuuhwycg2e"></a><span lang="EN">3.10 Predefined Object Extensions</span></h2>
+<p class="MsoNormal"><span lang="EN">Predefined Object Extensions have a specific
+purpose in STIX Cyber-observable Objects (SCOs): defining coherent sets of
+properties beyond the base, e.g., HTTP request information for a Network
+Traffic object. Accordingly, each SCO may include one or more Predefined Object
+Extensions.</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:14.0pt;line-height:115%;
+color:#434343"> </span></p>
+<p class="MsoNormal"><span lang="EN">Each Predefined Object Extension can be
+defined at most once on a given SCO. In an Observable Object instance, each
+extension is specified under the </span><b><span lang="EN" style="font-family:
+Consolas">extensions</span></b><span lang="EN"> property, which is of type </span><span lang="EN" style="font-family:Consolas;color:#C7254E;background:#F9F2F4">dictionary</span><span lang="EN">. Note that this means that each extension is specified through a
+corresponding key in the </span><span lang="EN" style="font-family:Consolas;
+color:#C7254E;background:#F9F2F4">extensions</span><span lang="EN"> property. For
+example, when specified in a File object instance, the NTFS extension would be
+specified using the key value of </span><span lang="EN" style="font-family:Consolas;
+color:#C7254E;background:#F9F2F4">ntfs-ext</span><span lang="EN">. </span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><b><span lang="EN">Examples</span></b></p>
+<p class="MsoNormal"><i><span lang="EN">Basic File with NTFS Extension</span></i></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "type":
+"file",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF"> 
+"spec_version": "2.1",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "id":
+"file--1b40e321-ae73-5637-bd97-33c35a86b80d",</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "hashes": {</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "MD5":
+"3773a88f65a5e780c8dff9cdc3a056f3"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  },</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "size": 25537,</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  "extensions":
+{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    "ntfs-ext":
+{</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">      "sid":
+"1234567"</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">    }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">  }</span></p>
+<p class="MsoNormal"><span lang="EN" style="font-size:9.0pt;line-height:115%;
+font-family:Consolas;color:black;background:#EFEFEF">}</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<span lang="EN" style='font-size:10.0pt;line-height:115%;font-family:"Arial",sans-serif'><br clear="all" style="page-break-before:always"/>
+</span>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<div align="center" class="MsoNormal" style="text-align:center"><span lang="EN">
+<hr align="center" size="2" width="100%"/>
+</span></div>
+
+</body>
+</html>

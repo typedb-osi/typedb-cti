@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html"/>
+<meta content="This document describes the STIX language for expressing cyber threat and observable information and defines its concepts and overall structure." name="description"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="Microsoft Word 15 (filtered)" name="Generator"/>
+<title>STIX Version 2.1</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Helvetica;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Courier;
+	panose-1:2 7 4 9 2 2 5 2 4 4;}
+@font-face
+	{font-family:"Tms Rmn";
+	panose-1:2 2 6 3 4 5 5 2 3 4;}
+@font-face
+	{font-family:Helv;
+	panose-1:2 11 6 4 2 2 2 3 2 4;}
+@font-face
+	{font-family:"New York";
+	panose-1:2 4 5 3 6 5 6 2 3 4;}
+@font-face
+	{font-family:System;
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:Batang;
+	panose-1:2 3 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Gothic";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:Dotum;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimHei;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:MingLiU;
+	panose-1:2 2 5 9 0 0 0 0 0 0;}
+@font-face
+	{font-family:Mincho;
+	panose-1:2 2 6 9 4 3 5 8 3 5;}
+@font-face
+	{font-family:Gulim;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:Century;
+	panose-1:2 4 6 4 5 5 5 2 3 4;}
+@font-face
+	{font-family:"Angsana New";
+	panose-1:2 2 6 3 5 4 5 2 3 4;}
+@font-face
+	{font-family:"Cordia New";
+	panose-1:2 11 3 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Mangal;
+	panose-1:2 4 5 3 5 2 3 3 2 2;}
+@font-face
+	{font-family:Latha;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Sylfaen;
+	panose-1:1 10 5 2 5 3 6 3 3 3;}
+@font-face
+	{font-family:Vrinda;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Raavi;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Shruti;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Sendnya;
+	panose-1:0 0 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Gautami;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Tunga;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:"Estrangelo Edessa";
+	panose-1:3 8 6 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Yu Gothic";
+	panose-1:2 11 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Calibri Light";
+	panose-1:2 15 3 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Palatino Linotype";
+	panose-1:2 4 5 2 5 5 5 3 3 4;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"Arial Unicode MS";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Segoe UI Emoji";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Liberation Sans";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+h1
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h2
+	{margin-top:.25in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h3
+	{margin-top:16.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:13.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h4
+	{margin-top:14.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h5
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h6
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	font-family:"Arial",sans-serif;
+	color:#666666;
+	font-weight:normal;
+	font-style:italic;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"Header Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"Footer Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+span.HeaderChar
+	{mso-style-name:"Header Char";
+	mso-style-link:Header;}
+span.FooterChar
+	{mso-style-name:"Footer Char";
+	mso-style-link:Footer;}
+span.msoIns
+	{mso-style-name:"";
+	text-decoration:underline;
+	color:red;}
+span.msoDel
+	{mso-style-name:"";
+	text-decoration:line-through;
+	color:green;}
+.MsoChpDefault
+	{font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+.MsoPapDefault
+	{line-height:115%;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+<body>
+<h1><a name="_r7a6x51lqjtn"></a><span lang="EN">Appendix E. References</span></h1>
+<p class="MsoNormal"><span lang="EN">This appendix contains the normative and
+informative references that are used in this document. Normative references are
+specific (identified by date of publication and/or edition number or version
+number) and Informative references are either specific or non-specific. For
+specific references, only the cited version applies. For non-specific
+references, the latest version of the reference document (including any
+amendments) applies. While any hyperlinks included in this appendix were valid
+at the time of publication, OASIS cannot guarantee their long term validity.</span></p>
+<h2><a name="_yb2a7ng0lljy"></a><span lang="EN">E.1 Normative References</span></h2>
+<p class="MsoNormal"><span lang="EN">The following documents are referenced in such
+a way that some or all of their content constitutes requirements of this
+document.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="margin-left:1.5in"><a name="kix.n1e6xo8zqkup"></a><b><span lang="EN">[Character Sets]</span></b></p>
+<p class="MsoNormal"><span lang="EN">"N. Freed and M. Dürst, "Character
+Sets", IANA, December 2013, [Online]. Available<b>:</b></span></p>
+<p class="MsoNormal"><span lang="EN"><a href="http://www.iana.org/assignments/character-sets/character-sets.xhtml"><span style="color:#1155CC">http://www.iana.org/assignments/character-sets/character-sets.xhtml</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><b><span lang="EN" style="font-size:14.0pt;line-height:115%;
+color:#3B0070"> </span></b></p>
+<p class="MsoNormal"><a name="kix.bpaod3mzj2ez"></a><b><span lang="EN">[Davis]</span></b></p>
+<p class="MsoNormal"><span lang="EN">M. Davis and K. Whistler, "UNICODE
+NORMALIZATION FORMS", Unicode® Standard Annex #15, February 2016. [Online]
+Available: <a href="http://unicode.org/reports/tr15/"><span style="color:#1155CC">http://unicode.org/reports/tr15/</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><u><span lang="EN" style="color:#1155CC"><span style="text-decoration:none"> </span></span></u></p>
+<p class="MsoNormal"><a name="kix.4evp1n3xs3cc"></a><b><span lang="EN">[FIPS202]</span></b></p>
+<p class="MsoNormal"><span lang="EN">"SHA-3 Standard: Permutation-Based Hash
+and Extendable-Output Functions", FIPS PUB 202, August 2015, Information
+Technology Laboratory, National Institute of Standards and Technology (NIST).
+[Online]. Available:<a href="http://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf"><span style="color:windowtext;text-decoration:none"> </span></a><a href="http://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf"><span style="color:#1155CC">http://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><u><span lang="EN" style="color:#1155CC"><span style="text-decoration:none"> </span></span></u></p>
+<p class="MsoNormal"><b><span lang="EN">[<a name="kix.e0t4w33hz9d6"></a>IEEE
+754-2008]</span></b></p>
+<p class="MsoNormal"><span lang="EN">"IEEE Standard for Floating-Point Arithmetic",
+IEEE 754-2008, August 2008. [Online]. Available:<a href="http://ieeexplore.ieee.org/document/4610935/"><span style="color:windowtext;
+text-decoration:none"> </span></a><a href="http://ieeexplore.ieee.org/document/4610935/"><span style="color:#1155CC">http://ieeexplore.ieee.org/document/4610935/</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><a name="kix.xaiqragw6tvp"></a><b><span lang="EN">[IPFIX]</span></b></p>
+<p class="MsoNormal"><span lang="EN">IANA, "IP Flow Information Export (IPFIX)
+Entities", December 2016, [Online]. Available:<a href="http://www.iana.org/assignments/ipfix/ipfix.xhtml"><span style="color:windowtext;text-decoration:none"> </span></a><a href="http://www.iana.org/assignments/ipfix/ipfix.xhtml"><span style="color:#1155CC">http://www.iana.org/assignments/ipfix/ipfix.xhtml</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><a name="kix.1pjkgdqb6my"></a><b><span lang="EN">[ISO3166-1]</span></b></p>
+<p class="MsoNormal"><b><span lang="EN">"</span></b><span lang="EN">ISO ISO
+3166-1:2013 Country Codes", 2013. [Online]. Available: <a href="https://www.iso.org/standard/63545.html"><span style="color:#1155CC">https://www.iso.org/standard/63545.html</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><u><span lang="EN" style="color:#1155CC"><span style="text-decoration:none"> </span></span></u></p>
+<p class="MsoNormal"><a name="kix.trljesb3ki5n"></a><b><span lang="EN">[ISO3166-2]</span></b></p>
+<p class="MsoNormal"><b><span lang="EN">"</span></b><span lang="EN">ISO
+3166-2:2020 Codes for the representation of names of countries and their
+subdivisions  Part 2: Country subdivision code", 2020. [Online].
+Available: <a href="https://www.iso.org/standard/72483.html"><span style="color:#1155CC">https://www.iso.org/standard/72483.html</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><u><span lang="EN" style="color:#1155CC"><span style="text-decoration:none"> </span></span></u></p>
+<p class="MsoNormal"><a name="kix.f5aueizcofqz"></a><b><span lang="EN">[ISO10646]</span></b></p>
+<p class="MsoNormal"><span lang="EN">"ISO/IEC 10646:2014 Information
+technology -- Universal Coded Character Set (UCS)", 2014. [Online].
+Available: <a href="http://unicode.org/L2/L2010/10038-fcd10646-main.pdf"><span style="color:#1155CC">http://unicode.org/L2/L2010/10038-fcd10646-main.pdf</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><a name="kix.e3zntus3jlt5"></a><b><span lang="EN">[Media Types]</span></b></p>
+<p class="MsoNormal"><span lang="EN">N. Freed, M. Kucherawy, M. Baker and B.
+Hoehrmann, "Media Types", IANA, December 2016. [Online]. Available:<a href="http://www.iana.org/assignments/media-types/media-types.xhtml"><span style="color:windowtext;text-decoration:none"> </span></a><a href="http://www.iana.org/assignments/media-types/media-types.xhtml"><span style="color:#1155CC">http://www.iana.org/assignments/media-types/media-types.xhtml</span></a><span style="background:white">.</span><a href="http://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38a.pdf"></a></span></p>
+<p class="MsoNormal"><span lang="EN"><b> </b></span></p>
+<p class="MsoNormal"><a name="kix.nr397lmn8gaw"></a><b><span lang="EN">[NIST
+SP800-38D]</span></b></p>
+<p class="MsoNormal"><span lang="EN">M. Dworkin, "Recommendation for Block
+Cipher Modes of Operation:Galois/Counter Mode (GCM) and GMAC", NIST
+Special Publication 800-38D, November 2007. [Online]. Available:<a href="http://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf"><span style="color:windowtext;text-decoration:none"> </span></a><a href="http://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf"><span style="color:#1155CC">http://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><a name="kix.6p0h99ieral9"></a><b><span lang="EN">[NVD]</span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN">Official Common Platform Enumeration (CPE)
+Dictionary, National Vulnerability Database [Online]. Available:<a href="https://nvd.nist.gov/cpe.cfm"><span style="color:windowtext;text-decoration:
+none"> </span></a><a href="https://nvd.nist.gov/cpe.cfm"><span style="color:#1155CC">https://nvd.nist.gov/cpe.cfm</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><a name="kix.lop6q5rn71jp"></a><b><span lang="EN">[Port Numbers]</span></b></p>
+<p class="MsoNormal"><span lang="EN">J.Touch, A. Mankin, E. Kohler, et. al.,
+"Service Name and Transport Protocol Port Number Registry", IANA,
+January 2017. [Online]. Available:           <a href="http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml"><span style="color:#1155CC">http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><a name="kix.31akobpb56b2"></a><b><span lang="EN">[RFC1034]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Mockapetris, P., "Domain names - concepts
+and facilities", STD 13, RFC 1034, DOI 10.17487/RFC1034, November 1987, <a href="http://www.rfc-editor.org/info/rfc1034"><span style="color:#1155CC">http://www.rfc-editor.org/info/rfc1034</span></a>.</span></p>
+<p class="MsoNormal"><u><span lang="EN" style="color:#1155CC"><span style="text-decoration:none"> </span></span></u></p>
+<p class="MsoNormal"><a name="kix.xsuyb9sg9oqb"></a><b><span lang="EN">[RFC1321]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Rivest, R., "The MD5 Message-Digest
+Algorithm", RFC 1321, DOI 10.17487/RFC1321, April 1992,<a href="http://www.rfc-editor.org/info/rfc1321"><span style="color:windowtext;
+text-decoration:none"> </span></a><a href="http://www.rfc-editor.org/info/rfc1321"><span style="color:#1155CC">http://www.rfc-editor.org/info/rfc1321</span></a>.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.zfh3juxrgozv"></a><b><span lang="EN">[RFC2047]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Moore, K., "MIME (Multipurpose Internet
+Mail Extensions) Part Three: Message Header Extensions for Non-ASCII
+Text", RFC 2047, DOI 10.17487/RFC2047, November 1996,<a href="http://www.rfc-editor.org/info/rfc2047"><span style="color:windowtext;
+text-decoration:none"> </span></a><a href="http://www.rfc-editor.org/info/rfc2047"><span style="color:#1155CC">http://www.rfc-editor.org/info/rfc2047</span></a>.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.6qr5uhgmbsvy"></a><b><span lang="EN">[RFC2119]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Bradner, S., "Key words for use in RFCs
+to Indicate Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/RFC2119,
+March 1997, <a href="http://www.rfc-editor.org/info/rfc2119"><span style="color:#1155CC">http://www.rfc-editor.org/info/rfc2119</span></a>.</span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><a name="kix.ycqehhzf8v91"></a><b><span lang="EN">[RFC3174]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Eastlake 3rd, D. and P. Jones, "US Secure
+Hash Algorithm 1 (SHA1)", RFC 3174, DOI 10.17487/RFC3174, September 2001,<a href="http://www.rfc-editor.org/info/rfc3174"><span style="color:windowtext;
+text-decoration:none"> </span></a><a href="http://www.rfc-editor.org/info/rfc3174"><span style="color:#1155CC">http://www.rfc-editor.org/info/rfc3174</span></a>.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><a name="kix.weakckb8llal"></a><b><span lang="EN">[RFC3339]</span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN">Klyne, G. and C. Newman, "Date and Time on
+the Internet: Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,<a href="http://www.rfc-editor.org/info/rfc3339"><span style="color:windowtext;
+text-decoration:none"> </span></a><a href="http://www.rfc-editor.org/info/rfc3339"><span style="color:#1155CC">http://www.rfc-editor.org/info/rfc3339</span></a>.</span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><a name="kix.vaucl8w7ov0y"></a><b><span lang="EN">[RFC3986]</span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN">Berners-Lee, T., Fielding, R., and L. Masinter,
+"Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC
+3986, DOI 10.17487/RFC3986, January 2005,<a href="http://www.rfc-editor.org/info/rfc3986"><span style="color:windowtext;
+text-decoration:none"> </span></a><a href="http://www.rfc-editor.org/info/rfc3986"><span style="color:#1155CC">http://www.rfc-editor.org/info/rfc3986</span></a>.</span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><a name="kix.whv3pij5qif6"></a><b><span lang="EN">[RFC4122]</span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN">Leach, P., Mealling, M., and R. Salz, "A
+Universally Unique IDentifier (UUID) URN Namespace", RFC 4122, DOI
+10.17487/RFC4122, July 2005,<a href="http://www.rfc-editor.org/info/rfc4122"><span style="color:windowtext;text-decoration:none"> </span></a><a href="http://www.rfc-editor.org/info/rfc4122"><span style="color:#1155CC">http://www.rfc-editor.org/info/rfc4122</span></a>.</span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.g675gx7pig03"></a><b><span lang="EN">[RFC4648]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Josefsson, S., "The Base16, Base32, and
+Base64 Data Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006, <a href="http://www.rfc-editor.org/info/rfc4648"><span style="color:#1155CC">http://www.rfc-editor.org/info/rfc4648</span></a>.</span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.fvyes42wcpaz"></a><b><span lang="EN">[RFC5322]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Resnick, P., Ed., "Internet Message
+Format", RFC 5322, DOI 10.17487/RFC5322, October 2008,<a href="http://www.rfc-editor.org/info/rfc5322"><span style="color:windowtext;
+text-decoration:none"> </span></a><a href="http://www.rfc-editor.org/info/rfc5322"><span style="color:#1155CC">http://www.rfc-editor.org/info/rfc5322</span></a>.</span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><a name="kix.1js008hntuzu"></a><b><span lang="EN">[RFC5646]</span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN">Phillips, A., Ed., and M. Davis, Ed., "Tags
+for Identifying Languages", BCP 47, RFC 5646, DOI 10.17487/RFC5646,
+September 2009, <a href="http://www.rfc-editor.org/info/rfc5646"><span style="color:#1155CC">http://www.rfc-editor.org/info/rfc5646</span></a><b>.</b></span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><a name="kix.mnnagiymw41b"></a><b><span lang="EN">[RFC5890]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Klensin, J., "Internationalized Domain
+Names for Applications (IDNA): Definitions and Document Framework", RFC
+5890, DOI 10.17487/RFC5890, August 2010, <a href="http://www.rfc-editor.org/info/rfc5890"><span style="color:#1155CC">http://www.rfc-editor.org/info/rfc5890</span></a>.</span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.gah7pmst0b2h"></a><b><span lang="EN">[RFC6234]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Eastlake 3rd, D. and T. Hansen, "US
+Secure Hash Algorithms (SHA and SHA-based HMAC and HKDF)", RFC 6234, DOI
+10.17487/RFC6234, May 2011,<a href="http://www.rfc-editor.org/info/rfc6234"><span style="color:windowtext;text-decoration:none"> </span></a><a href="http://www.rfc-editor.org/info/rfc6234"><span style="color:#1155CC">http://www.rfc-editor.org/info/rfc6234</span></a>.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><b><span lang="EN">[RFC<a name="kix.z9pk4hcspdlz"></a>7493]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Bray, T., Ed., "The I-JSON Message
+Format", RFC 7493, DOI  10.17487/RFC7493, March 2015, <a href="https://www.rfc-editor.org/info/rfc7493"><span style="color:#0000EE">https://www.rfc-editor.org/info/rfc7493</span></a>.</span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><a name="kix.d9icgovqkw4t"></a><b><span lang="EN">[RFC7539]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Nir, Y. and A. Langley, "ChaCha20 and
+Poly1305 for IETF Protocols", RFC 7539, DOI 10.17487/RFC7539, May 2015,<a href="http://www.rfc-editor.org/info/rfc7539"><span style="color:windowtext;
+text-decoration:none"> </span></a><a href="http://www.rfc-editor.org/info/rfc7539"><span style="color:#1155CC">http://www.rfc-editor.org/info/rfc7539</span></a>.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.ox8p65krmyyw"></a><b><span lang="EN">[RFC8174]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Leiba, B., "Ambiguity of Uppercase vs
+Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+May 2017, <a href="https://www.rfc-editor.org/info/rfc8174"><span style="color:#1155CC">https://www.rfc-editor.org/info/rfc8174</span></a>.</span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><a name="kix.1vpz7s4usd1"></a><b><span lang="EN">[RFC8259]</span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN">Bray, T., Ed., "The JavaScript Object
+Notation (JSON) Data Interchange Format", RFC 8259, DOI 10.17487/RFC8259,
+December 2017. <a href="http://www.rfc-editor.org/info/rfc8259"><span style="color:#1155CC">http://www.rfc-editor.org/info/rfc8259.txt</span></a><b>.</b></span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><a name="kvy09cwtcw71"></a><b><span lang="EN">[RFC8785]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Rundgren, A., Jordan, B., and S. Erdtman,
+"JSON Canonicalization Scheme (JCS)", RFC 8785, DOI 10.17487/RFC8785,
+June 2020, <a href="https://www.rfc-editor.org/info/rfc8785"><span style="color:#1155CC">https://www.rfc-editor.org/info/rfc8785</span></a>.<a href="https://cr.yp.to/snuffle/812.pdf"></a></span></p>
+<p class="MsoNormal"><span lang="EN"><b> </b></span></p>
+<p class="MsoNormal"><a name="kix.162aavsu2xqf"></a><b><span lang="EN">[SSDEEP]</span></b></p>
+<p class="MsoNormal"><span lang="EN">J. Kornblum, "Identifying Almost
+Identical Files Using Context Triggered Piecewise Hashing", Proceedings of
+The Digital Forensic Research Conference (DFRWS) 2006. [Online]. Available: <a href="https://dfrws.org/presentation/identifying-almost-identical-files-using-context-triggered-piecewise-hashing/"><span style="color:#1155CC">https://dfrws.org/presentation/identifying-almost-identical-files-using-context-triggered-piecewise-hashing/</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><u><span lang="EN" style="color:#1155CC"><span style="text-decoration:none"> </span></span></u></p>
+<p class="MsoNormal"><a name="kix.7oifth989ots"></a><b><span lang="EN">[SWID]</span></b></p>
+<p class="MsoNormal"><span lang="EN">ISO/IEC 19770-2:2015 Information technology --
+IT asset management -- Part 2: Software identification tag, 2015. [Online].
+Available: <a href="https://www.iso.org/standard/65666.html"><span style="color:#1155CC">https://www.iso.org/standard/65666.html</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><u><span lang="EN" style="color:#1155CC"><span style="text-decoration:none"> </span></span></u></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><a name="kix.93dh01c0d0rj"></a><b><span lang="EN">[TLP]</span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN">Traffic Light Protocol, Version 1.0 (TLP).
+(2016, Aug. 25). FIRST. [Online]. Available:<a href="https://first.org/tlp"><span style="color:windowtext;text-decoration:none"> </span></a><a href="https://first.org/tlp"><span style="color:#1155CC">https://first.org/tlp</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><a name="kix.jxqvi5f8dptq"></a><b><span lang="EN">[TLSH]</span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN">Jonathan Oliver, Chun Cheng, and Yanggui Chen,
+TLSH - A Locality Sensitive Hash. 4th Cybercrime and Trustworthy Computing
+Workshop, Sydney, November 2013. Available: <a href="https://github.com/trendmicro/tlsh/blob/master/TLSH_CTC_final.pdf"><span style="color:#1155CC">https://github.com/trendmicro/tlsh/blob/master/TLSH_CTC_final.pdf</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.yw8aykn1kqd6"></a><b><span lang="EN">[UNSD M49]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Standard country or area codes for statistical
+use (M49), UN Statistics Division (UNSD), Available: <a href="https://unstats.un.org/unsd/methodology/m49/"><span style="color:#1155CC">https://unstats.un.org/unsd/methodology/m49/</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><a name="kix.9rxf268l0wif"></a><b><span lang="EN">[WGS84]</span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN">National Imagery and Mapping Agency (NIMA),
+Department of Defense World Geodetic System 1984, NIMA TR8350.2, January 2000.
+Available: <a href="https://earth-info.nga.mil/php/download.php?file=coord-wgs84"><span style="color:#1155CC">https://earth-info.nga.mil/php/download.php?file=coord-wgs84</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><a name="kix.ntxoz9m4w0ub"></a><b><span lang="EN">[X.509]</span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN">X.509 : Information technology - Open Systems
+Interconnection - The Directory: Public-key and attribute certificate
+frameworks, ITU, October 2016. [Online]. Available:<a href="https://www.itu.int/rec/T-REC-X.509/"><span style="color:windowtext;
+text-decoration:none"> </span></a><a href="https://www.itu.int/rec/T-REC-X.509/"><span style="color:#1155CC">https://www.itu.int/rec/T-REC-X.509/</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<h2><a name="_s1675p2tmyur"></a><span lang="EN">E.2 Informative References</span></h2>
+<p class="MsoNormal"><span lang="EN">The following referenced documents are not
+required for the application of this document but may assist the reader with
+regard to a particular subject area.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><a name="kix.5c8ccdid1po3"></a><b><span lang="EN">[CAPEC]</span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN">Common Attack Pattern Enumeration and
+Classification (CAPEC). (2014, Nov. 7). The MITRE Corporation. [Online].
+Available:<a href="http://capec.mitre.org/"><span style="color:windowtext;
+text-decoration:none"> </span></a><a href="http://capec.mitre.org/"><span style="color:#1155CC">http://capec.mitre.org</span></a>.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><a name="kix.fs32yeyr5l0s"></a><b><span lang="EN">[Casey 2007]</span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN">Casey, T., Threat Agent Library Helps Identify
+Information Security Risks September 2007. [Online]. Available: <a href="https://www.researchgate.net/publication/324091298_Threat_Agent_Library_Helps_Identify_Information_Security_Risks"><span style="color:#1155CC">https://www.researchgate.net/publication/324091298_Threat_Agent_Library_Helps_Identify_Information_Security_Risks</span></a>.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.8655uc2w5px3"></a><b><span lang="EN">[Casey 2015]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Casey, T., "Understanding Cyberthreat
+Motivations to Improve Defense", Intel, February 2015. [Online].
+Available: <a href="https://www.intel.com/content/dam/www/public/us/en/documents/white-papers/understanding-cyberthreat-motivations-to-improve-defense-paper.pdf"><span style="color:#1155CC">https://www.intel.com/content/dam/www/public/us/en/documents/white-papers/understanding-cyberthreat-motivations-to-improve-defense-paper.pdf</span></a>.</span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><a name="kix.n54dt9br1wsl"></a><b><span lang="EN">[CVE]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Common Vulnerabilities and Exposures (CVE).
+The MITRE Corporation. [Online]. Available:<a href="http://cve.mitre.org"><span style="color:windowtext;text-decoration:none"> </span></a><a href="http://cve.mitre.org"><span style="color:#1155CC">http://cve.mitre.org</span></a>.</span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><a name="kix.ae63fhpjsrgl"></a><b><span lang="EN">[FM 2-22.3]</span></b></p>
+<p class="MsoNormal"><span lang="EN">"US Army Field Manual - Human
+Intelligence Collector Operations", FM 2-22.3, September 2006. [Online].
+Available: <a href="https://fas.org/irp/doddir/army/fm2-22-3.pdf"><span style="color:#1155CC">https://fas.org/irp/doddir/army/fm2-22-3.pdf</span></a>.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.s9lsgsz4lzjh"></a><b><span lang="EN">[FireEye 2014]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Tracking Malware with Import Hashing. FireEye.
+January 24, 2014. [Online]. Available: <a href="https://www.fireeye.com/blog/threat-research/2014/01/tracking-malware-import-hashing.html"><span style="color:#1155CC">https://www.fireeye.com/blog/threat-research/2014/01/tracking-malware-import-hashing.html</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.469jrhxxrsms"></a><b><span lang="EN">[Goessner
+2007]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Goessner, S., "JSONPath - XPath for
+JSON", February 2007. [Online]. Available: <a href="http://goessner.net/articles/JsonPath/"><span style="color:#1155CC">http://goessner.net/articles/JsonPath/</span></a><span style="color:#1155CC">.</span></span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><a name="kix.3eljfb8e28ab"></a><b><span lang="EN">[ICD 203]</span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN">"Analytic Standards", ICD 203, January
+2015. [Online]. Available: <a href="https://www.dni.gov/files/documents/ICD/ICD%20203%20Analytic%20Standards.pdf"><span style="color:#1155CC">https://www.dni.gov/files/documents/ICD/ICD%20203%20Analytic%20Standards.pdf</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><a name="kix.449cgskhflzl"></a><b><span lang="EN">[JSON Schema]</span></b></p>
+<p class="MsoNormal"><span lang="EN">OASIS Cyber Threat Intelligence (CTI) TC,
+"cti-stix2-json-schemas", OASIS. [Online]. Available:<a href="https://github.com/oasis-open/cti-stix2-json-schemas"><span style="color:windowtext;text-decoration:none"> </span></a><a href="https://github.com/oasis-open/cti-stix2-json-schemas"><span style="color:#1155CC">https://github.com/oasis-open/cti-stix2-json-schemas</span></a>.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.eij5abj8g9ua"></a><b><span lang="EN">[NIST800-83]</span></b></p>
+<p class="MsoNormal"><span lang="EN">M. Souppaya and K. Scarfone, "Guide to
+Malware Incident Prevention and Handling for Desktops and Laptops", NIST
+Special Publication 800-83, 2013. [Online]. Available: <a href="https://csrc.nist.gov/publications/detail/sp/800-83/rev-1/final"><span style="color:#1155CC">https://csrc.nist.gov/publications/detail/sp/800-83/rev-1/final</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.3tvxy42eglcz"></a><b><span lang="EN">[Pattern
+Grammar]</span></b></p>
+<p class="MsoNormal"><span lang="EN">OASIS Cyber Threat Intelligence (CTI) TC,
+"STIX Pattern Grammar", OASIS. [Online]. Available: <a href="https://github.com/oasis-open/cti-stix2-json-schemas/tree/master/pattern_grammar"><span style="color:#1155CC">https://github.com/oasis-open/cti-stix2-json-schemas/tree/master/pattern_grammar</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.x9xksgauq1r"></a><b><span lang="EN">[PCRE]</span></b></p>
+<p class="MsoNormal"><span lang="EN">PCRE - Perl Compatible Regular Expressions
+[Online]. Available: <a href="https://www.pcre.org/"><span style="color:#1155CC">https://www.pcre.org/</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.9kesp87u6jml"></a><b><span lang="EN">[RFC7515]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Jones, M., Bradley, J., and N. Sakimura,
+"JSON Web Signature (JWS)", RFC 7515, DOI 10.17487/RFC7515, May 2015,
+<a href="https://www.rfc-editor.org/info/rfc7515"><span style="color:#1155CC">https://www.rfc-editor.org/info/rfc7515</span></a>.</span></p>
+<p class="MsoNormal"><b><span lang="EN"> </span></b></p>
+<p class="MsoNormal"><a name="kix.3uxssilicxln"></a><b><span lang="EN">[RFC7516]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Jones, M. and J. Hildebrand, "JSON Web
+Encryption (JWE)", RFC 7516, DOI 10.17487/RFC7516, May 2015, <a href="https://www.rfc-editor.org/info/rfc7516"><span style="color:#1155CC">https://www.rfc-editor.org/info/rfc7516</span></a>.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.n1g0n7g1u31p"></a><b><span lang="EN">[RFC8322]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Field, J., Banghart, S., and D. Waltermire,
+"Resource-Oriented Lightweight Information Exchange (ROLIE)", RFC
+8322, DOI 10.17487/RFC8322, February 2018, <a href="https://www.rfc-editor.org/info/rfc8322"><span style="color:#1155CC">https://www.rfc-editor.org/info/rfc8322</span></a>.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.jprebiw5hc55"></a><b><span lang="EN">[SNORT]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Snort - Network Intrusion Detection &amp;
+Prevention System, Cisco, 2019  [Online]. Available: <a href="https://www.snort.org/"><span style="color:#1155CC">https://www.snort.org/</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.j8odqe8qwkxd"></a><b><span lang="EN">[Suicata]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Suricata - Open Source IDS / IPS / NSM engine,
+Open Information Security Foundation (OISF), [Online]. Available: <a href="https://suricata-ids.org/"><span style="color:#1155CC">https://suricata-ids.org/</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.ms40ac1rv5tg"></a><b><span lang="EN">[UnicodeTR#36]</span></b></p>
+<p class="MsoNormal"><span lang="EN">Unicode Technical Report #36. UNICODE SECURITY
+CONSIDERATIONS, 2014 [Online].  Available: <a href="https://unicode.org/reports/tr36/"><span style="color:#1155CC">https://unicode.org/reports/tr36/</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.qs2yh8abmfc4"></a><b><span lang="EN" style="background:white">[VERIS]</span></b></p>
+<p class="MsoNormal"><span lang="EN" style="background:white">VERIS Community
+Database. (n.d.). [Online]. Available:  </span><span lang="EN"><a href="http://veriscommunity.net/vcdb.html"><span style="color:#1155CC;
+background:white">http://veriscommunity.net/vcdb.html</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><a name="kix.35bit49fn2kb"></a><b><span lang="EN">[WEP]</span></b></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN">"Words of Estimative Probability",
+Kent, Sherman, March 2007. [Online]. Available:<a href="http://ieeexplore.ieee.org/document/4610935/"><span style="color:windowtext;
+text-decoration:none"> </span></a><a href="https://www.cia.gov/resources/csi/studies-in-intelligence/archives/vol-8-no-4/words-of-estimative-probability/"><span style="color:#1155CC">https://www.cia.gov/resources/csi/studies-in-intelligence/archives/vol-8-no-4/words-of-estimative-probability/</span></a><span style="background:white">.</span></span></p>
+<p class="MsoNormal" style="margin-top:2.0pt;margin-right:0in;margin-bottom:2.0pt;
+margin-left:0in"><span lang="EN"> </span></p>
+<p class="MsoNormal"><a name="kix.jwbkqggc8kyl"></a><b><span lang="EN">[YARA]</span></b></p>
+<p class="MsoNormal"><span lang="EN">YARA: The pattern matching swiss knife for
+malware researchers (and everyone else), Virus Total [Online]. Available: <a href="http://virustotal.github.io/yara/"><span style="color:#1155CC">http://virustotal.github.io/yara/</span></a><span style="background:white">.</span></span></p>
+<span lang="EN" style='font-size:10.0pt;line-height:115%;font-family:"Arial",sans-serif'><br clear="all" style="page-break-before:always"/>
+</span>
+<p class="MsoNormal" style="margin-left:1.5in;text-indent:-1.5in"><span lang="EN"> </span></p>
+<div align="center" class="MsoNormal" style="text-align:center"><span lang="EN">
+<hr align="center" size="2" width="100%"/>
+</span></div>
+
+</body>
+</html>

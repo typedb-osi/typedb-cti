@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html"/>
+<meta content="This document describes the STIX language for expressing cyber threat and observable information and defines its concepts and overall structure." name="description"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="Microsoft Word 15 (filtered)" name="Generator"/>
+<title>STIX Version 2.1</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Helvetica;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Courier;
+	panose-1:2 7 4 9 2 2 5 2 4 4;}
+@font-face
+	{font-family:"Tms Rmn";
+	panose-1:2 2 6 3 4 5 5 2 3 4;}
+@font-face
+	{font-family:Helv;
+	panose-1:2 11 6 4 2 2 2 3 2 4;}
+@font-face
+	{font-family:"New York";
+	panose-1:2 4 5 3 6 5 6 2 3 4;}
+@font-face
+	{font-family:System;
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:Batang;
+	panose-1:2 3 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Gothic";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:Dotum;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:SimHei;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:MingLiU;
+	panose-1:2 2 5 9 0 0 0 0 0 0;}
+@font-face
+	{font-family:Mincho;
+	panose-1:2 2 6 9 4 3 5 8 3 5;}
+@font-face
+	{font-family:Gulim;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:Century;
+	panose-1:2 4 6 4 5 5 5 2 3 4;}
+@font-face
+	{font-family:"Angsana New";
+	panose-1:2 2 6 3 5 4 5 2 3 4;}
+@font-face
+	{font-family:"Cordia New";
+	panose-1:2 11 3 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Mangal;
+	panose-1:2 4 5 3 5 2 3 3 2 2;}
+@font-face
+	{font-family:Latha;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Sylfaen;
+	panose-1:1 10 5 2 5 3 6 3 3 3;}
+@font-face
+	{font-family:Vrinda;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Raavi;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Shruti;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Sendnya;
+	panose-1:0 0 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Gautami;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Tunga;
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:"Estrangelo Edessa";
+	panose-1:3 8 6 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Yu Gothic";
+	panose-1:2 11 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Calibri Light";
+	panose-1:2 15 3 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Palatino Linotype";
+	panose-1:2 4 5 2 5 5 5 3 3 4;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"Arial Unicode MS";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"Segoe UI Emoji";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Liberation Sans";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	line-height:115%;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+h1
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h2
+	{margin-top:.25in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h3
+	{margin-top:16.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:13.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h4
+	{margin-top:14.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h5
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;}
+h6
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:4.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:11.0pt;
+	font-family:"Arial",sans-serif;
+	color:#666666;
+	font-weight:normal;
+	font-style:italic;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"Header Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"Footer Char";
+	margin:0in;
+	font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:18.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+p.MsoSubtitle, li.MsoSubtitle, div.MsoSubtitle
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial",sans-serif;
+	color:#446CAA;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+span.HeaderChar
+	{mso-style-name:"Header Char";
+	mso-style-link:Header;}
+span.FooterChar
+	{mso-style-name:"Footer Char";
+	mso-style-link:Footer;}
+span.msoIns
+	{mso-style-name:"";
+	text-decoration:underline;
+	color:red;}
+span.msoDel
+	{mso-style-name:"";
+	text-decoration:line-through;
+	color:green;}
+.MsoChpDefault
+	{font-size:10.0pt;
+	font-family:"Arial",sans-serif;}
+.MsoPapDefault
+	{line-height:115%;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+<body>
+<h1><span lang="EN">Notices</span></h1>
+<p class="MsoNormal"><span lang="EN">Copyright © OASIS Open 2022. All Rights
+Reserved.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">All capitalized terms in the following text
+have the meanings assigned to them in the OASIS Intellectual Property Rights
+Policy (the "OASIS IPR Policy"). The full <a href="https://www.oasis-open.org/policies-guidelines/ipr"><span style="color:#1155CC">Policy</span></a> may be found at the OASIS website.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">This document and translations of it may be
+copied and furnished to others, and derivative works that comment on or
+otherwise explain it or assist in its implementation may be prepared, copied,
+published, and distributed, in whole or in part, without restriction of any
+kind, provided that the above copyright notice and this section are included on
+all such copies and derivative works. However, this document itself may not be
+modified in any way, including by removing the copyright notice or references
+to OASIS, except as needed for the purpose of developing any document or
+deliverable produced by an OASIS Technical Committee (in which case the rules
+applicable to copyrights, as set forth in the OASIS IPR Policy, must be
+followed) or as required to translate it into languages other than English.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">The limited permissions granted above are
+perpetual and will not be revoked by OASIS or its successors or assigns.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">This document and the information contained
+herein is provided on an "AS IS" basis and OASIS DISCLAIMS ALL
+WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT
+THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY
+IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">OASIS requests that any OASIS Party or any
+other party that believes it has patent claims that would necessarily be
+infringed by implementations of this OASIS Committee Specification or OASIS
+Standard, to notify OASIS TC Administrator and provide an indication of its
+willingness to grant patent licenses to such patent claims in a manner
+consistent with the IPR Mode of the OASIS Technical Committee that produced
+this specification.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">OASIS invites any party to contact the OASIS
+TC Administrator if it is aware of a claim of ownership of any patent claims
+that would necessarily be infringed by implementations of this specification by
+a patent holder that is not willing to provide a license to such patent claims
+in a manner consistent with the IPR Mode of the OASIS Technical Committee that
+produced this specification. OASIS may include such claims on its website, but
+disclaims any obligation to do so.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">OASIS takes no position regarding the validity
+or scope of any intellectual property or other rights that might be claimed to
+pertain to the implementation or use of the technology described in this
+document or the extent to which any license under such rights might or might
+not be available; neither does it represent that it has made any effort to
+identify any such rights. Information on OASIS' procedures with respect to
+rights in any document or deliverable produced by an OASIS Technical Committee
+can be found on the OASIS website. Copies of claims of rights made available
+for publication and any assurances of licenses to be made available, or the
+result of an attempt made to obtain a general license or permission for the use
+of such proprietary rights by implementers or users of this OASIS Committee
+Specification or OASIS Standard, can be obtained from the OASIS TC
+Administrator. OASIS makes no representation that any information or list of
+intellectual property rights will at any time be complete, or that any claims
+in such list are, in fact, Essential Claims.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">The name "OASIS" is a trademark of <a href="https://www.oasis-open.org/"><span style="color:#1155CC">OASIS</span></a>,
+the owner and developer of this specification, and should be used only to refer
+to the organization and its official outputs. OASIS welcomes reference to, and
+implementation and use of, specifications, while reserving the right to enforce
+its marks against misleading uses. Please see <a href="https://www.oasis-open.org/policies-guidelines/trademark/"><span style="color:#1155CC">https://www.oasis-open.org/policies-guidelines/trademark/</span></a>
+for above guidance.</span></p>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<p class="MsoNormal"><span lang="EN">Portions copyright © United States Government
+2012-2022. All Rights Reserved.</span></p>
+<p class="MsoNormal"><span lang="EN">STIX, CYBOX, AND TAXII (STANDARD OR STANDARDS)
+AND THEIR COMPONENT PARTS ARE PROVIDED "AS IS" WITHOUT ANY WARRANTY
+OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT
+LIMITED TO, ANY WARRANTY THAT THESE STANDARDS OR ANY OF THEIR COMPONENT PARTS
+WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, OR FREEDOM FROM INFRINGEMENT, ANY WARRANTY
+THAT THE STANDARDS OR THEIR COMPONENT PARTS WILL BE ERROR FREE, OR ANY WARRANTY
+THAT THE DOCUMENTATION, IF PROVIDED, WILL CONFORM TO THE STANDARDS OR THEIR
+COMPONENT PARTS. IN NO EVENT SHALL THE UNITED STATES GOVERNMENT OR ITS CONTRACTORS
+OR SUBCONTRACTORS BE LIABLE FOR ANY DAMAGES, INCLUDING, BUT NOT LIMITED TO,
+DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES, ARISING OUT OF, RESULTING
+FROM, OR IN ANY WAY CONNECTED WITH THESE STANDARDS OR THEIR COMPONENT PARTS OR
+ANY PROVIDED DOCUMENTATION, WHETHER OR NOT BASED UPON WARRANTY, CONTRACT, TORT,
+OR OTHERWISE, WHETHER OR NOT INJURY WAS SUSTAINED BY PERSONS OR PROPERTY OR
+OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT OF THE
+RESULTS OF, OR USE OF, THE STANDARDS, THEIR COMPONENT PARTS, AND ANY PROVIDED
+DOCUMENTATION. THE UNITED STATES GOVERNMENT DISCLAIMS ALL WARRANTIES AND
+LIABILITIES REGARDING THE STANDARDS OR THEIR COMPONENT PARTS ATTRIBUTABLE TO
+ANY THIRD PARTY, IF PRESENT IN THE STANDARDS OR THEIR COMPONENT PARTS AND
+DISTRIBUTES IT OR THEM "AS IS."</span></p>
+<span lang="EN" style='font-size:10.0pt;line-height:115%;font-family:"Arial",sans-serif'><br clear="all" style="page-break-before:always"/>
+</span>
+<p class="MsoNormal"><span lang="EN"> </span></p>
+<div align="center" class="MsoNormal" style="text-align:center"><span lang="EN">
+<hr align="center" size="2" width="100%"/>
+</span></div>
+<p class="MsoNormal" style="border:none"><b><span lang="EN" style="font-size:18.0pt;
+line-height:115%;color:#446CAA">Table of Contents</span></b></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<p class="MsoNormal" style="margin-top:4.0pt;line-height:normal"><span lang="EN"><a href="#_ha77jftyxqcx"><b><span style="color:black;text-decoration:
+none">1 Introduction</span></b></a><b><span style="color:black">                                                                                                                                  </span></b></span><span lang="EN">14</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_eeb5g5wkvryu"><span style="color:black;text-decoration:none">1.1
+Document Conventions</span></a><span style="color:black">                                                                                                          </span></span><span lang="EN">14</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_klv9fmnhjhrc"><span style="color:black;text-decoration:none">1.2
+Overview</span></a><span style="color:black">                                                                                                                               </span></span><span lang="EN">14</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_i6q50siqb2l6"><span style="color:black;text-decoration:none">1.2.1
+Graph-Based Model</span></a><span style="color:black">                                                                                                      </span></span><span lang="EN">15</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_1j0vun2r7rgb"><span style="color:black;text-decoration:none">1.2.2 STIX
+Domain Objects</span></a><span style="color:black">                                                                                                    </span></span><span lang="EN">15</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_rosvg2qjx4h4"><span style="color:black;text-decoration:none">1.2.3 STIX
+Cyber-observable Objects</span></a><span style="color:black">                                                                                     </span></span><span lang="EN">15</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_o3xe01pbsgzj"><span style="color:black;text-decoration:none">1.2.4 STIX
+Relationships</span></a><span style="color:black">                                                                                                        </span></span><span lang="EN">16</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_vfv4kjmsf2dn"><span style="color:black;text-decoration:none">1.2.5 STIX
+Cyber Observable Observed Data Relationships (Deprecated)</span></a><span style="color:black">                                </span></span><span lang="EN">17</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_hdwfenduqtuh"><span style="color:black;text-decoration:none">1.2.6 STIX
+Patterning</span></a><span style="color:black">                                                                                                             </span></span><span lang="EN">17</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_disnqa06jm5"><span style="color:black;text-decoration:none">1.2.7 STIX
+Patterning ANTLR Grammar</span></a><span style="color:black">                                                                                  </span></span><span lang="EN">17</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ble33ropuhb8"><span style="color:black;text-decoration:none">1.2.8 STIX
+Common Properties</span></a><span style="color:black">                                                                                              </span></span><span lang="EN">18</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_vbsdt43uxrv0"><span style="color:black;text-decoration:none">1.2.9 STIX
+Open Vocabularies and Enumerations</span></a><span style="color:black">                                                                    </span></span><span lang="EN">18</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_o7shtmc9olax"><span style="color:black;text-decoration:none">1.2.10
+Reserved Names</span></a><span style="color:black">                                                                                                         </span></span><span lang="EN">18</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_vj2dopx186bb"><span style="color:black;text-decoration:none">1.2.11
+Serialization</span></a><span style="color:black">                                                                                                                </span></span><span lang="EN">18</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_65z4ktwggddy"><span style="color:black;text-decoration:none">1.2.12
+Transporting STIX</span></a><span style="color:black">                                                                                                       </span></span><span lang="EN">18</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_i9bdhfw0v22b"><span style="color:black;text-decoration:none">1.2.13
+JSON Schemas</span></a><span style="color:black">                                                                                                           </span></span><span lang="EN">18</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_am3e79x6zc1p"><span style="color:black;text-decoration:none">1.3
+Changes From Earlier Versions</span></a><span style="color:black">                                                                                               </span></span><span lang="EN">19</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_e8lf9o3a33jj"><span style="color:black;text-decoration:none">1.3.1 STIX
+2.1 Major Changes and Additions</span></a><span style="color:black">                                                                           </span></span><span lang="EN">19</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ct2yy95xayj4"><span style="color:black;text-decoration:none">1.4
+Glossary</span></a><span style="color:black">                                                                                                                                </span></span><span lang="EN">19</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_gv21fm9t1qgx"><b><span style="color:black;text-decoration:none">2
+Common Data Types</span></b></a><b><span style="color:black">                                                                                                                     </span></b></span><span lang="EN">21</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_63e0b9l81yx"><span style="color:black;text-decoration:none">2.1 Binary</span></a><span style="color:black">                                                                                                                                    </span></span><span lang="EN">22</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_7s76li5u5yid"><span style="color:black;text-decoration:none">2.2
+Boolean</span></a><span style="color:black">                                                                                                                                 </span></span><span lang="EN">22</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_f6e8afjdtrse"><span style="color:black;text-decoration:none">2.3
+Dictionary</span></a><span style="color:black">                                                                                                                              </span></span><span lang="EN">22</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_v9k64f8djur1"><span style="color:black;text-decoration:none">2.4 Enum</span></a><span style="color:black">                                                                                                                                    </span></span><span lang="EN">22</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_72bcfr3t79jx"><span style="color:black;text-decoration:none">2.5
+External Reference</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">23</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_bajcvqteiard"><span style="color:black;text-decoration:none">2.5.1
+Properties</span></a><span style="color:black">                                                                                                                     </span></span><span lang="EN">23</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_qe0c6m84wete"><span style="color:black;text-decoration:none">2.5.2
+Requirements</span></a><span style="color:black">                                                                                                                </span></span><span lang="EN">24</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_fu44u89stpb4"><span style="color:black;text-decoration:none">2.6 Float</span></a><span style="color:black">                                                                                                                                      </span></span><span lang="EN">25</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_odoabbtwuxyd"><span style="color:black;text-decoration:none">2.7 Hashes</span></a><span style="color:black">                                                                                                                                  </span></span><span lang="EN">26</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ko24ggw4eq0q"><span style="color:black;text-decoration:none">2.8
+Hexadecimal</span></a><span style="color:black">                                                                                                                          </span></span><span lang="EN">26</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_64yvzeku5a5c"><span style="color:black;text-decoration:none">2.9
+Identifier</span></a><span style="color:black">                                                                                                                                </span></span><span lang="EN">26</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_k1goo4u2qjpb"><span style="color:black;text-decoration:none">2.10
+Integer</span></a><span style="color:black">                                                                                                                                 </span></span><span lang="EN">28</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_i4tjv75ce50h"><span style="color:black;text-decoration:none">2.11 Kill
+Chain Phase</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">29</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_9w329aiwpu1y"><span style="color:black;text-decoration:none">2.12 List</span></a><span style="color:black">                                                                                                                                      </span></span><span lang="EN">30</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_w7dxdcevq8da"><span style="color:black;text-decoration:none">2.13
+Observable Container (deprecated)</span></a><span style="color:black">                                                                                       </span></span><span lang="EN">30</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_bnnxah80y7by"><span style="color:black;text-decoration:none">2.14 Open
+Vocabulary</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">31</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_uxyhzmv0vpyc"><span style="color:black;text-decoration:none">2.15
+String</span></a><span style="color:black">                                                                                                                                   </span></span><span lang="EN">32</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ksbm2nost85y"><span style="color:black;text-decoration:none">2.16
+Timestamp</span></a><span style="color:black">                                                                                                                           </span></span><span lang="EN">33</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_i7rrdtzgta8d"><span style="color:black;text-decoration:none">2.16.1
+Requirements</span></a><span style="color:black">                                                                                                              </span></span><span lang="EN">33</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_tw7zgjxxr1xi"><b><span style="color:black;text-decoration:none">3 STIX
+General Concepts</span></b></a><b><span style="color:black">                                                                                                                 </span></b></span><span lang="EN">34</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_6khi84u7y58g"><span style="color:black;text-decoration:none">3.1
+Property Names and String Literals</span></a><span style="color:black">                                                                                         </span></span><span lang="EN">34</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_xzbicbtscatx"><span style="color:black;text-decoration:none">3.2 Common
+Properties</span></a><span style="color:black">                                                                                                               </span></span><span lang="EN">34</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_v9ggtuvpqkfm"><span style="color:black;text-decoration:none">3.3 Object
+IDs and References</span></a><span style="color:black">                                                                                                     </span></span><span lang="EN">39</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_q6l05xzpcdf"><span style="color:black;text-decoration:none">3.4 SCO
+Deterministic ID Creation</span></a><span style="color:black">                                                                                                </span></span><span lang="EN">40</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_gckz8qcky97t"><span style="color:black;text-decoration:none">3.5 Object
+Creator</span></a><span style="color:black">                                                                                                                       </span></span><span lang="EN">40</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_rye5q2hkacu"><span style="color:black;text-decoration:none">3.6
+Versioning</span></a><span style="color:black">                                                                                                                             </span></span><span lang="EN">40</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_wc24wqtv2k5l"><span style="color:black;text-decoration:none">3.6.1
+Versioning Timestamps</span></a><span style="color:black">                                                                                                 </span></span><span lang="EN">41</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_vy23e1urdh0"><span style="color:black;text-decoration:none">3.6.2 New
+Version or New Object?</span></a><span style="color:black">                                                                                          </span></span><span lang="EN">41</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_f3dx2rhc3vl"><span style="color:black;text-decoration:none">3.7 Common
+Relationships</span></a><span style="color:black">                                                                                                           </span></span><span lang="EN">45</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_p54wxsxz1lsm"><span style="color:black;text-decoration:none">3.8
+Reserved Names</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">46</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_mqdyq1mo042h"><span style="color:black;text-decoration:none">3.9 Object
+Property Metadata</span></a><span style="color:black">                                                                                                       </span></span><span lang="EN">47</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_vgowxu5eb0h5"><span style="color:black;text-decoration:none">3.9.1 SCO
+String Encoding</span></a><span style="color:black">                                                                                                     </span></span><span lang="EN">47</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_5fzuuhwycg2e"><span style="color:black;text-decoration:none">3.10
+Predefined Object Extensions</span></a><span style="color:black">                                                                                               </span></span><span lang="EN">47</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_nrhq5e9nylke"><b><span style="color:black;text-decoration:none">4 STIX
+Domain Objects</span></b></a><b><span style="color:black">                                                                                                                    </span></b></span><span lang="EN">49</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_axjijf603msy"><span style="color:black;text-decoration:none">4.1 Attack
+Pattern</span></a><span style="color:black">                                                                                                                        </span></span><span lang="EN">49</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_4ohsa4pay4h4"><span style="color:black;text-decoration:none">4.1.1
+Properties</span></a><span style="color:black">                                                                                                                     </span></span><span lang="EN">49</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_e33ahkddw0q1"><span style="color:black;text-decoration:none">4.1.2
+Relationships</span></a><span style="color:black">                                                                                                                </span></span><span lang="EN">50</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_pcpvfz4ik6d6"><span style="color:black;text-decoration:none">4.2
+Campaign</span></a><span style="color:black">                                                                                                                              </span></span><span lang="EN">53</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_vvysvm8mt434"><span style="color:black;text-decoration:none">4.2.1
+Properties</span></a><span style="color:black">                                                                                                                     </span></span><span lang="EN">53</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_q63x7a5uhc8e"><span style="color:black;text-decoration:none">4.2.2
+Relationships</span></a><span style="color:black">                                                                                                                </span></span><span lang="EN">55</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_a925mpw39txn"><span style="color:black;text-decoration:none">4.3 Course
+of Action</span></a><span style="color:black">                                                                                                                    </span></span><span lang="EN">57</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_d5yf99f0a230"><span style="color:black;text-decoration:none">4.3.1
+Properties</span></a><span style="color:black">                                                                                                                     </span></span><span lang="EN">57</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_bokr6guil91f"><span style="color:black;text-decoration:none">4.3.2
+Relationships</span></a><span style="color:black">                                                                                                                </span></span><span lang="EN">58</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_t56pn7elv6u7"><span style="color:black;text-decoration:none">4.4
+Grouping</span></a><span style="color:black">                                                                                                                               </span></span><span lang="EN">60</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_9e3uldaqqha2"><span style="color:black;text-decoration:none">4.4.1
+Properties</span></a><span style="color:black">                                                                                                                     </span></span><span lang="EN">60</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_6w1q1wewd5t4"><span style="color:black;text-decoration:none">4.4.2
+Relationships</span></a><span style="color:black">                                                                                                                </span></span><span lang="EN">61</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_wh296fiwpklp"><span style="color:black;text-decoration:none">4.5
+Identity</span></a><span style="color:black">                                                                                                                                  </span></span><span lang="EN">62</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ru8fmldl2p6w"><span style="color:black;text-decoration:none">4.5.1
+Properties</span></a><span style="color:black">                                                                                                                     </span></span><span lang="EN">62</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_l0fpkltzfsa0"><span style="color:black;text-decoration:none">4.5.2
+Relationships</span></a><span style="color:black">                                                                                                                </span></span><span lang="EN">63</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_sczfhw64pjxt"><span style="color:black;text-decoration:none">4.6
+Incident</span></a><span style="color:black">                                                                                                                                 </span></span><span lang="EN">65</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_sde0qjn8wwul"><span style="color:black;text-decoration:none">4.6.1
+Properties</span></a><span style="color:black">                                                                                                                     </span></span><span lang="EN">65</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_h193lt7lzrse"><span style="color:black;text-decoration:none">4.6.2
+Relationships</span></a><span style="color:black">                                                                                                                </span></span><span lang="EN">65</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_muftrcpnf89v"><span style="color:black;text-decoration:none">4.7
+Indicator</span></a><span style="color:black">                                                                                                                                </span></span><span lang="EN">66</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_wfiae74706sw"><span style="color:black;text-decoration:none">4.7.1
+Properties</span></a><span style="color:black">                                                                                                                     </span></span><span lang="EN">67</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_oaq5jdro8yfr"><span style="color:black;text-decoration:none">4.7.2
+Relationships</span></a><span style="color:black">                                                                                                                </span></span><span lang="EN">69</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_jo3k1o6lr9"><span style="color:black;text-decoration:none">4.8
+Infrastructure</span></a><span style="color:black">                                                                                                                         </span></span><span lang="EN">71</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_l2alfbbcmfep"><span style="color:black;text-decoration:none">4.8.1
+Properties</span></a><span style="color:black">                                                                                                                     </span></span><span lang="EN">71</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_6isd2yowt7d5"><span style="color:black;text-decoration:none">4.8.2
+Relationships</span></a><span style="color:black">                                                                                                                </span></span><span lang="EN">72</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_5ol9xlbbnrdn"><span style="color:black;text-decoration:none">4.9
+Intrusion Set</span></a><span style="color:black">                                                                                                                          </span></span><span lang="EN">77</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ticprjb32bc4"><span style="color:black;text-decoration:none">4.9.1
+Properties</span></a><span style="color:black">                                                                                                                     </span></span><span lang="EN">77</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ld519r8v3oie"><span style="color:black;text-decoration:none">4.9.2
+Relationships</span></a><span style="color:black">                                                                                                                </span></span><span lang="EN">79</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_th8nitr8jb4k"><span style="color:black;text-decoration:none">4.10
+Location</span></a><span style="color:black">                                                                                                                               </span></span><span lang="EN">82</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_sqez6sri9vtz"><span style="color:black;text-decoration:none">4.10.1
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">83</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_r1m77ti5ioym"><span style="color:black;text-decoration:none">4.10.2
+Relationships</span></a><span style="color:black">                                                                                                              </span></span><span lang="EN">84</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_s5l7katgbp09"><span style="color:black;text-decoration:none">4.11
+Malware</span></a><span style="color:black">                                                                                                                               </span></span><span lang="EN">86</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_gc4ooz6oaz7y"><span style="color:black;text-decoration:none">4.11.1
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">87</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_wete2ohmtz4y"><span style="color:black;text-decoration:none">4.11.2
+Relationships</span></a><span style="color:black">                                                                                                              </span></span><span lang="EN">89</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_6hdrixb3ua4j"><span style="color:black;text-decoration:none">4.12
+Malware Analysis</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">94</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_dw67pa20zss5"><span style="color:black;text-decoration:none">4.12.1
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">94</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_4ulxfjz9uiz4"><span style="color:black;text-decoration:none">4.12.2
+Relationships</span></a><span style="color:black">                                                                                                              </span></span><span lang="EN">97</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_gudodcg1sbb9"><span style="color:black;text-decoration:none">4.13 Note</span></a><span style="color:black">                                                                                                                                    </span></span><span lang="EN">99</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_hr77jvcbs9jk"><span style="color:black;text-decoration:none">4.13.1
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">99</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_133yd97jiwu8"><span style="color:black;text-decoration:none">4.13.2
+Relationships</span></a><span style="color:black">                                                                                                             </span></span><span lang="EN">100</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_p49j1fwoxldc"><span style="color:black;text-decoration:none">4.14
+Observed Data</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">101</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_h1590esrzg5f"><span style="color:black;text-decoration:none">4.14.1
+Properties</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">102</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_oohyqxufcj2b"><span style="color:black;text-decoration:none">4.14.2
+Relationships</span></a><span style="color:black">                                                                                                             </span></span><span lang="EN">104</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ht1vtzfbtzda"><span style="color:black;text-decoration:none">4.15
+Opinion</span></a><span style="color:black">                                                                                                                              </span></span><span lang="EN">105</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_sr2hswmu5t1"><span style="color:black;text-decoration:none">4.15.1
+Properties</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">106</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_yg777s6qf41j"><span style="color:black;text-decoration:none">4.15.2
+Relationships</span></a><span style="color:black">                                                                                                             </span></span><span lang="EN">106</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_n8bjzg1ysgdq"><span style="color:black;text-decoration:none">4.16
+Report</span></a><span style="color:black">                                                                                                                               </span></span><span lang="EN">107</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ha4fpad0r9pf"><span style="color:black;text-decoration:none">4.16.1
+Properties</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">108</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_u1alc2ppehw4"><span style="color:black;text-decoration:none">4.16.2
+Relationships</span></a><span style="color:black">                                                                                                             </span></span><span lang="EN">109</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_k017w16zutw"><span style="color:black;text-decoration:none">4.17 Threat
+Actor</span></a><span style="color:black">                                                                                                                       </span></span><span lang="EN">111</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_2wowmlcbkqst"><span style="color:black;text-decoration:none">4.17.1
+Properties</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">111</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_rddgtiv420uc"><span style="color:black;text-decoration:none">4.17.2
+Relationships</span></a><span style="color:black">                                                                                                             </span></span><span lang="EN">114</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_z4voa9ndw8v"><span style="color:black;text-decoration:none">4.18 Tool</span></a><span style="color:black">                                                                                                                                   </span></span><span lang="EN">117</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_m21z3a1f3lou"><span style="color:black;text-decoration:none">4.18.1
+Properties</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">117</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_d8kskhd6k7bd"><span style="color:black;text-decoration:none">4.18.2
+Relationships</span></a><span style="color:black">                                                                                                             </span></span><span lang="EN">118</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_q5ytzmajn6re"><span style="color:black;text-decoration:none">4.19
+Vulnerability</span></a><span style="color:black">                                                                                                                       </span></span><span lang="EN">120</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_d9f0iay06wtx"><span style="color:black;text-decoration:none">4.19.1
+Properties</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">120</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ibz8ltydjosa"><span style="color:black;text-decoration:none">4.19.2
+Relationships</span></a><span style="color:black">                                                                                                             </span></span><span lang="EN">121</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_cqhkqvhnlgfh"><b><span style="color:black;text-decoration:none">5 STIX
+Relationship Objects</span></b></a><b><span style="color:black">                                                                                                           </span></b></span><span lang="EN">123</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_e2e1szrqfoan"><span style="color:black;text-decoration:none">5.1
+Relationship</span></a><span style="color:black">                                                                                                                         </span></span><span lang="EN">123</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_sypzg7rvdvc1"><span style="color:black;text-decoration:none">5.1.1
+Specification-Defined Relationships Summary</span></a><span style="color:black">                                                               </span></span><span lang="EN">123</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_al0fb8fcd9e7"><span style="color:black;text-decoration:none">5.1.2
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">124</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_pw1glqtz6mh2"><span style="color:black;text-decoration:none">5.1.3
+Relationships</span></a><span style="color:black">                                                                                                               </span></span><span lang="EN">125</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_a795guqsap3r"><span style="color:black;text-decoration:none">5.2
+Sighting</span></a><span style="color:black">                                                                                                                               </span></span><span lang="EN">126</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_7p0n81ikux8f"><span style="color:black;text-decoration:none">5.2.1
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">126</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_jwntpfv8ddt4"><span style="color:black;text-decoration:none">5.2.2
+Relationships</span></a><span style="color:black">                                                                                                               </span></span><span lang="EN">129</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_mlbmudhl16lr"><b><span style="color:black;text-decoration:none">6 STIX
+Cyber-observable Objects</span></b></a><b><span style="color:black">                                                                                                  </span></b></span><span lang="EN">131</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_4jegwl6ojbes"><span style="color:black;text-decoration:none">6.1
+Artifact Object</span></a><span style="color:black">                                                                                                                      </span></span><span lang="EN">131</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_rqwyxo6gp7cv"><span style="color:black;text-decoration:none">6.1.1
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">131</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_27gux0aol9e3"><span style="color:black;text-decoration:none">6.2
+Autonomous System (AS) Object</span></a><span style="color:black">                                                                                          </span></span><span lang="EN">133</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_bxebwa6l91fb"><span style="color:black;text-decoration:none">6.2.1
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">133</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_lyvpga5hlw52"><span style="color:black;text-decoration:none">6.3
+Directory Object</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">134</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_vhpkn06q7fvl"><span style="color:black;text-decoration:none">6.3.1
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">134</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_prhhksbxbg87"><span style="color:black;text-decoration:none">6.4 Domain
+Name Object</span></a><span style="color:black">                                                                                                           </span></span><span lang="EN">135</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_i2zf5h7vnrd9"><span style="color:black;text-decoration:none">6.4.1
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">135</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_r1t4el8qn5qo"><span style="color:black;text-decoration:none">6.4.2
+Relationships</span></a><span style="color:black">                                                                                                               </span></span><span lang="EN">136</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_wmenahkvqmgj"><span style="color:black;text-decoration:none">6.5 Email
+Address Object</span></a><span style="color:black">                                                                                                           </span></span><span lang="EN">137</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_am7srelb9c14"><span style="color:black;text-decoration:none">6.5.1
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">137</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_grboc7sq5514"><span style="color:black;text-decoration:none">6.6 Email
+Message Object</span></a><span style="color:black">                                                                                                          </span></span><span lang="EN">138</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_loz634bn09om"><span style="color:black;text-decoration:none">6.6.1
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">138</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_qpo5x7d8mefq"><span style="color:black;text-decoration:none">6.6.2
+Email MIME Component Type</span></a><span style="color:black">                                                                                      </span></span><span lang="EN">141</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_kzv52qqc0xw1"><span style="color:black;text-decoration:none">6.6.2.1
+Properties</span></a><span style="color:black">                                                                                                           </span></span><span lang="EN">141</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_99bl2dibcztv"><span style="color:black;text-decoration:none">6.7 File
+Object</span></a><span style="color:black">                                                                                                                           </span></span><span lang="EN">145</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_vq03pryd7u32"><span style="color:black;text-decoration:none">6.7.1
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">145</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_xi3g7dwaigs6"><span style="color:black;text-decoration:none">6.7.2
+Archive File Extension</span></a><span style="color:black">                                                                                                  </span></span><span lang="EN">148</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_mm25z9wuw4tr"><span style="color:black;text-decoration:none">6.7.2.1
+Properties</span></a><span style="color:black">                                                                                                           </span></span><span lang="EN">148</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_o6cweepfrsci"><span style="color:black;text-decoration:none">6.7.3 NTFS
+File Extension</span></a><span style="color:black">                                                                                                    </span></span><span lang="EN">149</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_tb77nk1g3y6f"><span style="color:black;text-decoration:none">6.7.3.1
+Properties</span></a><span style="color:black">                                                                                                           </span></span><span lang="EN">150</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_8i2ts0xicqea"><span style="color:black;text-decoration:none">6.7.3.2
+Alternate Data Stream Type</span></a><span style="color:black">                                                                                </span></span><span lang="EN">150</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_nbqgazg6fsma"><span style="color:black;text-decoration:none">6.7.3.2.1
+Properties</span></a><span style="color:black">                                                                                                  </span></span><span lang="EN">150</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_8xmpb2ghp9km"><span style="color:black;text-decoration:none">6.7.4 PDF
+File Extension</span></a><span style="color:black">                                                                                                      </span></span><span lang="EN">151</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_30hzxqrmkg8w"><span style="color:black;text-decoration:none">6.7.4.1
+Properties</span></a><span style="color:black">                                                                                                           </span></span><span lang="EN">151</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_u5z7i2ox8w4x"><span style="color:black;text-decoration:none">6.7.5
+Raster Image File Extension</span></a><span style="color:black">                                                                                         </span></span><span lang="EN">152</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_20mnz0u5ppxr"><span style="color:black;text-decoration:none">6.7.5.1
+Properties</span></a><span style="color:black">                                                                                                           </span></span><span lang="EN">152</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_gg5zibddf9bs"><span style="color:black;text-decoration:none">6.7.6
+Windows PE Binary File Extension</span></a><span style="color:black">                                                                            </span></span><span lang="EN">153</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_5f9bgdmj91h5"><span style="color:black;text-decoration:none">6.7.6.1
+Properties</span></a><span style="color:black">                                                                                                           </span></span><span lang="EN">153</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_29l09w731pzc"><span style="color:black;text-decoration:none">6.7.6.2
+Windows PE Optional Header Type</span></a><span style="color:black">                                                                  </span></span><span lang="EN">154</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_wyp5qdc2wugy"><span style="color:black;text-decoration:none">6.7.6.2.1
+Properties</span></a><span style="color:black">                                                                                                  </span></span><span lang="EN">154</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ioapwyd8oimw"><span style="color:black;text-decoration:none">6.7.6.3
+Windows PE Section Type</span></a><span style="color:black">                                                                               </span></span><span lang="EN">157</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:1.0in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_wiqw87xsov3t"><span style="color:black;text-decoration:none">6.7.6.3.1
+Properties</span></a><span style="color:black">                                                                                                  </span></span><span lang="EN">157</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ki1ufj1ku8s0"><span style="color:black;text-decoration:none">6.8 IPv4
+Address Object</span></a><span style="color:black">                                                                                                             </span></span><span lang="EN">159</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ta83c412bfsc"><span style="color:black;text-decoration:none">6.8.1
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">159</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_exv6owtle2d1"><span style="color:black;text-decoration:none">6.8.2
+Relationships</span></a><span style="color:black">                                                                                                               </span></span><span lang="EN">160</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_oeggeryskriq"><span style="color:black;text-decoration:none">6.9 IPv6
+Address Object</span></a><span style="color:black">                                                                                                             </span></span><span lang="EN">160</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_f76hsv2pvwwq"><span style="color:black;text-decoration:none">6.9.1
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">161</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_yd5zc8ebz7hk"><span style="color:black;text-decoration:none">6.9.2
+Relationships</span></a><span style="color:black">                                                                                                               </span></span><span lang="EN">161</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_f92nr9plf58y"><span style="color:black;text-decoration:none">6.10 MAC
+Address Object</span></a><span style="color:black">                                                                                                          </span></span><span lang="EN">162</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_6lhrrdef8852"><span style="color:black;text-decoration:none">6.10.1
+Properties</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">162</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_84hwlkdmev1w"><span style="color:black;text-decoration:none">6.11 Mutex
+Object</span></a><span style="color:black">                                                                                                                      </span></span><span lang="EN">163</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_u65ia5eoc7cv"><span style="color:black;text-decoration:none">6.11.1
+Properties</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">163</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_rgnc3w40xy"><span style="color:black;text-decoration:none">6.12 Network
+Traffic Object</span></a><span style="color:black">                                                                                                        </span></span><span lang="EN">164</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_e5nyr5squmsd"><span style="color:black;text-decoration:none">6.12.1
+Properties</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">164</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_b0e376hgtml8"><span style="color:black;text-decoration:none">6.12.2
+HTTP Request Extension</span></a><span style="color:black">                                                                                           </span></span><span lang="EN">171</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_60k6dn28qicj"><span style="color:black;text-decoration:none">6.12.2.1
+Properties</span></a><span style="color:black">                                                                                                         </span></span><span lang="EN">171</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ozypx0lmkebv"><span style="color:black;text-decoration:none">6.12.3
+ICMP Extension</span></a><span style="color:black">                                                                                                         </span></span><span lang="EN">173</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_3g6wds21zwzl"><span style="color:black;text-decoration:none">6.12.3.1
+Properties</span></a><span style="color:black">                                                                                                         </span></span><span lang="EN">173</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_8jamupj9ubdv"><span style="color:black;text-decoration:none">6.12.4
+Network Socket Extension</span></a><span style="color:black">                                                                                          </span></span><span lang="EN">174</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_f54f1hripxsg"><span style="color:black;text-decoration:none">6.12.4.1
+Properties</span></a><span style="color:black">                                                                                                         </span></span><span lang="EN">174</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_k2njqio7f142"><span style="color:black;text-decoration:none">6.12.5 TCP
+Extension</span></a><span style="color:black">                                                                                                          </span></span><span lang="EN">175</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_2z78x4m8ewcw"><span style="color:black;text-decoration:none">6.12.5.1
+Properties</span></a><span style="color:black">                                                                                                         </span></span><span lang="EN">176</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_hpppnm86a1jm"><span style="color:black;text-decoration:none">6.13
+Process Object</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">177</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ur7snm473t1d"><span style="color:black;text-decoration:none">6.13.1
+Properties</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">177</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_oyegq07gjf5t"><span style="color:black;text-decoration:none">6.13.2
+Windows Process Extension</span></a><span style="color:black">                                                                                   </span></span><span lang="EN">179</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_4wfs4ve800kf"><span style="color:black;text-decoration:none">6.13.2.1
+Properties</span></a><span style="color:black">                                                                                                         </span></span><span lang="EN">179</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_lbcvc2ahx1s0"><span style="color:black;text-decoration:none">6.13.3
+Windows Service Extension</span></a><span style="color:black">                                                                                    </span></span><span lang="EN">180</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_s2rmoe7djlt"><span style="color:black;text-decoration:none">6.13.3.1
+Properties</span></a><span style="color:black">                                                                                                         </span></span><span lang="EN">181</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_7rkyhtkdthok"><span style="color:black;text-decoration:none">6.14
+Software Object</span></a><span style="color:black">                                                                                                                  </span></span><span lang="EN">182</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_jru33yeokrmh"><span style="color:black;text-decoration:none">6.14.1
+Properties</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">182</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ah3hict2dez0"><span style="color:black;text-decoration:none">6.15 URL
+Object</span></a><span style="color:black">                                                                                                                        </span></span><span lang="EN">183</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_6bsklda6vc0c"><span style="color:black;text-decoration:none">6.15.1
+Properties</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">184</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_azo70vgj1vm2"><span style="color:black;text-decoration:none">6.16 User
+Account Object</span></a><span style="color:black">                                                                                                           </span></span><span lang="EN">184</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_hah33g4ntxnx"><span style="color:black;text-decoration:none">6.16.1
+Properties</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">185</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_hodiamlggpw5"><span style="color:black;text-decoration:none">6.16.2
+UNIX Account Extension</span></a><span style="color:black">                                                                                         </span></span><span lang="EN">187</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_z25gmwyz67kl"><span style="color:black;text-decoration:none">6.16.2.1
+Properties</span></a><span style="color:black">                                                                                                         </span></span><span lang="EN">187</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_luvw8wjlfo3y"><span style="color:black;text-decoration:none">6.17
+Windows Registry Key Object</span></a><span style="color:black">                                                                                          </span></span><span lang="EN">188</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_bdim4of4dl37"><span style="color:black;text-decoration:none">6.17.1
+Properties</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">188</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_u7n4ndghs3qq"><span style="color:black;text-decoration:none">6.17.2
+Windows Registry Value Type</span></a><span style="color:black">                                                                                 </span></span><span lang="EN">189</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_6jiqabgqp2hp"><span style="color:black;text-decoration:none">6.17.2.1
+Properties</span></a><span style="color:black">                                                                                                         </span></span><span lang="EN">189</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_8abcy1o5x9w1"><span style="color:black;text-decoration:none">6.18 X.509
+Certificate Object</span></a><span style="color:black">                                                                                                      </span></span><span lang="EN">190</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_g3kniyun8ykv"><span style="color:black;text-decoration:none">6.18.1
+Properties</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">191</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_oudvonxzdlku"><span style="color:black;text-decoration:none">6.18.2
+X.509 v3 Extensions Type</span></a><span style="color:black">                                                                                          </span></span><span lang="EN">192</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_c1kt4dheb6vz"><span style="color:black;text-decoration:none">6.18.2.1
+Properties</span></a><span style="color:black">                                                                                                         </span></span><span lang="EN">192</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_mq8oo9k9rb2"><b><span style="color:black;text-decoration:none">7 STIX
+Meta Objects</span></b></a><b><span style="color:black">                                                                                                                       </span></b></span><span lang="EN">196</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_z9r1cwtu8jja"><span style="color:black;text-decoration:none">7.1
+Language Content</span></a><span style="color:black">                                                                                                                </span></span><span lang="EN">196</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_nfwr8z9ax2bi"><span style="color:black;text-decoration:none">7.1.1
+Properties</span></a><span style="color:black">                                                                                                                   </span></span><span lang="EN">196</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_nsv9p5ua7z4r"><span style="color:black;text-decoration:none">7.1.2
+Relationships</span></a><span style="color:black">                                                                                                               </span></span><span lang="EN">198</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_95gfoglikdzh"><span style="color:black;text-decoration:none">7.2 Data
+Markings</span></a><span style="color:black">                                                                                                                      </span></span><span lang="EN">199</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_k5fndj2c7c1k"><span style="color:black;text-decoration:none">7.2.1
+Marking Definition</span></a><span style="color:black">                                                                                                        </span></span><span lang="EN">200</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_hr5vgqxjk7ns"><span style="color:black;text-decoration:none">7.2.1.1
+Properties</span></a><span style="color:black">                                                                                                           </span></span><span lang="EN">200</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_h8809y5grg3"><span style="color:black;text-decoration:none">7.2.1.2
+Relationships</span></a><span style="color:black">                                                                                                      </span></span><span lang="EN">201</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_3ru8r05saera"><span style="color:black;text-decoration:none">7.2.1.3
+Statement Marking Object Type</span></a><span style="color:black">                                                                           </span></span><span lang="EN">202</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_yd3ar14ekwrs"><span style="color:black;text-decoration:none">7.2.1.4
+TLP Marking Object Type</span></a><span style="color:black">                                                                                    </span></span><span lang="EN">202</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_bnienmcktc0n"><span style="color:black;text-decoration:none">7.2.2
+Object Markings</span></a><span style="color:black">                                                                                                          </span></span><span lang="EN">204</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_robezi5egfdr"><span style="color:black;text-decoration:none">7.2.3
+Granular Markings</span></a><span style="color:black">                                                                                                       </span></span><span lang="EN">204</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_l6edgya0tyjq"><span style="color:black;text-decoration:none">7.2.3.1
+Granular Marking Type</span></a><span style="color:black">                                                                                        </span></span><span lang="EN">204</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_32j232tfvtly"><span style="color:black;text-decoration:none">7.3
+Extension Definition</span></a><span style="color:black">                                                                                                              </span></span><span lang="EN">207</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_267wue80wnvt"><span style="color:black;text-decoration:none">7.3.1
+Extension Definition Properties</span></a><span style="color:black">                                                                                     </span></span><span lang="EN">209</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_bhp6qqa5dk92"><span style="color:black;text-decoration:none">7.3.2
+Requirements for STIX Extension Schemas</span></a><span style="color:black">                                                                  </span></span><span lang="EN">210</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_rw6dziuf97ib"><span style="color:black;text-decoration:none">7.3.2.1
+Requirements for Extension Properties</span></a><span style="color:black">                                                                 </span></span><span lang="EN">210</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.75in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_h6s93c8290cj"><span style="color:black;text-decoration:none">7.3.2.2
+Requirements for Extension STIX Objects</span></a><span style="color:black">                                                            </span></span><span lang="EN">210</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_gms872kuzdmg"><b><span style="color:black;text-decoration:none">8 STIX
+Bundle Object</span></b></a><b><span style="color:black">                                                                                                                     </span></b></span><span lang="EN">215</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_nuwp4rox8c7r"><span style="color:black;text-decoration:none">8.1
+Properties</span></a><span style="color:black">                                                                                                                            </span></span><span lang="EN">215</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_p23hxnekt294"><span style="color:black;text-decoration:none">8.2
+Relationships</span></a><span style="color:black">                                                                                                                       </span></span><span lang="EN">215</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_e8slinrhxcc9"><b><span style="color:black;text-decoration:none">9 STIX
+Patterning</span></b></a><b><span style="color:black">                                                                                                                           </span></b></span><span lang="EN">217</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_r80k3nm8z2we"><span style="color:black;text-decoration:none">9.1
+Definitions</span></a><span style="color:black">                                                                                                                            </span></span><span lang="EN">217</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_bvkuhhujn5qm"><span style="color:black;text-decoration:none">9.2
+Constants</span></a><span style="color:black">                                                                                                                            </span></span><span lang="EN">219</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_me3pzm77qfnf"><span style="color:black;text-decoration:none">9.3 STIX
+Patterns</span></a><span style="color:black">                                                                                                                       </span></span><span lang="EN">221</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_oxfmsowx7p3y"><span style="color:black;text-decoration:none">9.4
+Pattern Expressions</span></a><span style="color:black">                                                                                                             </span></span><span lang="EN">222</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_x1nsjyy75wtq"><span style="color:black;text-decoration:none">9.5
+Observation Expressions</span></a><span style="color:black">                                                                                                      </span></span><span lang="EN">222</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_itrc2pdxk4ef"><span style="color:black;text-decoration:none">9.5.1
+Observation Expression Qualifiers</span></a><span style="color:black">                                                                                </span></span><span lang="EN">224</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_l72a2uz085od"><span style="color:black;text-decoration:none">9.5.2
+Observation Operators</span></a><span style="color:black">                                                                                                 </span></span><span lang="EN">225</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ictqjpsw7dia"><span style="color:black;text-decoration:none">9.5.3
+Operator Precedence</span></a><span style="color:black">                                                                                                   </span></span><span lang="EN">226</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_boiciucr9smf"><span style="color:black;text-decoration:none">9.6
+Comparison Expressions</span></a><span style="color:black">                                                                                                      </span></span><span lang="EN">226</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_t11hn314cr7w"><span style="color:black;text-decoration:none">9.6.1
+Comparison Operators</span></a><span style="color:black">                                                                                                 </span></span><span lang="EN">227</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_xpvr1dvwmijp"><span style="color:black;text-decoration:none">9.6.2
+String Comparison</span></a><span style="color:black">                                                                                                       </span></span><span lang="EN">229</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_hwcrgiy40ia0"><span style="color:black;text-decoration:none">9.6.3
+Binary Type Comparison</span></a><span style="color:black">                                                                                              </span></span><span lang="EN">229</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_de6g573394q2"><span style="color:black;text-decoration:none">9.6.4
+Native Format Comparison</span></a><span style="color:black">                                                                                           </span></span><span lang="EN">230</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_i7kzkq2evwxj"><span style="color:black;text-decoration:none">9.7 Object
+Path Syntax</span></a><span style="color:black">                                                                                                               </span></span><span lang="EN">230</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_4e0vw4ysfuty"><span style="color:black;text-decoration:none">9.7.1
+Basic Object Properties</span></a><span style="color:black">                                                                                                </span></span><span lang="EN">231</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_tqad81km2lrm"><span style="color:black;text-decoration:none">9.7.2 List
+Object Properties</span></a><span style="color:black">                                                                                                   </span></span><span lang="EN">231</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ths0b11wzxv3"><span style="color:black;text-decoration:none">9.7.3
+Dictionary Object Properties</span></a><span style="color:black">                                                                                         </span></span><span lang="EN">232</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_wech7thv41ee"><span style="color:black;text-decoration:none">9.7.4 Object
+Reference Properties</span></a><span style="color:black">                                                                                        </span></span><span lang="EN">232</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_alhyho8zsnmv"><span style="color:black;text-decoration:none">9.8
+Examples</span></a><span style="color:black">                                                                                                                             </span></span><span lang="EN">233</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_izngjy1g98l2"><b><span style="color:black;text-decoration:none">10 STIX
+Vocabularies</span></b></a><b><span style="color:black">                                                                                                                     </span></b></span><span lang="EN">235</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_k2b7lkt45f0i"><span style="color:black;text-decoration:none">10.1
+Account Type Vocabulary</span></a><span style="color:black">                                                                                                    </span></span><span lang="EN">235</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_dmb1khqsn650"><span style="color:black;text-decoration:none">10.2
+Attack Motivation Vocabulary</span></a><span style="color:black">                                                                                              </span></span><span lang="EN">236</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_moarppphq8vq"><span style="color:black;text-decoration:none">10.3
+Attack Resource Level Vocabulary</span></a><span style="color:black">                                                                                       </span></span><span lang="EN">238</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_nfgle8k7nbo4"><span style="color:black;text-decoration:none">10.4
+Encryption Algorithm Enumeration</span></a><span style="color:black">                                                                                       </span></span><span lang="EN">239</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_f23s79k9bdhl"><span style="color:black;text-decoration:none">10.5 Extension
+Types Enumeration</span></a><span style="color:black">                                                                                             </span></span><span lang="EN">240</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_6g420oc42vbo"><span style="color:black;text-decoration:none">10.6
+Grouping Context Vocabulary</span></a><span style="color:black">                                                                                              </span></span><span lang="EN">240</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_tumklw3o2gyz"><span style="color:black;text-decoration:none">10.7
+Hashing Algorithm Vocabulary</span></a><span style="color:black">                                                                                             </span></span><span lang="EN">241</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_be1dktvcmyu"><span style="color:black;text-decoration:none">10.8
+Identity Class Vocabulary</span></a><span style="color:black">                                                                                                    </span></span><span lang="EN">242</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_1s3o9ou3pbq"><span style="color:black;text-decoration:none">10.9
+Implementation Language Vocabulary</span></a><span style="color:black">                                                                                 </span></span><span lang="EN">243</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_cvhfwe3t9vuo"><span style="color:black;text-decoration:none">10.10
+Indicator Type Vocabulary</span></a><span style="color:black">                                                                                                 </span></span><span lang="EN">244</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_oogrswk3onck"><span style="color:black;text-decoration:none">10.11
+Industry Sector Vocabulary</span></a><span style="color:black">                                                                                                </span></span><span lang="EN">245</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_67vrmztjft3h"><span style="color:black;text-decoration:none">10.12
+Infrastructure Type Vocabulary</span></a><span style="color:black">                                                                                          </span></span><span lang="EN">246</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_dtrq0daddkwa"><span style="color:black;text-decoration:none">10.13
+Malware Result Vocabulary</span></a><span style="color:black">                                                                                               </span></span><span lang="EN">247</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_2b6es5hl7gmc"><span style="color:black;text-decoration:none">10.14
+Malware Capabilities Vocabulary</span></a><span style="color:black">                                                                                       </span></span><span lang="EN">248</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_oxlc4df65spl"><span style="color:black;text-decoration:none">10.15
+Malware Type Vocabulary</span></a><span style="color:black">                                                                                                 </span></span><span lang="EN">251</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ocbzrcssidm8"><span style="color:black;text-decoration:none">10.16
+Network Socket Address Family Enumeration</span></a><span style="color:black">                                                                     </span></span><span lang="EN">253</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_qtz6e5rwiiss"><span style="color:black;text-decoration:none">10.17
+Network Socket Type Enumeration</span></a><span style="color:black">                                                                                    </span></span><span lang="EN">254</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_huin7si3ac8f"><span style="color:black;text-decoration:none">10.18
+Opinion Enumeration</span></a><span style="color:black">                                                                                                        </span></span><span lang="EN">255</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_9lfdvxnyofxw"><span style="color:black;text-decoration:none">10.19
+Pattern Type Vocabulary</span></a><span style="color:black">                                                                                                   </span></span><span lang="EN">255</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_iup9ob79qwei"><span style="color:black;text-decoration:none">10.20
+Processor Architecture Vocabulary</span></a><span style="color:black">                                                                                    </span></span><span lang="EN">256</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_i1sw27qw1v0s"><span style="color:black;text-decoration:none">10.21
+Region Vocabulary</span></a><span style="color:black">                                                                                                           </span></span><span lang="EN">257</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_bijmxibgkk5m"><span style="color:black;text-decoration:none">10.22
+Report Type Vocabulary</span></a><span style="color:black">                                                                                                    </span></span><span lang="EN">258</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_tqbl8z36yoir"><span style="color:black;text-decoration:none">10.23
+Threat Actor Type Vocabulary</span></a><span style="color:black">                                                                                           </span></span><span lang="EN">259</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_u6befh8d18r"><span style="color:black;text-decoration:none">10.24
+Threat Actor Role Vocabulary</span></a><span style="color:black">                                                                                            </span></span><span lang="EN">262</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_8jm676xbnggg"><span style="color:black;text-decoration:none">10.25
+Threat Actor Sophistication Vocabulary</span></a><span style="color:black">                                                                              </span></span><span lang="EN">262</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_cozm95emj8qk"><span style="color:black;text-decoration:none">10.26 Tool
+Type Vocabulary</span></a><span style="color:black">                                                                                                       </span></span><span lang="EN">265</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_n8wq1912g4ts"><span style="color:black;text-decoration:none">10.27
+Windows Integrity Level Enumeration</span></a><span style="color:black">                                                                             </span></span><span lang="EN">266</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_2tafjsrmhkrb"><span style="color:black;text-decoration:none">10.28
+Windows PE Binary Vocabulary</span></a><span style="color:black">                                                                                     </span></span><span lang="EN">266</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_emk4vrhg6ccn"><span style="color:black;text-decoration:none">10.29
+Windows Registry Datatype Enumeration</span></a><span style="color:black">                                                                        </span></span><span lang="EN">267</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_91c2s0q9p4f3"><span style="color:black;text-decoration:none">10.30
+Windows Service Start Type Enumeration</span></a><span style="color:black">                                                                       </span></span><span lang="EN">268</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_e8mzqdysuuve"><span style="color:black;text-decoration:none">10.31
+Windows Service Type Enumeration</span></a><span style="color:black">                                                                               </span></span><span lang="EN">269</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_t6oit3qe17hs"><span style="color:black;text-decoration:none">10.32
+Windows Service Status Enumeration</span></a><span style="color:black">                                                                             </span></span><span lang="EN">269</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_p2sz1mp7z524"><b><span style="color:black;text-decoration:none">11
+Customizing STIX (Deprecated)</span></b></a><b><span style="color:black">                                                                                                 </span></b></span><span lang="EN">271</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_8072zpptza86"><span style="color:black;text-decoration:none">11.1
+Custom Properties (Deprecated)</span></a><span style="color:black">                                                                                         </span></span><span lang="EN">271</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_3a2x3jdr23tq"><span style="color:black;text-decoration:none">11.1.1
+Requirements (Deprecated)</span></a><span style="color:black">                                                                                        </span></span><span lang="EN">271</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_7f3c4jgkyhl3"><span style="color:black;text-decoration:none">11.2
+Custom Objects (Deprecated)</span></a><span style="color:black">                                                                                             </span></span><span lang="EN">272</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_u7ks5xud8vj0"><span style="color:black;text-decoration:none">11.2.1
+Requirements (Deprecated)</span></a><span style="color:black">                                                                                        </span></span><span lang="EN">272</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ct36xlv6obo7"><span style="color:black;text-decoration:none">11.3
+Custom Object Extensions (Deprecated)</span></a><span style="color:black">                                                                              </span></span><span lang="EN">273</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_jqavxfc9er64"><span style="color:black;text-decoration:none">11.3.1
+Requirements (Deprecated)</span></a><span style="color:black">                                                                                        </span></span><span lang="EN">273</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_difggtnnudht"><b><span style="color:black;text-decoration:none">12
+Conformance</span></b></a><b><span style="color:black">                                                                                                                             </span></b></span><span lang="EN">275</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_2c6m6fwix6p8"><span style="color:black;text-decoration:none">12.1 STIX
+Object Producers and Consumers</span></a><span style="color:black">                                                                               </span></span><span lang="EN">275</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_afah9h2pxi28"><span style="color:black;text-decoration:none">12.2 STIX
+Object Mandatory Features</span></a><span style="color:black">                                                                                         </span></span><span lang="EN">275</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_gygtg7mt1jza"><span style="color:black;text-decoration:none">12.2.1
+Versioning</span></a><span style="color:black">                                                                                                                 </span></span><span lang="EN">275</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_vdnporb6fgle"><span style="color:black;text-decoration:none">12.3 STIX
+Object Optional Features</span></a><span style="color:black">                                                                                            </span></span><span lang="EN">275</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_ymvi1pwwcv6h"><span style="color:black;text-decoration:none">12.3.1
+Object-Level Data Markings</span></a><span style="color:black">                                                                                        </span></span><span lang="EN">275</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_464quh5445k6"><span style="color:black;text-decoration:none">12.3.2
+Granular Data Markings</span></a><span style="color:black">                                                                                             </span></span><span lang="EN">275</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_wlzv4529wxnv"><span style="color:black;text-decoration:none">12.3.3
+STIX Extensions</span></a><span style="color:black">                                                                                                        </span></span><span lang="EN">276</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_6ejnb3le2n0v"><span style="color:black;text-decoration:none">12.4 STIX
+Patterning Conformance</span></a><span style="color:black">                                                                                             </span></span><span lang="EN">276</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_bebgt1w3w0vg"><span style="color:black;text-decoration:none">12.5 STIX
+Pattern Producer</span></a><span style="color:black">                                                                                                        </span></span><span lang="EN">276</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_p9rrqbu81ohi"><span style="color:black;text-decoration:none">12.6 STIX
+Pattern Consumer</span></a><span style="color:black">                                                                                                      </span></span><span lang="EN">276</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_rpnxf75280eq"><span style="color:black;text-decoration:none">12.7 STIX
+Patterning Conformance Levels</span></a><span style="color:black">                                                                                  </span></span><span lang="EN">277</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_mk7wr7irtrih"><span style="color:black;text-decoration:none">12.7.1
+Level 1: Basic Conformance</span></a><span style="color:black">                                                                                       </span></span><span lang="EN">277</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_9lql9s26oz8s"><span style="color:black;text-decoration:none">12.7.2
+Level 2: Basic Conformance plus Observation Operators</span></a><span style="color:black">                                             </span></span><span lang="EN">277</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_p4ytvrw2xmhk"><span style="color:black;text-decoration:none">12.7.3
+Level 3: Full Conformance</span></a><span style="color:black">                                                                                          </span></span><span lang="EN">277</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_1v6elyto0uqg"><b><span style="color:black;text-decoration:none">Appendix
+A. Confidence Scales</span></b></a><b><span style="color:black">                                                                                                     </span></b></span><span lang="EN">278</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_6n2czpjuie3v"><b><span style="color:black;text-decoration:none">Appendix
+B. Relationship Summary Table</span></b></a><b><span style="color:black">                                                                                     </span></b></span><span lang="EN">280</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_wwok3b866yjl"><b><span style="color:black;text-decoration:none">Appendix
+C. Additional Examples</span></b></a><b><span style="color:black">                                                                                                  </span></b></span><span lang="EN">283</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_gzzjw0r54gax"><span style="color:black;text-decoration:none">C.1
+Infrastructure Additional Examples</span></a><span style="color:black">                                                                                        </span></span><span lang="EN">283</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_juc9mo4crict"><span style="color:black;text-decoration:none">C.1.1
+Malware &amp; Target List Hosting Domain</span></a><span style="color:black">                                                                         </span></span><span lang="EN">283</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_nuyv023oe1ig"><span style="color:black;text-decoration:none">C.1.2
+Malware Botnet Infrastructure</span></a><span style="color:black">                                                                                      </span></span><span lang="EN">284</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_m7kgn8ikoagr"><span style="color:black;text-decoration:none">C.1.3
+Related/Component Botnet Infrastructure</span></a><span style="color:black">                                                                     </span></span><span lang="EN">286</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_7v60jzaz0vjz"><span style="color:black;text-decoration:none">C.1.4
+Malware Instance Hosted on Compromised Domain</span></a><span style="color:
+black">                                                      </span></span><span lang="EN">288</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_6d9v48cvb0gx"><span style="color:black;text-decoration:none">C.2
+Extension Definition Additional Examples</span></a><span style="color:black">                                                                              </span></span><span lang="EN">289</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_qu1ts24o7lat"><span style="color:black;text-decoration:none">C.2.1
+Create a new object type with a copyright marking definition</span></a><span style="color:black">                                          </span></span><span lang="EN">289</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_8pkgf1nvk4m2"><span style="color:black;text-decoration:none">C.2.2
+Adding properties to an existing an STIX object instance</span></a><span style="color:black">                                               </span></span><span lang="EN">290</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_xqm1th5yz7ae"><span style="color:black;text-decoration:none">C.2.3
+Adding properties to an existing an STIX relationship object instance</span></a><span style="color:black">                             </span></span><span lang="EN">291</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_l3nl12k8erhs"><span style="color:black;text-decoration:none">C.2.4
+Adding properties to an existing STIX marking definition object instance</span></a><span style="color:black">                         </span></span><span lang="EN">292</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_unn9yjtes0vy"><span style="color:black;text-decoration:none">C.2.5
+Adding properties to an existing STIX language content object instance</span></a><span style="color:black">                         </span></span><span lang="EN">293</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_6aygoa1w5oc6"><b><span style="color:black;text-decoration:none">Appendix
+D. IANA Considerations</span></b></a><b><span style="color:black">                                                                                                 </span></b></span><span lang="EN">294</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_r7a6x51lqjtn"><b><span style="color:black;text-decoration:none">Appendix
+E. References</span></b></a><b><span style="color:black">                                                                                                                 </span></b></span><span lang="EN">297</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_yb2a7ng0lljy"><span style="color:black;text-decoration:none">E.1
+Normative References</span></a><span style="color:black">                                                                                                          </span></span><span lang="EN">297</span></p>
+<p class="MsoNormal" style="margin-top:3.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.25in;margin-bottom:.0001pt;line-height:normal"><span lang="EN"><a href="#_s1675p2tmyur"><span style="color:black;text-decoration:none">E.2
+Informative References</span></a><span style="color:black">                                                                                                        </span></span><span lang="EN">300</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_rruar05mnuwn"><b><span style="color:black;text-decoration:none">Appendix
+F. Acknowledgments</span></b></a><b><span style="color:black">                                                                                                     </span></b></span><span lang="EN">303</span></p>
+<p class="MsoNormal" style="margin-top:10.0pt;line-height:normal"><span lang="EN"><a href="#_hfy40z48wjpi"><b><span style="color:black;text-decoration:none">Appendix
+G. Revision History</span></b></a><b><span style="color:black">                                                                                                        </span></b></span><span lang="EN">309</span></p>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<span lang="EN" style='font-size:10.0pt;line-height:115%;font-family:"Arial",sans-serif'><br clear="all" style="page-break-before:always"/>
+</span>
+<p class="MsoNormal" style="border:none"><span lang="EN"> </span></p>
+<div align="center" class="MsoNormal" style="text-align:center"><span lang="EN">
+<hr align="center" size="2" width="100%"/>
+</span></div>
+
+</body>
+</html>
