@@ -1,0 +1,358 @@
+define
+
+relation stix-relationship-object,
+  relates source,
+  relates target,
+
+  # required common properties
+  owns id @key,
+  owns type,
+  owns spec-version @card(1) @values("2.1") ,
+  owns created @card(1),
+  owns modified @card(1),
+
+  # optional common properties
+  owns revoked, 
+  owns label_, 
+  owns confidence, 
+  owns lang, 
+
+    # TODO: unimplemented
+    # owns extensions,
+    # owns external-references[],  # TODO not implemented: requires lists, if order is important
+    # owns object-marking-refs[],
+    # owns granular-markings[],
+  
+  # specific properties
+  owns relationship-type, 
+  owns description, 
+  owns start-time, 
+  owns stop-time,
+
+  # embedded relationships are defined after embedded relationship definitions
+  ;
+
+# Ternary relation!!
+relation sighting,
+  sub stix-relationship-object,
+
+  relates sighting-of as target @card(1),
+  relates observed-data as source @card(0..), # TODO: does this make sense as a 'source'?
+  relates where-sighted as source @card(0..), # TODO: does this make sense as a 'source'?
+
+  owns first-seen,
+  owns last-seen,
+  owns count,
+  owns summary,
+  ;
+
+
+# --- Common relationships --- 
+
+# TODO: not encodable - constraint that player of source and player of target must be the same types
+relation derived-from,
+  sub stix-relationship-object,
+  relates deriving-source as source @card(1),
+  relates derived-target as target @card(1);
+
+# TODO: not encodable - constraint that player of source and player of target must be the same types
+# TODO: this would be better off not as an SRO subtype
+ #      but as a separate type that doesn't distinguish source and target and uses a single role with @card(2..)
+relation duplicate-of,
+  sub stix-relationship-object,
+  relates duplicating-source as source, 
+  relates duplicated-target as target;
+
+# TODO: this would be better off not as an SRO subtype 
+#       but as a separate type that doesn't distinguish source and target and uses a single role with @card(2..)
+relation related-to,
+sub stix-relationship-object,
+  relates relating-source as source,
+  relates related-target as target;
+
+
+# --- Relationships used by multiple objects --- 
+relation delivers,
+  sub stix-relationship-object,
+  relates delivering-source as source,
+  relates delivered-target as target;
+
+relation targets,
+	sub stix-relationship-object,
+    relates targeting-source as source,
+    relates targeted-target as target;
+
+relation attributed-to,
+	sub stix-relationship-object,
+    relates attributing-source as source,
+    relates attributed-target as target;
+
+relation mitigates,
+	sub stix-relationship-object,
+	relates mitigating-source as source,
+	relates mitigated-target as target;
+
+relation indicates,
+	sub stix-relationship-object,
+	relates indicating-source as source,
+	relates indicated-target as target;
+
+relation reference,
+	sub stix-relationship-object,
+	relates referencing-source as source,
+	relates referenced-target as target;
+
+relation uses,
+	sub stix-relationship-object,
+	relates using-source as source,
+	relates used-target as target;
+
+relation located-at,
+	sub stix-relationship-object,
+	relates locating-source as source,
+	relates location-target as target;
+
+relation originates-from,
+	sub stix-relationship-object,
+	relates originating-source as source,
+	relates origin-target as target;
+
+relation has_, # note: has is reserved in TypeQL, use has_ instead
+	sub stix-relationship-object,
+	relates having-source as source,
+	relates had-target as target;
+
+relation hosts,
+	sub stix-relationship-object,
+	relates hosting-source as source,
+	relates hosted-target as target;
+
+relation ownership,
+	sub stix-relationship-object,
+	relates owning-source as source,
+	relates owned-target as target;
+
+relation compromises,
+	sub stix-relationship-object,
+	relates compromising-source as source,
+	relates compromised-target as target;
+
+relation authored-by,
+	sub stix-relationship-object,
+	relates authored-source as source,
+	relates author-target as target;
+
+relation drops,
+	sub stix-relationship-object,
+	relates dropping-source as source,
+	relates dropped-target as target;
+
+relation downloads,
+	sub stix-relationship-object,
+	relates downloading-source as source,
+	relates downloaded-target as target;
+
+relation exploits,
+	sub stix-relationship-object,
+	relates exploiting-source as source,
+	relates exploited-target as target;
+
+relation investigates,
+	sub stix-relationship-object,
+	relates investigating-source as source,
+	relates investigated-target as target;
+
+relation remediates,
+	sub stix-relationship-object,
+	relates remediating-source as source,
+	relates remediated-target as target;
+
+relation based-on,
+	sub stix-relationship-object,
+	relates basing-source as source,
+	relates based-target as target;
+
+relation communicates-with,
+	sub stix-relationship-object,
+	relates communicating-source as source,
+	relates communicated-target as target;
+
+relation consists-of,
+	sub stix-relationship-object,
+	relates consisting-source as source,
+	relates consisted-target as target;
+
+relation controls,
+	sub stix-relationship-object,
+	relates controlling-source as source,
+	relates controlled-target as target;
+
+relation beacons-to,
+	sub stix-relationship-object,
+	relates beaconing-source as source,
+	relates beaconed-target as target;
+
+relation exfiltrates-to,
+	sub stix-relationship-object,
+	relates exfiltrating-source as source,
+	relates exfiltrated-target as target;
+
+relation variant-of,
+	sub stix-relationship-object,
+	relates varying-source as source,
+	relates varied-target as target;
+
+relation characterizes,
+	sub stix-relationship-object,
+	relates characterizing-source as source,
+	relates characterized-target as target;
+
+
+# TODO 
+relation analysis-of,
+	sub stix-relationship-object,
+	relates analyzing-source as source,
+	relates analyzed-target as target,
+	relates host-vm,
+	relates operating-system,
+	relates installed-software,
+	relates captured-sco;
+
+relation av-analysis-of,
+	sub analysis-of;
+
+relation static-analysis-of,
+	sub analysis-of;
+
+relation dynamic-analysis-of,
+	sub analysis-of;
+
+relation impersonates,
+	sub stix-relationship-object,
+	relates impersonating-source as source,
+	relates impersonated-target as target;
+
+relation resolves-to,
+	sub stix-relationship-object,
+	relates resolving-source as source,
+	relates resolved-target as target;
+
+relation belongs-to,
+    sub stix-relationship-object,
+	relates owned-source as source,
+	relates owner-target as target;
+	
+
+# --- Embedded relationships --- 
+
+relation embedded-relationship,
+  relates owner @card(1),
+  relates embedded @card(1);
+
+relation created-by,
+  sub embedded-relationship,
+  relates creator as owner,
+  relates created as embedded;
+
+relation object-marking,
+  sub embedded-relationship,
+  relates object as owner,
+  relates marking as embedded;
+
+# 7.2.3
+relation granular-marking,
+  sub embedded-relationship,
+  relates object as owner,
+  relates marking as embedded,
+  
+  owns lang,
+  owns selector @card(0..),  # NOTE: this will be not super usable without ordered properties/plays!
+  ;
+
+relation object-reference,
+  sub embedded-relationship,
+  relates object as owner,
+  relates referenced as embedded;
+
+relation meta-object-reference,
+  sub object-reference,
+  relates meta-object as object,
+  relates referenced-object as referenced,
+  owns modified; # note: must match the time of the modified object being referenced?
+
+relation host-vm,
+  sub embedded-relationship,
+  relates hosted as owner,
+  relates host as embedded;
+
+relation operating-system,
+  sub embedded-relationship,
+  relates hosted as owner,
+  relates system as embedded;
+
+relation installed-software,
+  sub embedded-relationship,
+  relates hosted as owner,
+  relates software as embedded;
+
+relation analysis-sco,
+  sub embedded-relationship,
+  relates analyzed as owner,
+  relates analysis as embedded;
+
+relation sample,
+  sub embedded-relationship,
+  relates source as owner,
+  relates sample as embedded;
+
+# --- embedded relations with SCO source ---
+relation contains_,
+    sub embedded-relationship,
+	relates container as owner,
+	relates contained as embedded;
+
+relation email-header,
+	sub embedded-relationship,
+	relates email as owner,
+	relates address as embedded;
+
+relation header-from,
+	sub email-header;
+
+relation header-sender,
+	sub email-header;
+
+relation header-to,
+	sub email-header;
+
+relation header-cc,
+	sub email-header;
+
+relation header-bcc,
+	sub email-header;
+
+relation file-content,
+	sub embedded-relationship,
+	relates file as owner,
+	relates content as embedded;
+
+relation raw-email,
+	sub embedded-relationship,
+	relates email as owner,
+	relates artifact as embedded;
+
+relation message-body-data,
+	sub embedded-relationship,
+	relates request as owner,
+	relates body as embedded;
+
+relation service-dll,
+	sub embedded-relationship,
+	relates service as owner,
+	relates dll as embedded;
+
+# --- sighting extension ---
+relation sighting,
+  # sighting embedded relationships
+  plays created-by:created,
+  plays object-marking:object;

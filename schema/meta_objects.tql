@@ -1,0 +1,93 @@
+ define
+
+entity stix-meta-object @abstract,
+	sub stix-object,
+  
+  # common properties
+
+    # TODO: unimplemented
+    # owns extensions,
+    # owns granular-markings[]
+
+  plays created-by:created,
+  plays object-marking:object,
+  ;
+
+# --- 7.1 Language Content --- 
+entity language-content,
+    sub stix-meta-object,
+
+    # common properties (specialised inheritance)
+    owns type @values("language-content"),
+    owns revoked,
+    owns label_ @card(0..),
+    owns confidence,
+
+      # owns contents,        # TODO: requires dictionary, and is quite complicated!!!
+    
+    # embedded relationships
+    plays meta-object-reference:object,
+    
+  ;
+
+
+# --- 7.2 Data Marking ---
+entity marking-definition @abstract,
+  sub stix-meta-object,
+
+  # common properties
+  owns type @values("marking-definition")
+  owns created @card(1),              # Required
+  owns name,
+  
+  # embedded relationships
+  plays object-marking:marking,
+  plays object-marking:object,
+  plays granular-marking:object,
+
+  ;
+
+# --- 7.2.1.3 Statement Marking ---
+entity statement-marking,
+  sub marking-definition,
+  # specific properties
+  owns statement @card(1);
+
+# --- 7.2.1.4 TLP Marking ---
+entity tlp-marking,
+  sub marking-definition,
+    # specific properties
+  owns tlp  @values("white", "green", "amber", "red") @card(1); # Required
+
+# --- Object marking --- 
+# Note: no entity type definition, using relation instead!
+
+# --- 7.2.3 Granular Marking --- 
+# Note: no entity type definition, using relation instead!
+
+# --- 7.3 Extension Definition ---
+entity extension-definition,
+  sub stix-meta-object,
+
+  # common properties
+  owns type @values("extension-definition"),
+  owns modified @card(1),                       # Required
+  owns created @card(1),                        # Required
+  owns revoked,
+  owns label_ @card(0..),
+
+  # specific properties
+  owns name @card(1),
+  owns description,
+  owns schema @card(1),                   # Required: URL to the JSON schema
+  owns version @card(1),                  # Required: Version of the extension
+  owns extension-type @card(1..),         # Required (at least one): From STIX extension-type-ov
+
+
+  owns extension-property @card(0..),
+
+  # embedded relationships inherited from stix-meta-object:
+  # created-by handles created-by-ref
+  # object-marking handles object-marking-refs
+  # granular-marking handles granular-markings (check if stix-meta-object needs to play this)
+  ;

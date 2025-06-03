@@ -1,0 +1,13 @@
+# TypeDB Artifacts
+typedb-console*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz
+
+# STIX standard
+stix_standard/

@@ -1,0 +1,62 @@
+define
+
+# common dictionary structure
+relation dictionary-entry,
+  relates owner @card(1);
+
+attribute dict-key @abstract;
+attribute dict-value @abstract;
+
+attribute key-string,
+  sub dict-key,
+  value string;
+
+attribute value-string,
+  sub dict-value,
+  value string;
+
+attribute value-integer,
+  sub dict-value,
+  value integer;
+
+# External References (2.5)
+entity external-reference,
+  owns source-name @card(1),
+  owns description,
+  owns url-value,
+  owns external-id,
+  plays external-reference-ownership:external-reference,
+  plays hash-entry:hash-owner;
+
+attribute source-name, value string;
+attribute external-id, value string;
+
+relation external-reference-ownership,
+  relates owner @card(1),
+  relates external-reference @card(1);
+
+# Hashes (2.7)
+relation hash-entry,
+  sub dictionary-entry,
+  owns hash-algorithm @card(1),
+  owns hash @card(1),
+  relates hash-owner as owner;
+
+# Kill Chain Phase (2.11)
+entity kill-chain-phase,
+  owns kill-chain-name @card(1),
+  owns phase-name @key,
+  plays kill-chain-phase-ownership:kill-chain-phase;
+
+attribute kill-chain-name, value string;
+attribute phase-name, value string;
+
+relation kill-chain-phase-ownership,
+  relates owner @card(1),
+  relates kill-chain-phase @card(1);
+
+# extending existing relationships
+relation stix-relationship-object,
+  plays external-reference-ownership:owner;
+
+

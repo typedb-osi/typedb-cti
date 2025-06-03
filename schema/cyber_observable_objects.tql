@@ -1,0 +1,629 @@
+define
+
+entity stix-cyber-observable-object @abstract,
+  sub stix-object,
+  owns defanged,
+  
+  # common relationships
+  plays consists-of:consisted-target,
+
+  ;
+
+
+# --- Artifact Object (6.1) ---
+entity artifact,
+  sub stix-cyber-observable-object,
+
+  # specialised common properties
+  owns type @values("artifact"),
+
+  # optional common properties
+
+  # specific properties
+  owns mime-type,
+  owns payload-bin,
+  owns url-value,
+  owns hash @card(0..),
+  owns encryption-algorithm,
+  owns decryption-key,
+
+  plays file-content:content,         # target of 'content-ref'
+  plays raw-email:artifact,           # target of 'raw-email-ref'
+  plays message-body-data:body,       # target of 'message-body-data-ref'
+
+  # indirect ownerships
+  plays hash-entry:hash-owner,
+  ;
+
+# --- Autonomous System Object (6.2) ---
+entity autonomous-system,
+  sub stix-cyber-observable-object,
+
+  # specialised common properties
+  owns type @values("autonomous-system"),
+
+  # required properties
+  owns system-number @card(1),          # required property
+
+  # optional properties
+  owns system-name,
+  owns rir;
+
+# --- Directory Object (6.3) ---
+entity directory,
+  sub stix-cyber-observable-object,
+
+  # specialised common properties
+  owns type @values("directory"),
+
+  # required properties
+  owns path @card(1),                 # required property 
+
+  # optional properties
+  owns path-enc,                    
+  owns ctime,                     
+  owns mtime,                      
+  owns atime,                      
+  
+  plays contains_:container,            # from 'content-ref'
+  plays contains_:contained,            # target of 'content-ref'
+  ;
+
+# --- Domain Name Object (6.4) ---
+entity domain-name,
+  sub stix-cyber-observable-object,
+
+  # specialised common properties
+  owns type @values("domain-name"),
+
+  # required properties
+  owns domain-value @card(1),         # required property
+
+  # relationships
+  plays communicates-with:communicated-target, 
+  plays resolves-to:resolving-source,   # from 'resolves-to-ref'
+  plays resolves-to:resolved-target;    # target of 'resolves-to-ref'
+
+# --- Email Address Object (6.5) ---
+entity email-addr,
+  sub stix-cyber-observable-object,
+  # specialised common properties
+  owns type @values("email-addr"),
+
+  # required properties
+  owns email-value @card(1),          # required property. TODO: regex for email addres RFC5322
+
+  # optional properties
+  owns display-name,
+
+  plays belongs-to:owned-source,
+  plays email-header:address,
+  ;
+
+# Email Message Object (section 6.6)
+entity email-message,
+  sub stix-cyber-observable-object,
+  owns type @values("email-message"),
+  owns is-multipart @card(1),         # required property
+  owns date_ @card(1),                # required property
+  owns content-type,
+  owns message-id,
+  owns subject,
+  owns received-line @card(0..),     # TODO: requires ordering!!
+  owns body,
+  
+  # embedded relationships
+  plays email-header:email,           # from 'from-ref', 'sender-ref', 'to-refs', 'cc-refs', 'bcc-refs'
+  plays raw-email:email,              # from 'raw-email-ref'
+
+  plays email-additional-headers-dict-entry:header-owner,
+
+  plays body-multipart:email,         # from 'body-multipart'
+  ;
+
+entity email-mime-part-type,
+  owns body,
+  owns content-type,
+  owns content-disposition,
+
+  plays body-multipart:body,
+  plays email-mime-part-body-raw:owner,
+  ;
+
+relation body-multipart,
+  relates email @card(1),
+  relates body @card(1);
+
+relation email-mime-part-body-raw,
+  relates owner @card(1),
+  relates raw @card(1);
+
+# Note: extending other entities
+entity artifact, 
+  plays email-mime-part-body-raw:raw;
+
+entity file,
+  plays email-mime-part-body-raw:raw;
+
+relation email-additional-headers-dict-entry,
+  sub dictionary-entry,
+  owns additional-header-field @card(1),
+  owns additional-header-value @card(1..),     # support repeated values
+  relates header-owner as owner;
+
+# File Object (section 6.7)
+entity file,
+  sub stix-cyber-observable-object,
+  owns type @values("file"),
+  owns size,
+  owns name,                     # Note: must have either name or hashes
+  owns name-enc,
+  owns magic-number-hex,
+  owns hash @card(0..),          # Note: must have either name or hashes
+  owns mime-type,
+  owns ctime,
+  owns mtime,
+  owns atime,
+  
+  plays downloads:downloaded-target,
+  plays drops:dropped-target,
+  plays contains_:contained,     # Note: used for both files reverse link 'parent-directory-ref' and forward 'contains-ref' link
+  plays file-content:file,       # from 'content-ref'
+  plays service-dll:dll,         # from 'service-dll-refs'
+
+  plays email-mime-part-body-raw:raw,
+
+  # indirect ownerships
+  plays hash-entry:hash-owner,
+  ;
+
+
+# Archive file extension (6.7.2)
+entity archive,
+  sub file,
+  owns comment,
+  plays contains_:container @card(1..);
+
+# NTFS File Extension (6.7.3)
+entity ntfs-file,
+  sub file,
+  owns sid,
+
+  # indirect ownerships
+  plays ntfs-alternate-data-stream-type-ownership:owner;
+
+entity ntfs-alternate-data-stream-type,
+  owns name @card(1),
+  owns size,
+  plays hash-entry:hash-owner,
+  
+  plays ntfs-alternate-data-stream-type-ownership:data-stream-type;
+
+relation ntfs-alternate-data-stream-type-ownership,
+  relates owner @card(1),
+  relates data-stream-type @card(1);
+
+# PDF File Extension (6.7.4)
+entity pdf,
+  sub file,
+  owns version,
+  owns is-optimized,
+  owns pdfid0,
+  owns pdfid1;
+
+relation pdf-document-info-dict-entry,
+  sub dictionary-entry,
+  relates info-owner as owner,
+  owns key-string @card(1),
+  owns value-string @card(1);
+
+# Raster Image File Extension (6.7.5)
+entity raster-image,
+  sub file,
+  owns image-height,
+  owns image-width,
+  owns bits-per-pixel,
+
+  # indirect ownerships
+  plays exif-tags-dict-entry:tags-owner;
+
+relation exif-tags-dict-entry,
+  sub dictionary-entry,
+  relates tags-owner as owner,
+  owns key-string @card(1),
+  owns value-string @card(1);  # TODO: technically, this should be either a String or Integer
+
+# Windows PE Binary File Extension (6.7.6)
+entity windows-pe-binary,
+  sub file,
+  owns pe-type @card(1),
+  owns imphash,
+  owns machine-hex,
+  owns number-of-sections,
+  owns time-date-stamp,
+  owns pointer-to-symbol-table-hex,
+  owns size-of-optional-header,
+  owns characteristics-hex,
+
+  # indirect ownerships
+  plays file-header-hash-dict-entry:hash-owner,
+  plays windows-pe-section-type-ownership:owner,
+  plays windows-pe-optional-header-ownership:owner,
+  ;
+
+# separate re-implementation of generic "hashes", which a file can also have!
+relation file-header-hash-dict-entry,
+  sub dictionary-entry,
+  owns hash-algorithm @card(1),
+  owns hash @card(1),
+  relates hash-owner as owner;
+
+entity windows-pe-optional-header,
+  owns magic-hex,
+  owns major-linker-version,
+  owns minor-linker-version,
+  owns size-of-code,
+  owns size-of-initialized-data,
+  owns size-of-uninitialized-data,
+  owns address-of-entry-point,
+  owns base-of-code,
+  owns base-of-data,
+  owns image-base,
+  owns section-alignment,
+  owns file-alignment,
+  owns major-os-version,
+  owns minor-os-version,
+  owns major-image-version,
+  owns minor-image-version,
+  owns major-subsystem-version,
+  owns minor-subsystem-version,
+  owns win32-version-value-hex,
+  owns size-of-image,
+  owns size-of-headers,
+  owns checksum-hex,
+  owns subsystem-hex,
+  owns dll-characteristics-hex,
+  owns size-of-stack-reserve,
+  owns size-of-stack-commit,
+  owns size-of-heap-reserve,
+  owns size-of-heap-commit,
+  owns loader-flags-hex,
+  owns number-of-rva-and-sizes,
+  
+  plays windows-pe-optional-header-ownership:header,
+
+  # indirect ownerships
+  plays hash-entry:hash-owner,
+  ;
+
+relation windows-pe-optional-header-ownership,
+  relates owner @card(1),
+  relates header @card(1);
+
+entity windows-pe-section-type,
+  owns name @card(1),
+  owns size,
+  owns entropy,
+
+  plays windows-pe-section-type-ownership:pe-section,
+
+  # indirect ownerships
+  plays hash-entry:hash-owner,
+  ;
+
+relation windows-pe-section-type-ownership,
+  relates owner @card(1),
+  relates pe-section @card(1);
+
+# IPv4 Address Object (section 6.8)
+entity ipv4-addr,
+  sub stix-cyber-observable-object,
+  owns type @values("ipv4-addr"),
+  owns ipv4-value @card(1),             # required property
+  owns resolves-to-ref @card(0..),  
+  owns belongs-to-ref @card(0..),
+  
+  plays communicates-with:communicated-target,
+  plays resolves-to:resolving-source,
+  plays belongs-to:owned-source
+  ;
+
+# IPv6 Address Object (section 6.9)
+entity ipv6-addr,
+  sub stix-cyber-observable-object,
+  owns type @values("ipv6-addr"),
+  owns ipv6-value @card(1),         # required property
+  owns resolves-to-ref @card(0..),  
+  owns belongs-to-ref @card(0..),
+    
+  plays communicates-with:communicated-target,
+  plays resolves-to:resolving-source,
+  plays belongs-to:owned-source
+  ;
+
+# MAC Address Object (section 6.10)
+entity mac-addr,
+  sub stix-cyber-observable-object,
+  owns type @values("mac-addr"),
+  owns mac-value @card(1),          # required property
+  ;
+
+# Mutex Object (section 6.11)
+entity mutex,
+  sub stix-cyber-observable-object,
+  owns type @values("mutex"),
+  owns name @card(1)                # required property
+  ;
+
+# Network Traffic Object (section 6.12)
+entity network-traffic,
+  sub stix-cyber-observable-object,
+  owns type @values("network-traffic"),
+  owns start,
+  owns end_,
+  owns is-active,
+  owns src-ref,                   # Note: must have either src-ref or dst-ref
+  owns dst-ref,                   # Note: must have either src-ref or dst-ref
+  owns src-port,
+  owns dst-port,
+  owns protocol @card(1..),       # required property, uses 'protocol' instead of 'protocols' for list semantics
+  owns src-byte-count,
+  owns dst-byte-count,
+  owns src-packets,
+  owns dst-packets,
+  owns src-payload-ref,
+  owns dst-payload-ref,
+  owns encapsulates-ref @card(0..),
+  owns encapsulated-by-ref,
+
+  # indirect ownerships
+  plays ipfix-dict-entry:ipfix-owner,
+  ;
+
+relation ipfix-dict-entry,
+  sub dictionary-entry,
+  relates ipfix-owner as owner,
+  owns key-string @card(1),
+  owns value-string @card(1);
+
+# HTTP Request Extension (6.12.2)
+entity http-request,
+  sub network-traffic,
+  owns request-method @card(1),  
+  owns request-value @card(1),  
+  owns request-version,         
+  owns message-body-length,
+
+  # embedded relatinoships
+  plays message-body-data:request,
+
+  # indirect ownerships
+  plays request-header-dict-entry:request,
+  ;
+
+relation request-header-dict-entry,
+  sub dictionary-entry,
+  relates request as owner,
+  owns key-string @card(1),
+  owns value-string @card(1);
+
+# ICMP Extension (6.12.3)
+entity icmp,
+  sub network-traffic,
+  owns icmp-type-hex,
+  owns icmp-code-hex;
+
+entity network-socket,
+  sub network-traffic,
+  owns address-family @card(1),
+  owns is-blocking,
+  owns is-listening,
+  owns socket-type,
+  owns socket-descriptor,
+  owns socket-handle,
+
+  # indirect ownerships
+  plays options-dict-entry:options-owner,
+  ;
+
+relation options-dict-entry,
+  sub dictionary-entry,
+  relates options-owner as owner,
+  owns key-string @card(1),
+  owns value-integer @card(1);
+
+# TCP extension (6.12.5)
+entity tpc,
+  sub network-traffic,
+  owns src-flags-hex @card(0..),
+  owns dst-flags-hex @card(0..);
+
+# Process Object (6.13)
+entity process,
+    sub stix-cyber-observable-object,
+    owns type @values("process"),
+    owns is-hidden,
+    owns pid,
+    owns created-time,
+    owns cwd,
+    owns command-line,
+    owns environment-variables,
+    owns opened-connection-refs @card(0..),
+    owns creator-user-ref,
+    owns image-ref,
+    owns parent-ref,
+    owns child-refs @card(0..);
+
+# Windows Process Extension (6.13.2)
+entity windows-process,
+  sub process,
+  owns aslr-enabled,
+  owns dep-enabled,
+  owns priority,
+  owns owner-sid,
+  owns window-title,
+  owns integrity-level,
+  
+  # indirect ownerships
+  plays startup-info-dict-entry:info-owner,
+  ;    # TODO: Windows™ Service Extension
+
+relation startup-info-dict-entry,
+  sub dictionary-entry,
+  relates info-owner as owner,
+  owns key-string @card(1),
+  owns value-string @card(1);
+
+
+# Windows Service Extension (6.13.2)
+entity windows-service,
+  sub process,
+  owns service-name,
+  owns description @card(0..),
+  owns display-name,
+  owns group-name,
+  owns start-type,
+  owns service-type,
+  owns service-status,
+  
+  # embedded relationships
+  plays service-dll:service,
+
+  ;
+
+relation startup-info-dict-entry,
+  sub dictionary-entry,
+  relates info-owner as owner,
+  owns key-string @card(1),
+  owns value-string @card(1);
+
+
+# Software Object (section 6.14)
+entity software,
+  sub stix-cyber-observable-object,
+  owns type @values("software"),
+  
+  # required properties
+  owns name @card(1),                    # required property
+  
+  # optional properties
+  owns cpe,
+  owns swid,
+  owns language @card(0..),             
+  owns vendor,
+  owns version,
+
+  plays host-vm:host,
+  plays operating-system:system,
+  plays installed-software:software,
+  
+  ;
+
+# URL Object (section 6.15)
+entity url,
+  sub stix-cyber-observable-object,
+  owns type @values("url"),
+  owns url-value @card(1),              # required property
+
+  plays communicates-with:communicated-target;
+
+
+# User Account Object (section 6.16)
+entity user-account,
+  sub stix-cyber-observable-object,
+  owns type @values("user-account"),
+  # Note: At least one specific property MUST be present per STIX spec
+  owns user-id,
+  owns credential,
+  owns account-login,
+  owns account-type,
+  owns display-name,
+  owns is-service-account,
+  owns is-privileged,
+  owns can-escalate-privs,
+  owns is-disabled,
+  owns account-created,
+  owns account-expires,
+  owns credential-last-changed,
+  owns account-first-login,
+  owns account-last-login,
+  
+  plays belongs-to:owner-target,
+  ;
+
+# UNIX Account extension (6.16.2)
+entity unix-account,
+  sub user-account,
+  owns gid,
+  owns group_ @card(0..),
+  owns home-dir,
+  owns shell;
+  
+# Windows™ Registry Key Object (section 6.17)
+entity windows-registry-key,
+  sub stix-cyber-observable-object,
+  owns type @values("windows-registry-key"),
+  # Note: At least one specific property MUST be present per STIX spec
+  owns windows-registry-key-string,
+  owns modified-time,
+  owns creator-user-ref,
+  owns number-of-subkeys,
+
+  # indirect ownerships
+  plays windows-registry-value-ownership:owner,
+  ;
+
+
+entity windows-registry-value,
+  owns name,
+  owns registry-value-data,
+  owns registry-value-data-type,
+  
+  plays windows-registry-value-ownership:value_,
+  ;
+
+relation windows-registry-value-ownership,
+  relates owner,
+  relates value_;
+
+
+# X.509 Certificate Object (section 6.18)
+entity x509-certificate,
+  sub stix-cyber-observable-object,
+  owns type @values("x509-certificate"),
+  # Note: At least one specific property MUST be present per STIX spec
+  owns is-self-signed,
+  owns hash @card(0..),                
+  owns version,                        
+  owns serial-number,
+  owns signature-algorithm,
+  owns issuer,
+  owns validity-not-before,
+  owns validity-not-after,
+  owns subject,
+  owns subject-public-key-algorithm,
+  owns subject-public-key-modulus,
+  owns subject-public-key-exponent,
+
+  # indirect ownerships
+  plays hash-entry:hash-owner;
+
+entity x509-v3,
+  sub x509-certificate,
+  owns basic-constraints,
+  owns name-constraints,
+  owns policy-constraints,
+  owns key-usage,
+  owns extended-key-usage,
+  owns subject-key-identifier,
+  owns authority-key-identifier,
+  owns subject-alternative-name,
+  owns issuer-alternative-name,
+  owns subject-directory-attributes,
+  owns crl-distribution-points,
+  owns inhibit-any-policy,
+  owns private-key-usage-period-not-before,
+  owns private-key-usage-period-not-after,
+  owns certificate-policies,
+  owns policy-mappings;
+

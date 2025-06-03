@@ -1,0 +1,542 @@
+define
+
+entity stix-object @abstract,
+  owns id @key,                       # all core and meta objects must have a unique ID
+  owns type @card(1),                 # all core and meta objects must have a type
+  owns spec-version @values("2.1"),
+
+  ### STIX inconsistency: "common relationship types are defined for all SDOs and SCOs", however NOTE does not!
+  plays derived-from:deriving-source,
+  plays derived-from:derived-target,
+  plays duplicate-of:duplicating-source,
+  plays duplicate-of:duplicated-target,
+  plays related-to:relating-source,
+  plays related-to:related-target,
+
+  plays object-reference:referenced,
+  plays meta-object-reference:referenced-object,
+  plays external-reference-ownership:owner,
+  ;
+
+entity stix-domain-object @abstract,
+  sub stix-object,
+
+  # required properties
+  owns spec-version @card(1),         # all SDO's must have a spec-version value
+  owns created @card(1),              # all SDO's must have a created value
+  owns modified @card(1),             # all SDO's must have a modified value
+  owns revoked,
+  owns confidence,
+  owns lang,
+  owns label_ @card(0..),
+
+    # TODO: unimplemented
+    # owns extensions,
+
+  # top-level relationships
+  plays sighting:sighting-of,
+
+  # embedded relationships
+  plays created-by:created,
+  plays object-marking:object,
+  plays granular-marking:object,
+  ;
+
+entity stix-cyber-observable-object,
+  sub stix-object,
+  owns defanged,
+
+  # owns extensions,
+  plays granular-marking:object,
+  ;
+
+
+#  --- 4.1 Attack Pattern ---
+entity attack-pattern,
+  sub stix-domain-object,
+  # common properties (specialised inheritance)
+  owns type @values("attack-pattern"),
+
+  # specific properties
+  owns name @card(1),
+  owns description,
+  owns alias_ @card(0..),
+
+  # common relationships (specialised inheritance)
+
+  # specific relationships
+  plays delivers:delivering-source,
+  plays targets:targeting-source,
+  plays uses:using-source,
+  plays indicates:indicated-target,
+  plays mitigates:mitigated-target,
+  plays uses:used-target,
+
+  # additional components
+  plays kill-chain-phase-ownership:owner,
+  ;
+
+#  --- 4.2 Campaign ---
+entity campaign,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("campaign"),
+
+  # specific properties
+  owns name @card(1),                 # required property
+  owns description,                   
+  owns alias_ @card(0..),
+  owns first-seen,
+  owns last-seen,
+  owns objective,                     
+
+  # specific relationships
+  plays attributed-to:attributing-source,  
+  plays compromises:compromising-source,  
+  plays originates-from:originating-source, 
+  plays targets:targeting-source,   
+  plays uses:using-source,
+
+  plays indicates:indicated-target;
+
+#  --- 4.3 Course of Action ---
+entity course-of-action,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("course-of-action"),
+  
+  # specific properties
+  owns name @card(1),                 # required property
+  owns description,
+  
+  # specific relationships
+  plays investigates:investigating-source,
+  plays mitigates:mitigating-source,
+  plays remediates:remediating-source;
+
+#  --- 4.4 Grouping ---
+entity grouping,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("grouping"),
+  
+  # specific properties
+  owns name,                          
+  owns description,                   
+  owns context @card(1),             # required property
+  
+  # specific relationships
+
+  # embedded relationships
+  plays object-reference:object,
+  ;
+
+#  --- 4.5 Identity ---
+entity identity,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("identity"),
+  
+  # specific properties
+  owns name @card(1),                 # required property
+  owns description,                   
+  owns role_ @card(0..),              # list of strings... if order matters, must wait for lists
+  owns identity-class,                
+  owns sector @card(0..),             # list of strings... if order matters, just wait for lists
+  owns contact-information,           
+  
+  # top-level relationships
+  plays sighting:where-sighted,
+
+  # specific relationships
+  plays located-at:locating-source,
+  
+  plays targets:targeted-target,
+  plays attributed-to:attributed-target,
+  plays impersonates:impersonated-target,
+
+  # embedded relationships
+  plays created-by:creator;
+
+
+#  --- 4.6 Incident ---
+entity incident,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("incident"),
+  
+  # specific properties
+  owns name @card(1),                 # required property
+  owns description,                   
+  
+  # specific relationships
+  ;
+
+#  --- 4.7 Indicator ---
+entity indicator,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("indicator"),
+  
+  # specific properties
+  owns name,                          
+  owns description,                   
+  owns indicator-type @card(0..),     # TODO: implement with ordering [] when supported
+  owns pattern @card(1),              # required property
+  owns pattern-type @card(1),         # required property
+  owns pattern-version,               
+  owns valid-from @card(1),           # required property
+  owns valid-until,
+  
+  # specific relationships
+  plays indicates:indicating-source,
+  plays based-on:basing-source,
+  plays investigates:investigated-target,
+  plays mitigates:mitigated-target,
+  
+  # additional components
+  plays kill-chain-phase-ownership:owner,
+  ;
+
+#  --- 4.8 Infrastructure ---
+entity infrastructure,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("infrastructure"),
+  
+  # specific properties
+  owns name @card(1),                       # required property
+  owns description,
+  owns infrastructure-type @card(0..),
+  owns alias_ @card(0..),
+  owns first-seen,
+  owns last-seen,
+  
+  # specific relationships
+  plays communicates-with:communicating-source,
+  plays consists-of:consisting-source,
+  plays controls:controlling-source,
+  plays delivers:delivering-source,
+  plays has_:having-source,
+  plays hosts:hosting-source,
+  plays located-at:locating-source,
+  plays uses:using-source,
+  
+  plays communicates-with:communicated-target,
+  plays consists-of:consisted-target,
+  plays controls:controlled-target,
+  plays uses:used-target,
+  plays compromises:compromised-target,
+  plays beacons-to:beaconed-target,
+  plays exfiltrates-to:exfiltrated-target,
+  plays hosts:hosted-target,
+  plays indicates:indicated-target,
+  plays ownership:owned-target,
+  plays targets:targeted-target,
+  
+  # additional components
+  plays kill-chain-phase-ownership:owner,
+  ;
+
+#  --- 4.9 Intrusion Set ---
+entity intrusion-set,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("intrusion-set"),
+  
+  # specific properties
+  owns name @card(1),                     # required property
+  owns description,                   
+  owns alias_ @card(0..),                 # TODO: implement with ordering [] when supported
+  owns first-seen,                   
+  owns last-seen,                    
+  owns goal @card(0..),                   # TODO: implement with ordering [] when supported
+  owns resource-level,               
+  owns primary-motivation,           
+  owns secondary-motivation @card(0..),   # TODO: implement with ordering [] when supported
+  
+  # specific relationships
+  plays attributed-to:attributing-source,
+  plays compromises:compromising-source,
+  plays hosts:hosting-source,
+  plays ownership:owning-source,
+  plays originates-from:originating-source,
+  plays targets:targeting-source,
+  plays uses:using-source,
+  
+  plays authored-by:author-target,
+  plays attributed-to:attributed-target,
+  plays indicates:indicated-target;
+
+#  --- 4.10 Location ---
+entity location,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("location"),
+  
+  # specific properties
+  owns name,                      
+  owns description,               
+  owns latitude,                  
+  owns longitude,                 
+  owns precision,                 
+  owns region,                    
+  owns country,                   
+  owns administrative-area,       
+  owns city,                      
+  owns street-address,           
+  owns postal-code,             
+
+  # top-level relationships
+  plays sighting:where-sighted, 
+
+  # specific relationships
+  plays located-at:location-target,
+  plays originates-from:origin-target,
+  plays targets:targeted-target;
+
+#  --- 4.11 Malware ---
+entity malware,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("malware"),
+  
+  # specific properties
+  owns name,
+  owns description,
+  owns malware-type @card(0..),        # TODO: implement with ordering [] when supported
+  owns is-family @card(1),              # required 
+  owns alias_ @card(0..),               # TODO: implement with ordering [] when supported
+  owns first-seen,                   
+  owns last-seen,
+  owns architecture-execution-env @card(0..),   # TODO: implement with ordering [] when supported
+  owns implementation-language @card(0..),      # TODO: implement with ordering [] when supported
+  owns capability @card(0..),                   # TODO: implement with ordering [] when supported
+  
+  # specific relationships
+  plays authored-by:authored-source,
+  plays beacons-to:beaconing-source,
+  plays exfiltrates-to:exfiltrating-source,
+  plays communicates-with:communicating-source,
+  plays controls:controlling-source,
+  plays downloads:downloading-source,
+  plays drops:dropping-source,
+  plays exploits:exploiting-source,
+  plays originates-from:originating-source,
+  plays targets:targeting-source,
+  plays uses:using-source,
+  plays variant-of:varying-source,
+  
+  plays delivers:delivered-target,
+  plays indicates:indicated-target,
+  plays mitigates:mitigated-target,
+  plays remediates:remediated-target,
+  plays uses:used-target,
+  plays drops:dropped-target,
+  plays controls:controlled-target,
+  plays characterizes:characterized-target,
+  plays analysis-of:analyzed-target,
+  
+  # additional components
+  plays kill-chain-phase-ownership:owner,
+  ;
+  # note: allows use of av-, static-, and dynamic- relations
+
+#  --- 4.12 Malware Analysis ---
+entity malware-analysis,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("malware-analysis"),
+  
+  # specific properties
+  owns product @card(1),                    # required property
+  owns version,                      
+  owns configuration-version,        
+  owns module @card(0..),                   # TODO: implement with ordering [] when supported
+  owns analysis-engine-version,      
+  owns analysis-definition-version,  
+  owns submitted,                    
+  owns analysis-started,             
+  owns analysis-ended,               
+  owns result-name,
+  owns result,          
+
+  # embedded relationships
+  plays host-vm:hosted,
+  plays operating-system:hosted,
+  plays installed-software:hosted,
+  plays analysis-sco:analyzed,
+  plays sample:source,
+  
+  # specific relationships
+  plays characterizes:characterizing-source,
+
+  plays analysis-of:analyzing-source,
+  # note: allows all subtypes of analysis-of: av-, static-, dynamic- analysis
+  ;
+
+#  --- 4.13 Note ---
+entity note,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("note"),
+  
+  # specific properties
+  owns abstract_,
+  owns content @card(1),              # required property
+  owns author @card(0..),            # TODO: implement with ordering [] when supported
+  
+  # embedded relationships
+  plays object-reference:object;  
+
+#  --- 4.14 Observed Data ---
+entity observed-data,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("observed-data"),
+  
+  # specific properties
+  owns first-observed @card(1),           # required property
+  owns last-observed @card(1),            # required property
+  owns number-observed @card(1),          # required property
+  # owns object-refs @card(0..),          # TODO: implement with ordering [] when supported
+  
+  # top-level relationships
+  plays sighting:observed-data,
+
+  # embedded relationships
+  plays object-reference:object,   
+
+  # specific relationships
+  plays based-on:based-target,         
+  plays consists-of:consisted-target;
+
+#  --- 4.15 Opinion ---
+entity opinion-object,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("opinion"),
+  
+  # specific properties
+  owns explanation,                   
+  owns author @card(0..),             # TODO: implement with ordering [] when supported
+  owns opinion @card(1),              # required property
+  
+  # embedded relationships
+  plays object-reference:object;
+
+# --- 4.16 Report ---
+entity report,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("report"),
+
+  # specific properties
+  owns name @card(1),                   # required property
+  owns description,
+  owns report-type @card(0..),          # TODO: implement with ordering [] when supported
+  owns published @card(1),              # required property
+
+  # embedded relationships
+  plays object-reference:object;
+
+# --- 4.17 Threat Actor ---
+entity threat-actor,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("threat-actor"),
+
+  # specific properties
+  owns name @card(1),                     # required property
+  owns description,
+  owns threat-actor-type @card(0..),      # TODO: implement with ordering [] when supported
+  owns alias_ @card(0..),                 # TODO: implement with ordering [] when supported (aliases in STIX)
+  owns first-seen,
+  owns last-seen,
+  owns role_ @card(0..),                  # TODO: implement with ordering [] when supported
+  owns goal @card(0..),                   # TODO: implement with ordering [] when supported
+  owns sophistication,
+  owns resource-level,
+  owns primary-motivation,
+  owns secondary-motivation @card(0..),   # TODO: implement with ordering [] when supported
+  owns personal-motivation @card(0..),    # TODO: implement with ordering [] when supported
+
+  # specific relationships
+  plays attributed-to:attributing-source,
+  plays compromises:compromising-source,
+  plays hosts:hosting-source,
+  plays ownership:owning-source,
+  plays impersonates:impersonating-source,
+  plays located-at:locating-source,
+  plays targets:targeting-source,
+  plays uses:using-source,
+
+  plays attributed-to:attributed-target,
+  plays authored-by:author-target,
+  plays indicates:indicated-target;
+
+# --- 4.18 Tool ---
+entity tool,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("tool"),
+
+  # specific properties
+  owns name @card(1),                  # required property
+  owns description,
+  owns tool-type @card(0..),           # TODO: implement with ordering [] when supported
+  owns alias_ @card(0..),              # TODO: implement with ordering [] when supported (aliases in STIX)
+  # owns kill-chain-phases @card(0..), # TODO: implement: requires struct types (maybe List of Struct types if order is important)
+  owns tool-version,
+
+  # specific relationships
+  plays delivers:delivering-source,
+  plays drops:dropping-source,
+  plays has_:having-source,          # has vulnerability
+  plays targets:targeting-source,
+  plays uses:using-source,
+
+  plays hosts:hosted-target,         # infrastructure hosts tool
+  plays downloads:downloaded-target,
+  plays indicates:indicated-target,
+  plays mitigates:mitigated-target,
+  plays uses:used-target,
+
+  # additional components
+  plays kill-chain-phase-ownership:owner,
+  ;
+# --- 4.19 Vulnerability ---
+entity vulnerability,
+  sub stix-domain-object,
+
+  # common properties (specialised inheritance)
+  owns type @values("vulnerability"),
+
+  # specific properties
+  owns name @card(1),                 # required property
+  owns description,
+
+  # specific relationships
+  plays targets:targeted-target,    
+  plays exploits:exploited-target, 
+  plays remediates:remediated-target,
+  plays mitigates:mitigated-target, 
+  plays has_:had-target;            
+
