@@ -1,4 +1,3 @@
-database delete stix
 database create stix
 transaction schema stix
 source properties.tql
