@@ -19,7 +19,14 @@ The schema files are interdependent (e.g., objects use properties, relationships
 
 **Load Sample Data**
 
-TODO
+TODO properly load the data via python
+
+Temporary micro data: load the a single stix object in the root of this project to play with. This is handwritten and not meant to be a scalable solution
+
+You can do it like this:
+```
+typedb console --address=<address> --username=<username> --password=<password> --script=<path to sample_data_script.tqls
+```
 
 ## Sample queries
 
@@ -93,6 +100,9 @@ There are several missing components, mostly in things that require ordered list
 
 * All components that semantically conceptually require list orderings:
   * email.received-line[] 
+
+* Object markings (NOT granular)
+  * This one just needs to be done, and isn't dependent on ordering
 
 ### TypeDB-specific interpretations
 

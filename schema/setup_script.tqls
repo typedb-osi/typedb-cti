@@ -1,9 +1,9 @@
 database delete stix
 database create stix
 transaction schema stix
-source /Users/joshua/Documents/vaticle/gh_vaticle/typedb-cti/schema/properties.tql
-source /Users/joshua/Documents/vaticle/gh_vaticle/typedb-cti/schema/relationships.tql
-source /Users/joshua/Documents/vaticle/gh_vaticle/typedb-cti/schema/additional_components.tql
-source /Users/joshua/Documents/vaticle/gh_vaticle/typedb-cti/schema/domain_objects.tql
-source /Users/joshua/Documents/vaticle/gh_vaticle/typedb-cti/schema/cyber_observable_objects.tql
+source properties.tql
+source relationships.tql
+source additional_components.tql
+source domain_objects.tql
+source cyber_observable_objects.tql
 commit
