@@ -11,7 +11,10 @@ from stix_model.sdos import (
 from stix_model.scos import (
     artifact_loader, autonomous_system_loader, directory_loader,
     domain_name_loader, email_address_loader, email_message_loader,
-    file_loader
+    file_loader, ipv4_addr_loader, ipv6_addr_loader, mac_addr_loader,
+    mutex_loader, network_traffic_loader, process_loader, software_loader,
+    url_loader, user_account_loader, windows_registry_key_loader,
+    windows_registry_value_loader, x509_certificate_loader
 )
 
 # Map of STIX object types to their corresponding loaders
@@ -44,7 +47,19 @@ LOADER_MAP: Dict[str, Any] = {
     "domain-name": domain_name_loader,
     "email-addr": email_address_loader,
     "email-message": email_message_loader,
-    "file": file_loader
+    "file": file_loader,
+    "ipv4-addr": ipv4_addr_loader,
+    "ipv6-addr": ipv6_addr_loader,
+    "mac-addr": mac_addr_loader,
+    "mutex": mutex_loader,
+    "network-traffic": network_traffic_loader,
+    "process": process_loader,
+    "software": software_loader,
+    "url": url_loader,
+    "user-account": user_account_loader,
+    "windows-registry-key": windows_registry_key_loader,
+    "windows-registry-value": windows_registry_value_loader,
+    "x509-certificate": x509_certificate_loader
 }
 
 def load_stix_bundle(file_path: str) -> List[str]:
@@ -58,7 +73,7 @@ def load_stix_bundle(file_path: str) -> List[str]:
     if not isinstance(bundle, dict) or 'objects' not in bundle:
         raise ValueError("Invalid STIX bundle format: missing 'objects' array")
     
-    all_statements = []
+    insert_queries = []
     for stix_object in bundle['objects']:
         if not isinstance(stix_object, dict) or 'type' not in stix_object:
             print(f"Warning: Skipping invalid STIX object: {stix_object}")
@@ -71,18 +86,15 @@ def load_stix_bundle(file_path: str) -> List[str]:
             print(f"Warning: No loader found for STIX object type: {object_type}")
             continue
             
-        try:
-            statements = loader.apply(stix_object)
-            all_statements.extend(statements)
-        except Exception as e:
-            print(f"Error processing STIX object of type {object_type}: {str(e)}")
-            continue
+        insert_query = loader.insert_query(stix_object)
+        insert_queries.append("\n".join(insert_query))
+
     
-    return all_statements
+    return insert_queries
 
 if __name__ == "__main__":
     # Example usage
-    statements = load_stix_bundle("sample-stix-ics-attack.json")
-    for statement in statements:
-        print(statement)
+    insert_queries = load_stix_bundle("sample-stix-ics-attack.json")
+    for insert_query in insert_queries:
+        print(insert_query)
         print("---") 

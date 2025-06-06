@@ -1,4 +1,4 @@
-from stix_model.loaders import TypeDBDocumentLoader, PropertyLoaders
+from stix_model.loaders import TypeDBDocumentMapping, PropertyMappings
 
 
 # @dataclass
@@ -16,196 +16,196 @@ from stix_model.loaders import TypeDBDocumentLoader, PropertyLoaders
 #     aliases: List[str] = field(default_factory=list)
     
 
-kill_chain_phase_loader = TypeDBDocumentLoader("kcp", "isa kill-chain-phase") \
-    .key("phase_name", "has phase-name {value}", quoted=True) \
-    .has("kill_chain_name", "has kill-chain-name {value}", quoted=True)
+kill_chain_phase_loader = TypeDBDocumentMapping("kill-chain-phase") \
+    .key(doc_key="phase_name", attribute="phase-name", quoted=True) \
+    .has(doc_key="kill_chain_name", attribute="kill-chain-name", quoted=True)
 
 
-stix_object_properties = PropertyLoaders() \
-    .key("id", "has id {value}", quoted=True) \
-    .has("type", "has type {value}", quoted=True) \
-    .has("spec_version", "has spec-version {value}", quoted=True) \
-    .has("created", "has created {value}") \
-    .has("modified", "has modified {value}") \
-    .has("revoked", "has revoked {value}") \
-    .has("labels", "has label_ {value}", quoted=True) \
-    .has("lang", "has lang {value}", quoted=True) \
-    .has("defanged", "has defanged {value}")
+stix_object_properties = PropertyMappings() \
+    .key(doc_key="id", attribute="id", quoted=True) \
+    .has(doc_key="type", attribute="type", quoted=True) \
+    .has(doc_key="spec_version", attribute="spec-version", quoted=True) \
+    .has(doc_key="created", attribute="created") \
+    .has(doc_key="modified", attribute="modified") \
+    .has(doc_key="revoked", attribute="revoked") \
+    .has(doc_key="labels", attribute="label_", quoted=True) \
+    .has(doc_key="lang", attribute="lang", quoted=True) \
+    .has(doc_key="defanged", attribute="defanged")
 
     # TODO: external references, object markings, granular markings, extensions
 
 
-attack_pattern_loader = TypeDBDocumentLoader("ap", "isa attack-pattern") \
+attack_pattern_loader = TypeDBDocumentMapping("attack-pattern") \
     .include(stix_object_properties) \
-    .has("name", "has name {value}", quoted=True) \
-    .has("description", "has description {value}", quoted=True) \
-    .has("aliases", "has alias_ {value}", quoted=True) \
-    .relation("kill_chain_phases", kill_chain_phase_loader, "kill-chain-phase-ownership (owner: ${var}, kill-chain-phase: ${other_var})")
+    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="aliases", attribute="alias_", quoted=True) \
+    .embedded_relation(doc_key="kill_chain_phases", embedded_loader=kill_chain_phase_loader, relation_type="kill-chain-phase-ownership", self_role="owner", embedded_role="kill-chain-phase")
 
-campaign_loader = TypeDBDocumentLoader("c", "isa campaign") \
+campaign_loader = TypeDBDocumentMapping("campaign") \
     .include(stix_object_properties) \
-    .has("name", "has name {value}", quoted=True) \
-    .has("description", "has description {value}", quoted=True) \
-    .has("aliases", "has alias_ {value}", quoted=True) \
-    .has("first_seen", "has first-seen {value}") \
-    .has("last_seen", "has last-seen {value}") \
-    .has("objective", "has objective {value}", quoted=True)
+    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="aliases", attribute="alias_", quoted=True) \
+    .has(doc_key="first_seen", attribute="first-seen") \
+    .has(doc_key="last_seen", attribute="last-seen") \
+    .has(doc_key="objective", attribute="objective", quoted=True)
 
-course_of_action_loader = TypeDBDocumentLoader("coa", "isa course-of-action") \
+course_of_action_loader = TypeDBDocumentMapping("course-of-action") \
     .include(stix_object_properties) \
-    .has("name", "has name {value}", quoted=True) \
-    .has("description", "has description {value}", quoted=True)
+    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True)
 
-grouping_loader = TypeDBDocumentLoader("g", "isa grouping") \
+grouping_loader = TypeDBDocumentMapping("grouping") \
     .include(stix_object_properties) \
-    .has("name", "has name {value}", quoted=True) \
-    .has("description", "has description {value}", quoted=True) \
-    .has("context", "has context {value}", quoted=True)
+    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="context", attribute="context", quoted=True)
 
-identity_loader = TypeDBDocumentLoader("i", "isa identity") \
+identity_loader = TypeDBDocumentMapping("identity") \
     .include(stix_object_properties) \
-    .has("name", "has name {value}", quoted=True) \
-    .has("description", "has description {value}", quoted=True) \
-    .has("roles", "has role_ {value}", quoted=True) \
-    .has("identity_class", "has identity-class {value}", quoted=True) \
-    .has("sectors", "has sector {value}", quoted=True) \
-    .has("contact_information", "has contact-information {value}", quoted=True)
+    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="roles", attribute="role_", quoted=True) \
+    .has(doc_key="identity_class", attribute="identity-class", quoted=True) \
+    .has(doc_key="sectors", attribute="sector", quoted=True) \
+    .has(doc_key="contact_information", attribute="contact-information", quoted=True)
 
-incident_loader = TypeDBDocumentLoader("inc", "isa incident") \
+incident_loader = TypeDBDocumentMapping("incident") \
     .include(stix_object_properties) \
-    .has("name", "has name {value}", quoted=True) \
-    .has("description", "has description {value}", quoted=True) 
+    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True) 
 
-indicator_loader = TypeDBDocumentLoader("ind", "isa indicator") \
+indicator_loader = TypeDBDocumentMapping("indicator") \
     .include(stix_object_properties) \
-    .has("name", "has name {value}", quoted=True) \
-    .has("description", "has description {value}", quoted=True) \
-    .has("indicator_types", "has indicator-type {value}", quoted=True) \
-    .has("pattern", "has pattern {value}", quoted=True) \
-    .has("pattern_type", "has pattern-type {value}", quoted=True) \
-    .has("pattern_version", "has pattern-version {value}", quoted=True) \
-    .has("valid_from", "has valid-from {value}") \
-    .has("valid_until", "has valid-until {value}") \
-    .relation("kill_chain_phases", kill_chain_phase_loader, "kill-chain-phase-ownership (owner: ${var}, kill-chain-phase: ${other_var})")
+    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="indicator_types", attribute="indicator-type", quoted=True) \
+    .has(doc_key="pattern", attribute="pattern", quoted=True) \
+    .has(doc_key="pattern_type", attribute="pattern-type", quoted=True) \
+    .has(doc_key="pattern_version", attribute="pattern-version", quoted=True) \
+    .has(doc_key="valid_from", attribute="valid-from") \
+    .has(doc_key="valid_until", attribute="valid-until") \
+    .embedded_relation(doc_key="kill_chain_phases", embedded_loader=kill_chain_phase_loader, relation_type="kill-chain-phase-ownership", self_role="owner", embedded_role="kill-chain-phase")
 
-infrastructure_loader = TypeDBDocumentLoader("inf", "isa infrastructure") \
+infrastructure_loader = TypeDBDocumentMapping("infrastructure") \
     .include(stix_object_properties) \
-    .has("name", "has name {value}", quoted=True) \
-    .has("description", "has description {value}", quoted=True) \
-    .has("infrastructure_types", "has infrastructure-type {value}", quoted=True) \
-    .has("aliases", "has alias_ {value}", quoted=True) \
-    .has("first_seen", "has first-seen {value}") \
-    .has("last_seen", "has last-seen {value}") \
-    .relation("kill_chain_phases", kill_chain_phase_loader, "kill-chain-phase-ownership (owner: ${var}, kill-chain-phase: ${other_var})")
+    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="infrastructure_types", attribute="infrastructure-type", quoted=True) \
+    .has(doc_key="aliases", attribute="alias_", quoted=True) \
+    .has(doc_key="first_seen", attribute="first-seen") \
+    .has(doc_key="last_seen", attribute="last-seen") \
+    .embedded_relation(doc_key="kill_chain_phases", embedded_loader=kill_chain_phase_loader, relation_type="kill-chain-phase-ownership", self_role="owner", embedded_role="kill-chain-phase")
 
-intrusion_set_loader = TypeDBDocumentLoader("is", "isa intrusion-set") \
+intrusion_set_loader = TypeDBDocumentMapping("intrusion-set") \
     .include(stix_object_properties) \
-    .has("name", "has name {value}", quoted=True) \
-    .has("description", "has description {value}", quoted=True) \
-    .has("aliases", "has alias_ {value}", quoted=True) \
-    .has("first_seen", "has first-seen {value}") \
-    .has("last_seen", "has last-seen {value}") \
-    .has("goals", "has goal {value}", quoted=True) \
-    .has("resource_level", "has resource-level {value}", quoted=True) \
-    .has("primary_motivation", "has primary-motivation {value}", quoted=True) \
-    .has("secondary_motivations", "has secondary-motivation {value}", quoted=True)
+    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="aliases", attribute="alias_", quoted=True) \
+    .has(doc_key="first_seen", attribute="first-seen") \
+    .has(doc_key="last_seen", attribute="last-seen") \
+    .has(doc_key="goals", attribute="goal", quoted=True) \
+    .has(doc_key="resource_level", attribute="resource-level", quoted=True) \
+    .has(doc_key="primary_motivation", attribute="primary-motivation", quoted=True) \
+    .has(doc_key="secondary_motivations", attribute="secondary-motivation", quoted=True)
 
-location_loader = TypeDBDocumentLoader("loc", "isa location") \
+location_loader = TypeDBDocumentMapping("location") \
     .include(stix_object_properties) \
-    .has("name", "has name {value}", quoted=True) \
-    .has("description", "has description {value}", quoted=True) \
-    .has("latitude", "has latitude {value}") \
-    .has("longitude", "has longitude {value}") \
-    .has("precision", "has precision {value}") \
-    .has("region", "has region {value}", quoted=True) \
-    .has("country", "has country {value}", quoted=True) \
-    .has("administrative_area", "has administrative-area {value}", quoted=True) \
-    .has("city", "has city {value}", quoted=True) \
-    .has("street_address", "has street-address {value}", quoted=True) \
-    .has("postal_code", "has postal-code {value}", quoted=True)
+    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="latitude", attribute="latitude") \
+    .has(doc_key="longitude", attribute="longitude") \
+    .has(doc_key="precision", attribute="precision") \
+    .has(doc_key="region", attribute="region", quoted=True) \
+    .has(doc_key="country", attribute="country", quoted=True) \
+    .has(doc_key="administrative_area", attribute="administrative-area", quoted=True) \
+    .has(doc_key="city", attribute="city", quoted=True) \
+    .has(doc_key="street_address", attribute="street-address", quoted=True) \
+    .has(doc_key="postal_code", attribute="postal-code", quoted=True)
 
-malware_loader = TypeDBDocumentLoader("m", "isa malware") \
+malware_loader = TypeDBDocumentMapping("malware") \
     .include(stix_object_properties) \
-    .has("name", "has name {value}", quoted=True) \
-    .has("description", "has description {value}", quoted=True) \
-    .has("malware_types", "has malware-type {value}", quoted=True) \
-    .has("is_family", "has is-family {value}") \
-    .has("aliases", "has alias_ {value}", quoted=True) \
-    .has("first_seen", "has first-seen {value}") \
-    .has("last_seen", "has last-seen {value}") \
-    .has("architecture_execution_envs", "has architecture-execution-env {value}", quoted=True) \
-    .has("implementation_languages", "has implementation-language {value}", quoted=True) \
-    .has("capabilities", "has capability {value}", quoted=True) \
-    .relation("kill_chain_phases", kill_chain_phase_loader, "kill-chain-phase-ownership (owner: ${var}, kill-chain-phase: ${other_var})")
+    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="malware_types", attribute="malware-type", quoted=True) \
+    .has(doc_key="is_family", attribute="is-family") \
+    .has(doc_key="aliases", attribute="alias_", quoted=True) \
+    .has(doc_key="first_seen", attribute="first-seen") \
+    .has(doc_key="last_seen", attribute="last-seen") \
+    .has(doc_key="architecture_execution_envs", attribute="architecture-execution-env", quoted=True) \
+    .has(doc_key="implementation_languages", attribute="implementation-language", quoted=True) \
+    .has(doc_key="capabilities", attribute="capability", quoted=True) \
+    .embedded_relation(doc_key="kill_chain_phases", embedded_loader=kill_chain_phase_loader, relation_type="kill-chain-phase-ownership", self_role="owner", embedded_role="kill-chain-phase")
 
-malware_analysis_loader = TypeDBDocumentLoader("ma", "isa malware-analysis") \
+malware_analysis_loader = TypeDBDocumentMapping("malware-analysis") \
     .include(stix_object_properties) \
-    .has("product", "has product {value}", quoted=True) \
-    .has("version", "has version {value}", quoted=True) \
-    .has("configuration_version", "has configuration-version {value}", quoted=True) \
-    .has("modules", "has module {value}", quoted=True) \
-    .has("analysis_engine_version", "has analysis-engine-version {value}", quoted=True) \
-    .has("analysis_definition_version", "has analysis-definition-version {value}", quoted=True) \
-    .has("submitted", "has submitted {value}") \
-    .has("analysis_started", "has analysis-started {value}") \
-    .has("analysis_ended", "has analysis-ended {value}") \
-    .has("result_name", "has result-name {value}", quoted=True) \
-    .has("result", "has result {value}", quoted=True)
+    .has(doc_key="product", attribute="product", quoted=True) \
+    .has(doc_key="version", attribute="version", quoted=True) \
+    .has(doc_key="configuration_version", attribute="configuration-version", quoted=True) \
+    .has(doc_key="modules", attribute="module", quoted=True) \
+    .has(doc_key="analysis_engine_version", attribute="analysis-engine-version", quoted=True) \
+    .has(doc_key="analysis_definition_version", attribute="analysis-definition-version", quoted=True) \
+    .has(doc_key="submitted", attribute="submitted") \
+    .has(doc_key="analysis_started", attribute="analysis-started") \
+    .has(doc_key="analysis_ended", attribute="analysis-ended") \
+    .has(doc_key="result_name", attribute="result-name", quoted=True) \
+    .has(doc_key="result", attribute="result", quoted=True)
 
-note_loader = TypeDBDocumentLoader("n", "isa note") \
+note_loader = TypeDBDocumentMapping("note") \
     .include(stix_object_properties) \
-    .has("abstract", "has abstract_ {value}", quoted=True) \
-    .has("content", "has content {value}", quoted=True) \
-    .has("authors", "has author {value}", quoted=True)
+    .has(doc_key="abstract", attribute="abstract_", quoted=True) \
+    .has(doc_key="content", attribute="content", quoted=True) \
+    .has(doc_key="authors", attribute="author", quoted=True)
 
-observed_data_loader = TypeDBDocumentLoader("od", "isa observed-data") \
+observed_data_loader = TypeDBDocumentMapping("observed-data") \
     .include(stix_object_properties) \
-    .has("first_observed", "has first-observed {value}") \
-    .has("last_observed", "has last-observed {value}") \
-    .has("number_observed", "has number-observed {value}")
+    .has(doc_key="first_observed", attribute="first-observed") \
+    .has(doc_key="last_observed", attribute="last-observed") \
+    .has(doc_key="number_observed", attribute="number-observed")
 
-opinion_loader = TypeDBDocumentLoader("op", "isa opinion") \
+opinion_loader = TypeDBDocumentMapping("opinion") \
     .include(stix_object_properties) \
-    .has("explanation", "has explanation {value}", quoted=True) \
-    .has("authors", "has author {value}", quoted=True) \
-    .has("opinion", "has opinion {value}", quoted=True)
+    .has(doc_key="explanation", attribute="explanation", quoted=True) \
+    .has(doc_key="authors", attribute="author", quoted=True) \
+    .has(doc_key="opinion", attribute="opinion", quoted=True)
 
-report_loader = TypeDBDocumentLoader("r", "isa report") \
+report_loader = TypeDBDocumentMapping("report") \
     .include(stix_object_properties) \
-    .has("name", "has name {value}", quoted=True) \
-    .has("description", "has description {value}", quoted=True) \
-    .has("report_types", "has report-type {value}", quoted=True) \
-    .has("published", "has published {value}")
+    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="report_types", attribute="report-type", quoted=True) \
+    .has(doc_key="published", attribute="published")
 
-threat_actor_loader = TypeDBDocumentLoader("ta", "isa threat-actor") \
+threat_actor_loader = TypeDBDocumentMapping("threat-actor") \
     .include(stix_object_properties) \
-    .has("name", "has name {value}", quoted=True) \
-    .has("description", "has description {value}", quoted=True) \
-    .has("threat_actor_types", "has threat-actor-type {value}", quoted=True) \
-    .has("aliases", "has alias_ {value}", quoted=True) \
-    .has("first_seen", "has first-seen {value}") \
-    .has("last_seen", "has last-seen {value}") \
-    .has("roles", "has role_ {value}", quoted=True) \
-    .has("goals", "has goal {value}", quoted=True) \
-    .has("sophistication", "has sophistication {value}", quoted=True) \
-    .has("resource_level", "has resource-level {value}", quoted=True) \
-    .has("primary_motivation", "has primary-motivation {value}", quoted=True) \
-    .has("secondary_motivations", "has secondary-motivation {value}", quoted=True) \
-    .has("personal_motivations", "has personal-motivation {value}", quoted=True)
+    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="threat_actor_types", attribute="threat-actor-type", quoted=True) \
+    .has(doc_key="aliases", attribute="alias_", quoted=True) \
+    .has(doc_key="first_seen", attribute="first-seen") \
+    .has(doc_key="last_seen", attribute="last-seen") \
+    .has(doc_key="roles", attribute="role_", quoted=True) \
+    .has(doc_key="goals", attribute="goal", quoted=True) \
+    .has(doc_key="sophistication", attribute="sophistication", quoted=True) \
+    .has(doc_key="resource_level", attribute="resource-level", quoted=True) \
+    .has(doc_key="primary_motivation", attribute="primary-motivation", quoted=True) \
+    .has(doc_key="secondary_motivations", attribute="secondary-motivation", quoted=True) \
+    .has(doc_key="personal_motivations", attribute="personal-motivation", quoted=True)
 
-tool_loader = TypeDBDocumentLoader("t", "isa tool") \
+tool_loader = TypeDBDocumentMapping("tool") \
     .include(stix_object_properties) \
-    .has("name", "has name {value}", quoted=True) \
-    .has("description", "has description {value}", quoted=True) \
-    .has("tool_types", "has tool-type {value}", quoted=True) \
-    .has("aliases", "has alias_ {value}", quoted=True) \
-    .has("tool_version", "has tool-version {value}", quoted=True) \
-    .relation("kill_chain_phases", kill_chain_phase_loader, "kill-chain-phase-ownership (owner: ${var}, kill-chain-phase: ${other_var})")
+    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="tool_types", attribute="tool-type", quoted=True) \
+    .has(doc_key="aliases", attribute="alias_", quoted=True) \
+    .has(doc_key="tool_version", attribute="tool-version", quoted=True) \
+    .embedded_relation(doc_key="kill_chain_phases", embedded_loader=kill_chain_phase_loader, relation_type="kill-chain-phase-ownership", self_role="owner", embedded_role="kill-chain-phase")
 
-vulnerability_loader = TypeDBDocumentLoader("v", "isa vulnerability") \
+vulnerability_loader = TypeDBDocumentMapping("vulnerability") \
     .include(stix_object_properties) \
-    .has("name", "has name {value}", quoted=True) \
-    .has("description", "has description {value}", quoted=True)
+    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True)
 
 # # TODO: relationship loader
 

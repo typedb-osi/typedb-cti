@@ -1,12 +1,12 @@
 define
 
 relation stix-relationship-object,
-  relates source,
-  relates target,
+  relates source @card(1),
+  relates target @card(1),
 
   # required common properties
   owns id @key,
-  owns type,
+  owns type @card(1) @values("relationship"),
   owns spec-version @card(1) @values("2.1") ,
   owns created @card(1),
   owns modified @card(1),
@@ -20,16 +20,17 @@ relation stix-relationship-object,
     # TODO: unimplemented
     # owns extensions,
     # owns external-references[],  # TODO not implemented: requires lists, if order is important
-    # owns object-marking-refs[],
-    # owns granular-markings[],
   
   # specific properties
-  owns relationship-type, 
+  owns relationship-type @card(1), 
   owns description, 
   owns start-time, 
   owns stop-time,
 
-  # embedded relationships are defined after embedded relationship definitions
+  # embedded relationships
+  plays created-by:created,
+  plays object-marking:object,
+  plays granular-marking:object,
   ;
 
 # Ternary relation!!

@@ -1,94 +1,181 @@
 from typing import List, Optional, Dict, Any
 from datetime import datetime
+import time
 
 JSON = Dict[str, Any]
 
 def escape(value: str) -> str:
     return value.replace("\\", "\\\\").replace("'", "\'")
 
-class PropertyLoaders:
+def isa_statement(var: str, type_: str) -> str:
+    return f"${var} isa {type_};"
+
+class KeyMapping:
+    def __init__(self, doc_key: str, attribute: str, quoted: bool = False):
+        self.doc_key = doc_key
+        self.attribute = attribute
+        self.quoted = quoted
+
+    def statement(self, var: str, value: any) -> str:
+        if self.quoted:
+            value = f"'{escape(value)}'"
+        if type(value) == bool:
+            value = "true" if value else "false"
+        return f"${var} has {self.attribute} {value};"
+
+
+class HasMapping:
+    def __init__(self, doc_key: str, attribute: str, quoted: bool = False):
+        self.doc_key = doc_key
+        self.attribute = attribute
+        self.quoted = quoted
+
+    def statement(self, var: str, value: any) -> str:
+        if self.quoted:
+            value = f"'{escape(value)}'"
+        if type(value) == bool:
+            value = "true" if value else "false"
+        return f"${var} has {self.attribute} {value};"
+
+
+class RelationMapping:
+    def __init__(self, doc_key: str, value_processor: "TypeDBDocumentMapping", relation_type: str, self_role: str, embedded_role: str):
+        self.doc_key = doc_key
+        self.value_processor = value_processor
+        self.relation_type = relation_type
+        self.self_role = self_role
+        self.embedded_role = embedded_role
+
+    def insert_query(self, doc: JSON, first_player_var: str) -> List[str]:
+        pipeline = []
+        pipeline.extend(self.value_processor.insert_query(doc, first_player_var))
+
+        embedded_var = self.value_processor.var_with_prefix(first_player_var)
+        pipeline.append(f"insert {self.relation_type} ({self.self_role}: ${first_player_var}, {self.embedded_role}: ${embedded_var});")
+        return pipeline
+
+
+class LinksMapping:
+    def __init__(self, doc_key: str, player_lookup: str):
+        self.doc_key = doc_key
+        self.player_lookup = player_lookup
+
+
+class PropertyMappings:
     def __init__(self):
-        self.has_key_loaders = []
-        self.has_loaders = []
-        self.relation_loaders = []
+        self.has_key_mappings = []
+        self.has_mappings = []
+        self.relation_mappings = []
+        self.links_mappings = []
     
-    def key(self, doc_key: str, statement: str, quoted: bool = False):
-        self.has_key_loaders.append(DirectValueStatement(doc_key, "${var} " + statement, quoted))
+    def key(self, doc_key: str, attribute: str, quoted: bool = False):
+        self.has_key_mappings.append(KeyMapping(doc_key, attribute, quoted))
         return self
 
-    def has(self, doc_key: str, statement: str, quoted: bool = False):
-        self.has_loaders.append(DirectValueStatement(doc_key, "${var} " + statement, quoted))
+    def has(self, doc_key: str, attribute: str, quoted: bool = False):
+        self.has_mappings.append(HasMapping(doc_key, attribute, quoted))
         return self
 
-    def relation(self, doc_key: str, value_processor: "TypeDBDocumentLoader", statement: str):
-        self.relation_loaders.append(ProcessedValueStages(doc_key, value_processor, statement))
+    def relation(self, doc_key: str, value_processor: "TypeDBDocumentMapping", relation_type: str, self_role: str, embedded_role: str):
+        self.relation_mappings.append(RelationMapping(doc_key, value_processor, relation_type, self_role, embedded_role))
+        return self
+    
+    def links(self, doc_key: str, player_lookup: str):
+        self.links_mappings.append(LinksMapping(doc_key, player_lookup))
         return self
 
-    def include(self, property_loaders: "PropertyLoaders"):
-        for loader in property_loaders.has_key_loaders:
-            for existing_loader in self.has_key_loaders:
-                if loader.doc_key == existing_loader.doc_key:
-                    raise ValueError(f"Duplicate key property loader for {loader.doc_key}")
-        self.has_key_loaders.extend(property_loaders.has_key_loaders)
-        for loader in property_loaders.has_loaders: 
-            for existing_loader in self.has_loaders:
-                if loader.doc_key == existing_loader.doc_key:
-                    raise ValueError(f"Duplicate has property loader for {loader.doc_key}")
-        self.has_loaders.extend(property_loaders.has_loaders)
-        for loader in property_loaders.relation_loaders:
-            for existing_loader in self.relation_loaders:
-                if loader.doc_key == existing_loader.doc_key:
-                    raise ValueError(f"Duplicate relation property loader for {loader.doc_key}")
-        self.relation_loaders.extend(property_loaders.relation_loaders)
+    def include(self, property_mappings: "PropertyMappings"):
+        for mapping in property_mappings.has_key_mappings:
+            for existing_mapping in self.has_key_mappings:
+                if mapping.doc_key == existing_mapping.doc_key:
+                    raise ValueError(f"Duplicate key property mapping for {mapping.doc_key}")
+        self.has_key_mappings.extend(property_mappings.has_key_mappings)
+        for mapping in property_mappings.has_mappings: 
+            for existing_mapping in self.has_mappings:
+                if mapping.doc_key == existing_mapping.doc_key:
+                    raise ValueError(f"Duplicate has property mapping for {mapping.doc_key}")
+        self.has_mappings.extend(property_mappings.has_mappings)
+        for mapping in property_mappings.relation_mappings:
+            for existing_mapping in self.relation_mappings:
+                if mapping.doc_key == existing_mapping.doc_key:
+                    raise ValueError(f"Duplicate relation property mapping for {mapping.doc_key}")
+        self.relation_mappings.extend(property_mappings.relation_mappings)
+        for mapping in property_mappings.links_mappings:
+            for existing_mapping in self.links_mappings:
+                if mapping.doc_key == existing_mapping.doc_key:
+                    raise ValueError(f"Duplicate links property mapping for {mapping.doc_key}")
+        self.links_mappings.extend(property_mappings.links_mappings)
         return self
 
 
 """
 Load a JSON document, that represents a central concept, plus some attribute ownerships, some of which may be keys.
 """
-class TypeDBDocumentLoader:
-    def __init__(self, var: str, isa: str):
-        self.var = var
-        self.isa_loader = ConstantStatement("${var} " + isa)
-        self.property_loaders = PropertyLoaders()
+class TypeDBDocumentMapping:
+    def __init__(self, type_: str):
+        self.var = f"var_{type_}_{int(time.time() * 1000)}"
+        self.type_ = type_
+        self.property_mappings = PropertyMappings()
+
+    def key(self, doc_key: str, attribute: str, quoted: bool = False):
+        self.property_mappings.key(doc_key, attribute, quoted)
+        return self
+
+    def has(self, doc_key: str, attribute: str, quoted: bool = False):
+        self.property_mappings.has(doc_key, attribute, quoted)
+        return self
+
+    def embedded_relation(self, doc_key: str, embedded_loader: "TypeDBDocumentMapping", relation_type: str, self_role: str, embedded_role: str):
+        self.property_mappings.relation(doc_key, embedded_loader, relation_type, self_role, embedded_role)
+        return self
     
-
-    def key(self, doc_key: str, statement: str, quoted: bool = False):
-        self.property_loaders.key(doc_key, statement, quoted)
-        return self
-
-    def has(self, doc_key: str, statement: str, quoted: bool = False):
-        self.property_loaders.has(doc_key, statement, quoted)
-        return self
-
-    def relation(self, doc_key: str, value_processor: "TypeDBDocumentLoader", statement: str):
-        self.property_loaders.relation(doc_key, value_processor, statement)
+    def links(self, doc_key: str, player_lookup: str):
+        self.property_mappings.links(doc_key, player_lookup)
         return self
     
-    def include(self, property_loaders: "PropertyLoaders"):
-        self.property_loaders.include(property_loaders)
+    def include(self, property_mappings: "PropertyMappings"):
+        self.property_mappings.include(property_mappings)
         return self
 
-    def apply(self, doc: JSON, var_prefix: str = "") -> List[str]:
+    def insert_query(self, doc: JSON, var_prefix: str = "") -> List[str]:
+        print(doc)
         pipeline = []
+        var = self.var_with_prefix(var_prefix)
 
-        statements = self.isa_loader.apply(self.var_with_prefix(var_prefix))
-        # TODO: keys might be inserted with 'put' instead of 'insert' clauses
-        for has_key in self.property_loaders.has_key_loaders:
-            statements.extend(has_key.apply(doc, self.var_with_prefix(var_prefix)))
-        if len(statements) > 0:
-            put_stage = "put\n" + ";\n".join(statements) + ";"
-            pipeline.append(put_stage)
+        put_statements = [isa_statement(var, self.type_)]
 
-        statements = []
-        for has in self.property_loaders.has_loaders:
-            statements.extend(has.apply(doc, self.var_with_prefix(var_prefix)))
-        if len(statements) > 0:
-            insert_stage = "insert\n" + ";\n".join(statements) + ";"
+        # # TODO: keys might be inserted with 'put' instead of 'insert' clauses
+        for has_key in self.property_mappings.has_key_mappings:
+            value = doc.get(has_key.doc_key)
+            if type(value) == list:
+                for v in value:
+                    put_statements.append(has_key.statement(var, v))
+            elif value is not None:
+                put_statements.append(has_key.statement(var, value))
+        
+        put_stage = "put\n" + "\n".join(put_statements)
+        pipeline.append(put_stage)
+
+        insert_statements = []
+        for has in self.property_mappings.has_mappings:
+            value = doc.get(has.doc_key)
+            if type(value) == list:
+                for v in value:
+                    insert_statements.append(has.statement(var, v))
+            elif value is not None:
+                insert_statements.append(has.statement(var, value))
+
+        if len(insert_statements) > 0:
+            insert_stage = "insert\n" + "\n".join(insert_statements)
             pipeline.append(insert_stage)
 
-        for relation in self.property_loaders.relation_loaders:
-            pipeline.extend(relation.apply(doc, self.var_with_prefix(var_prefix)))
+        for relation in self.property_mappings.relation_mappings:
+            value = doc.get(relation.doc_key)
+            if type(value) == list:
+                for v in value:
+                    pipeline.extend(relation.insert_query(v, var))
+            elif value is not None:
+                pipeline.extend(relation.insert_query(value, var))
         
         return pipeline
 
@@ -132,7 +219,7 @@ class DirectValueStatement:
 
 
 class ProcessedValueStages:
-    def __init__(self, doc_key: str, value_processor: TypeDBDocumentLoader, statement_format_string: str):
+    def __init__(self, doc_key: str, value_processor: TypeDBDocumentMapping, statement_format_string: str):
         self.statement_format_string = statement_format_string
         self.doc_key = doc_key
         self.value_processor = value_processor

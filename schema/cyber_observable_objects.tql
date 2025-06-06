@@ -413,6 +413,7 @@ entity icmp,
   owns icmp-type-hex,
   owns icmp-code-hex;
 
+# Network Socket Extension (6.12.4)
 entity network-socket,
   sub network-traffic,
   owns address-family @card(1),
@@ -433,7 +434,7 @@ relation options-dict-entry,
   owns value-integer @card(1);
 
 # TCP extension (6.12.5)
-entity tpc,
+entity tcp,
   sub network-traffic,
   owns src-flags-hex @card(0..),
   owns dst-flags-hex @card(0..);
@@ -447,12 +448,13 @@ entity process,
     owns created-time,
     owns cwd,
     owns command-line,
-    owns environment-variables,
-    owns opened-connection-refs @card(0..),
-    owns creator-user-ref,
-    owns image-ref,
-    owns parent-ref,
-    owns child-refs @card(0..);
+    # owns environment-variables,
+    # owns opened-connection-refs @card(0..),
+    # owns creator-user-ref,
+    # owns image-ref,
+    # owns parent-ref,
+    # owns child-refs @card(0..)
+    ;
 
 # Windows Process Extension (6.13.2)
 entity windows-process,
@@ -566,7 +568,7 @@ entity windows-registry-key,
   # Note: At least one specific property MUST be present per STIX spec
   owns windows-registry-key-string,
   owns modified-time,
-  owns creator-user-ref,
+  # owns creator-user-ref,
   owns number-of-subkeys,
 
   # indirect ownerships

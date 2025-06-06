@@ -90,6 +90,23 @@ The STIX standard defines various objects and their relationships. This schema m
     *   Includes the generic `relationship` type and specific relationship types derived from it (e.g., `related-to`, `duplicate-of`).
     *   Also defines TypeDB relations that model the *linking properties* often found on SDOs and SCOs (like `created_by_ref`, `resolves_to_ref`, `belongs_to_ref`). These TypeDB relations provide a more direct and queryable link between entities compared to just storing the target object's ID in an attribute. For instance, the `resolves_to_ref` attribute on `domain-name` is modeled using a `resolves-to` relation connecting a `domain-name` entity to an `ipv4-addr` or `ipv6-addr` entity.
 
+### TODOs
+
+* Object markings (NOT granular)
+  * This one just needs to be done, and isn't dependent on ordering
+
+* Process refs
+    owns opened-connection-refs @card(0..),
+    owns creator-user-ref,
+    owns image-ref,
+    owns parent-ref,
+    owns child-refs @card(0..)
+  * And dicts: environment-variables
+
+* Windows Registry Key
+  * creator_user_ref,
+
+  
 ### Missing components
 
 There are several missing components, mostly in things that require ordered lists in TypeDB, which are not yet implemented.
@@ -101,8 +118,6 @@ There are several missing components, mostly in things that require ordered list
 * All components that semantically conceptually require list orderings:
   * email.received-line[] 
 
-* Object markings (NOT granular)
-  * This one just needs to be done, and isn't dependent on ordering
 
 ### TypeDB-specific interpretations
 
