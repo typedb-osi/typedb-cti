@@ -351,9 +351,3 @@ relation service-dll,
 	sub embedded-relationship,
 	relates service as owner,
 	relates dll as embedded;
-
-# --- sighting extension ---
-relation sighting,
-  # sighting embedded relationships
-  plays created-by:created,
-  plays object-marking:object;

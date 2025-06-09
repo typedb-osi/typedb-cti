@@ -1,5 +1,5 @@
 import unittest
-from src.stix_model.sdos import TypeDBDocumentLoader, attack_pattern_loader, campaign_loader, course_of_action_loader, grouping_loader, identity_loader, incident_loader, indicator_loader, infrastructure_loader, intrusion_set_loader, location_loader, malware_loader, malware_analysis_loader, note_loader, observed_data_loader, opinion_loader, report_loader, threat_actor_loader, tool_loader, vulnerability_loader
+from src.stix_model.sdos import TypeDBDocumentMapping, attack_pattern_loader, campaign_loader, course_of_action_loader, grouping_loader, identity_loader, incident_loader, indicator_loader, infrastructure_loader, intrusion_set_loader, location_loader, malware_loader, malware_analysis_loader, note_loader, observed_data_loader, opinion_loader, report_loader, threat_actor_loader, tool_loader, vulnerability_loader
 from typedb.driver import *
 
 DB_NAME = "test_stix"

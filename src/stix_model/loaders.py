@@ -10,6 +10,7 @@ def escape(value: str) -> str:
 def isa_statement(var: str, type_: str) -> str:
     return f"${var} isa {type_};"
 
+
 class KeyMapping:
     def __init__(self, doc_key: str, attribute: str, quoted: bool = False):
         self.doc_key = doc_key
@@ -56,9 +57,28 @@ class RelationMapping:
 
 
 class LinksMapping:
-    def __init__(self, doc_key: str, player_lookup: str):
-        self.doc_key = doc_key
-        self.player_lookup = player_lookup
+    def __init__(self, player_attribute_doc_key: str, player_attribute: str, role: str, quoted: bool = False):
+        self.player_attribute_doc_key = player_attribute_doc_key
+        self.role = role
+        self.player_attribute = player_attribute
+        self.quoted = quoted
+
+    def insert_query(self, player_attribute_value: any, relation_var: str, relation_type: str) -> List[str]:
+        pipeline = []
+        player_var = f"var_player_{int(time.time() * 1000)}"
+        player_type_var = f"{player_var}_type"
+        if self.quoted:
+            player_attribute_value = f"'{escape(player_attribute_value)}'"
+        if type(player_attribute_value) == bool:
+            player_attribute_value = "true" if player_attribute_value else "false"
+        pipeline.append(f"""
+match 
+${player_var} has {self.player_attribute} {player_attribute_value};
+${player_var} isa! ${player_type_var};
+${player_type_var} plays {relation_type}:{self.role};
+                        """)
+        pipeline.append(f"insert ${relation_var} links ({self.role}: ${player_var});")
+        return pipeline
 
 
 class PropertyMappings:
@@ -80,8 +100,8 @@ class PropertyMappings:
         self.relation_mappings.append(RelationMapping(doc_key, value_processor, relation_type, self_role, embedded_role))
         return self
     
-    def links(self, doc_key: str, player_lookup: str):
-        self.links_mappings.append(LinksMapping(doc_key, player_lookup))
+    def links(self, player_attribute_doc_key: str, player_attribute: str, role: str, quoted: bool = False):
+        self.links_mappings.append(LinksMapping(player_attribute_doc_key, player_attribute, role, quoted))
         return self
 
     def include(self, property_mappings: "PropertyMappings"):
@@ -129,10 +149,10 @@ class TypeDBDocumentMapping:
         self.property_mappings.relation(doc_key, embedded_loader, relation_type, self_role, embedded_role)
         return self
     
-    def links(self, doc_key: str, player_lookup: str):
-        self.property_mappings.links(doc_key, player_lookup)
+    def links(self, player_attribute_doc_key: str, player_attribute: str, role: str, quoted: bool = False):
+        self.property_mappings.links(player_attribute_doc_key, player_attribute, role, quoted)
         return self
-    
+
     def include(self, property_mappings: "PropertyMappings"):
         self.property_mappings.include(property_mappings)
         return self
@@ -176,6 +196,14 @@ class TypeDBDocumentMapping:
                     pipeline.extend(relation.insert_query(v, var))
             elif value is not None:
                 pipeline.extend(relation.insert_query(value, var))
+        
+        for links in self.property_mappings.links_mappings:
+            value = doc.get(links.player_attribute_doc_key)
+            if type(value) == list:
+                for v in value:
+                    pipeline.extend(links.insert_query(v, var, self.type_))
+            elif value is not None:
+                pipeline.extend(links.insert_query(value, var, self.type_))
         
         return pipeline
 

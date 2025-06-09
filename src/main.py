@@ -16,6 +16,7 @@ from stix_model.scos import (
     url_loader, user_account_loader, windows_registry_key_loader,
     windows_registry_value_loader, x509_certificate_loader
 )
+from stix_model.relationships import uses_loader
 
 # Map of STIX object types to their corresponding loaders
 LOADER_MAP: Dict[str, Any] = {
@@ -62,6 +63,10 @@ LOADER_MAP: Dict[str, Any] = {
     "x509-certificate": x509_certificate_loader
 }
 
+RELATIONSHIP_LOADER_MAP: Dict[str, Any] = {
+    "uses": uses_loader
+}
+
 def load_stix_bundle(file_path: str) -> List[str]:
     """
     Load a STIX bundle from a file and process each object using the appropriate loader.
@@ -80,10 +85,15 @@ def load_stix_bundle(file_path: str) -> List[str]:
             continue
             
         object_type = stix_object['type']
-        loader = LOADER_MAP.get(object_type)
+        if object_type == "relationship":
+            relationship_type = stix_object['relationship_type']
+            loader = RELATIONSHIP_LOADER_MAP.get(relationship_type)
+        else:
+            relationship_type = None 
+            loader = LOADER_MAP.get(object_type)
         
         if loader is None:
-            print(f"Warning: No loader found for STIX object type: {object_type}")
+            print(f"Warning: No loader found for STIX document: {object_type} (relationship: {relationship_type})")
             continue
             
         insert_query = loader.insert_query(stix_object)

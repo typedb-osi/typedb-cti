@@ -1,5 +1,5 @@
 import unittest
-from src.stix_model.scos import TypeDBDocumentLoader, artifact_loader, autonomous_system_loader, directory_loader, domain_name_loader, email_address_loader, email_message_loader, file_loader
+from src.stix_model.scos import TypeDBDocumentMapping, artifact_loader, autonomous_system_loader, directory_loader, domain_name_loader, email_address_loader, email_message_loader, file_loader
 from typedb.driver import *
 
 DB_NAME = "test_stix"
