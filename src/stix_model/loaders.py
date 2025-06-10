@@ -47,12 +47,12 @@ class RelationMapping:
         self.self_role = self_role
         self.embedded_role = embedded_role
 
-    def insert_query(self, doc: JSON, first_player_var: str) -> List[str]:
-        pipeline = []
-        pipeline.extend(self.value_processor.insert_query(doc, first_player_var))
+    def insert_query(self, doc: JSON, first_player_var: str, index: int = 0) -> List[str]:
+        pipeline = [f"\n### Load complete player from property '{self.doc_key}' and link via relation '{self.relation_type}' with role '{self.self_role}'"]
+        pipeline.extend(self.value_processor.insert_query(doc, first_player_var + f"_{index}"))
 
-        embedded_var = self.value_processor.var_with_prefix(first_player_var)
-        pipeline.append(f"insert {self.relation_type} ({self.self_role}: ${first_player_var}, {self.embedded_role}: ${embedded_var});")
+        embedded_var = self.value_processor.var_with_prefix(first_player_var + f"_{index}")
+        pipeline.append(f"\ninsert {self.relation_type} ({self.self_role}: ${first_player_var}, {self.embedded_role}: ${embedded_var});")
         return pipeline
 
 
@@ -63,20 +63,18 @@ class LinksMapping:
         self.player_attribute = player_attribute
         self.quoted = quoted
 
-    def insert_query(self, player_attribute_value: any, relation_var: str, relation_type: str) -> List[str]:
-        pipeline = []
-        player_var = f"var_player_{int(time.time() * 1000)}"
+    def insert_query(self, player_attribute_value: any, relation_var: str, relation_type: str, index: int = 0) -> List[str]:
+        pipeline = [f"\n### Relation '{relation_type}' links player using property {self.player_attribute_doc_key} with role {self.role}"]
+        player_var = f"player_{self.player_attribute_doc_key}_{index}"
         player_type_var = f"{player_var}_type"
         if self.quoted:
             player_attribute_value = f"'{escape(player_attribute_value)}'"
         if type(player_attribute_value) == bool:
             player_attribute_value = "true" if player_attribute_value else "false"
-        pipeline.append(f"""
-match 
+        pipeline.append(f"""match 
 ${player_var} has {self.player_attribute} {player_attribute_value};
 ${player_var} isa! ${player_type_var};
-${player_type_var} plays {relation_type}:{self.role};
-                        """)
+${player_type_var} plays {relation_type}:{self.role};""")
         pipeline.append(f"insert ${relation_var} links ({self.role}: ${player_var});")
         return pipeline
 
@@ -133,7 +131,7 @@ Load a JSON document, that represents a central concept, plus some attribute own
 """
 class TypeDBDocumentMapping:
     def __init__(self, type_: str):
-        self.var = f"var_{type_}_{int(time.time() * 1000)}"
+        self.var = f"{type_}"
         self.type_ = type_
         self.property_mappings = PropertyMappings()
 
@@ -159,7 +157,7 @@ class TypeDBDocumentMapping:
 
     def insert_query(self, doc: JSON, var_prefix: str = "") -> List[str]:
         print(doc)
-        pipeline = []
+        pipeline = [f"\n### Put object of type '{self.type_}'"]
         var = self.var_with_prefix(var_prefix)
 
         put_statements = [isa_statement(var, self.type_)]
@@ -180,8 +178,8 @@ class TypeDBDocumentMapping:
         for has in self.property_mappings.has_mappings:
             value = doc.get(has.doc_key)
             if type(value) == list:
-                for v in value:
-                    insert_statements.append(has.statement(var, v))
+                for i, v in enumerate(value):
+                    insert_statements.append(has.statement(var + f"_{i}", v))
             elif value is not None:
                 insert_statements.append(has.statement(var, value))
 
@@ -192,16 +190,16 @@ class TypeDBDocumentMapping:
         for relation in self.property_mappings.relation_mappings:
             value = doc.get(relation.doc_key)
             if type(value) == list:
-                for v in value:
-                    pipeline.extend(relation.insert_query(v, var))
+                for i, v in enumerate(value):
+                    pipeline.extend(relation.insert_query(v, var, i))
             elif value is not None:
                 pipeline.extend(relation.insert_query(value, var))
         
         for links in self.property_mappings.links_mappings:
             value = doc.get(links.player_attribute_doc_key)
             if type(value) == list:
-                for v in value:
-                    pipeline.extend(links.insert_query(v, var, self.type_))
+                for i, v in enumerate(value):
+                    pipeline.extend(links.insert_query(v, var, self.type_, i))
             elif value is not None:
                 pipeline.extend(links.insert_query(value, var, self.type_))
         
@@ -212,71 +210,3 @@ class TypeDBDocumentMapping:
             return prefix + "_" + self.var
         else:
             return self.var
-
-
-class ConstantStatement:
-    def __init__(self, statement_format_string: str):
-        self.statement_format_string = statement_format_string
-    
-    def apply(self, var: str, builder: str = "") -> List[str]:
-        return [self.statement_format_string.format(var=var)]
-
-
-class DirectValueStatement:
-    def __init__(self, doc_key: str, statement_format_string: str, quoted: bool):
-        self.statement_format_string = statement_format_string
-        self.doc_key = doc_key
-        self.quoted = quoted
-    
-    # TODO: if we have had query builders, we can make this injection-safe?
-    def apply(self, doc: JSON, var: str) -> List[str]:
-        values = doc.get(self.doc_key)
-        statements = []
-        if values is not None:
-            if isinstance(values, list):
-                for value in values:
-                    statements.append(self._format_statement(var=var, value=value))
-            else:
-                statements.append(self._format_statement(var=var, value=values))
-        return statements
-    
-    def _format_statement(self, var: str, value: Optional[str]):
-        if self.quoted:
-            value = f"'{escape(value)}'"
-        return self.statement_format_string.format(var=var, value=value)
-
-
-class ProcessedValueStages:
-    def __init__(self, doc_key: str, value_processor: TypeDBDocumentMapping, statement_format_string: str):
-        self.statement_format_string = statement_format_string
-        self.doc_key = doc_key
-        self.value_processor = value_processor
-    
-    # TODO: if we have had query builders, we can make this injection-safe?
-    def apply(self, doc: JSON, var: str) -> List[str]:
-        values = doc.get(self.doc_key)
-        player_stages = []
-        relation_statements = []
-        if values is not None:
-            if isinstance(values, list):
-                for (i, value) in enumerate(values):
-                    other_var = self.value_processor.var_with_prefix(f"{var}_{i}")
-                    processed = self.value_processor.apply(value, var_prefix=f"{var}_{i}")
-                    player_stages = processed + player_stages
-                    relation_statements.append(self._format_statement(var=var, other_var=other_var))
-            else:
-                value = values
-                other_var = self.value_processor.var_with_prefix(var)
-                processed = self.value_processor.apply(value, var_prefix=var)
-                player_stages = processed + player_stages
-                relation_statements.append(self._format_statement(var=var, other_var=other_var)) 
-
-        stages = player_stages
-        if len(player_stages) > 0:
-            stages.append("put\n" + ";\n".join(relation_statements) + ";")
-
-        return stages
-    
-    def _format_statement(self, var: str, other_var: [str]):
-        return self.statement_format_string.format(var=var, other_var=other_var)
-
