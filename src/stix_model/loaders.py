@@ -156,7 +156,6 @@ class TypeDBDocumentMapping:
         return self
 
     def insert_query(self, doc: JSON, var_prefix: str = "") -> List[str]:
-        print(doc)
         pipeline = [f"\n### Put object of type '{self.type_}'"]
         var = self.var_with_prefix(var_prefix)
 

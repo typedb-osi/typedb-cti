@@ -16,7 +16,17 @@ from stix_model.scos import (
     url_loader, user_account_loader, windows_registry_key_loader,
     windows_registry_value_loader, x509_certificate_loader
 )
-from stix_model.relationships import uses_loader
+from stix_model.relationships import (
+    uses_loader, targets_loader, resolves_to_loader, related_to_loader,
+    originates_from_loader, located_at_loader, has_loader, impersonates_loader,
+    hosts_loader, exfiltrates_to_loader, duplicate_of_loader, downloads_loader,
+    derived_from_loader, controls_loader, communicates_with_loader,
+    characterizes_loader, belongs_to_loader, beacons_to_loader, based_on_loader,
+    authored_by_loader, attributed_to_loader, compromises_loader, consists_of_loader,
+    delivers_loader, drops_loader, exploits_loader, indicates_loader,
+    investigates_loader, mitigates_loader, ownership_loader, reference_loader,
+    remediates_loader, variant_of_loader
+)
 
 # Map of STIX object types to their corresponding loaders
 LOADER_MAP: Dict[str, Any] = {
@@ -64,7 +74,39 @@ LOADER_MAP: Dict[str, Any] = {
 }
 
 RELATIONSHIP_LOADER_MAP: Dict[str, Any] = {
-    "uses": uses_loader
+    "attributed_to": attributed_to_loader,
+    "authored_by": authored_by_loader,
+    "based_on": based_on_loader,
+    "beacons_to": beacons_to_loader,
+    "belongs_to": belongs_to_loader,
+    "characterizes": characterizes_loader,
+    "communicates_with": communicates_with_loader,
+    "compromises": compromises_loader,
+    "consists_of": consists_of_loader,
+    "controls": controls_loader,
+    "delivers": delivers_loader,
+    "derived_from": derived_from_loader,
+    "downloads": downloads_loader,
+    "drops": drops_loader,
+    "duplicate_of": duplicate_of_loader,
+    "exfiltrates_to": exfiltrates_to_loader,
+    "exploits": exploits_loader,
+    "has": has_loader,
+    "hosts": hosts_loader,
+    "impersonates": impersonates_loader,
+    "indicates": indicates_loader,
+    "investigates": investigates_loader,
+    "located_at": located_at_loader,
+    "mitigates": mitigates_loader,
+    "originates_from": originates_from_loader,
+    "ownership": ownership_loader,
+    "reference": reference_loader,
+    "related_to": related_to_loader,
+    "remediates": remediates_loader,
+    "resolves_to": resolves_to_loader,
+    "targets": targets_loader,
+    "uses": uses_loader,
+    "variant_of": variant_of_loader
 }
 
 def load_stix_bundle(file_path: str) -> List[str]:

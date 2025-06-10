@@ -209,6 +209,9 @@ relation characterizes,
 	relates characterized-target as target;
 
 
+
+
+
 # TODO 
 relation analysis-of,
 	sub stix-relationship-object,
@@ -227,6 +230,10 @@ relation static-analysis-of,
 
 relation dynamic-analysis-of,
 	sub analysis-of;
+
+
+
+
 
 relation impersonates,
 	sub stix-relationship-object,
