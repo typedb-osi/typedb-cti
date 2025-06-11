@@ -1,9 +1,15 @@
 from stix_model.loaders import TypeDBDocumentMapping, PropertyMappings
 from stix_model.sdos import stix_object_properties
+from stix_model.embedded_relationships import (
+    embedded_contains_properties, embedded_header_from_properties,
+    embedded_header_sender_properties, embedded_header_to_properties,
+    embedded_header_cc_properties, embedded_header_bcc_properties,
+    embedded_raw_email_properties, embedded_file_content_properties
+)
 
 # TODO: hashes additional component
 
-artifact_loader = TypeDBDocumentMapping("artifact") \
+artifact_mapping = TypeDBDocumentMapping("artifact") \
     .include(stix_object_properties) \
     .has(doc_key="mime_type", attribute="mime-type", quoted=True) \
     .has(doc_key="payload_bin", attribute="payload-bin", quoted=True) \
@@ -11,30 +17,31 @@ artifact_loader = TypeDBDocumentMapping("artifact") \
     .has(doc_key="encryption_algorithm", attribute="encryption-algorithm", quoted=True) \
     .has(doc_key="decryption_key", attribute="decryption-key", quoted=True)
 
-autonomous_system_loader = TypeDBDocumentMapping("autonomous-system") \
+autonomous_system_mapping = TypeDBDocumentMapping("autonomous-system") \
     .include(stix_object_properties) \
     .key(doc_key="number", attribute="system-number") \
     .has(doc_key="name", attribute="system-name", quoted=True) \
     .has(doc_key="rir", attribute="rir", quoted=True)
 
-directory_loader = TypeDBDocumentMapping("directory") \
+directory_mapping = TypeDBDocumentMapping("directory") \
     .include(stix_object_properties) \
     .key(doc_key="path", attribute="path", quoted=True) \
     .has(doc_key="path_enc", attribute="path-enc", quoted=True) \
     .has(doc_key="ctime", attribute="ctime") \
     .has(doc_key="mtime", attribute="mtime") \
-    .has(doc_key="atime", attribute="atime")
+    .has(doc_key="atime", attribute="atime") \
+	.include(embedded_contains_properties)
 
-domain_name_loader = TypeDBDocumentMapping("domain-name") \
+domain_name_mapping = TypeDBDocumentMapping("domain-name") \
     .include(stix_object_properties) \
     .key(doc_key="value", attribute="domain-value", quoted=True)
 
-email_address_loader = TypeDBDocumentMapping("email-addr") \
+email_address_mapping = TypeDBDocumentMapping("email-addr") \
     .include(stix_object_properties) \
     .key(doc_key="value", attribute="email-value", quoted=True) \
     .has(doc_key="display_name", attribute="display-name", quoted=True)
 
-email_message_loader = TypeDBDocumentMapping("email-message") \
+email_message_mapping = TypeDBDocumentMapping("email-message") \
     .include(stix_object_properties) \
     .has(doc_key="is_multipart", attribute="is-multipart") \
     .has(doc_key="date", attribute="date_") \
@@ -42,9 +49,17 @@ email_message_loader = TypeDBDocumentMapping("email-message") \
     .has(doc_key="message_id", attribute="message-id", quoted=True) \
     .has(doc_key="subject", attribute="subject", quoted=True) \
     .has(doc_key="received_lines", attribute="received-line", quoted=True) \
-    .has(doc_key="body", attribute="body", quoted=True)
+    .has(doc_key="body", attribute="body", quoted=True) \
+	.include(embedded_header_from_properties) \
+	.include(embedded_header_sender_properties) \
+	.include(embedded_header_to_properties) \
+	.include(embedded_header_cc_properties) \
+	.include(embedded_header_bcc_properties) \
+	.include(embedded_raw_email_properties) 
 
-file_loader = TypeDBDocumentMapping("file") \
+# TODO: body-multipart, email-mime-part-body-raw, email-mime-part-type entity
+
+file_mapping = TypeDBDocumentMapping("file") \
     .include(stix_object_properties) \
     .has(doc_key="size", attribute="size") \
     .has(doc_key="name", attribute="name", quoted=True) \
@@ -53,27 +68,31 @@ file_loader = TypeDBDocumentMapping("file") \
     .has(doc_key="mime_type", attribute="mime-type", quoted=True) \
     .has(doc_key="ctime", attribute="ctime") \
     .has(doc_key="mtime", attribute="mtime") \
-    .has(doc_key="atime", attribute="atime") 
+    .has(doc_key="atime", attribute="atime") \
+	.include(embedded_contains_properties) \
+    .include(embedded_file_content_properties)
+    
+
 
 # TODO: decide how we want to model extensions
 
-ipv4_addr_loader = TypeDBDocumentMapping("ipv4-addr") \
+ipv4_addr_mapping = TypeDBDocumentMapping("ipv4-addr") \
     .include(stix_object_properties) \
     .key(doc_key="value", attribute="ipv4-value", quoted=True)
 
-ipv6_addr_loader = TypeDBDocumentMapping("ipv6-addr") \
+ipv6_addr_mapping = TypeDBDocumentMapping("ipv6-addr") \
     .include(stix_object_properties) \
     .key(doc_key="value", attribute="ipv6-value", quoted=True)
 
-mac_addr_loader = TypeDBDocumentMapping("mac-addr") \
+mac_addr_mapping = TypeDBDocumentMapping("mac-addr") \
     .include(stix_object_properties) \
     .key(doc_key="value", attribute="mac-value", quoted=True)
 
-mutex_loader = TypeDBDocumentMapping("mutex") \
+mutex_mapping = TypeDBDocumentMapping("mutex") \
     .include(stix_object_properties) \
     .key(doc_key="name", attribute="name", quoted=True)
 
-network_traffic_loader = TypeDBDocumentMapping("network-traffic") \
+network_traffic_mapping = TypeDBDocumentMapping("network-traffic") \
     .include(stix_object_properties) \
     .has(doc_key="start", attribute="start") \
     .has(doc_key="end", attribute="end_") \
@@ -94,7 +113,7 @@ network_traffic_loader = TypeDBDocumentMapping("network-traffic") \
 
 # TODO: decide how we want to model extensions
 
-process_loader = TypeDBDocumentMapping("process") \
+process_mapping = TypeDBDocumentMapping("process") \
     .include(stix_object_properties) \
     .has(doc_key="is_hidden", attribute="is-hidden") \
     .has(doc_key="pid", attribute="pid") \
@@ -102,7 +121,7 @@ process_loader = TypeDBDocumentMapping("process") \
     .has(doc_key="cwd", attribute="cwd", quoted=True) \
     .has(doc_key="command_line", attribute="command-line", quoted=True)
 
-software_loader = TypeDBDocumentMapping("software") \
+software_mapping = TypeDBDocumentMapping("software") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="cpe", attribute="cpe", quoted=True) \
@@ -111,11 +130,11 @@ software_loader = TypeDBDocumentMapping("software") \
     .has(doc_key="vendor", attribute="vendor", quoted=True) \
     .has(doc_key="version", attribute="version", quoted=True)
 
-url_loader = TypeDBDocumentMapping("url") \
+url_mapping = TypeDBDocumentMapping("url") \
     .include(stix_object_properties) \
     .key(doc_key="value", attribute="url-value", quoted=True)
 
-user_account_loader = TypeDBDocumentMapping("user-account") \
+user_account_mapping = TypeDBDocumentMapping("user-account") \
     .include(stix_object_properties) \
     .has(doc_key="user_id", attribute="user-id", quoted=True) \
     .has(doc_key="credential", attribute="credential", quoted=True) \
@@ -132,7 +151,7 @@ user_account_loader = TypeDBDocumentMapping("user-account") \
     .has(doc_key="account_first_login", attribute="account-first-login") \
     .has(doc_key="account_last_login", attribute="account-last-login")
 
-windows_registry_key_loader = TypeDBDocumentMapping("windows-registry-key") \
+windows_registry_key_mapping = TypeDBDocumentMapping("windows-registry-key") \
     .include(stix_object_properties) \
     .has(doc_key="key", attribute="windows-registry-key-string", quoted=True) \
     .has(doc_key="modified_time", attribute="modified-time") \
@@ -140,12 +159,12 @@ windows_registry_key_loader = TypeDBDocumentMapping("windows-registry-key") \
 
 # TODO: ownership relationship
 
-windows_registry_value_loader = TypeDBDocumentMapping("windows-registry-value") \
+windows_registry_value_mapping = TypeDBDocumentMapping("windows-registry-value") \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="data", attribute="registry-value-data", quoted=True) \
     .has(doc_key="type", attribute="registry-value-data-type", quoted=True)
 
-x509_certificate_loader = TypeDBDocumentMapping("x509-certificate") \
+x509_certificate_mapping = TypeDBDocumentMapping("x509-certificate") \
     .include(stix_object_properties) \
     .has(doc_key="is_self_signed", attribute="is-self-signed") \
     .has(doc_key="hashes", attribute="hash", quoted=True) \

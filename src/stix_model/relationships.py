@@ -1,4 +1,5 @@
 from stix_model.loaders import TypeDBDocumentMapping, PropertyMappings
+from stix_model.embedded_relationships import embedded_created_by_properties
 
 stix_relationship_properties = PropertyMappings() \
 	.key(doc_key="id", attribute="id", quoted=True) \
@@ -13,11 +14,11 @@ stix_relationship_properties = PropertyMappings() \
 	.has(doc_key="relationship_type", attribute="relationship-type", quoted=True) \
 	.has(doc_key="description", attribute="description", quoted=True) \
 	.has(doc_key="start_time", attribute="start-time") \
-	.has(doc_key="stop_time", attribute="stop-time")
+	.has(doc_key="stop_time", attribute="stop-time") \
+	.include(embedded_created_by_properties) 
 
 
-
-derived_from_loader = TypeDBDocumentMapping(type_="derived-from") \
+derived_from_mapping = TypeDBDocumentMapping(type_="derived-from") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -32,7 +33,7 @@ derived_from_loader = TypeDBDocumentMapping(type_="derived-from") \
 		quoted=True
 	)
 
-duplicate_of_loader = TypeDBDocumentMapping(type_="duplicate-of") \
+duplicate_of_mapping = TypeDBDocumentMapping(type_="duplicate-of") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -47,7 +48,7 @@ duplicate_of_loader = TypeDBDocumentMapping(type_="duplicate-of") \
 		quoted=True
 	)
 
-related_to_loader = TypeDBDocumentMapping(type_="related-to") \
+related_to_mapping = TypeDBDocumentMapping(type_="related-to") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -62,7 +63,7 @@ related_to_loader = TypeDBDocumentMapping(type_="related-to") \
 		quoted=True
 	)
 
-delivers_loader = TypeDBDocumentMapping(type_="delivers") \
+delivers_mapping = TypeDBDocumentMapping(type_="delivers") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -77,7 +78,7 @@ delivers_loader = TypeDBDocumentMapping(type_="delivers") \
 		quoted=True
 	)
 
-targets_loader = TypeDBDocumentMapping(type_="targets") \
+targets_mapping = TypeDBDocumentMapping(type_="targets") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -92,7 +93,7 @@ targets_loader = TypeDBDocumentMapping(type_="targets") \
 		quoted=True
 	)
 
-attributed_to_loader = TypeDBDocumentMapping(type_="attributed-to") \
+attributed_to_mapping = TypeDBDocumentMapping(type_="attributed-to") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -107,7 +108,7 @@ attributed_to_loader = TypeDBDocumentMapping(type_="attributed-to") \
 		quoted=True
 	)
 
-mitigates_loader = TypeDBDocumentMapping(type_="mitigates") \
+mitigates_mapping = TypeDBDocumentMapping(type_="mitigates") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -122,7 +123,7 @@ mitigates_loader = TypeDBDocumentMapping(type_="mitigates") \
 		quoted=True
 	)
 
-indicates_loader = TypeDBDocumentMapping(type_="indicates") \
+indicates_mapping = TypeDBDocumentMapping(type_="indicates") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -137,7 +138,7 @@ indicates_loader = TypeDBDocumentMapping(type_="indicates") \
 		quoted=True
 	)
 
-reference_loader = TypeDBDocumentMapping(type_="reference") \
+reference_mapping = TypeDBDocumentMapping(type_="reference") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -152,7 +153,7 @@ reference_loader = TypeDBDocumentMapping(type_="reference") \
 		quoted=True
 	)
 
-uses_loader = TypeDBDocumentMapping(type_="uses") \
+uses_mapping = TypeDBDocumentMapping(type_="uses") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -167,7 +168,7 @@ uses_loader = TypeDBDocumentMapping(type_="uses") \
 		quoted=True
 	)
 
-located_at_loader = TypeDBDocumentMapping(type_="located-at") \
+located_at_mapping = TypeDBDocumentMapping(type_="located-at") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -182,7 +183,7 @@ located_at_loader = TypeDBDocumentMapping(type_="located-at") \
 		quoted=True
 	)
 
-originates_from_loader = TypeDBDocumentMapping(type_="originates-from") \
+originates_from_mapping = TypeDBDocumentMapping(type_="originates-from") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -197,7 +198,7 @@ originates_from_loader = TypeDBDocumentMapping(type_="originates-from") \
 		quoted=True
 	)
 
-has_loader = TypeDBDocumentMapping(type_="has_") \
+has_mapping = TypeDBDocumentMapping(type_="has_") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -212,7 +213,7 @@ has_loader = TypeDBDocumentMapping(type_="has_") \
 		quoted=True
 	)
 
-hosts_loader = TypeDBDocumentMapping(type_="hosts") \
+hosts_mapping = TypeDBDocumentMapping(type_="hosts") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -227,7 +228,7 @@ hosts_loader = TypeDBDocumentMapping(type_="hosts") \
 		quoted=True
 	)
 
-ownership_loader = TypeDBDocumentMapping(type_="ownership") \
+ownership_mapping = TypeDBDocumentMapping(type_="ownership") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -242,7 +243,7 @@ ownership_loader = TypeDBDocumentMapping(type_="ownership") \
 		quoted=True
 	)
 
-compromises_loader = TypeDBDocumentMapping(type_="compromises") \
+compromises_mapping = TypeDBDocumentMapping(type_="compromises") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -257,7 +258,7 @@ compromises_loader = TypeDBDocumentMapping(type_="compromises") \
 		quoted=True
 	)
 
-authored_by_loader = TypeDBDocumentMapping(type_="authored-by") \
+authored_by_mapping = TypeDBDocumentMapping(type_="authored-by") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -272,7 +273,7 @@ authored_by_loader = TypeDBDocumentMapping(type_="authored-by") \
 		quoted=True
 	)
 
-drops_loader = TypeDBDocumentMapping(type_="drops") \
+drops_mapping = TypeDBDocumentMapping(type_="drops") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -287,7 +288,7 @@ drops_loader = TypeDBDocumentMapping(type_="drops") \
 		quoted=True
 	)
 
-downloads_loader = TypeDBDocumentMapping(type_="downloads") \
+downloads_mapping = TypeDBDocumentMapping(type_="downloads") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -302,7 +303,7 @@ downloads_loader = TypeDBDocumentMapping(type_="downloads") \
 		quoted=True
 	)
 
-exploits_loader = TypeDBDocumentMapping(type_="exploits") \
+exploits_mapping = TypeDBDocumentMapping(type_="exploits") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -317,7 +318,7 @@ exploits_loader = TypeDBDocumentMapping(type_="exploits") \
 		quoted=True
 	)
 
-investigates_loader = TypeDBDocumentMapping(type_="investigates") \
+investigates_mapping = TypeDBDocumentMapping(type_="investigates") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -332,7 +333,7 @@ investigates_loader = TypeDBDocumentMapping(type_="investigates") \
 		quoted=True
 	)
 
-remediates_loader = TypeDBDocumentMapping(type_="remediates") \
+remediates_mapping = TypeDBDocumentMapping(type_="remediates") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -347,7 +348,7 @@ remediates_loader = TypeDBDocumentMapping(type_="remediates") \
 		quoted=True
 	)
 
-based_on_loader = TypeDBDocumentMapping(type_="based-on") \
+based_on_mapping = TypeDBDocumentMapping(type_="based-on") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -362,7 +363,7 @@ based_on_loader = TypeDBDocumentMapping(type_="based-on") \
 		quoted=True
 	)
 
-communicates_with_loader = TypeDBDocumentMapping(type_="communicates-with") \
+communicates_with_mapping = TypeDBDocumentMapping(type_="communicates-with") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -377,7 +378,7 @@ communicates_with_loader = TypeDBDocumentMapping(type_="communicates-with") \
 		quoted=True
 	)
 
-consists_of_loader = TypeDBDocumentMapping(type_="consists-of") \
+consists_of_mapping = TypeDBDocumentMapping(type_="consists-of") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -392,7 +393,7 @@ consists_of_loader = TypeDBDocumentMapping(type_="consists-of") \
 		quoted=True
 	)
 
-controls_loader = TypeDBDocumentMapping(type_="controls") \
+controls_mapping = TypeDBDocumentMapping(type_="controls") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -407,7 +408,7 @@ controls_loader = TypeDBDocumentMapping(type_="controls") \
 		quoted=True
 	)
 
-beacons_to_loader = TypeDBDocumentMapping(type_="beacons-to") \
+beacons_to_mapping = TypeDBDocumentMapping(type_="beacons-to") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -422,7 +423,7 @@ beacons_to_loader = TypeDBDocumentMapping(type_="beacons-to") \
 		quoted=True
 	)
 
-exfiltrates_to_loader = TypeDBDocumentMapping(type_="exfiltrates-to") \
+exfiltrates_to_mapping = TypeDBDocumentMapping(type_="exfiltrates-to") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -437,7 +438,7 @@ exfiltrates_to_loader = TypeDBDocumentMapping(type_="exfiltrates-to") \
 		quoted=True
 	)
 
-variant_of_loader = TypeDBDocumentMapping(type_="variant-of") \
+variant_of_mapping = TypeDBDocumentMapping(type_="variant-of") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -452,7 +453,7 @@ variant_of_loader = TypeDBDocumentMapping(type_="variant-of") \
 		quoted=True
 	)
 
-characterizes_loader = TypeDBDocumentMapping(type_="characterizes") \
+characterizes_mapping = TypeDBDocumentMapping(type_="characterizes") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -467,7 +468,7 @@ characterizes_loader = TypeDBDocumentMapping(type_="characterizes") \
 		quoted=True
 	)
 
-impersonates_loader = TypeDBDocumentMapping(type_="impersonates") \
+impersonates_mapping = TypeDBDocumentMapping(type_="impersonates") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -482,7 +483,7 @@ impersonates_loader = TypeDBDocumentMapping(type_="impersonates") \
 		quoted=True
 	)
 
-resolves_to_loader = TypeDBDocumentMapping(type_="resolves-to") \
+resolves_to_mapping = TypeDBDocumentMapping(type_="resolves-to") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -497,7 +498,7 @@ resolves_to_loader = TypeDBDocumentMapping(type_="resolves-to") \
 		quoted=True
 	)
 
-belongs_to_loader = TypeDBDocumentMapping(type_="belongs-to") \
+belongs_to_mapping = TypeDBDocumentMapping(type_="belongs-to") \
 	.include(stix_relationship_properties) \
 	.links(
 		player_attribute_doc_key="source_ref",
@@ -511,7 +512,4 @@ belongs_to_loader = TypeDBDocumentMapping(type_="belongs-to") \
 		role="owner-target",
 		quoted=True
 	)
-
-
-# TODO embedded relationships
 

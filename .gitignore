@@ -11,3 +11,6 @@ __pycache__/
 
 # STIX standard
 stix_standard/
+
+# Large sample datasets
+sample_data/

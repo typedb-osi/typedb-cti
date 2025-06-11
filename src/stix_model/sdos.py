@@ -1,4 +1,10 @@
 from stix_model.loaders import TypeDBDocumentMapping, PropertyMappings
+from stix_model.embedded_relationships import (
+    embedded_created_by_properties, embedded_object_marking_properties,
+    embedded_object_reference_properties, embedded_host_vm_properties,
+    embedded_operating_system_properties, embedded_installed_software_properties,
+    embedded_analysis_sco_properties, embedded_sample_properties
+)
 
 
 # @dataclass
@@ -16,7 +22,7 @@ from stix_model.loaders import TypeDBDocumentMapping, PropertyMappings
 #     aliases: List[str] = field(default_factory=list)
     
 
-kill_chain_phase_loader = TypeDBDocumentMapping("kill-chain-phase") \
+kill_chain_phase_mapping = TypeDBDocumentMapping("kill-chain-phase") \
     .key(doc_key="phase_name", attribute="phase-name", quoted=True) \
     .has(doc_key="kill_chain_name", attribute="kill-chain-name", quoted=True)
 
@@ -30,19 +36,27 @@ stix_object_properties = PropertyMappings() \
     .has(doc_key="revoked", attribute="revoked") \
     .has(doc_key="labels", attribute="label_", quoted=True) \
     .has(doc_key="lang", attribute="lang", quoted=True) \
-    .has(doc_key="defanged", attribute="defanged")
+    .has(doc_key="defanged", attribute="defanged") \
+    .include(embedded_created_by_properties) \
+    .include(embedded_object_marking_properties) 
 
-    # TODO: external references, object markings, granular markings, extensions
+# TODO: extensions, external references, object markings, granular markings, extensions
 
 
-attack_pattern_loader = TypeDBDocumentMapping("attack-pattern") \
+attack_pattern_mapping = TypeDBDocumentMapping("attack-pattern") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True) \
     .has(doc_key="aliases", attribute="alias_", quoted=True) \
-    .embedded_relation(doc_key="kill_chain_phases", embedded_loader=kill_chain_phase_loader, relation_type="kill-chain-phase-ownership", self_role="owner", embedded_role="kill-chain-phase")
+    .relation_and_new_player(
+		doc_key="kill_chain_phases", 
+		other_player_mapping=kill_chain_phase_mapping, 
+		relation_type="kill-chain-phase-ownership", 
+		self_role="owner", 
+		other_player_role="kill-chain-phase"
+    )
 
-campaign_loader = TypeDBDocumentMapping("campaign") \
+campaign_mapping = TypeDBDocumentMapping("campaign") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True) \
@@ -51,18 +65,19 @@ campaign_loader = TypeDBDocumentMapping("campaign") \
     .has(doc_key="last_seen", attribute="last-seen") \
     .has(doc_key="objective", attribute="objective", quoted=True)
 
-course_of_action_loader = TypeDBDocumentMapping("course-of-action") \
+course_of_action_mapping = TypeDBDocumentMapping("course-of-action") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True)
 
-grouping_loader = TypeDBDocumentMapping("grouping") \
+grouping_mapping = TypeDBDocumentMapping("grouping") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True) \
-    .has(doc_key="context", attribute="context", quoted=True)
+    .has(doc_key="context", attribute="context", quoted=True) \
+	.include(embedded_object_reference_properties)
 
-identity_loader = TypeDBDocumentMapping("identity") \
+identity_mapping = TypeDBDocumentMapping("identity") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True) \
@@ -71,12 +86,12 @@ identity_loader = TypeDBDocumentMapping("identity") \
     .has(doc_key="sectors", attribute="sector", quoted=True) \
     .has(doc_key="contact_information", attribute="contact-information", quoted=True)
 
-incident_loader = TypeDBDocumentMapping("incident") \
+incident_mapping = TypeDBDocumentMapping("incident") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True) 
 
-indicator_loader = TypeDBDocumentMapping("indicator") \
+indicator_mapping = TypeDBDocumentMapping("indicator") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True) \
@@ -86,9 +101,15 @@ indicator_loader = TypeDBDocumentMapping("indicator") \
     .has(doc_key="pattern_version", attribute="pattern-version", quoted=True) \
     .has(doc_key="valid_from", attribute="valid-from") \
     .has(doc_key="valid_until", attribute="valid-until") \
-    .embedded_relation(doc_key="kill_chain_phases", embedded_loader=kill_chain_phase_loader, relation_type="kill-chain-phase-ownership", self_role="owner", embedded_role="kill-chain-phase")
+    .relation_and_new_player(
+		doc_key="kill_chain_phases", 
+		other_player_mapping=kill_chain_phase_mapping, 
+		relation_type="kill-chain-phase-ownership", 
+		self_role="owner", 
+		other_player_role="kill-chain-phase"
+    )
 
-infrastructure_loader = TypeDBDocumentMapping("infrastructure") \
+infrastructure_mapping = TypeDBDocumentMapping("infrastructure") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True) \
@@ -96,9 +117,15 @@ infrastructure_loader = TypeDBDocumentMapping("infrastructure") \
     .has(doc_key="aliases", attribute="alias_", quoted=True) \
     .has(doc_key="first_seen", attribute="first-seen") \
     .has(doc_key="last_seen", attribute="last-seen") \
-    .embedded_relation(doc_key="kill_chain_phases", embedded_loader=kill_chain_phase_loader, relation_type="kill-chain-phase-ownership", self_role="owner", embedded_role="kill-chain-phase")
+    .relation_and_new_player(
+		doc_key="kill_chain_phases", 
+		other_player_mapping=kill_chain_phase_mapping, 
+		relation_type="kill-chain-phase-ownership", 
+		self_role="owner", 
+		other_player_role="kill-chain-phase"
+    )
 
-intrusion_set_loader = TypeDBDocumentMapping("intrusion-set") \
+intrusion_set_mapping = TypeDBDocumentMapping("intrusion-set") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True) \
@@ -110,7 +137,7 @@ intrusion_set_loader = TypeDBDocumentMapping("intrusion-set") \
     .has(doc_key="primary_motivation", attribute="primary-motivation", quoted=True) \
     .has(doc_key="secondary_motivations", attribute="secondary-motivation", quoted=True)
 
-location_loader = TypeDBDocumentMapping("location") \
+location_mapping = TypeDBDocumentMapping("location") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True) \
@@ -124,7 +151,7 @@ location_loader = TypeDBDocumentMapping("location") \
     .has(doc_key="street_address", attribute="street-address", quoted=True) \
     .has(doc_key="postal_code", attribute="postal-code", quoted=True)
 
-malware_loader = TypeDBDocumentMapping("malware") \
+malware_mapping = TypeDBDocumentMapping("malware") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True) \
@@ -136,9 +163,18 @@ malware_loader = TypeDBDocumentMapping("malware") \
     .has(doc_key="architecture_execution_envs", attribute="architecture-execution-env", quoted=True) \
     .has(doc_key="implementation_languages", attribute="implementation-language", quoted=True) \
     .has(doc_key="capabilities", attribute="capability", quoted=True) \
-    .embedded_relation(doc_key="kill_chain_phases", embedded_loader=kill_chain_phase_loader, relation_type="kill-chain-phase-ownership", self_role="owner", embedded_role="kill-chain-phase")
+    .relation_and_new_player(
+		doc_key="kill_chain_phases", 
+		other_player_mapping=kill_chain_phase_mapping, 
+		relation_type="kill-chain-phase-ownership", 
+		self_role="owner", 
+		other_player_role="kill-chain-phase"
+    ) \
+	.include(embedded_operating_system_properties) \
+	.include(embedded_sample_properties) 
 
-malware_analysis_loader = TypeDBDocumentMapping("malware-analysis") \
+
+malware_analysis_mapping = TypeDBDocumentMapping("malware-analysis") \
     .include(stix_object_properties) \
     .has(doc_key="product", attribute="product", quoted=True) \
     .has(doc_key="version", attribute="version", quoted=True) \
@@ -150,34 +186,44 @@ malware_analysis_loader = TypeDBDocumentMapping("malware-analysis") \
     .has(doc_key="analysis_started", attribute="analysis-started") \
     .has(doc_key="analysis_ended", attribute="analysis-ended") \
     .has(doc_key="result_name", attribute="result-name", quoted=True) \
-    .has(doc_key="result", attribute="result", quoted=True)
+    .has(doc_key="result", attribute="result", quoted=True)\
+	.include(embedded_host_vm_properties) \
+	.include(embedded_operating_system_properties) \
+	.include(embedded_installed_software_properties) \
+	.include(embedded_analysis_sco_properties) \
+	.include(embedded_sample_properties) 
 
-note_loader = TypeDBDocumentMapping("note") \
+
+note_mapping = TypeDBDocumentMapping("note") \
     .include(stix_object_properties) \
     .has(doc_key="abstract", attribute="abstract_", quoted=True) \
     .has(doc_key="content", attribute="content", quoted=True) \
-    .has(doc_key="authors", attribute="author", quoted=True)
+    .has(doc_key="authors", attribute="author", quoted=True) \
+	.include(embedded_object_reference_properties)
 
-observed_data_loader = TypeDBDocumentMapping("observed-data") \
+observed_data_mapping = TypeDBDocumentMapping("observed-data") \
     .include(stix_object_properties) \
     .has(doc_key="first_observed", attribute="first-observed") \
     .has(doc_key="last_observed", attribute="last-observed") \
-    .has(doc_key="number_observed", attribute="number-observed")
+    .has(doc_key="number_observed", attribute="number-observed") \
+    .include(embedded_object_reference_properties)
 
-opinion_loader = TypeDBDocumentMapping("opinion") \
+opinion_mapping = TypeDBDocumentMapping("opinion") \
     .include(stix_object_properties) \
     .has(doc_key="explanation", attribute="explanation", quoted=True) \
     .has(doc_key="authors", attribute="author", quoted=True) \
-    .has(doc_key="opinion", attribute="opinion", quoted=True)
+    .has(doc_key="opinion", attribute="opinion", quoted=True) \
+	.include(embedded_object_reference_properties)
 
-report_loader = TypeDBDocumentMapping("report") \
+report_mapping = TypeDBDocumentMapping("report") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True) \
     .has(doc_key="report_types", attribute="report-type", quoted=True) \
-    .has(doc_key="published", attribute="published")
+    .has(doc_key="published", attribute="published") \
+	.include(embedded_object_reference_properties)
 
-threat_actor_loader = TypeDBDocumentMapping("threat-actor") \
+threat_actor_mapping = TypeDBDocumentMapping("threat-actor") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True) \
@@ -193,22 +239,28 @@ threat_actor_loader = TypeDBDocumentMapping("threat-actor") \
     .has(doc_key="secondary_motivations", attribute="secondary-motivation", quoted=True) \
     .has(doc_key="personal_motivations", attribute="personal-motivation", quoted=True)
 
-tool_loader = TypeDBDocumentMapping("tool") \
+tool_mapping = TypeDBDocumentMapping("tool") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True) \
     .has(doc_key="tool_types", attribute="tool-type", quoted=True) \
     .has(doc_key="aliases", attribute="alias_", quoted=True) \
     .has(doc_key="tool_version", attribute="tool-version", quoted=True) \
-    .embedded_relation(doc_key="kill_chain_phases", embedded_loader=kill_chain_phase_loader, relation_type="kill-chain-phase-ownership", self_role="owner", embedded_role="kill-chain-phase")
+    .relation_and_new_player(
+		doc_key="kill_chain_phases", 
+		other_player_mapping=kill_chain_phase_mapping, 
+		relation_type="kill-chain-phase-ownership", 
+		self_role="owner",
+        other_player_role="kill-chain-phase"
+    )
 
-vulnerability_loader = TypeDBDocumentMapping("vulnerability") \
+vulnerability_mapping = TypeDBDocumentMapping("vulnerability") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True)
 
 # # TODO: relationship loader
 
-# pipeline = attack_pattern_loader.apply(test_doc)
+# pipeline = attack_pattern_mapping.apply(test_doc)
 # query = "\n".join(pipeline)
 # print(query)

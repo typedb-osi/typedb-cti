@@ -516,7 +516,7 @@ entity software,
   owns version,
 
   plays host-vm:host,
-  plays operating-system:system,
+  plays operating-system:os,
   plays installed-software:software,
   
   ;

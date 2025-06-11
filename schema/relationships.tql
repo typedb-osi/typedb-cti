@@ -296,7 +296,7 @@ relation host-vm,
 relation operating-system,
   sub embedded-relationship,
   relates hosted as owner,
-  relates system as embedded;
+  relates os as embedded;
 
 relation installed-software,
   sub embedded-relationship,
@@ -339,11 +339,6 @@ relation header-cc,
 relation header-bcc,
 	sub email-header;
 
-relation file-content,
-	sub embedded-relationship,
-	relates file as owner,
-	relates content as embedded;
-
 relation raw-email,
 	sub embedded-relationship,
 	relates email as owner,
@@ -353,6 +348,11 @@ relation message-body-data,
 	sub embedded-relationship,
 	relates request as owner,
 	relates body as embedded;
+
+relation file-content,
+	sub embedded-relationship,
+	relates file as owner,
+	relates content as embedded;
 
 relation service-dll,
 	sub embedded-relationship,
