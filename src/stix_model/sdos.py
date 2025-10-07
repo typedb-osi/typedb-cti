@@ -36,9 +36,7 @@ stix_object_properties = PropertyMappings() \
     .has(doc_key="revoked", attribute="revoked") \
     .has(doc_key="labels", attribute="label_", quoted=True) \
     .has(doc_key="lang", attribute="lang", quoted=True) \
-    .has(doc_key="defanged", attribute="defanged") \
-    .include(embedded_created_by_properties) \
-    .include(embedded_object_marking_properties) 
+    .include(embedded_created_by_properties)
 
 # TODO: extensions, external references, object markings, granular markings, extensions
 
