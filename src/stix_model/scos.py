@@ -30,7 +30,7 @@ directory_mapping = TypeDBDocumentMapping("directory") \
     .has(doc_key="ctime", attribute="ctime") \
     .has(doc_key="mtime", attribute="mtime") \
     .has(doc_key="atime", attribute="atime") \
-	.include(embedded_contains_properties)
+    .include(embedded_contains_properties)
 
 domain_name_mapping = TypeDBDocumentMapping("domain-name") \
     .include(stix_object_properties) \
@@ -50,12 +50,12 @@ email_message_mapping = TypeDBDocumentMapping("email-message") \
     .has(doc_key="subject", attribute="subject", quoted=True) \
     .has(doc_key="received_lines", attribute="received-line", quoted=True) \
     .has(doc_key="body", attribute="body", quoted=True) \
-	.include(embedded_header_from_properties) \
-	.include(embedded_header_sender_properties) \
-	.include(embedded_header_to_properties) \
-	.include(embedded_header_cc_properties) \
-	.include(embedded_header_bcc_properties) \
-	.include(embedded_raw_email_properties) 
+    .include(embedded_header_from_properties) \
+    .include(embedded_header_sender_properties) \
+    .include(embedded_header_to_properties) \
+    .include(embedded_header_cc_properties) \
+    .include(embedded_header_bcc_properties) \
+    .include(embedded_raw_email_properties) 
 
 # TODO: body-multipart, email-mime-part-body-raw, email-mime-part-type entity
 
@@ -69,7 +69,7 @@ file_mapping = TypeDBDocumentMapping("file") \
     .has(doc_key="ctime", attribute="ctime") \
     .has(doc_key="mtime", attribute="mtime") \
     .has(doc_key="atime", attribute="atime") \
-	.include(embedded_contains_properties) \
+    .include(embedded_contains_properties) \
     .include(embedded_file_content_properties)
     
 

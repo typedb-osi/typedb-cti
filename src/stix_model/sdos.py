@@ -49,11 +49,11 @@ attack_pattern_mapping = TypeDBDocumentMapping("attack-pattern") \
     .has(doc_key="description", attribute="description", quoted=True) \
     .has(doc_key="aliases", attribute="alias_", quoted=True) \
     .relation_and_new_player(
-		doc_key="kill_chain_phases", 
-		other_player_mapping=kill_chain_phase_mapping, 
-		relation_type="kill-chain-phase-ownership", 
-		self_role="owner", 
-		other_player_role="kill-chain-phase"
+        doc_key="kill_chain_phases", 
+        other_player_mapping=kill_chain_phase_mapping, 
+        relation_type="kill-chain-phase-ownership", 
+        self_role="owner", 
+        other_player_role="kill-chain-phase"
     )
 
 campaign_mapping = TypeDBDocumentMapping("campaign") \
@@ -75,7 +75,7 @@ grouping_mapping = TypeDBDocumentMapping("grouping") \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True) \
     .has(doc_key="context", attribute="context", quoted=True) \
-	.include(embedded_object_reference_properties)
+    .include(embedded_object_reference_properties)
 
 identity_mapping = TypeDBDocumentMapping("identity") \
     .include(stix_object_properties) \
@@ -102,11 +102,11 @@ indicator_mapping = TypeDBDocumentMapping("indicator") \
     .has(doc_key="valid_from", attribute="valid-from") \
     .has(doc_key="valid_until", attribute="valid-until") \
     .relation_and_new_player(
-		doc_key="kill_chain_phases", 
-		other_player_mapping=kill_chain_phase_mapping, 
-		relation_type="kill-chain-phase-ownership", 
-		self_role="owner", 
-		other_player_role="kill-chain-phase"
+        doc_key="kill_chain_phases", 
+        other_player_mapping=kill_chain_phase_mapping, 
+        relation_type="kill-chain-phase-ownership", 
+        self_role="owner", 
+        other_player_role="kill-chain-phase"
     )
 
 infrastructure_mapping = TypeDBDocumentMapping("infrastructure") \
@@ -118,11 +118,11 @@ infrastructure_mapping = TypeDBDocumentMapping("infrastructure") \
     .has(doc_key="first_seen", attribute="first-seen") \
     .has(doc_key="last_seen", attribute="last-seen") \
     .relation_and_new_player(
-		doc_key="kill_chain_phases", 
-		other_player_mapping=kill_chain_phase_mapping, 
-		relation_type="kill-chain-phase-ownership", 
-		self_role="owner", 
-		other_player_role="kill-chain-phase"
+        doc_key="kill_chain_phases", 
+        other_player_mapping=kill_chain_phase_mapping, 
+        relation_type="kill-chain-phase-ownership", 
+        self_role="owner", 
+        other_player_role="kill-chain-phase"
     )
 
 intrusion_set_mapping = TypeDBDocumentMapping("intrusion-set") \
@@ -164,14 +164,14 @@ malware_mapping = TypeDBDocumentMapping("malware") \
     .has(doc_key="implementation_languages", attribute="implementation-language", quoted=True) \
     .has(doc_key="capabilities", attribute="capability", quoted=True) \
     .relation_and_new_player(
-		doc_key="kill_chain_phases", 
-		other_player_mapping=kill_chain_phase_mapping, 
-		relation_type="kill-chain-phase-ownership", 
-		self_role="owner", 
-		other_player_role="kill-chain-phase"
+        doc_key="kill_chain_phases", 
+        other_player_mapping=kill_chain_phase_mapping, 
+        relation_type="kill-chain-phase-ownership", 
+        self_role="owner", 
+        other_player_role="kill-chain-phase"
     ) \
-	.include(embedded_operating_system_properties) \
-	.include(embedded_sample_properties) 
+    .include(embedded_operating_system_properties) \
+    .include(embedded_sample_properties) 
 
 
 malware_analysis_mapping = TypeDBDocumentMapping("malware-analysis") \
@@ -187,11 +187,11 @@ malware_analysis_mapping = TypeDBDocumentMapping("malware-analysis") \
     .has(doc_key="analysis_ended", attribute="analysis-ended") \
     .has(doc_key="result_name", attribute="result-name", quoted=True) \
     .has(doc_key="result", attribute="result", quoted=True)\
-	.include(embedded_host_vm_properties) \
-	.include(embedded_operating_system_properties) \
-	.include(embedded_installed_software_properties) \
-	.include(embedded_analysis_sco_properties) \
-	.include(embedded_sample_properties) 
+    .include(embedded_host_vm_properties) \
+    .include(embedded_operating_system_properties) \
+    .include(embedded_installed_software_properties) \
+    .include(embedded_analysis_sco_properties) \
+    .include(embedded_sample_properties) 
 
 
 note_mapping = TypeDBDocumentMapping("note") \
@@ -199,7 +199,7 @@ note_mapping = TypeDBDocumentMapping("note") \
     .has(doc_key="abstract", attribute="abstract_", quoted=True) \
     .has(doc_key="content", attribute="content", quoted=True) \
     .has(doc_key="authors", attribute="author", quoted=True) \
-	.include(embedded_object_reference_properties)
+    .include(embedded_object_reference_properties)
 
 observed_data_mapping = TypeDBDocumentMapping("observed-data") \
     .include(stix_object_properties) \
@@ -213,7 +213,7 @@ opinion_mapping = TypeDBDocumentMapping("opinion") \
     .has(doc_key="explanation", attribute="explanation", quoted=True) \
     .has(doc_key="authors", attribute="author", quoted=True) \
     .has(doc_key="opinion", attribute="opinion", quoted=True) \
-	.include(embedded_object_reference_properties)
+    .include(embedded_object_reference_properties)
 
 report_mapping = TypeDBDocumentMapping("report") \
     .include(stix_object_properties) \
@@ -221,7 +221,7 @@ report_mapping = TypeDBDocumentMapping("report") \
     .has(doc_key="description", attribute="description", quoted=True) \
     .has(doc_key="report_types", attribute="report-type", quoted=True) \
     .has(doc_key="published", attribute="published") \
-	.include(embedded_object_reference_properties)
+    .include(embedded_object_reference_properties)
 
 threat_actor_mapping = TypeDBDocumentMapping("threat-actor") \
     .include(stix_object_properties) \
@@ -247,10 +247,10 @@ tool_mapping = TypeDBDocumentMapping("tool") \
     .has(doc_key="aliases", attribute="alias_", quoted=True) \
     .has(doc_key="tool_version", attribute="tool-version", quoted=True) \
     .relation_and_new_player(
-		doc_key="kill_chain_phases", 
-		other_player_mapping=kill_chain_phase_mapping, 
-		relation_type="kill-chain-phase-ownership", 
-		self_role="owner",
+        doc_key="kill_chain_phases", 
+        other_player_mapping=kill_chain_phase_mapping, 
+        relation_type="kill-chain-phase-ownership", 
+        self_role="owner",
         other_player_role="kill-chain-phase"
     )
 
