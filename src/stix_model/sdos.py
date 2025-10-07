@@ -33,9 +33,9 @@ stix_object_properties = PropertyMappings() \
     .has(doc_key="spec_version", attribute="spec-version", quoted=True, single=True) \
     .has(doc_key="created", attribute="created", single=True) \
     .has(doc_key="modified", attribute="modified", single=True) \
-    .has(doc_key="revoked", attribute="revoked") \
+    .has(doc_key="revoked", attribute="revoked", single=True) \
     .has(doc_key="labels", attribute="label_", quoted=True) \
-    .has(doc_key="lang", attribute="lang", quoted=True) \
+    .has(doc_key="lang", attribute="lang", quoted=True, single=True) \
     .include(embedded_created_by_properties)
 
 # TODO: extensions, external references, object markings, granular markings, extensions
@@ -59,14 +59,15 @@ campaign_mapping = TypeDBDocumentMapping("campaign") \
     .has(doc_key="name", attribute="name", quoted=True, single=True) \
     .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="aliases", attribute="alias_", quoted=True) \
-    .has(doc_key="first_seen", attribute="first-seen") \
-    .has(doc_key="last_seen", attribute="last-seen") \
-    .has(doc_key="objective", attribute="objective", quoted=True)
+    .has(doc_key="first_seen", attribute="first-seen", single=True) \
+    .has(doc_key="last_seen", attribute="last-seen", single=True) \
+    .has(doc_key="objective", attribute="objective", quoted=True, single=True)
 
 course_of_action_mapping = TypeDBDocumentMapping("course-of-action") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True, single=True) \
-    .has(doc_key="description", attribute="description", quoted=True)
+    .has(doc_key="description", attribute="description", quoted=True, single=True) \
+    .has(doc_key="confidence", attribute="confidence", single=True)
 
 grouping_mapping = TypeDBDocumentMapping("grouping") \
     .include(stix_object_properties) \
@@ -80,7 +81,7 @@ identity_mapping = TypeDBDocumentMapping("identity") \
     .has(doc_key="name", attribute="name", quoted=True, single=True) \
     .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="roles", attribute="role_", quoted=True) \
-    .has(doc_key="identity_class", attribute="identity-class", quoted=True) \
+    .has(doc_key="identity_class", attribute="identity-class", quoted=True, single=True) \
     .has(doc_key="sectors", attribute="sector", quoted=True) \
     .has(doc_key="contact_information", attribute="contact-information", quoted=True)
 
@@ -91,8 +92,9 @@ incident_mapping = TypeDBDocumentMapping("incident") \
 
 indicator_mapping = TypeDBDocumentMapping("indicator") \
     .include(stix_object_properties) \
-    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="name", attribute="name", quoted=True, single=True) \
     .has(doc_key="description", attribute="description", quoted=True, single=True) \
+    .has(doc_key="confidence", attribute="confidence", single=True) \
     .has(doc_key="indicator_types", attribute="indicator-type", quoted=True) \
     .has(doc_key="pattern", attribute="pattern", quoted=True, single=True) \
     .has(doc_key="pattern_type", attribute="pattern-type", quoted=True, single=True) \
@@ -223,17 +225,17 @@ report_mapping = TypeDBDocumentMapping("report") \
 
 threat_actor_mapping = TypeDBDocumentMapping("threat-actor") \
     .include(stix_object_properties) \
-    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="name", attribute="name", quoted=True, single=True) \
     .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="threat_actor_types", attribute="threat-actor-type", quoted=True) \
     .has(doc_key="aliases", attribute="alias_", quoted=True) \
-    .has(doc_key="first_seen", attribute="first-seen") \
-    .has(doc_key="last_seen", attribute="last-seen") \
+    .has(doc_key="first_seen", attribute="first-seen", single=True) \
+    .has(doc_key="last_seen", attribute="last-seen", single=True) \
     .has(doc_key="roles", attribute="role_", quoted=True) \
     .has(doc_key="goals", attribute="goal", quoted=True) \
-    .has(doc_key="sophistication", attribute="sophistication", quoted=True) \
-    .has(doc_key="resource_level", attribute="resource-level", quoted=True) \
-    .has(doc_key="primary_motivation", attribute="primary-motivation", quoted=True) \
+    .has(doc_key="sophistication", attribute="sophistication", quoted=True, single=True) \
+    .has(doc_key="resource_level", attribute="resource-level", quoted=True, single=True) \
+    .has(doc_key="primary_motivation", attribute="primary-motivation", quoted=True, single=True) \
     .has(doc_key="secondary_motivations", attribute="secondary-motivation", quoted=True) \
     .has(doc_key="personal_motivations", attribute="personal-motivation", quoted=True)
 
