@@ -190,9 +190,9 @@ entity indicator,
   owns indicator-type @card(0..),     # TODO: implement with ordering [] when supported
   owns pattern @card(1),              # required property
   owns pattern-type @card(1),         # required property
-  owns pattern-version,               
+  owns pattern-version @card(0..1),   # optional property
   owns valid-from @card(1),           # required property
-  owns valid-until,
+  owns valid-until @card(0..1),       # optional property
   
   # specific relationships
   plays indicates:indicating-source,
