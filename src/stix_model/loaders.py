@@ -1,6 +1,5 @@
-from typing import List, Optional, Dict, Any
-from datetime import datetime
-import time
+import json
+from typing import List, Dict, Any
 
 JSON = Dict[str, Any]
 
@@ -92,14 +91,13 @@ class LinksMapping:
         pipeline = [f"\n### Relation '{relation_type}' links player using property {self.player_attribute_doc_key} with role {self.role}"]
         player_var = f"player_{self.player_attribute_doc_key}_{index}"
         player_type_var = f"{player_var}_type"
+        t = player_attribute_value.split('--')[0]
         if self.quoted:
             player_attribute_value = f"'{escape(player_attribute_value)}'"
         if type(player_attribute_value) == bool:
             player_attribute_value = "true" if player_attribute_value else "false"
-        pipeline.append(f"""match 
-${player_var} has {self.player_attribute} {player_attribute_value};
-${player_var} isa! ${player_type_var};
-${player_type_var} plays {relation_type}:{self.role};""")
+        pipeline.append(f"""put 
+${player_var} isa {t}, has {self.player_attribute} {player_attribute_value};""")
         pipeline.append(f"insert ${relation_var} links ({self.role}: ${player_var});")
         return pipeline
 
@@ -217,7 +215,7 @@ class TypeDBDocumentMapping:
             value = doc.get(has.doc_key)
             if type(value) == list:
                 for i, v in enumerate(value):
-                    insert_statements.append(has.statement(var + f"_{i}", v))
+                    insert_statements.append(has.statement(var, v))
             elif value is not None:
                 insert_statements.append(has.statement(var, value))
 
@@ -251,8 +249,37 @@ class TypeDBDocumentMapping:
         
         return pipeline
 
-    def var_with_prefix(self, prefix: str):
+    def var_with_prefix(self, prefix: str) -> str:
         if len(prefix) > 0:
             return prefix + "_" + self.var
         else:
             return self.var
+
+    def fetch_object(self, key: str) -> str:
+        query = f"\n### Fetch object of type '{self.type_}'\n"
+
+        query += f'match $�var isa {self.type_}, has id "{key}"; fetch {{\n'
+
+        # # TODO: keys might be inserted with 'put' instead of 'insert' clauses
+        for has_key in self.property_mappings.has_key_mappings:
+            query += f'  "{has_key.doc_key}": [ $�var.{has_key.attribute} ],\n'
+        
+        for has in self.property_mappings.has_mappings:
+            query += f'  "{has.doc_key}": [ $�var.{has.attribute} ],\n'
+
+        for rel in self.property_mappings.relation_new_player_mappings:
+            query += f'  "{rel.doc_key}": [ ' + \
+                    f'match ({rel.self_role}: $�var, {rel.other_player_role}: $�other) isa {rel.relation_type}; ' + \
+                    'return { $�other }; ],\n'
+
+        for rel in self.property_mappings.relation_existing_player_mappings:
+            query += f'  "{rel.player_attribute_doc_key}": [ ' + \
+                    f'match ({rel.self_role}: $�var, {rel.player_role}: $�other) isa {rel.relation_type}; ' + \
+                    f'$�other has {rel.player_attribute} $�other_attr; ' + \
+                    'return { $�other_attr }; ],\n'
+
+        for links in self.property_mappings.links_mappings:
+            pass
+
+        return query + '};'
+
