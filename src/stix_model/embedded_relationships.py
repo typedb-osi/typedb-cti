@@ -10,7 +10,8 @@ embedded_created_by_properties = PropertyMappings() \
         relation_type="created-by",
         self_role="created",
         player_role="creator",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 embedded_object_marking_properties = PropertyMappings() \
@@ -44,7 +45,8 @@ embedded_host_vm_properties = PropertyMappings() \
         relation_type="host-vm",
         self_role="hosted",
         player_role="host",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 embedded_operating_system_properties = PropertyMappings() \
@@ -54,7 +56,8 @@ embedded_operating_system_properties = PropertyMappings() \
         relation_type="operating-system",
         self_role="hosted",
         player_role="os",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 embedded_installed_software_properties = PropertyMappings() \
@@ -84,7 +87,8 @@ embedded_sample_properties = PropertyMappings() \
         relation_type="sample",
         self_role="source",
         player_role="sample",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 embedded_contains_properties = PropertyMappings() \

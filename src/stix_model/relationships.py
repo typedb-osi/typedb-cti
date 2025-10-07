@@ -7,14 +7,14 @@ stix_relationship_properties = PropertyMappings() \
     .has(doc_key="spec_version", attribute="spec-version", quoted=True, single=True) \
     .has(doc_key="created", attribute="created", single=True) \
     .has(doc_key="modified", attribute="modified", single=True) \
-    .has(doc_key="revoked", attribute="revoked", quoted=True) \
-    .has(doc_key="confidence", attribute="confidence", quoted=True) \
-    .has(doc_key="lang", attribute="lang", quoted=True) \
-    .has(doc_key="label", attribute="label_", quoted=True) \
+    .has(doc_key="revoked", attribute="revoked", quoted=True, single=True) \
+    .has(doc_key="confidence", attribute="confidence", quoted=True, single=True) \
+    .has(doc_key="lang", attribute="lang", quoted=True, single=True) \
+    .has(doc_key="label", attribute="label_", quoted=True, single=True) \
     .has(doc_key="relationship_type", attribute="relationship-type", quoted=True, single=True) \
     .has(doc_key="description", attribute="description", quoted=True, single=True) \
-    .has(doc_key="start_time", attribute="start-time") \
-    .has(doc_key="stop_time", attribute="stop-time") \
+    .has(doc_key="start_time", attribute="start-time", single=True) \
+    .has(doc_key="stop_time", attribute="stop-time", single=True) \
     .include(embedded_created_by_properties) 
 
 

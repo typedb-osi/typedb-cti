@@ -57,13 +57,14 @@ class RelationNewPlayerMapping:
 
 
 class RelationExistingPlayerMapping:
-    def __init__(self, player_attribute_doc_key: str, player_attribute: str, relation_type: str, self_role: str, player_role: str, quoted: bool = False):
+    def __init__(self, player_attribute_doc_key: str, player_attribute: str, relation_type: str, self_role: str, player_role: str, quoted: bool = False, single: bool = False):
         self.player_attribute_doc_key = player_attribute_doc_key
         self.player_attribute = player_attribute
         self.relation_type = relation_type
         self.self_role = self_role
         self.player_role = player_role
         self.quoted = quoted
+        self.single = single
 
     def insert_query(self, player_attribute_value: any, first_player_var: str, index: int = 0) -> List[str]:
         pipeline = [f"\n### Load player from property '{self.player_attribute_doc_key}' and link via relation '{self.relation_type}' with role '{self.self_role}'"]
@@ -124,8 +125,8 @@ class PropertyMappings:
         self.relation_new_player_mappings.append(RelationNewPlayerMapping(doc_key, other_player_processor, relation_type, self_role, other_player_role))
         return self
 
-    def relation_existing_player(self, player_attribute_doc_key: str, player_attribute: str, relation_type: str, self_role: str, player_role: str, quoted: bool = False):
-        self.relation_existing_player_mappings.append(RelationExistingPlayerMapping(player_attribute_doc_key, player_attribute, relation_type, self_role, player_role, quoted))
+    def relation_existing_player(self, player_attribute_doc_key: str, player_attribute: str, relation_type: str, self_role: str, player_role: str, quoted: bool = False, single: bool = False):
+        self.relation_existing_player_mappings.append(RelationExistingPlayerMapping(player_attribute_doc_key, player_attribute, relation_type, self_role, player_role, quoted, single))
         return self
     
     def links(self, player_attribute_doc_key: str, player_attribute: str, role: str, quoted: bool = False, single: bool = False):
@@ -182,8 +183,8 @@ class TypeDBDocumentMapping:
         self.property_mappings.relation_and_new_player(doc_key, other_player_mapping, relation_type, self_role, other_player_role)
         return self
     
-    def relation_existing_player(self, player_attribute_doc_key: str, player_attribute: str, relation_type: str, self_role: str, player_role: str, quoted: bool = False):
-        self.property_mappings.relation_existing_player(player_attribute_doc_key, player_attribute, relation_type, self_role, player_role, quoted)
+    def relation_existing_player(self, player_attribute_doc_key: str, player_attribute: str, relation_type: str, self_role: str, player_role: str, quoted: bool = False, single: bool = False):
+        self.property_mappings.relation_existing_player(player_attribute_doc_key, player_attribute, relation_type, self_role, player_role, quoted, single)
         return self
 
     def links(self, player_attribute_doc_key: str, player_attribute: str, role: str, quoted: bool = False, single: bool = False):
@@ -278,20 +279,25 @@ class TypeDBDocumentMapping:
                     'return { $�other }; ],\n'
 
         for rel in self.property_mappings.relation_existing_player_mappings:
-            query += f'  "{rel.player_attribute_doc_key}": [ ' + \
-                    f'match ({rel.self_role}: $�var, {rel.player_role}: $�other) isa {rel.relation_type}; ' + \
-                    f'$�other has {rel.player_attribute} $�other_attr; ' + \
-                    'return { $�other_attr }; ],\n'
+            query += f'  "{rel.player_attribute_doc_key}": '
+            if not rel.single:
+                query += '[ '
+            query += f'match ({rel.self_role}: $�var, {rel.player_role}: $�other) isa {rel.relation_type}; '
+            query += f'$�other has {rel.player_attribute} $�other_attr; '
+            if rel.single:
+                query += 'return first $�other_attr;,\n'
+            else:
+                query += 'return { $�other_attr }; ],\n'
 
         for links in self.property_mappings.links_mappings:
+            query += f'  "{links.player_attribute_doc_key}": ';
+            if not links.single:
+                query += '[ '
+            query += f'match $�var links ({links.role}: $�player); $�player has {links.player_attribute} $�player_attr; '
             if links.single:
-                query += f'  "{links.player_attribute_doc_key}": ' + \
-                        f'match $�var links ({links.role}: $�player); $�player has {links.player_attribute} $�player_attr; ' + \
-                        'return first $�player_attr;,\n'
+                query += 'return first $�player_attr;,\n'
             else:
-                query += f'  "{links.player_attribute_doc_key}": [ ' + \
-                        f'match $�var links ({links.role}: $�player); $�player has {links.player_attribute} $�player_attr; ' + \
-                        'return { $�player_attr }; ],\n'
+                query += 'return { $�player_attr }; ],\n'
 
         return query + '};'
 
