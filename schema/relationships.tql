@@ -30,7 +30,7 @@ relation stix-relationship-object,
   # embedded relationships
   plays created-by:created,
   plays object-marking:object,
-  plays granular-marking:object,
+  plays granular-marking:object
   ;
 
 # Ternary relation!!
@@ -44,7 +44,7 @@ relation sighting,
   owns first-seen,
   owns last-seen,
   owns count,
-  owns summary,
+  owns summary
   ;
 
 
@@ -274,7 +274,7 @@ relation granular-marking,
   relates marking as embedded,
   
   owns lang,
-  owns selector @card(0..),  # NOTE: this will be not super usable without ordered properties/plays!
+  owns selector @card(0..)   # NOTE: this will be not super usable without ordered properties/plays!
   ;
 
 relation object-reference,

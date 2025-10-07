@@ -5,7 +5,7 @@ entity stix-cyber-observable-object @abstract,
   owns defanged,
   
   # common relationships
-  plays consists-of:consisted-target,
+  plays consists-of:consisted-target
 
   ;
 
@@ -32,7 +32,7 @@ entity artifact,
   plays message-body-data:body,       # target of 'message-body-data-ref'
 
   # indirect ownerships
-  plays hash-entry:hash-owner,
+  plays hash-entry:hash-owner
   ;
 
 # --- Autonomous System Object (6.2) ---
@@ -66,7 +66,7 @@ entity directory,
   owns atime,                      
   
   plays contains_:container,            # from 'content-ref'
-  plays contains_:contained,            # target of 'content-ref'
+  plays contains_:contained             # target of 'content-ref'
   ;
 
 # --- Domain Name Object (6.4) ---
@@ -97,7 +97,7 @@ entity email-addr,
   owns display-name,
 
   plays belongs-to:owned-source,
-  plays email-header:address,
+  plays email-header:address
   ;
 
 # Email Message Object (section 6.6)
@@ -118,7 +118,7 @@ entity email-message,
 
   plays email-additional-headers-dict-entry:header-owner,
 
-  plays body-multipart:email,         # from 'body-multipart'
+  plays body-multipart:email          # from 'body-multipart'
   ;
 
 entity email-mime-part-type,
@@ -127,7 +127,7 @@ entity email-mime-part-type,
   owns content-disposition,
 
   plays body-multipart:body,
-  plays email-mime-part-body-raw:owner,
+  plays email-mime-part-body-raw:owner
   ;
 
 relation body-multipart,
@@ -174,7 +174,7 @@ entity file,
   plays email-mime-part-body-raw:raw,
 
   # indirect ownerships
-  plays hash-entry:hash-owner,
+  plays hash-entry:hash-owner
   ;
 
 
@@ -248,7 +248,7 @@ entity windows-pe-binary,
   # indirect ownerships
   plays file-header-hash-dict-entry:hash-owner,
   plays windows-pe-section-type-ownership:owner,
-  plays windows-pe-optional-header-ownership:owner,
+  plays windows-pe-optional-header-ownership:owner
   ;
 
 # separate re-implementation of generic "hashes", which a file can also have!
@@ -293,7 +293,7 @@ entity windows-pe-optional-header,
   plays windows-pe-optional-header-ownership:header,
 
   # indirect ownerships
-  plays hash-entry:hash-owner,
+  plays hash-entry:hash-owner
   ;
 
 relation windows-pe-optional-header-ownership,
@@ -308,7 +308,7 @@ entity windows-pe-section-type,
   plays windows-pe-section-type-ownership:pe-section,
 
   # indirect ownerships
-  plays hash-entry:hash-owner,
+  plays hash-entry:hash-owner
   ;
 
 relation windows-pe-section-type-ownership,
@@ -345,7 +345,7 @@ entity ipv6-addr,
 entity mac-addr,
   sub stix-cyber-observable-object,
   owns type @values("mac-addr"),
-  owns mac-value @card(1),          # required property
+  owns mac-value @card(1)           # required property
   ;
 
 # Mutex Object (section 6.11)
@@ -377,7 +377,7 @@ entity network-traffic,
   owns encapsulated-by-ref,
 
   # indirect ownerships
-  plays ipfix-dict-entry:ipfix-owner,
+  plays ipfix-dict-entry:ipfix-owner
   ;
 
 relation ipfix-dict-entry,
@@ -398,7 +398,7 @@ entity http-request,
   plays message-body-data:request,
 
   # indirect ownerships
-  plays request-header-dict-entry:request,
+  plays request-header-dict-entry:request
   ;
 
 relation request-header-dict-entry,
@@ -424,7 +424,7 @@ entity network-socket,
   owns socket-handle,
 
   # indirect ownerships
-  plays options-dict-entry:options-owner,
+  plays options-dict-entry:options-owner
   ;
 
 relation options-dict-entry,
@@ -447,7 +447,7 @@ entity process,
     owns pid,
     owns created-time,
     owns cwd,
-    owns command-line,
+    owns command-line
     # owns environment-variables,
     # owns opened-connection-refs @card(0..),
     # owns creator-user-ref,
@@ -467,7 +467,7 @@ entity windows-process,
   owns integrity-level,
   
   # indirect ownerships
-  plays startup-info-dict-entry:info-owner,
+  plays startup-info-dict-entry:info-owner
   ;    # TODO: Windows™ Service Extension
 
 relation startup-info-dict-entry,
@@ -489,7 +489,7 @@ entity windows-service,
   owns service-status,
   
   # embedded relationships
-  plays service-dll:service,
+  plays service-dll:service
 
   ;
 
@@ -517,7 +517,7 @@ entity software,
 
   plays host-vm:host,
   plays operating-system:os,
-  plays installed-software:software,
+  plays installed-software:software
   
   ;
 
@@ -550,7 +550,7 @@ entity user-account,
   owns account-first-login,
   owns account-last-login,
   
-  plays belongs-to:owner-target,
+  plays belongs-to:owner-target
   ;
 
 # UNIX Account extension (6.16.2)
@@ -572,7 +572,7 @@ entity windows-registry-key,
   owns number-of-subkeys,
 
   # indirect ownerships
-  plays windows-registry-value-ownership:owner,
+  plays windows-registry-value-ownership:owner
   ;
 
 
@@ -581,7 +581,7 @@ entity windows-registry-value,
   owns registry-value-data,
   owns registry-value-data-type,
   
-  plays windows-registry-value-ownership:value_,
+  plays windows-registry-value-ownership:value_
   ;
 
 relation windows-registry-value-ownership,
