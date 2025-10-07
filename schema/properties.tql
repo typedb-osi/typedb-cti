@@ -43,9 +43,7 @@ attribute role_,
   # Uses the "Threat Actor Role" common vocabulary (10.24)
   @values("agent", "director", "independent", "infrastructure-architect", "infrastructure-operator", "malware-author", "sponsor");
 attribute identity-class, 
-  value string
-  # Uses the "Identity Class" common vocabulary (10.8)
-  @values("individual", "group", "system", "organization", "class", "unknown");
+  value string;
 attribute sector, 
   value string
   # Uses the "Industry Sector" common vocabulary (10.11)
@@ -54,17 +52,15 @@ attribute contact-information, value string;
 
 # --- Indicator specific properties (4.7) ---
 attribute indicator-type, 
-  value string
-  # Uses the "Indicator Type" common vocabulary (10.10)
-  @values("anomalous-activity", "anonymization", "benign", "compromised", "malicious-activity", "attribution", "unknown");
+  value string;
 attribute pattern, value string;
 attribute pattern-type, 
   value string
   # Uses the "Pattern Type" common vocabulary (10.19)
   @values("stix", "pcre", "sigma", "snort", "suricata", "yara");
 attribute pattern-version, value string;
-attribute valid-from, value datetime;
-attribute valid-until, value datetime;
+attribute valid-from, value datetime-tz;
+attribute valid-until, value datetime-tz;
 
 # --- Infrastructure specific properties (4.8) ---
 attribute infrastructure-type, 
@@ -300,7 +296,7 @@ attribute is-multipart,
   value boolean;
 
 attribute date_,
-  value datetime;
+  value datetime-tz;
 
 attribute content-type,
   value string;
@@ -405,7 +401,7 @@ attribute number-of-sections,
   value integer;
 
 attribute time-date-stamp,
-  value datetime;
+  value datetime-tz;
 
 attribute pointer-to-symbol-table-hex,
   value string;
@@ -502,9 +498,9 @@ attribute mac-value,  # TODO: regex for Mac address validation
 
 # Network Traffic object specific properties (6.12)
 attribute start,
-  value datetime;
+  value datetime-tz;
 attribute end_,
-  value datetime;
+  value datetime-tz;
 attribute is-active,
   value boolean;
 attribute src-ref,
@@ -579,7 +575,7 @@ attribute pid,
   value integer;
 
 attribute created-time,
-  value datetime;
+  value datetime-tz;
 
 attribute cwd,
   value string;
@@ -624,16 +620,16 @@ attribute is-service-account, value boolean;
 attribute is-privileged, value boolean;
 attribute can-escalate-privs, value boolean;
 attribute is-disabled, value boolean;
-attribute account-created, value datetime;
-attribute account-expires, value datetime;
-attribute credential-last-changed, value datetime;
-attribute account-first-login, value datetime;
-attribute account-last-login, value datetime;
+attribute account-created, value datetime-tz;
+attribute account-expires, value datetime-tz;
+attribute credential-last-changed, value datetime-tz;
+attribute account-first-login, value datetime-tz;
+attribute account-last-login, value datetime-tz;
 
 # Windows™ Registry Key Object specific properties (6.17)
 attribute windows-registry-key-string, value string;
 attribute number-of-subkeys, value integer;
-attribute modified-time, value datetime;
+attribute modified-time, value datetime-tz;
   # TODO: windows-registry-value struct
 
 # X.509 Certificate Object specific properties (6.18)
@@ -643,8 +639,8 @@ attribute is-self-signed, value boolean;
 attribute serial-number, value string;
 attribute signature-algorithm, value string;
 attribute issuer, value string;
-attribute validity-not-before, value datetime;
-attribute validity-not-after, value datetime;
+attribute validity-not-before, value datetime-tz;
+attribute validity-not-after, value datetime-tz;
 attribute subject, value string;
 attribute subject-public-key-algorithm, value string;
 attribute subject-public-key-modulus, value string;
@@ -676,9 +672,9 @@ attribute crl-distribution-points,
 attribute inhibit-any-policy, 
   value string;
 attribute private-key-usage-period-not-before, 
-  value datetime;
+  value datetime-tz;
 attribute private-key-usage-period-not-after, 
-  value datetime;
+  value datetime-tz;
 attribute certificate-policies, 
   value string;
 attribute policy-mappings, 
