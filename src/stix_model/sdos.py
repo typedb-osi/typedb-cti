@@ -29,10 +29,10 @@ kill_chain_phase_mapping = TypeDBDocumentMapping("kill-chain-phase") \
 
 stix_object_properties = PropertyMappings() \
     .key(doc_key="id", attribute="id", quoted=True) \
-    .has(doc_key="type", attribute="type", quoted=True) \
-    .has(doc_key="spec_version", attribute="spec-version", quoted=True) \
-    .has(doc_key="created", attribute="created") \
-    .has(doc_key="modified", attribute="modified") \
+    .has(doc_key="type", attribute="type", quoted=True, single=True) \
+    .has(doc_key="spec_version", attribute="spec-version", quoted=True, single=True) \
+    .has(doc_key="created", attribute="created", single=True) \
+    .has(doc_key="modified", attribute="modified", single=True) \
     .has(doc_key="revoked", attribute="revoked") \
     .has(doc_key="labels", attribute="label_", quoted=True) \
     .has(doc_key="lang", attribute="lang", quoted=True) \
@@ -43,8 +43,8 @@ stix_object_properties = PropertyMappings() \
 
 attack_pattern_mapping = TypeDBDocumentMapping("attack-pattern") \
     .include(stix_object_properties) \
-    .has(doc_key="name", attribute="name", quoted=True) \
-    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="name", attribute="name", quoted=True, single=True) \
+    .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="aliases", attribute="alias_", quoted=True) \
     .relation_and_new_player(
         doc_key="kill_chain_phases", 
@@ -56,8 +56,8 @@ attack_pattern_mapping = TypeDBDocumentMapping("attack-pattern") \
 
 campaign_mapping = TypeDBDocumentMapping("campaign") \
     .include(stix_object_properties) \
-    .has(doc_key="name", attribute="name", quoted=True) \
-    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="name", attribute="name", quoted=True, single=True) \
+    .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="aliases", attribute="alias_", quoted=True) \
     .has(doc_key="first_seen", attribute="first-seen") \
     .has(doc_key="last_seen", attribute="last-seen") \
@@ -65,20 +65,20 @@ campaign_mapping = TypeDBDocumentMapping("campaign") \
 
 course_of_action_mapping = TypeDBDocumentMapping("course-of-action") \
     .include(stix_object_properties) \
-    .has(doc_key="name", attribute="name", quoted=True) \
+    .has(doc_key="name", attribute="name", quoted=True, single=True) \
     .has(doc_key="description", attribute="description", quoted=True)
 
 grouping_mapping = TypeDBDocumentMapping("grouping") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
-    .has(doc_key="description", attribute="description", quoted=True) \
-    .has(doc_key="context", attribute="context", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True, single=True) \
+    .has(doc_key="context", attribute="context", quoted=True, single=True) \
     .include(embedded_object_reference_properties)
 
 identity_mapping = TypeDBDocumentMapping("identity") \
     .include(stix_object_properties) \
-    .has(doc_key="name", attribute="name", quoted=True) \
-    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="name", attribute="name", quoted=True, single=True) \
+    .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="roles", attribute="role_", quoted=True) \
     .has(doc_key="identity_class", attribute="identity-class", quoted=True) \
     .has(doc_key="sectors", attribute="sector", quoted=True) \
@@ -86,19 +86,19 @@ identity_mapping = TypeDBDocumentMapping("identity") \
 
 incident_mapping = TypeDBDocumentMapping("incident") \
     .include(stix_object_properties) \
-    .has(doc_key="name", attribute="name", quoted=True) \
-    .has(doc_key="description", attribute="description", quoted=True) 
+    .has(doc_key="name", attribute="name", quoted=True, single=True) \
+    .has(doc_key="description", attribute="description", quoted=True, single=True) 
 
 indicator_mapping = TypeDBDocumentMapping("indicator") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
-    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="indicator_types", attribute="indicator-type", quoted=True) \
-    .has(doc_key="pattern", attribute="pattern", quoted=True) \
-    .has(doc_key="pattern_type", attribute="pattern-type", quoted=True) \
-    .has(doc_key="pattern_version", attribute="pattern-version", quoted=True) \
-    .has(doc_key="valid_from", attribute="valid-from") \
-    .has(doc_key="valid_until", attribute="valid-until") \
+    .has(doc_key="pattern", attribute="pattern", quoted=True, single=True) \
+    .has(doc_key="pattern_type", attribute="pattern-type", quoted=True, single=True) \
+    .has(doc_key="pattern_version", attribute="pattern-version", quoted=True, single=True) \
+    .has(doc_key="valid_from", attribute="valid-from", single=True) \
+    .has(doc_key="valid_until", attribute="valid-until", single=True) \
     .relation_and_new_player(
         doc_key="kill_chain_phases", 
         other_player_mapping=kill_chain_phase_mapping, 
@@ -110,7 +110,7 @@ indicator_mapping = TypeDBDocumentMapping("indicator") \
 infrastructure_mapping = TypeDBDocumentMapping("infrastructure") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
-    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="infrastructure_types", attribute="infrastructure-type", quoted=True) \
     .has(doc_key="aliases", attribute="alias_", quoted=True) \
     .has(doc_key="first_seen", attribute="first-seen") \
@@ -126,7 +126,7 @@ infrastructure_mapping = TypeDBDocumentMapping("infrastructure") \
 intrusion_set_mapping = TypeDBDocumentMapping("intrusion-set") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
-    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="aliases", attribute="alias_", quoted=True) \
     .has(doc_key="first_seen", attribute="first-seen") \
     .has(doc_key="last_seen", attribute="last-seen") \
@@ -138,7 +138,7 @@ intrusion_set_mapping = TypeDBDocumentMapping("intrusion-set") \
 location_mapping = TypeDBDocumentMapping("location") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
-    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="latitude", attribute="latitude") \
     .has(doc_key="longitude", attribute="longitude") \
     .has(doc_key="precision", attribute="precision") \
@@ -152,7 +152,7 @@ location_mapping = TypeDBDocumentMapping("location") \
 malware_mapping = TypeDBDocumentMapping("malware") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
-    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="malware_types", attribute="malware-type", quoted=True) \
     .has(doc_key="is_family", attribute="is-family") \
     .has(doc_key="aliases", attribute="alias_", quoted=True) \
@@ -216,7 +216,7 @@ opinion_mapping = TypeDBDocumentMapping("opinion") \
 report_mapping = TypeDBDocumentMapping("report") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
-    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="report_types", attribute="report-type", quoted=True) \
     .has(doc_key="published", attribute="published") \
     .include(embedded_object_reference_properties)
@@ -224,7 +224,7 @@ report_mapping = TypeDBDocumentMapping("report") \
 threat_actor_mapping = TypeDBDocumentMapping("threat-actor") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
-    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="threat_actor_types", attribute="threat-actor-type", quoted=True) \
     .has(doc_key="aliases", attribute="alias_", quoted=True) \
     .has(doc_key="first_seen", attribute="first-seen") \
@@ -240,7 +240,7 @@ threat_actor_mapping = TypeDBDocumentMapping("threat-actor") \
 tool_mapping = TypeDBDocumentMapping("tool") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
-    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="tool_types", attribute="tool-type", quoted=True) \
     .has(doc_key="aliases", attribute="alias_", quoted=True) \
     .has(doc_key="tool_version", attribute="tool-version", quoted=True) \

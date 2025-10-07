@@ -25,10 +25,11 @@ class KeyMapping:
 
 
 class HasMapping:
-    def __init__(self, doc_key: str, attribute: str, quoted: bool = False):
+    def __init__(self, doc_key: str, attribute: str, quoted: bool = False, single: bool = False):
         self.doc_key = doc_key
         self.attribute = attribute
         self.quoted = quoted
+        self.single = single
 
     def statement(self, var: str, value: any) -> str:
         if self.quoted:
@@ -81,11 +82,12 @@ ${player_type_var} plays {self.relation_type}:{self.player_role};""")
 
 
 class LinksMapping:
-    def __init__(self, player_attribute_doc_key: str, player_attribute: str, role: str, quoted: bool = False):
+    def __init__(self, player_attribute_doc_key: str, player_attribute: str, role: str, quoted: bool = False, single: bool = False):
         self.player_attribute_doc_key = player_attribute_doc_key
         self.player_attribute = player_attribute
         self.role = role
         self.quoted = quoted
+        self.single = single
 
     def insert_query(self, player_attribute_value: any, relation_var: str, relation_type: str, index: int = 0) -> List[str]:
         pipeline = [f"\n### Relation '{relation_type}' links player using property {self.player_attribute_doc_key} with role {self.role}"]
@@ -114,8 +116,8 @@ class PropertyMappings:
         self.has_key_mappings.append(KeyMapping(doc_key, attribute, quoted))
         return self
 
-    def has(self, doc_key: str, attribute: str, quoted: bool = False):
-        self.has_mappings.append(HasMapping(doc_key, attribute, quoted))
+    def has(self, doc_key: str, attribute: str, quoted: bool = False, single: bool = False):
+        self.has_mappings.append(HasMapping(doc_key, attribute, quoted, single))
         return self
 
     def relation_and_new_player(self, doc_key: str, other_player_processor: "TypeDBDocumentMapping", relation_type: str, self_role: str, other_player_role: str):
@@ -126,8 +128,8 @@ class PropertyMappings:
         self.relation_existing_player_mappings.append(RelationExistingPlayerMapping(player_attribute_doc_key, player_attribute, relation_type, self_role, player_role, quoted))
         return self
     
-    def links(self, player_attribute_doc_key: str, player_attribute: str, role: str, quoted: bool = False):
-        self.links_mappings.append(LinksMapping(player_attribute_doc_key, player_attribute, role, quoted))
+    def links(self, player_attribute_doc_key: str, player_attribute: str, role: str, quoted: bool = False, single: bool = False):
+        self.links_mappings.append(LinksMapping(player_attribute_doc_key, player_attribute, role, quoted, single))
         return self
 
     def include(self, property_mappings: "PropertyMappings"):
@@ -172,8 +174,8 @@ class TypeDBDocumentMapping:
         self.property_mappings.key(doc_key, attribute, quoted)
         return self
 
-    def has(self, doc_key: str, attribute: str, quoted: bool = False):
-        self.property_mappings.has(doc_key, attribute, quoted)
+    def has(self, doc_key: str, attribute: str, quoted: bool = False, single: bool = False):
+        self.property_mappings.has(doc_key, attribute, quoted, single)
         return self
 
     def relation_and_new_player(self, doc_key: str, other_player_mapping: "TypeDBDocumentMapping", relation_type: str, self_role: str, other_player_role: str):
@@ -184,8 +186,8 @@ class TypeDBDocumentMapping:
         self.property_mappings.relation_existing_player(player_attribute_doc_key, player_attribute, relation_type, self_role, player_role, quoted)
         return self
 
-    def links(self, player_attribute_doc_key: str, player_attribute: str, role: str, quoted: bool = False):
-        self.property_mappings.links(player_attribute_doc_key, player_attribute, role, quoted)
+    def links(self, player_attribute_doc_key: str, player_attribute: str, role: str, quoted: bool = False, single: bool = False):
+        self.property_mappings.links(player_attribute_doc_key, player_attribute, role, quoted, single)
         return self
 
     def include(self, property_mappings: "PropertyMappings"):
@@ -262,10 +264,13 @@ class TypeDBDocumentMapping:
 
         # # TODO: keys might be inserted with 'put' instead of 'insert' clauses
         for has_key in self.property_mappings.has_key_mappings:
-            query += f'  "{has_key.doc_key}": [ $�var.{has_key.attribute} ],\n'
+            query += f'  "{has_key.doc_key}": $�var.{has_key.attribute},\n'
         
         for has in self.property_mappings.has_mappings:
-            query += f'  "{has.doc_key}": [ $�var.{has.attribute} ],\n'
+            if has.single:
+                query += f'  "{has.doc_key}": $�var.{has.attribute},\n'
+            else:
+                query += f'  "{has.doc_key}": [ $�var.{has.attribute} ],\n'
 
         for rel in self.property_mappings.relation_new_player_mappings:
             query += f'  "{rel.doc_key}": [ ' + \
@@ -279,7 +284,14 @@ class TypeDBDocumentMapping:
                     'return { $�other_attr }; ],\n'
 
         for links in self.property_mappings.links_mappings:
-            pass
+            if links.single:
+                query += f'  "{links.player_attribute_doc_key}": ' + \
+                        f'match $�var links ({links.role}: $�player); $�player has {links.player_attribute} $�player_attr; ' + \
+                        'return first $�player_attr;,\n'
+            else:
+                query += f'  "{links.player_attribute_doc_key}": [ ' + \
+                        f'match $�var links ({links.role}: $�player); $�player has {links.player_attribute} $�player_attr; ' + \
+                        'return { $�player_attr }; ],\n'
 
         return query + '};'
 

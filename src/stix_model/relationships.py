@@ -3,16 +3,16 @@ from stix_model.embedded_relationships import embedded_created_by_properties
 
 stix_relationship_properties = PropertyMappings() \
     .key(doc_key="id", attribute="id", quoted=True) \
-    .has(doc_key="type", attribute="type", quoted=True) \
-    .has(doc_key="spec_version", attribute="spec-version", quoted=True) \
-    .has(doc_key="created", attribute="created") \
-    .has(doc_key="modified", attribute="modified") \
+    .has(doc_key="type", attribute="type", quoted=True, single=True) \
+    .has(doc_key="spec_version", attribute="spec-version", quoted=True, single=True) \
+    .has(doc_key="created", attribute="created", single=True) \
+    .has(doc_key="modified", attribute="modified", single=True) \
     .has(doc_key="revoked", attribute="revoked", quoted=True) \
     .has(doc_key="confidence", attribute="confidence", quoted=True) \
     .has(doc_key="lang", attribute="lang", quoted=True) \
     .has(doc_key="label", attribute="label_", quoted=True) \
-    .has(doc_key="relationship_type", attribute="relationship-type", quoted=True) \
-    .has(doc_key="description", attribute="description", quoted=True) \
+    .has(doc_key="relationship_type", attribute="relationship-type", quoted=True, single=True) \
+    .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="start_time", attribute="start-time") \
     .has(doc_key="stop_time", attribute="stop-time") \
     .include(embedded_created_by_properties) 
@@ -24,13 +24,15 @@ derived_from_mapping = TypeDBDocumentMapping(type_="derived-from") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="deriving-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="derived-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 duplicate_of_mapping = TypeDBDocumentMapping(type_="duplicate-of") \
@@ -39,13 +41,15 @@ duplicate_of_mapping = TypeDBDocumentMapping(type_="duplicate-of") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="duplicating-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="duplicated-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 related_to_mapping = TypeDBDocumentMapping(type_="related-to") \
@@ -54,13 +58,15 @@ related_to_mapping = TypeDBDocumentMapping(type_="related-to") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="relating-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="related-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 delivers_mapping = TypeDBDocumentMapping(type_="delivers") \
@@ -69,13 +75,15 @@ delivers_mapping = TypeDBDocumentMapping(type_="delivers") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="delivering-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="delivered-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 targets_mapping = TypeDBDocumentMapping(type_="targets") \
@@ -84,13 +92,15 @@ targets_mapping = TypeDBDocumentMapping(type_="targets") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="targeting-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="targeted-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 attributed_to_mapping = TypeDBDocumentMapping(type_="attributed-to") \
@@ -99,13 +109,15 @@ attributed_to_mapping = TypeDBDocumentMapping(type_="attributed-to") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="attributing-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="attributed-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 mitigates_mapping = TypeDBDocumentMapping(type_="mitigates") \
@@ -114,13 +126,15 @@ mitigates_mapping = TypeDBDocumentMapping(type_="mitigates") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="mitigating-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="mitigated-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 indicates_mapping = TypeDBDocumentMapping(type_="indicates") \
@@ -129,13 +143,15 @@ indicates_mapping = TypeDBDocumentMapping(type_="indicates") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="indicating-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="indicated-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 reference_mapping = TypeDBDocumentMapping(type_="reference") \
@@ -144,13 +160,15 @@ reference_mapping = TypeDBDocumentMapping(type_="reference") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="referencing-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="referenced-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 uses_mapping = TypeDBDocumentMapping(type_="uses") \
@@ -159,13 +177,15 @@ uses_mapping = TypeDBDocumentMapping(type_="uses") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="using-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref", 
         player_attribute="id",
         role="used-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 located_at_mapping = TypeDBDocumentMapping(type_="located-at") \
@@ -174,13 +194,15 @@ located_at_mapping = TypeDBDocumentMapping(type_="located-at") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="locating-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="location-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 originates_from_mapping = TypeDBDocumentMapping(type_="originates-from") \
@@ -189,13 +211,15 @@ originates_from_mapping = TypeDBDocumentMapping(type_="originates-from") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="originating-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="origin-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 has_mapping = TypeDBDocumentMapping(type_="has_") \
@@ -204,13 +228,15 @@ has_mapping = TypeDBDocumentMapping(type_="has_") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="having-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="had-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 hosts_mapping = TypeDBDocumentMapping(type_="hosts") \
@@ -219,13 +245,15 @@ hosts_mapping = TypeDBDocumentMapping(type_="hosts") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="hosting-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="hosted-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 ownership_mapping = TypeDBDocumentMapping(type_="ownership") \
@@ -234,13 +262,15 @@ ownership_mapping = TypeDBDocumentMapping(type_="ownership") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="owning-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="owned-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 compromises_mapping = TypeDBDocumentMapping(type_="compromises") \
@@ -249,13 +279,15 @@ compromises_mapping = TypeDBDocumentMapping(type_="compromises") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="compromising-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="compromised-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 authored_by_mapping = TypeDBDocumentMapping(type_="authored-by") \
@@ -264,13 +296,15 @@ authored_by_mapping = TypeDBDocumentMapping(type_="authored-by") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="authored-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="author-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 drops_mapping = TypeDBDocumentMapping(type_="drops") \
@@ -279,13 +313,15 @@ drops_mapping = TypeDBDocumentMapping(type_="drops") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="dropping-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="dropped-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 downloads_mapping = TypeDBDocumentMapping(type_="downloads") \
@@ -294,13 +330,15 @@ downloads_mapping = TypeDBDocumentMapping(type_="downloads") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="downloading-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="downloaded-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 exploits_mapping = TypeDBDocumentMapping(type_="exploits") \
@@ -309,13 +347,15 @@ exploits_mapping = TypeDBDocumentMapping(type_="exploits") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="exploiting-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="exploited-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 investigates_mapping = TypeDBDocumentMapping(type_="investigates") \
@@ -324,13 +364,15 @@ investigates_mapping = TypeDBDocumentMapping(type_="investigates") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="investigating-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="investigated-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 remediates_mapping = TypeDBDocumentMapping(type_="remediates") \
@@ -339,13 +381,15 @@ remediates_mapping = TypeDBDocumentMapping(type_="remediates") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="remediating-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="remediated-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 based_on_mapping = TypeDBDocumentMapping(type_="based-on") \
@@ -354,13 +398,15 @@ based_on_mapping = TypeDBDocumentMapping(type_="based-on") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="basing-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="based-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 communicates_with_mapping = TypeDBDocumentMapping(type_="communicates-with") \
@@ -369,13 +415,15 @@ communicates_with_mapping = TypeDBDocumentMapping(type_="communicates-with") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="communicating-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="communicated-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 consists_of_mapping = TypeDBDocumentMapping(type_="consists-of") \
@@ -384,13 +432,15 @@ consists_of_mapping = TypeDBDocumentMapping(type_="consists-of") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="consisting-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="consisted-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 controls_mapping = TypeDBDocumentMapping(type_="controls") \
@@ -399,13 +449,15 @@ controls_mapping = TypeDBDocumentMapping(type_="controls") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="controlling-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="controlled-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 beacons_to_mapping = TypeDBDocumentMapping(type_="beacons-to") \
@@ -414,13 +466,15 @@ beacons_to_mapping = TypeDBDocumentMapping(type_="beacons-to") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="beaconing-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="beaconed-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 exfiltrates_to_mapping = TypeDBDocumentMapping(type_="exfiltrates-to") \
@@ -429,13 +483,15 @@ exfiltrates_to_mapping = TypeDBDocumentMapping(type_="exfiltrates-to") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="exfiltrating-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="exfiltrated-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 variant_of_mapping = TypeDBDocumentMapping(type_="variant-of") \
@@ -444,13 +500,15 @@ variant_of_mapping = TypeDBDocumentMapping(type_="variant-of") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="varying-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="varied-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 characterizes_mapping = TypeDBDocumentMapping(type_="characterizes") \
@@ -459,13 +517,15 @@ characterizes_mapping = TypeDBDocumentMapping(type_="characterizes") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="characterizing-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="characterized-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 impersonates_mapping = TypeDBDocumentMapping(type_="impersonates") \
@@ -474,13 +534,15 @@ impersonates_mapping = TypeDBDocumentMapping(type_="impersonates") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="impersonating-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="impersonated-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 resolves_to_mapping = TypeDBDocumentMapping(type_="resolves-to") \
@@ -489,13 +551,15 @@ resolves_to_mapping = TypeDBDocumentMapping(type_="resolves-to") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="resolving-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="resolved-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
 belongs_to_mapping = TypeDBDocumentMapping(type_="belongs-to") \
@@ -504,12 +568,14 @@ belongs_to_mapping = TypeDBDocumentMapping(type_="belongs-to") \
         player_attribute_doc_key="source_ref",
         player_attribute="id",
         role="owned-source",
-        quoted=True
+        quoted=True,
+        single=True,
     ) \
     .links(
         player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="owner-target",
-        quoted=True
+        quoted=True,
+        single=True,
     )
 
