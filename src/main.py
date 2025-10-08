@@ -202,5 +202,5 @@ if __name__ == "__main__":
         transaction.commit()
     with driver.transaction(DB_NAME, TransactionType.READ) as transaction:
         for (oid, loader) in inserted:
-            fetch_query = loader.match('x', oid) + loader.fetch('x')
+            fetch_query = loader.match('x', oid) + " fetch " + loader.fetch('x') + ";"
             print(json.dumps(next(transaction.query(fetch_query).resolve())))

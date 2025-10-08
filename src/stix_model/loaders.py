@@ -69,9 +69,9 @@ class RelationNewPlayerMapping:
     def fetch(self, self_var: str, var_prefix: str) -> str:
         other_var = var_with_prefix("var", var_prefix)
         return f'  "{self.doc_key}": [ ' + \
-                f'match ({self.self_role}: ${self_var}, {self.other_player_role}: ${other_var}) isa {self.relation_type}; ' + \
+                f'match ({self.self_role}: ${self_var}, {self.other_player_role}: ${other_var}) isa {self.relation_type}; fetch ' + \
                 self.other_player_processor.fetch(other_var, var_prefix) + \
-                ' ],\n'
+                '; ],\n'
 
 
 class RelationExistingPlayerMapping:
@@ -299,7 +299,7 @@ class TypeDBDocumentMapping:
         return f'match ${var} isa {self.type_}, has id "{key}";\n'
 
     def fetch(self, var: str, var_prefix: str = "") -> str:
-        query = 'fetch {\n'
+        query = '{\n'
 
         # # TODO: keys might be inserted with 'put' instead of 'insert' clauses
         for has_key in self.property_mappings.has_key_mappings:
@@ -324,5 +324,5 @@ class TypeDBDocumentMapping:
             else:
                 query += 'return { $player_attr }; ],\n'
 
-        return query + '};'
+        return query + '}'
 
