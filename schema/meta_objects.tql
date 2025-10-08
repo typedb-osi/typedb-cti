@@ -21,28 +21,27 @@ entity language-content,
     owns type @values("language-content"),
     owns revoked,
     owns label_ @card(0..),
-    owns confidence,
+    owns confidence
 
       # owns contents,        # TODO: requires dictionary, and is quite complicated!!!
     
     # embedded relationships
-    plays meta-object-reference:object
+    # plays meta-object-reference:object
     
   ;
 
 
 # --- 7.2 Data Marking ---
-entity marking-definition @abstract,
+entity marking-definition ,
   sub stix-meta-object,
 
   # common properties
-  owns type @values("marking-definition")
+  owns type @values("marking-definition"),
   owns created @card(1),              # Required
   owns name,
   
   # embedded relationships
   plays object-marking:marking,
-  plays object-marking:object,
   plays granular-marking:object
 
   ;
@@ -53,11 +52,15 @@ entity statement-marking,
   # specific properties
   owns statement @card(1);
 
+attribute statement, value string;
+
 # --- 7.2.1.4 TLP Marking ---
 entity tlp-marking,
   sub marking-definition,
     # specific properties
   owns tlp  @values("white", "green", "amber", "red") @card(1); # Required
+
+attribute tlp, value string;
 
 # --- Object marking --- 
 # Note: no entity type definition, using relation instead!
