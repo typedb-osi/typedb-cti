@@ -27,6 +27,13 @@ kill_chain_phase_mapping = TypeDBDocumentMapping("kill-chain-phase") \
     .has(doc_key="kill_chain_name", attribute="kill-chain-name", quoted=True, single=True)
 
 
+external_reference_mapping = TypeDBDocumentMapping("external-reference") \
+    .has(doc_key="source_name", attribute="source-name", quoted=True, single=True) \
+    .has(doc_key="description", attribute="description", quoted=True, single=True) \
+    .has(doc_key="url", attribute="url-value", quoted=True, single=True) \
+    .has(doc_key="external_id", attribute="external-id", quoted=True, single=True)
+
+
 stix_object_properties = PropertyMappings() \
     .key(doc_key="id", attribute="id", quoted=True) \
     .has(doc_key="type", attribute="type", quoted=True, single=True) \
@@ -52,6 +59,13 @@ attack_pattern_mapping = TypeDBDocumentMapping("attack-pattern") \
         relation_type="kill-chain-phase-ownership", 
         self_role="owner", 
         other_player_role="kill-chain-phase"
+    ) \
+    .relation_and_new_player(
+        doc_key="external_references", 
+        other_player_mapping=external_reference_mapping, 
+        relation_type="external-reference-ownership", 
+        self_role="owner", 
+        other_player_role="external-reference"
     )
 
 campaign_mapping = TypeDBDocumentMapping("campaign") \
@@ -61,13 +75,27 @@ campaign_mapping = TypeDBDocumentMapping("campaign") \
     .has(doc_key="aliases", attribute="alias_", quoted=True) \
     .has(doc_key="first_seen", attribute="first-seen", single=True) \
     .has(doc_key="last_seen", attribute="last-seen", single=True) \
-    .has(doc_key="objective", attribute="objective", quoted=True, single=True)
+    .has(doc_key="objective", attribute="objective", quoted=True, single=True) \
+    .relation_and_new_player(
+        doc_key="external_references", 
+        other_player_mapping=external_reference_mapping, 
+        relation_type="external-reference-ownership", 
+        self_role="owner", 
+        other_player_role="external-reference"
+    )
 
 course_of_action_mapping = TypeDBDocumentMapping("course-of-action") \
     .include(stix_object_properties) \
     .has(doc_key="name", attribute="name", quoted=True, single=True) \
     .has(doc_key="description", attribute="description", quoted=True, single=True) \
-    .has(doc_key="confidence", attribute="confidence", single=True)
+    .has(doc_key="confidence", attribute="confidence", single=True) \
+    .relation_and_new_player(
+        doc_key="external_references", 
+        other_player_mapping=external_reference_mapping, 
+        relation_type="external-reference-ownership", 
+        self_role="owner", 
+        other_player_role="external-reference"
+    )
 
 grouping_mapping = TypeDBDocumentMapping("grouping") \
     .include(stix_object_properties) \
@@ -84,7 +112,14 @@ identity_mapping = TypeDBDocumentMapping("identity") \
     .has(doc_key="roles", attribute="role_", quoted=True) \
     .has(doc_key="identity_class", attribute="identity-class", quoted=True, single=True) \
     .has(doc_key="sectors", attribute="sector", quoted=True) \
-    .has(doc_key="contact_information", attribute="contact-information", quoted=True, single=True)
+    .has(doc_key="contact_information", attribute="contact-information", quoted=True, single=True) \
+    .relation_and_new_player(
+        doc_key="external_references", 
+        other_player_mapping=external_reference_mapping, 
+        relation_type="external-reference-ownership", 
+        self_role="owner", 
+        other_player_role="external-reference"
+    )
 
 incident_mapping = TypeDBDocumentMapping("incident") \
     .include(stix_object_properties) \
@@ -109,6 +144,13 @@ indicator_mapping = TypeDBDocumentMapping("indicator") \
         relation_type="kill-chain-phase-ownership", 
         self_role="owner", 
         other_player_role="kill-chain-phase"
+    ) \
+    .relation_and_new_player(
+        doc_key="external_references", 
+        other_player_mapping=external_reference_mapping, 
+        relation_type="external-reference-ownership", 
+        self_role="owner", 
+        other_player_role="external-reference"
     )
 
 infrastructure_mapping = TypeDBDocumentMapping("infrastructure") \
@@ -241,7 +283,14 @@ threat_actor_mapping = TypeDBDocumentMapping("threat-actor") \
     .has(doc_key="resource_level", attribute="resource-level", quoted=True, single=True) \
     .has(doc_key="primary_motivation", attribute="primary-motivation", quoted=True, single=True) \
     .has(doc_key="secondary_motivations", attribute="secondary-motivation", quoted=True) \
-    .has(doc_key="personal_motivations", attribute="personal-motivation", quoted=True)
+    .has(doc_key="personal_motivations", attribute="personal-motivation", quoted=True) \
+    .relation_and_new_player(
+        doc_key="external_references", 
+        other_player_mapping=external_reference_mapping, 
+        relation_type="external-reference-ownership", 
+        self_role="owner", 
+        other_player_role="external-reference"
+    )
 
 tool_mapping = TypeDBDocumentMapping("tool") \
     .include(stix_object_properties) \

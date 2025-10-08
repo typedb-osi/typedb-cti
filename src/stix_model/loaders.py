@@ -242,19 +242,23 @@ class TypeDBDocumentMapping:
         pipeline = [f"\n### Put object of type '{self.type_}'"]
         var = self.var_with_prefix(var_prefix)
 
-        put_statements = [isa_statement(var, self.type_)]
+        write_statements = [isa_statement(var, self.type_)]
 
         # # TODO: keys might be inserted with 'put' instead of 'insert' clauses
         for has_key in self.property_mappings.has_key_mappings:
             value = doc.get(has_key.doc_key)
             if type(value) == list:
                 for v in value:
-                    put_statements.append(has_key.statement(var, v))
+                    write_statements.append(has_key.statement(var, v))
             elif value is not None:
-                put_statements.append(has_key.statement(var, value))
+                write_statements.append(has_key.statement(var, value))
         
-        put_stage = "put\n" + "\n".join(put_statements)
-        pipeline.append(put_stage)
+        if len(self.property_mappings.has_key_mappings) == 0:
+            # keyless, always insert
+            pipeline.append("insert\n" + "\n".join(write_statements))
+        else:
+            # has a key, put
+            pipeline.append("put\n" + "\n".join(write_statements))
 
         insert_statements = []
         for has in self.property_mappings.has_mappings:

@@ -45,9 +45,7 @@ attribute role_,
 attribute identity-class, 
   value string;
 attribute sector, 
-  value string
-  # Uses the "Industry Sector" common vocabulary (10.11)
-  @values("agriculture", "aerospace", "automotive", "chemical", "commercial", "communications", "construction", "defense", "education", "energy", "entertainment", "financial-services", "government", "emergency-services", "government-local", "government-national", "government-public-services", "government-regional", "healthcare", "hospitality-leisure", "infrastructure", "dams", "nuclear", "water", "insurance", "manufacturing", "mining", "non-profit", "pharmaceuticals", "retail", "technology", "telecommunications", "transportation", "utilities");
+  value string;
 attribute contact-information, value string;
 
 # --- Indicator specific properties (4.7) ---
