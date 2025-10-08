@@ -1,4 +1,3 @@
-import json
 from typing import List, Dict, Any
 
 JSON = Dict[str, Any]
@@ -8,6 +7,12 @@ def escape(value: str) -> str:
 
 def isa_statement(var: str, type_: str) -> str:
     return f"${var} isa {type_};"
+
+def var_with_prefix(var: str, prefix: str) -> str:
+    if len(prefix) > 0:
+        return prefix + "_" + var
+    else:
+        return var
 
 
 class KeyMapping:
@@ -38,6 +43,12 @@ class HasMapping:
             value = "true" if value else "false"
         return f"${var} has {self.attribute} {value};"
 
+    def fetch(self, owner_var: str) -> str:
+        if self.single:
+            return f'  "{self.doc_key}": ${owner_var}.{self.attribute},\n'
+        else:
+            return f'  "{self.doc_key}": [ ${owner_var}.{self.attribute} ],\n'
+
 
 class RelationNewPlayerMapping:
     def __init__(self, doc_key: str, other_player_processor: "TypeDBDocumentMapping", relation_type: str, self_role: str, other_player_role: str):
@@ -55,6 +66,13 @@ class RelationNewPlayerMapping:
         pipeline.append(f"\ninsert {self.relation_type} ({self.self_role}: ${first_player_var}, {self.other_player_role}: ${other_player_var});")
         return pipeline
 
+    def fetch(self, self_var: str, var_prefix: str) -> str:
+        other_var = var_with_prefix("var", var_prefix)
+        return f'  "{self.doc_key}": [ ' + \
+                f'match ({self.self_role}: ${self_var}, {self.other_player_role}: ${other_var}) isa {self.relation_type}; ' + \
+                self.other_player_processor.fetch(other_var, var_prefix) + \
+                ' ],\n'
+
 
 class RelationExistingPlayerMapping:
     def __init__(self, player_attribute_doc_key: str, player_attribute: str, relation_type: str, self_role: str, player_role: str, quoted: bool = False, single: bool = False):
@@ -69,17 +87,28 @@ class RelationExistingPlayerMapping:
     def insert_query(self, player_attribute_value: any, first_player_var: str, index: int = 0) -> List[str]:
         pipeline = [f"\n### Load player from property '{self.player_attribute_doc_key}' and link via relation '{self.relation_type}' with role '{self.self_role}'"]
         player_var = f"player_{self.player_attribute_doc_key}_{index}"
-        player_type_var = f"{player_var}_type"
+        player_type = player_attribute_value.split('--')[0]
         if self.quoted:
             player_attribute_value = f"'{escape(player_attribute_value)}'"
         if type(player_attribute_value) == bool:
             player_attribute_value = "true" if player_attribute_value else "false"
-        pipeline.append(f"""match 
-${player_var} has {self.player_attribute} {player_attribute_value};
-${player_var} isa! ${player_type_var};
-${player_type_var} plays {self.relation_type}:{self.player_role};""")
+        pipeline.append(f"""put ${player_var} isa {player_type}, has {self.player_attribute} {player_attribute_value};""")
         pipeline.append(f"insert {self.relation_type} ({self.self_role}: ${first_player_var}, {self.player_role}: ${player_var});")
         return pipeline
+
+    def fetch(self, self_var: str, var_prefix: str) -> str:
+        other_var = var_with_prefix("var", var_prefix)
+        other_attr = var_with_prefix("attr", var_prefix)
+        query = f'  "{self.player_attribute_doc_key}": '
+        if not self.single:
+            query += '[ '
+        query += f'match ({self.self_role}: ${self_var}, {self.player_role}: ${other_var}) isa {self.relation_type}; '
+        query += f'${other_var} has {self.player_attribute} ${other_attr}; '
+        if self.single:
+            query += f'return first ${other_attr};,\n'
+        else:
+            query += f'return {{ ${other_attr} }}; ],\n'
+        return query
 
 
 class LinksMapping:
@@ -93,16 +122,27 @@ class LinksMapping:
     def insert_query(self, player_attribute_value: any, relation_var: str, relation_type: str, index: int = 0) -> List[str]:
         pipeline = [f"\n### Relation '{relation_type}' links player using property {self.player_attribute_doc_key} with role {self.role}"]
         player_var = f"player_{self.player_attribute_doc_key}_{index}"
-        player_type_var = f"{player_var}_type"
-        t = player_attribute_value.split('--')[0]
+        player_type = player_attribute_value.split('--')[0]
         if self.quoted:
             player_attribute_value = f"'{escape(player_attribute_value)}'"
         if type(player_attribute_value) == bool:
             player_attribute_value = "true" if player_attribute_value else "false"
-        pipeline.append(f"""put 
-${player_var} isa {t}, has {self.player_attribute} {player_attribute_value};""")
+        pipeline.append(f"""put ${player_var} isa {player_type}, has {self.player_attribute} {player_attribute_value};""")
         pipeline.append(f"insert ${relation_var} links ({self.role}: ${player_var});")
         return pipeline
+
+    def fetch(self, self_var: str, var_prefix: str) -> str:
+        player_var = var_with_prefix("var", var_prefix)
+        player_attr = var_with_prefix("attr", var_prefix)
+        query = f'  "{self.player_attribute_doc_key}": ';
+        if not self.single:
+            query += '[ '
+        query += f'match ${self_var} self ({self.role}: ${player_var}); ${player_var} has {self.player_attribute} ${player_attr}; '
+        if self.single:
+            query += f'return first ${player_attr};,\n'
+        else:
+            query += f'return {{ ${player_attr} }}; ],\n'
+        return query
 
 
 class PropertyMappings:
@@ -170,6 +210,9 @@ class TypeDBDocumentMapping:
         self.var = f"{type_}"
         self.type_ = type_
         self.property_mappings = PropertyMappings()
+
+    def var_with_prefix(self, prefix: str) -> str:
+        return var_with_prefix(self.var, prefix)
 
     def key(self, doc_key: str, attribute: str, quoted: bool = False):
         self.property_mappings.key(doc_key, attribute, quoted)
@@ -252,52 +295,34 @@ class TypeDBDocumentMapping:
         
         return pipeline
 
-    def var_with_prefix(self, prefix: str) -> str:
-        if len(prefix) > 0:
-            return prefix + "_" + self.var
-        else:
-            return self.var
+    def match(self, var: str, key: str) -> str:
+        return f'match ${var} isa {self.type_}, has id "{key}";\n'
 
-    def fetch_object(self, key: str) -> str:
-        query = f"\n### Fetch object of type '{self.type_}'\n"
-
-        query += f'match $�var isa {self.type_}, has id "{key}"; fetch {{\n'
+    def fetch(self, var: str, var_prefix: str = "") -> str:
+        query = 'fetch {\n'
 
         # # TODO: keys might be inserted with 'put' instead of 'insert' clauses
         for has_key in self.property_mappings.has_key_mappings:
-            query += f'  "{has_key.doc_key}": $�var.{has_key.attribute},\n'
+            query += f'  "{has_key.doc_key}": ${var}.{has_key.attribute},\n'
         
         for has in self.property_mappings.has_mappings:
-            if has.single:
-                query += f'  "{has.doc_key}": $�var.{has.attribute},\n'
-            else:
-                query += f'  "{has.doc_key}": [ $�var.{has.attribute} ],\n'
+            query += has.fetch(var)
 
-        for rel in self.property_mappings.relation_new_player_mappings:
-            query += f'  "{rel.doc_key}": [ ' + \
-                    f'match ({rel.self_role}: $�var, {rel.other_player_role}: $�other) isa {rel.relation_type}; ' + \
-                    'return { $�other }; ],\n'
+        for i, rel in enumerate(self.property_mappings.relation_new_player_mappings):
+            query += rel.fetch(var, f"full_{i}_{var_prefix}")
 
-        for rel in self.property_mappings.relation_existing_player_mappings:
-            query += f'  "{rel.player_attribute_doc_key}": '
-            if not rel.single:
-                query += '[ '
-            query += f'match ({rel.self_role}: $�var, {rel.player_role}: $�other) isa {rel.relation_type}; '
-            query += f'$�other has {rel.player_attribute} $�other_attr; '
-            if rel.single:
-                query += 'return first $�other_attr;,\n'
-            else:
-                query += 'return { $�other_attr }; ],\n'
+        for i, rel in enumerate(self.property_mappings.relation_existing_player_mappings):
+            query += rel.fetch(var, f"ref_{i}_{var_prefix}")
 
-        for links in self.property_mappings.links_mappings:
+        for i, links in enumerate(self.property_mappings.links_mappings):
             query += f'  "{links.player_attribute_doc_key}": ';
             if not links.single:
                 query += '[ '
-            query += f'match $�var links ({links.role}: $�player); $�player has {links.player_attribute} $�player_attr; '
+            query += f'match ${var} links ({links.role}: $player); $player has {links.player_attribute} $player_attr; '
             if links.single:
-                query += 'return first $�player_attr;,\n'
+                query += 'return first $player_attr;,\n'
             else:
-                query += 'return { $�player_attr }; ],\n'
+                query += 'return { $player_attr }; ],\n'
 
         return query + '};'
 

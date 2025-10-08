@@ -24,7 +24,7 @@ from stix_model.embedded_relationships import (
 
 kill_chain_phase_mapping = TypeDBDocumentMapping("kill-chain-phase") \
     .key(doc_key="phase_name", attribute="phase-name", quoted=True) \
-    .has(doc_key="kill_chain_name", attribute="kill-chain-name", quoted=True)
+    .has(doc_key="kill_chain_name", attribute="kill-chain-name", quoted=True, single=True)
 
 
 stix_object_properties = PropertyMappings() \
@@ -78,12 +78,13 @@ grouping_mapping = TypeDBDocumentMapping("grouping") \
 
 identity_mapping = TypeDBDocumentMapping("identity") \
     .include(stix_object_properties) \
+    .include(embedded_object_marking_properties) \
     .has(doc_key="name", attribute="name", quoted=True, single=True) \
     .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="roles", attribute="role_", quoted=True) \
     .has(doc_key="identity_class", attribute="identity-class", quoted=True, single=True) \
     .has(doc_key="sectors", attribute="sector", quoted=True) \
-    .has(doc_key="contact_information", attribute="contact-information", quoted=True)
+    .has(doc_key="contact_information", attribute="contact-information", quoted=True, single=True)
 
 incident_mapping = TypeDBDocumentMapping("incident") \
     .include(stix_object_properties) \
@@ -92,6 +93,7 @@ incident_mapping = TypeDBDocumentMapping("incident") \
 
 indicator_mapping = TypeDBDocumentMapping("indicator") \
     .include(stix_object_properties) \
+    .include(embedded_object_marking_properties) \
     .has(doc_key="name", attribute="name", quoted=True, single=True) \
     .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="confidence", attribute="confidence", single=True) \
@@ -139,17 +141,18 @@ intrusion_set_mapping = TypeDBDocumentMapping("intrusion-set") \
 
 location_mapping = TypeDBDocumentMapping("location") \
     .include(stix_object_properties) \
+    .include(embedded_object_marking_properties) \
     .has(doc_key="name", attribute="name", quoted=True) \
     .has(doc_key="description", attribute="description", quoted=True, single=True) \
-    .has(doc_key="latitude", attribute="latitude") \
-    .has(doc_key="longitude", attribute="longitude") \
-    .has(doc_key="precision", attribute="precision") \
-    .has(doc_key="region", attribute="region", quoted=True) \
-    .has(doc_key="country", attribute="country", quoted=True) \
-    .has(doc_key="administrative_area", attribute="administrative-area", quoted=True) \
-    .has(doc_key="city", attribute="city", quoted=True) \
-    .has(doc_key="street_address", attribute="street-address", quoted=True) \
-    .has(doc_key="postal_code", attribute="postal-code", quoted=True)
+    .has(doc_key="latitude", attribute="latitude", single=True) \
+    .has(doc_key="longitude", attribute="longitude", single=True) \
+    .has(doc_key="precision", attribute="precision", single=True) \
+    .has(doc_key="region", attribute="region", quoted=True, single=True) \
+    .has(doc_key="country", attribute="country", quoted=True, single=True) \
+    .has(doc_key="administrative_area", attribute="administrative-area", quoted=True, single=True) \
+    .has(doc_key="city", attribute="city", quoted=True, single=True) \
+    .has(doc_key="street_address", attribute="street-address", quoted=True, single=True) \
+    .has(doc_key="postal_code", attribute="postal-code", quoted=True, single=True)
 
 malware_mapping = TypeDBDocumentMapping("malware") \
     .include(stix_object_properties) \
@@ -208,11 +211,12 @@ observed_data_mapping = TypeDBDocumentMapping("observed-data") \
     .has(doc_key="number_observed", attribute="number-observed") \
     .include(embedded_object_reference_properties)
 
-opinion_mapping = TypeDBDocumentMapping("opinion") \
+opinion_mapping = TypeDBDocumentMapping("opinion-object") \
     .include(stix_object_properties) \
-    .has(doc_key="explanation", attribute="explanation", quoted=True) \
+    .include(embedded_object_marking_properties) \
+    .has(doc_key="explanation", attribute="explanation", quoted=True, single=True) \
     .has(doc_key="authors", attribute="author", quoted=True) \
-    .has(doc_key="opinion", attribute="opinion", quoted=True) \
+    .has(doc_key="opinion", attribute="opinion", quoted=True, single=True) \
     .include(embedded_object_reference_properties)
 
 report_mapping = TypeDBDocumentMapping("report") \

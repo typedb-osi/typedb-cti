@@ -98,7 +98,7 @@ RELATIONSHIP_mapping_MAP: Dict[str, Any] = {
     "impersonates": impersonates_mapping,
     "indicates": indicates_mapping,
     "investigates": investigates_mapping,
-    "located_at": located_at_mapping,
+    "located-at": located_at_mapping,
     "mitigates": mitigates_mapping,
     "originates_from": originates_from_mapping,
     "ownership": ownership_mapping,
@@ -202,5 +202,5 @@ if __name__ == "__main__":
         transaction.commit()
     with driver.transaction(DB_NAME, TransactionType.READ) as transaction:
         for (oid, loader) in inserted:
-            fetch_query = loader.fetch_object(oid)
+            fetch_query = loader.match('x', oid) + loader.fetch('x')
             print(json.dumps(next(transaction.query(fetch_query).resolve())))

@@ -31,8 +31,8 @@ embedded_object_reference_properties = PropertyMappings() \
         player_attribute_doc_key="object_refs",
         player_attribute="id",
         relation_type="object-reference",
-        self_role="referencing-group",
-        player_role="referenced-object",
+        self_role="object",
+        player_role="referenced",
         quoted=True,
     )
 

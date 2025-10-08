@@ -1,5 +1,6 @@
 from stix_model.loaders import TypeDBDocumentMapping, PropertyMappings
 from stix_model.embedded_relationships import embedded_created_by_properties
+from stix_model.embedded_relationships import embedded_object_marking_properties
 
 stix_relationship_properties = PropertyMappings() \
     .key(doc_key="id", attribute="id", quoted=True) \
@@ -190,6 +191,7 @@ uses_mapping = TypeDBDocumentMapping(type_="uses") \
 
 located_at_mapping = TypeDBDocumentMapping(type_="located-at") \
     .include(stix_relationship_properties) \
+    .include(embedded_object_marking_properties) \
     .links(
         player_attribute_doc_key="source_ref",
         player_attribute="id",
