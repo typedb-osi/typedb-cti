@@ -129,9 +129,11 @@ Consultation with experts has suggested that there be globally unique kill_chain
 
 These are modeled as entities.
 
+TODO: 
+
 - Extensions
 
-Predefined extensions are modeled using native TypeDB subtypes!
+Predefined extensions are cannot be modeled using native TypeDB subtypes! Instead, we need to use composition.
 
 - Dictionaries
 

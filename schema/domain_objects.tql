@@ -15,7 +15,7 @@ entity stix-object @abstract,
 
   plays object-reference:referenced,
   plays meta-object-reference:referenced-object,
-  plays external-reference-ownership:owner
+  plays external-reference-ownership:owner     # TODO not implemented: requires lists, if order is important
   ;
 
 entity stix-domain-object @abstract,

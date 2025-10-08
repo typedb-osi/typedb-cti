@@ -493,12 +493,6 @@ entity windows-service,
 
   ;
 
-relation startup-info-dict-entry,
-  sub dictionary-entry,
-  relates info-owner as owner,
-  owns key-string @card(1),
-  owns value-string @card(1);
-
 
 # Software Object (section 6.14)
 entity software,

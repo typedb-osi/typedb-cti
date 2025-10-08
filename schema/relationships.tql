@@ -19,7 +19,6 @@ relation stix-relationship-object,
 
     # TODO: unimplemented
     # owns extensions,
-    # owns external-references[],  # TODO not implemented: requires lists, if order is important
   
   # specific properties
   owns relationship-type @card(1), 
@@ -31,6 +30,9 @@ relation stix-relationship-object,
   plays created-by:created,
   plays object-marking:object,
   plays granular-marking:object
+
+  
+  plays external-reference-ownership:owner,  # TODO not implemented: requires lists, if order is important
   ;
 
 # Ternary relation!!

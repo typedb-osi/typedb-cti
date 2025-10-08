@@ -45,8 +45,7 @@ stix_object_properties = PropertyMappings() \
     .has(doc_key="lang", attribute="lang", quoted=True, single=True) \
     .include(embedded_created_by_properties)
 
-# TODO: extensions, external references, object markings, granular markings, extensions
-
+# TODO: extensions, external references, object markings, granular markings
 
 attack_pattern_mapping = TypeDBDocumentMapping("attack-pattern") \
     .include(stix_object_properties) \
