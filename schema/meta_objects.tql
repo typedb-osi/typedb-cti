@@ -10,7 +10,7 @@ entity stix-meta-object @abstract,
     # owns granular-markings[]
 
   plays created-by:created,
-  plays object-marking:object,
+  plays object-marking:object
   ;
 
 # --- 7.1 Language Content --- 
@@ -26,7 +26,7 @@ entity language-content,
       # owns contents,        # TODO: requires dictionary, and is quite complicated!!!
     
     # embedded relationships
-    plays meta-object-reference:object,
+    plays meta-object-reference:object
     
   ;
 
@@ -43,7 +43,7 @@ entity marking-definition @abstract,
   # embedded relationships
   plays object-marking:marking,
   plays object-marking:object,
-  plays granular-marking:object,
+  plays granular-marking:object
 
   ;
 
@@ -84,7 +84,7 @@ entity extension-definition,
   owns extension-type @card(1..),         # Required (at least one): From STIX extension-type-ov
 
 
-  owns extension-property @card(0..),
+  owns extension-property @card(0..)
 
   # embedded relationships inherited from stix-meta-object:
   # created-by handles created-by-ref

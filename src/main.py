@@ -1,5 +1,6 @@
+import sys
 import json
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Tuple
 from stix_model.sdos import (
     attack_pattern_mapping, campaign_mapping, course_of_action_mapping,
     grouping_mapping, identity_mapping, incident_mapping, indicator_mapping,
@@ -27,6 +28,7 @@ from stix_model.relationships import (
     investigates_mapping, mitigates_mapping, ownership_mapping, reference_mapping,
     remediates_mapping, variant_of_mapping
 )
+from typedb.driver import TypeDB, TransactionType, Credentials, DriverOptions
 
 # Map of STIX object types to their corresponding loaders
 LOADER_MAP: Dict[str, Any] = {
@@ -74,7 +76,7 @@ LOADER_MAP: Dict[str, Any] = {
 }
 
 RELATIONSHIP_mapping_MAP: Dict[str, Any] = {
-    "attributed_to": attributed_to_mapping,
+    "attributed-to": attributed_to_mapping,
     "authored_by": authored_by_mapping,
     "based_on": based_on_mapping,
     "beacons_to": beacons_to_mapping,
@@ -96,7 +98,7 @@ RELATIONSHIP_mapping_MAP: Dict[str, Any] = {
     "impersonates": impersonates_mapping,
     "indicates": indicates_mapping,
     "investigates": investigates_mapping,
-    "located_at": located_at_mapping,
+    "located-at": located_at_mapping,
     "mitigates": mitigates_mapping,
     "originates_from": originates_from_mapping,
     "ownership": ownership_mapping,
@@ -109,7 +111,7 @@ RELATIONSHIP_mapping_MAP: Dict[str, Any] = {
     "variant_of": variant_of_mapping
 }
 
-def load_stix_bundle(file_path: str) -> List[str]:
+def load_stix_bundle(file_path: str) -> (List[str], List[Tuple[str, Any]]):
     """
     Load a STIX bundle from a file and process each object using the appropriate loader.
     Returns a list of TypeQL statements to be executed.
@@ -121,9 +123,10 @@ def load_stix_bundle(file_path: str) -> List[str]:
         raise ValueError("Invalid STIX bundle format: missing 'objects' array")
     
     insert_queries = []
+    inserted = []
     for stix_object in bundle['objects']:
         if not isinstance(stix_object, dict) or 'type' not in stix_object:
-            print(f"Warning: Skipping invalid STIX object: {stix_object}")
+            sys.stderr.write(f"Warning: Skipping invalid STIX object: {stix_object}\n")
             continue
             
         object_type = stix_object['type']
@@ -135,18 +138,69 @@ def load_stix_bundle(file_path: str) -> List[str]:
             loader = LOADER_MAP.get(object_type)
         
         if loader is None:
-            print(f"Warning: No loader found for STIX document: {object_type} (relationship: {relationship_type})")
+            sys.stderr.write(f"Warning: No loader found for STIX document: {object_type} (relationship: {relationship_type})\n")
             continue
+
+        inserted.append((stix_object['id'], loader))
             
         insert_query = loader.insert_query(stix_object)
         insert_queries.append("\n".join(insert_query))
 
     
-    return insert_queries
+    return (insert_queries, inserted)
+
+DB_NAME = "stix"
+SERVER_ADDR = "127.0.0.1:1729"
+USERNAME = "admin"
+PASSWORD = "password"
+
+def setup():
+    driver = TypeDB.driver(SERVER_ADDR, Credentials(USERNAME, PASSWORD), DriverOptions(False, None))
+    # Clean up any existing test database
+    if driver.databases.contains(DB_NAME):
+        driver.databases.get(DB_NAME).delete()
+    if not driver.databases.contains(DB_NAME):
+        driver.databases.create(DB_NAME)
+    
+    # Create fresh test database
+    with driver.transaction(DB_NAME, TransactionType.SCHEMA) as transaction:
+        # load all the schema files
+        with open("schema/properties.tql", "r") as f:
+            query = f.read()
+            transaction.query(query)
+        with open("schema/relationships.tql", "r") as f:
+            query = f.read()
+            transaction.query(query)
+        with open("schema/additional_components.tql", "r") as f:
+            query = f.read()
+            transaction.query(query)
+        with open("schema/domain_objects.tql", "r") as f:
+            query = f.read()
+            transaction.query(query)
+        with open("schema/cyber_observable_objects.tql", "r") as f:
+            query = f.read()
+            transaction.query(query)
+        with open("schema/meta_objects.tql", "r") as f:
+            query = f.read()
+            transaction.query(query)
+        transaction.commit()
+
+    return driver
+
 
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('bundle')
+    args = parser.parse_args()
     # Example usage
-    insert_queries = load_stix_bundle("sample-stix-ics-attack.json")
-    for insert_query in insert_queries:
-        print(insert_query)
-        print("---") 
+    (insert_queries, inserted) = load_stix_bundle(args.bundle)
+    driver = setup()
+    with driver.transaction(DB_NAME, TransactionType.WRITE) as transaction:
+        for insert_query in insert_queries:
+            transaction.query(insert_query)
+        transaction.commit()
+    with driver.transaction(DB_NAME, TransactionType.READ) as transaction:
+        for (oid, loader) in inserted:
+            fetch_query = loader.match('x', oid) + " fetch " + loader.fetch('x') + ";"
+            print(json.dumps(next(transaction.query(fetch_query).resolve())))

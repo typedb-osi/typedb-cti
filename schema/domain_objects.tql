@@ -15,7 +15,7 @@ entity stix-object @abstract,
 
   plays object-reference:referenced,
   plays meta-object-reference:referenced-object,
-  plays external-reference-ownership:owner,
+  plays external-reference-ownership:owner
   ;
 
 entity stix-domain-object @abstract,
@@ -39,7 +39,7 @@ entity stix-domain-object @abstract,
   # embedded relationships
   plays created-by:created,
   plays object-marking:object,
-  plays granular-marking:object,
+  plays granular-marking:object
   ;
 
 entity stix-cyber-observable-object,
@@ -47,7 +47,7 @@ entity stix-cyber-observable-object,
   owns defanged,
 
   # owns extensions,
-  plays granular-marking:object,
+  plays granular-marking:object
   ;
 
 
@@ -73,7 +73,7 @@ entity attack-pattern,
   plays uses:used-target,
 
   # additional components
-  plays kill-chain-phase-ownership:owner,
+  plays kill-chain-phase-ownership:owner
   ;
 
 #  --- 4.2 Campaign ---
@@ -131,7 +131,7 @@ entity grouping,
   # specific relationships
 
   # embedded relationships
-  plays object-reference:object,
+  plays object-reference:object
   ;
 
 #  --- 4.5 Identity ---
@@ -172,7 +172,7 @@ entity incident,
   
   # specific properties
   owns name @card(1),                 # required property
-  owns description,                   
+  owns description                   
   
   # specific relationships
   ;
@@ -190,9 +190,9 @@ entity indicator,
   owns indicator-type @card(0..),     # TODO: implement with ordering [] when supported
   owns pattern @card(1),              # required property
   owns pattern-type @card(1),         # required property
-  owns pattern-version,               
+  owns pattern-version @card(0..1),   # optional property
   owns valid-from @card(1),           # required property
-  owns valid-until,
+  owns valid-until @card(0..1),       # optional property
   
   # specific relationships
   plays indicates:indicating-source,
@@ -201,7 +201,7 @@ entity indicator,
   plays mitigates:mitigated-target,
   
   # additional components
-  plays kill-chain-phase-ownership:owner,
+  plays kill-chain-phase-ownership:owner
   ;
 
 #  --- 4.8 Infrastructure ---
@@ -242,7 +242,7 @@ entity infrastructure,
   plays targets:targeted-target,
   
   # additional components
-  plays kill-chain-phase-ownership:owner,
+  plays kill-chain-phase-ownership:owner
   ;
 
 #  --- 4.9 Intrusion Set ---
@@ -348,7 +348,7 @@ entity malware,
   plays analysis-of:analyzed-target,
   
   # additional components
-  plays kill-chain-phase-ownership:owner,
+  plays kill-chain-phase-ownership:owner
   ;
   # note: allows use of av-, static-, and dynamic- relations
 
@@ -382,7 +382,7 @@ entity malware-analysis,
   # specific relationships
   plays characterizes:characterizing-source,
 
-  plays analysis-of:analyzing-source,
+  plays analysis-of:analyzing-source
   # note: allows all subtypes of analysis-of: av-, static-, dynamic- analysis
   ;
 
@@ -520,7 +520,7 @@ entity tool,
   plays uses:used-target,
 
   # additional components
-  plays kill-chain-phase-ownership:owner,
+  plays kill-chain-phase-ownership:owner
   ;
 # --- 4.19 Vulnerability ---
 entity vulnerability,
