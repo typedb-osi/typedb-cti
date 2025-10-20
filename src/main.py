@@ -78,7 +78,7 @@ LOADER_MAP: Dict[str, Any] = {
 RELATIONSHIP_mapping_MAP: Dict[str, Any] = {
     "attributed-to": attributed_to_mapping,
     "authored-by": authored_by_mapping,
-    "based_on": based_on_mapping,
+    "based-on": based_on_mapping,
     "beacons-to": beacons_to_mapping,
     "belongs-to": belongs_to_mapping,
     "characterizes": characterizes_mapping,

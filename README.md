@@ -106,7 +106,7 @@ The STIX standard defines various objects and their relationships. This schema m
 * Windows Registry Key
   * creator_user_ref,
 
-  
+
 ### Missing components
 
 There are several missing components, mostly in things that require ordered lists in TypeDB, which are not yet implemented.
