@@ -312,6 +312,8 @@ entity malware,
   owns architecture-execution-env @card(0..),   # TODO: implement with ordering [] when supported
   owns implementation-language @card(0..),      # TODO: implement with ordering [] when supported
   owns capability @card(0..),                   # TODO: implement with ordering [] when supported
+  plays operating-system:hosted,
+  plays sample:source,
 
   # specific relationships
   plays authored-by:authored-source,
@@ -323,7 +325,6 @@ entity malware,
   plays drops:dropping-source,
   plays exploits:exploiting-source,
   plays originates-from:originating-source,
-  plays sample:source,
   plays targets:targeting-source,
   plays uses:using-source,
   plays variant-of:varying-source,
