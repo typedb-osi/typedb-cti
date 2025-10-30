@@ -1,6 +1,7 @@
 from stix_model.loaders import TypeDBDocumentMapping, PropertyMappings
 from stix_model.embedded_relationships import embedded_created_by_properties
 from stix_model.embedded_relationships import embedded_object_marking_properties
+from stix_model.sdos import external_reference_mapping
 
 stix_relationship_properties = PropertyMappings() \
     .key(doc_key="id", attribute="id", quoted=True) \
@@ -8,15 +9,24 @@ stix_relationship_properties = PropertyMappings() \
     .has(doc_key="spec_version", attribute="spec-version", quoted=True, single=True) \
     .has(doc_key="created", attribute="created", single=True) \
     .has(doc_key="modified", attribute="modified", single=True) \
+    .include(embedded_created_by_properties) \
     .has(doc_key="revoked", attribute="revoked", quoted=True, single=True) \
-    .has(doc_key="confidence", attribute="confidence", quoted=True, single=True) \
+    .has(doc_key="labels", attribute="label_", quoted=True) \
+    .has(doc_key="confidence", attribute="confidence", single=True) \
     .has(doc_key="lang", attribute="lang", quoted=True, single=True) \
-    .has(doc_key="label", attribute="label_", quoted=True, single=True) \
+    .relation_and_new_player(
+        doc_key="external_references",
+        other_player_mapping=external_reference_mapping,
+        relation_type="external-reference-ownership",
+        self_role="owner",
+        other_player_role="external-reference"
+    ) \
+    .include(embedded_object_marking_properties) \
     .has(doc_key="relationship_type", attribute="relationship-type", quoted=True, single=True) \
     .has(doc_key="description", attribute="description", quoted=True, single=True) \
     .has(doc_key="start_time", attribute="start-time", single=True) \
     .has(doc_key="stop_time", attribute="stop-time", single=True) \
-    .include(embedded_created_by_properties) 
+# TODO: extensions, granular markings
 
 
 derived_from_mapping = TypeDBDocumentMapping(type_="derived-from") \
@@ -55,6 +65,7 @@ duplicate_of_mapping = TypeDBDocumentMapping(type_="duplicate-of") \
 
 related_to_mapping = TypeDBDocumentMapping(type_="related-to") \
     .include(stix_relationship_properties) \
+    .has(doc_key="labels", attribute="label_", quoted=True) \
     .links(
         player_attribute_doc_key="source_ref",
         player_attribute="id",
@@ -182,7 +193,7 @@ uses_mapping = TypeDBDocumentMapping(type_="uses") \
         single=True,
     ) \
     .links(
-        player_attribute_doc_key="target_ref", 
+        player_attribute_doc_key="target_ref",
         player_attribute="id",
         role="used-target",
         quoted=True,
@@ -191,7 +202,6 @@ uses_mapping = TypeDBDocumentMapping(type_="uses") \
 
 located_at_mapping = TypeDBDocumentMapping(type_="located-at") \
     .include(stix_relationship_properties) \
-    .include(embedded_object_marking_properties) \
     .links(
         player_attribute_doc_key="source_ref",
         player_attribute="id",
