@@ -167,22 +167,22 @@ def setup():
         # load all the schema files
         with open("schema/properties.tql", "r") as f:
             query = f.read()
-            transaction.query(query)
-        with open("schema/relationships.tql", "r") as f:
-            query = f.read()
-            transaction.query(query)
+            transaction.query(query).resolve()
         with open("schema/additional_components.tql", "r") as f:
             query = f.read()
-            transaction.query(query)
+            transaction.query(query).resolve()
+        with open("schema/relationships.tql", "r") as f:
+            query = f.read()
+            transaction.query(query).resolve()
         with open("schema/domain_objects.tql", "r") as f:
             query = f.read()
-            transaction.query(query)
+            transaction.query(query).resolve()
         with open("schema/cyber_observable_objects.tql", "r") as f:
             query = f.read()
-            transaction.query(query)
+            transaction.query(query).resolve()
         with open("schema/meta_objects.tql", "r") as f:
             query = f.read()
-            transaction.query(query)
+            transaction.query(query).resolve()
         transaction.commit()
 
     return driver
