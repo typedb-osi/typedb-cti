@@ -3,11 +3,13 @@ define
 entity stix-cyber-observable-object @abstract,
   sub stix-object,
   owns defanged,
-  
-  # common relationships
-  plays consists-of:consisted-target
 
-  ;
+  # common relationships
+  plays consists-of:consisted-target,
+
+  plays analysis-sco:analyzed,
+  plays object-marking:object,
+  plays sample:sample;
 
 
 # --- Artifact Object (6.1) ---
@@ -32,8 +34,8 @@ entity artifact,
   plays message-body-data:body,       # target of 'message-body-data-ref'
 
   # indirect ownerships
-  plays hash-entry:hash-owner
-  ;
+  plays hash-entry:hash-owner;
+
 
 # --- Autonomous System Object (6.2) ---
 entity autonomous-system,
@@ -49,6 +51,7 @@ entity autonomous-system,
   owns system-name,
   owns rir;
 
+
 # --- Directory Object (6.3) ---
 entity directory,
   sub stix-cyber-observable-object,
@@ -57,17 +60,17 @@ entity directory,
   owns type @values("directory"),
 
   # required properties
-  owns path @card(1),                 # required property 
+  owns path @card(1),                 # required property
 
   # optional properties
-  owns path-enc,                    
-  owns ctime,                     
-  owns mtime,                      
-  owns atime,                      
-  
+  owns path-enc,
+  owns ctime,
+  owns mtime,
+  owns atime,
+
   plays contains_:container,            # from 'content-ref'
-  plays contains_:contained             # target of 'content-ref'
-  ;
+  plays contains_:contained;            # target of 'content-ref'
+
 
 # --- Domain Name Object (6.4) ---
 entity domain-name,
@@ -80,9 +83,10 @@ entity domain-name,
   owns domain-value @card(1),         # required property
 
   # relationships
-  plays communicates-with:communicated-target, 
+  plays communicates-with:communicated-target,
   plays resolves-to:resolving-source,   # from 'resolves-to-ref'
   plays resolves-to:resolved-target;    # target of 'resolves-to-ref'
+
 
 # --- Email Address Object (6.5) ---
 entity email-addr,
@@ -97,29 +101,29 @@ entity email-addr,
   owns display-name,
 
   plays belongs-to:owned-source,
-  plays email-header:address
-  ;
+  plays email-header:address;
+
 
 # Email Message Object (section 6.6)
 entity email-message,
   sub stix-cyber-observable-object,
   owns type @values("email-message"),
   owns is-multipart @card(1),         # required property
-  owns date_ @card(1),                # required property
+  owns date_,
   owns content-type,
   owns message-id,
   owns subject,
   owns received-line @card(0..),     # TODO: requires ordering!!
   owns body,
-  
+
   # embedded relationships
   plays email-header:email,           # from 'from-ref', 'sender-ref', 'to-refs', 'cc-refs', 'bcc-refs'
   plays raw-email:email,              # from 'raw-email-ref'
 
   plays email-additional-headers-dict-entry:header-owner,
 
-  plays body-multipart:email          # from 'body-multipart'
-  ;
+  plays body-multipart:email;          # from 'body-multipart'
+
 
 entity email-mime-part-type,
   owns body,
@@ -127,8 +131,7 @@ entity email-mime-part-type,
   owns content-disposition,
 
   plays body-multipart:body,
-  plays email-mime-part-body-raw:owner
-  ;
+  plays email-mime-part-body-raw:owner;
 
 relation body-multipart,
   relates email @card(1),
@@ -139,7 +142,7 @@ relation email-mime-part-body-raw,
   relates raw @card(1);
 
 # Note: extending other entities
-entity artifact, 
+entity artifact,
   plays email-mime-part-body-raw:raw;
 
 entity file,
@@ -150,6 +153,7 @@ relation email-additional-headers-dict-entry,
   owns additional-header-field @card(1),
   owns additional-header-value @card(1..),     # support repeated values
   relates header-owner as owner;
+
 
 # File Object (section 6.7)
 entity file,
@@ -164,7 +168,7 @@ entity file,
   owns ctime,
   owns mtime,
   owns atime,
-  
+
   plays downloads:downloaded-target,
   plays drops:dropped-target,
   plays contains_:contained,     # Note: used for both files reverse link 'parent-directory-ref' and forward 'contains-ref' link
@@ -174,8 +178,7 @@ entity file,
   plays email-mime-part-body-raw:raw,
 
   # indirect ownerships
-  plays hash-entry:hash-owner
-  ;
+  plays hash-entry:hash-owner;
 
 
 # Archive file extension (6.7.2)
@@ -196,7 +199,7 @@ entity ntfs-alternate-data-stream-type,
   owns name @card(1),
   owns size,
   plays hash-entry:hash-owner,
-  
+
   plays ntfs-alternate-data-stream-type-ownership:data-stream-type;
 
 relation ntfs-alternate-data-stream-type-ownership,
@@ -248,8 +251,7 @@ entity windows-pe-binary,
   # indirect ownerships
   plays file-header-hash-dict-entry:hash-owner,
   plays windows-pe-section-type-ownership:owner,
-  plays windows-pe-optional-header-ownership:owner
-  ;
+  plays windows-pe-optional-header-ownership:owner;
 
 # separate re-implementation of generic "hashes", which a file can also have!
 relation file-header-hash-dict-entry,
@@ -289,12 +291,11 @@ entity windows-pe-optional-header,
   owns size-of-heap-commit,
   owns loader-flags-hex,
   owns number-of-rva-and-sizes,
-  
+
   plays windows-pe-optional-header-ownership:header,
 
   # indirect ownerships
-  plays hash-entry:hash-owner
-  ;
+  plays hash-entry:hash-owner;
 
 relation windows-pe-optional-header-ownership,
   relates owner @card(1),
@@ -308,8 +309,7 @@ entity windows-pe-section-type,
   plays windows-pe-section-type-ownership:pe-section,
 
   # indirect ownerships
-  plays hash-entry:hash-owner
-  ;
+  plays hash-entry:hash-owner;
 
 relation windows-pe-section-type-ownership,
   relates owner @card(1),
@@ -320,40 +320,36 @@ entity ipv4-addr,
   sub stix-cyber-observable-object,
   owns type @values("ipv4-addr"),
   owns ipv4-value @card(1),             # required property
-  owns resolves-to-ref @card(0..),  
+  owns resolves-to-ref @card(0..),
   owns belongs-to-ref @card(0..),
-  
+
   plays communicates-with:communicated-target,
   plays resolves-to:resolving-source,
-  plays belongs-to:owned-source
-  ;
+  plays belongs-to:owned-source;
 
 # IPv6 Address Object (section 6.9)
 entity ipv6-addr,
   sub stix-cyber-observable-object,
   owns type @values("ipv6-addr"),
   owns ipv6-value @card(1),         # required property
-  owns resolves-to-ref @card(0..),  
+  owns resolves-to-ref @card(0..),
   owns belongs-to-ref @card(0..),
-    
+
   plays communicates-with:communicated-target,
   plays resolves-to:resolving-source,
-  plays belongs-to:owned-source
-  ;
+  plays belongs-to:owned-source;
 
 # MAC Address Object (section 6.10)
 entity mac-addr,
   sub stix-cyber-observable-object,
   owns type @values("mac-addr"),
-  owns mac-value @card(1)           # required property
-  ;
+  owns mac-value @card(1);           # required property
 
 # Mutex Object (section 6.11)
 entity mutex,
   sub stix-cyber-observable-object,
   owns type @values("mutex"),
-  owns name @card(1)                # required property
-  ;
+  owns name @card(1);                # required property
 
 # Network Traffic Object (section 6.12)
 entity network-traffic,
@@ -377,8 +373,7 @@ entity network-traffic,
   owns encapsulated-by-ref,
 
   # indirect ownerships
-  plays ipfix-dict-entry:ipfix-owner
-  ;
+  plays ipfix-dict-entry:ipfix-owner;
 
 relation ipfix-dict-entry,
   sub dictionary-entry,
@@ -389,17 +384,16 @@ relation ipfix-dict-entry,
 # HTTP Request Extension (6.12.2)
 entity http-request,
   sub network-traffic,
-  owns request-method @card(1),  
-  owns request-value @card(1),  
-  owns request-version,         
+  owns request-method @card(1),
+  owns request-value @card(1),
+  owns request-version,
   owns message-body-length,
 
   # embedded relatinoships
   plays message-body-data:request,
 
   # indirect ownerships
-  plays request-header-dict-entry:request
-  ;
+  plays request-header-dict-entry:request;
 
 relation request-header-dict-entry,
   sub dictionary-entry,
@@ -424,8 +418,7 @@ entity network-socket,
   owns socket-handle,
 
   # indirect ownerships
-  plays options-dict-entry:options-owner
-  ;
+  plays options-dict-entry:options-owner;
 
 relation options-dict-entry,
   sub dictionary-entry,
@@ -465,10 +458,10 @@ entity windows-process,
   owns owner-sid,
   owns window-title,
   owns integrity-level,
-  
+
   # indirect ownerships
-  plays startup-info-dict-entry:info-owner
-  ;    # TODO: Windows™ Service Extension
+  plays startup-info-dict-entry:info-owner;
+  # TODO: Windows™ Service Extension
 
 relation startup-info-dict-entry,
   sub dictionary-entry,
@@ -487,33 +480,29 @@ entity windows-service,
   owns start-type,
   owns service-type,
   owns service-status,
-  
-  # embedded relationships
-  plays service-dll:service
 
-  ;
+  # embedded relationships
+  plays service-dll:service;
 
 
 # Software Object (section 6.14)
 entity software,
   sub stix-cyber-observable-object,
   owns type @values("software"),
-  
+
   # required properties
   owns name @card(1),                    # required property
-  
+
   # optional properties
   owns cpe,
   owns swid,
-  owns language @card(0..),             
+  owns language @card(0..),
   owns vendor,
   owns version,
 
   plays host-vm:host,
   plays operating-system:os,
-  plays installed-software:software
-  
-  ;
+  plays installed-software:software;
 
 # URL Object (section 6.15)
 entity url,
@@ -543,9 +532,8 @@ entity user-account,
   owns credential-last-changed,
   owns account-first-login,
   owns account-last-login,
-  
-  plays belongs-to:owner-target
-  ;
+
+  plays belongs-to:owner-target;
 
 # UNIX Account extension (6.16.2)
 entity unix-account,
@@ -554,7 +542,7 @@ entity unix-account,
   owns group_ @card(0..),
   owns home-dir,
   owns shell;
-  
+
 # Windows™ Registry Key Object (section 6.17)
 entity windows-registry-key,
   sub stix-cyber-observable-object,
@@ -566,17 +554,15 @@ entity windows-registry-key,
   owns number-of-subkeys,
 
   # indirect ownerships
-  plays windows-registry-value-ownership:owner
-  ;
+  plays windows-registry-value-ownership:owner;
 
 
 entity windows-registry-value,
   owns name,
   owns registry-value-data,
   owns registry-value-data-type,
-  
-  plays windows-registry-value-ownership:value_
-  ;
+
+  plays windows-registry-value-ownership:value_;
 
 relation windows-registry-value-ownership,
   relates owner,
@@ -589,8 +575,7 @@ entity x509-certificate,
   owns type @values("x509-certificate"),
   # Note: At least one specific property MUST be present per STIX spec
   owns is-self-signed,
-  owns hash @card(0..),                
-  owns version,                        
+  owns version,
   owns serial-number,
   owns signature-algorithm,
   owns issuer,

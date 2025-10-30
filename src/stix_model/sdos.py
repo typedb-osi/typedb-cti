@@ -1,6 +1,7 @@
 from stix_model.loaders import TypeDBDocumentMapping, PropertyMappings
 from stix_model.embedded_relationships import (
         embedded_created_by_properties, embedded_multiple_sample_properties,
+        embedded_multiple_operating_system_properties,
         embedded_object_marking_properties, embedded_object_reference_properties,
         embedded_host_vm_properties, embedded_operating_system_properties,
         embedded_installed_software_properties, embedded_analysis_sco_properties,
@@ -182,7 +183,7 @@ malware_mapping = TypeDBDocumentMapping("malware") \
     ) \
     .has(doc_key="first_seen", attribute="first-seen", single=True) \
     .has(doc_key="last_seen", attribute="last-seen", single=True) \
-    .include(embedded_operating_system_properties) \
+    .include(embedded_multiple_operating_system_properties) \
     .has(doc_key="architecture_execution_envs", attribute="architecture-execution-env", quoted=True) \
     .has(doc_key="implementation_languages", attribute="implementation-language", quoted=True) \
     .has(doc_key="capabilities", attribute="capability", quoted=True) \

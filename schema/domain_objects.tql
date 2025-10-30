@@ -41,13 +41,6 @@ entity stix-domain-object @abstract,
   # TODO: extensions
   ;
 
-entity stix-cyber-observable-object,
-  sub stix-object,
-  owns defanged,
-
-  # owns extensions,
-  plays granular-marking:object;
-
 
 #  --- 4.1 Attack Pattern ---
 entity attack-pattern,
@@ -330,6 +323,7 @@ entity malware,
   plays drops:dropping-source,
   plays exploits:exploiting-source,
   plays originates-from:originating-source,
+  plays sample:source,
   plays targets:targeting-source,
   plays uses:using-source,
   plays variant-of:varying-source,

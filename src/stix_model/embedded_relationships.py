@@ -3,6 +3,27 @@ from stix_model.loaders import PropertyMappings
 ##### Embedded Relationships #####
 ##### Note: these are intended to be used with the 'self' role direction only #####
 
+embedded_belongs_to_properties = PropertyMappings() \
+    .relation_existing_player(
+        player_attribute_doc_key="belongs_to_ref",
+        player_attribute="id",
+        relation_type="belongs-to",
+        self_role="owned-source",
+        player_role="owner-target",
+        quoted=True,
+        single=True,
+    )
+
+embedded_resolves_to_properties = PropertyMappings() \
+    .relation_existing_player(
+        player_attribute_doc_key="resolves_to_refs",
+        player_attribute="id",
+        relation_type="resolves-to",
+        self_role="resolving-source",
+        player_role="resolved-target",
+        quoted=True,
+    )
+
 embedded_created_by_properties = PropertyMappings() \
     .relation_existing_player(
         player_attribute_doc_key="created_by_ref",
@@ -60,6 +81,16 @@ embedded_operating_system_properties = PropertyMappings() \
         single=True,
     )
 
+embedded_multiple_operating_system_properties = PropertyMappings() \
+    .relation_existing_player(
+        player_attribute_doc_key="operating_system_refs",
+        player_attribute="id",
+        relation_type="operating-system",
+        self_role="hosted",
+        player_role="os",
+        quoted=True,
+    )
+
 embedded_installed_software_properties = PropertyMappings() \
     .relation_existing_player(
         player_attribute_doc_key="installed_software_refs",
@@ -75,8 +106,8 @@ embedded_analysis_sco_properties = PropertyMappings() \
         player_attribute_doc_key="analysis_sco_refs",
         player_attribute="id",
         relation_type="analysis-sco",
-        self_role="analyzed",
-        player_role="analysis",
+        self_role="analysis",
+        player_role="analyzed",
         quoted=True,
     )
 
@@ -99,7 +130,6 @@ embedded_multiple_sample_properties = PropertyMappings() \
         self_role="source",
         player_role="sample",
         quoted=True,
-        single=True,
     )
 
 embedded_contains_properties = PropertyMappings() \
