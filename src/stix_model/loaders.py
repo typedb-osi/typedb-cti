@@ -257,7 +257,7 @@ class TypeDBDocumentMapping:
                     write_statements.append(has_key.statement(var, v))
             elif value is not None:
                 write_statements.append(has_key.statement(var, value))
-        
+
         if len(self.property_mappings.has_key_mappings) == 0:
             # keyless, always insert
             pipeline.append("insert\n" + "\n".join(write_statements))
@@ -285,7 +285,7 @@ class TypeDBDocumentMapping:
                     pipeline.extend(new_relation.insert_query(v, var, i))
             elif value is not None:
                 pipeline.extend(new_relation.insert_query(value, var))
-        
+
         for existing_relation in self.property_mappings.relation_existing_player_mappings:
             value = doc.get(existing_relation.player_attribute_doc_key)
             if type(value) == list:
@@ -293,7 +293,7 @@ class TypeDBDocumentMapping:
                     pipeline.extend(existing_relation.insert_query(v, var, i))
             elif value is not None:
                 pipeline.extend(existing_relation.insert_query(value, var))
-        
+
         for links in self.property_mappings.links_mappings:
             value = doc.get(links.player_attribute_doc_key)
             if type(value) == list:
@@ -301,7 +301,7 @@ class TypeDBDocumentMapping:
                     pipeline.extend(links.insert_query(v, var, self.type_, i))
             elif value is not None:
                 pipeline.extend(links.insert_query(value, var, self.type_))
-        
+
         return pipeline
 
     def match(self, var: str, key: str) -> str:
@@ -313,7 +313,7 @@ class TypeDBDocumentMapping:
         # # TODO: keys might be inserted with 'put' instead of 'insert' clauses
         for has_key in self.property_mappings.has_key_mappings:
             query += f'  "{has_key.doc_key}": ${var}.{has_key.attribute},\n'
-        
+
         for has in self.property_mappings.has_mappings:
             query += has.fetch(var)
 
