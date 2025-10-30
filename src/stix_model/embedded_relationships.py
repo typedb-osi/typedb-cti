@@ -91,6 +91,17 @@ embedded_sample_properties = PropertyMappings() \
         single=True,
     )
 
+embedded_multiple_sample_properties = PropertyMappings() \
+    .relation_existing_player(
+        player_attribute_doc_key="sample_refs",
+        player_attribute="id",
+        relation_type="sample",
+        self_role="source",
+        player_role="sample",
+        quoted=True,
+        single=True,
+    )
+
 embedded_contains_properties = PropertyMappings() \
     .relation_existing_player(
         player_attribute_doc_key="contains_refs",

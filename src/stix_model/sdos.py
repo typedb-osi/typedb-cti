@@ -1,8 +1,8 @@
 from stix_model.loaders import TypeDBDocumentMapping, PropertyMappings
 from stix_model.embedded_relationships import (
-        embedded_created_by_properties, embedded_object_marking_properties,
-        embedded_object_reference_properties, embedded_host_vm_properties,
-        embedded_operating_system_properties,
+        embedded_created_by_properties, embedded_multiple_sample_properties,
+        embedded_object_marking_properties, embedded_object_reference_properties,
+        embedded_host_vm_properties, embedded_operating_system_properties,
         embedded_installed_software_properties, embedded_analysis_sco_properties,
         embedded_sample_properties
 )
@@ -186,7 +186,7 @@ malware_mapping = TypeDBDocumentMapping("malware") \
     .has(doc_key="architecture_execution_envs", attribute="architecture-execution-env", quoted=True) \
     .has(doc_key="implementation_languages", attribute="implementation-language", quoted=True) \
     .has(doc_key="capabilities", attribute="capability", quoted=True) \
-    .include(embedded_sample_properties)
+    .include(embedded_multiple_sample_properties)
 
 
 malware_analysis_mapping = TypeDBDocumentMapping("malware-analysis") \
@@ -214,7 +214,7 @@ note_mapping = TypeDBDocumentMapping("note") \
     .has(doc_key="abstract", attribute="abstract_", quoted=True, single=True) \
     .has(doc_key="content", attribute="content", quoted=True, single=True) \
     .has(doc_key="authors", attribute="author", quoted=True) \
-    .include(embedded_object_reference_properties) 
+    .include(embedded_object_reference_properties)
 
 
 observed_data_mapping = TypeDBDocumentMapping("observed-data") \
@@ -286,4 +286,3 @@ vulnerability_mapping = TypeDBDocumentMapping("vulnerability") \
     ) \
     .has(doc_key="name", attribute="name", quoted=True, single=True) \
     .has(doc_key="description", attribute="description", quoted=True, single=True)
-
