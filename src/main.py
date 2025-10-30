@@ -28,6 +28,7 @@ from stix_model.relationships import (
     investigates_mapping, mitigates_mapping, ownership_mapping, reference_mapping,
     remediates_mapping, variant_of_mapping
 )
+from stix_model.meta_objects import marking_definition_mapping
 from typedb.driver import TypeDB, TransactionType, Credentials, DriverOptions
 
 # Map of STIX object types to their corresponding loaders
@@ -72,7 +73,10 @@ LOADER_MAP: Dict[str, Any] = {
     "user-account": user_account_mapping,
     "windows-registry-key": windows_registry_key_mapping,
     "windows-registry-value": windows_registry_value_mapping,
-    "x509-certificate": x509_certificate_mapping
+    "x509-certificate": x509_certificate_mapping,
+
+    # STIX meta objects
+    "marking-definition": marking_definition_mapping
 }
 
 RELATIONSHIP_mapping_MAP: Dict[str, Any] = {

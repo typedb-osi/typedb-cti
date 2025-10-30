@@ -18,16 +18,12 @@ entity language-content,
     sub stix-meta-object,
 
     # common properties (specialised inheritance)
-    owns type @values("language-content"),
-    owns revoked,
-    owns label_ @card(0..),
-    owns confidence
+    owns type @values("language-content")
 
-      # owns contents,        # TODO: requires dictionary, and is quite complicated!!!
+    # owns contents,        # TODO: requires dictionary, and is quite complicated!!!
     
     # embedded relationships
     # plays meta-object-reference:object
-    
   ;
 
 
@@ -42,15 +38,10 @@ entity marking-definition ,
   
   # embedded relationships
   plays object-marking:marking,
-  plays granular-marking:object
+  plays granular-marking:object,
 
-  ;
-
-# --- 7.2.1.3 Statement Marking ---
-entity statement-marking,
-  sub marking-definition,
   # specific properties
-  owns statement @card(1);
+  owns statement @card(0..1);
 
 attribute statement, value string;
 
