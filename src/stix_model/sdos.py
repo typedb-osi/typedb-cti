@@ -277,12 +277,5 @@ tool_mapping = TypeDBDocumentMapping("tool") \
 
 vulnerability_mapping = TypeDBDocumentMapping("vulnerability") \
     .include(stix_domain_object_properties) \
-    .relation_and_new_player(
-        doc_key="external_references",
-        other_player_mapping=external_reference_mapping,
-        relation_type="external-reference-ownership",
-        self_role="owner",
-        other_player_role="external-reference"
-    ) \
     .has(doc_key="name", attribute="name", quoted=True, single=True) \
     .has(doc_key="description", attribute="description", quoted=True, single=True)
