@@ -161,8 +161,8 @@ class PropertyMappings:
         self.has_mappings.append(HasMapping(doc_key, attribute, quoted, single))
         return self
 
-    def relation_and_new_player(self, doc_key: str, other_player_processor: "TypeDBDocumentMapping", relation_type: str, self_role: str, other_player_role: str):
-        self.relation_new_player_mappings.append(RelationNewPlayerMapping(doc_key, other_player_processor, relation_type, self_role, other_player_role))
+    def relation_and_new_player(self, doc_key: str, other_player_mapping: "TypeDBDocumentMapping", relation_type: str, self_role: str, other_player_role: str):
+        self.relation_new_player_mappings.append(RelationNewPlayerMapping(doc_key, other_player_mapping, relation_type, self_role, other_player_role))
         return self
 
     def relation_existing_player(self, player_attribute_doc_key: str, player_attribute: str, relation_type: str, self_role: str, player_role: str, quoted: bool = False, single: bool = False):
