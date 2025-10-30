@@ -152,7 +152,7 @@ class PropertyMappings:
         self.relation_new_player_mappings = []
         self.relation_existing_player_mappings = []
         self.links_mappings = []
-    
+
     def key(self, doc_key: str, attribute: str, quoted: bool = False):
         self.has_key_mappings.append(KeyMapping(doc_key, attribute, quoted))
         return self
@@ -168,7 +168,7 @@ class PropertyMappings:
     def relation_existing_player(self, player_attribute_doc_key: str, player_attribute: str, relation_type: str, self_role: str, player_role: str, quoted: bool = False, single: bool = False):
         self.relation_existing_player_mappings.append(RelationExistingPlayerMapping(player_attribute_doc_key, player_attribute, relation_type, self_role, player_role, quoted, single))
         return self
-    
+
     def links(self, player_attribute_doc_key: str, player_attribute: str, role: str, quoted: bool = False, single: bool = False):
         self.links_mappings.append(LinksMapping(player_attribute_doc_key, player_attribute, role, quoted, single))
         return self
@@ -179,7 +179,7 @@ class PropertyMappings:
                 if mapping.doc_key == existing_mapping.doc_key:
                     raise ValueError(f"Duplicate key property mapping for {mapping.doc_key}")
         self.has_key_mappings.extend(property_mappings.has_key_mappings)
-        for mapping in property_mappings.has_mappings: 
+        for mapping in property_mappings.has_mappings:
             for existing_mapping in self.has_mappings:
                 if mapping.doc_key == existing_mapping.doc_key:
                     raise ValueError(f"Duplicate has property mapping for {mapping.doc_key}")
@@ -210,6 +210,7 @@ class TypeDBDocumentMapping:
         self.var = f"{type_}"
         self.type_ = type_
         self.property_mappings = PropertyMappings()
+        self.stubs = []
 
     def var_with_prefix(self, prefix: str) -> str:
         return var_with_prefix(self.var, prefix)
@@ -225,13 +226,17 @@ class TypeDBDocumentMapping:
     def relation_and_new_player(self, doc_key: str, other_player_mapping: "TypeDBDocumentMapping", relation_type: str, self_role: str, other_player_role: str):
         self.property_mappings.relation_and_new_player(doc_key, other_player_mapping, relation_type, self_role, other_player_role)
         return self
-    
+
     def relation_existing_player(self, player_attribute_doc_key: str, player_attribute: str, relation_type: str, self_role: str, player_role: str, quoted: bool = False, single: bool = False):
         self.property_mappings.relation_existing_player(player_attribute_doc_key, player_attribute, relation_type, self_role, player_role, quoted, single)
         return self
 
     def links(self, player_attribute_doc_key: str, player_attribute: str, role: str, quoted: bool = False, single: bool = False):
         self.property_mappings.links(player_attribute_doc_key, player_attribute, role, quoted, single)
+        return self
+
+    def stub(self, doc_key: str):
+        self.stubs.append(doc_key)
         return self
 
     def include(self, property_mappings: "PropertyMappings"):
