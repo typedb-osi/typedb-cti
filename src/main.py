@@ -53,7 +53,7 @@ LOADER_MAP: Dict[str, Any] = {
     "threat-actor": threat_actor_mapping,
     "tool": tool_mapping,
     "vulnerability": vulnerability_mapping,
-    
+
     # STIX Cyber-observable Objects (SCOs)
     "artifact": artifact_mapping,
     "autonomous-system": autonomous_system_mapping,
@@ -122,69 +122,48 @@ def load_stix_bundle(file_path: str) -> (List[str], List[Tuple[str, Any]]):
     """
     with open(file_path, 'r') as f:
         bundle = json.load(f)
-    
+
     if not isinstance(bundle, dict) or 'objects' not in bundle:
         raise ValueError("Invalid STIX bundle format: missing 'objects' array")
-    
+
     insert_queries = []
     inserted = []
     for stix_object in bundle['objects']:
         if not isinstance(stix_object, dict) or 'type' not in stix_object:
             sys.stderr.write(f"Warning: Skipping invalid STIX object: {stix_object}\n")
             continue
-            
+
         object_type = stix_object['type']
         if object_type == "relationship":
             relationship_type = stix_object['relationship_type']
             loader = RELATIONSHIP_mapping_MAP.get(relationship_type)
         else:
-            relationship_type = None 
+            relationship_type = None
             loader = LOADER_MAP.get(object_type)
-        
+
         if loader is None:
             sys.stderr.write(f"Warning: No loader found for STIX document: {object_type} (relationship: {relationship_type})\n")
             continue
 
         inserted.append((stix_object['id'], loader))
-            
+
         insert_query = loader.insert_query(stix_object)
         insert_queries.append("\n".join(insert_query))
 
-    
+
     return (insert_queries, inserted)
 
-DB_NAME = "stix"
-SERVER_ADDR = "127.0.0.1:1729"
-USERNAME = "admin"
-PASSWORD = "password"
 
-def setup():
-    driver = TypeDB.driver(SERVER_ADDR, Credentials(USERNAME, PASSWORD), DriverOptions(False, None))
+def setup(driver, db_name):
     # Clean up any existing test database
-    if driver.databases.contains(DB_NAME):
-        driver.databases.get(DB_NAME).delete()
-    if not driver.databases.contains(DB_NAME):
-        driver.databases.create(DB_NAME)
-    
+    if driver.databases.contains(db_name):
+        driver.databases.get(db_name).delete()
+    driver.databases.create(db_name)
+
     # Create fresh test database
-    with driver.transaction(DB_NAME, TransactionType.SCHEMA) as transaction:
+    with driver.transaction(db_name, TransactionType.SCHEMA) as transaction:
         # load all the schema files
-        with open("schema/properties.tql", "r") as f:
-            query = f.read()
-            transaction.query(query).resolve()
-        with open("schema/additional_components.tql", "r") as f:
-            query = f.read()
-            transaction.query(query).resolve()
-        with open("schema/relationships.tql", "r") as f:
-            query = f.read()
-            transaction.query(query).resolve()
-        with open("schema/domain_objects.tql", "r") as f:
-            query = f.read()
-            transaction.query(query).resolve()
-        with open("schema/cyber_observable_objects.tql", "r") as f:
-            query = f.read()
-            transaction.query(query).resolve()
-        with open("schema/meta_objects.tql", "r") as f:
+        with open("sample/schema.tql", "r") as f:
             query = f.read()
             transaction.query(query).resolve()
         transaction.commit()
@@ -192,15 +171,53 @@ def setup():
     return driver
 
 
+DB_NAME = "stix"
+SERVER_ADDR = "127.0.0.1:1729"
+USERNAME = "admin"
+PASSWORD = "password"
+
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser()
-    parser.add_argument('bundle')
+    parser = argparse.ArgumentParser(description="TypeDB STIX demo tool")
+    parser.add_argument("--address", type=str, help="TypeDB address", default=SERVER_ADDR)
+    parser.add_argument("--username", type=str, help="TypeDB username", default=USERNAME)
+    parser.add_argument("--password", type=str, help="TypeDB password", default=PASSWORD)
+    parser.add_argument("--tls-disabled", action="store_true", help="Connect to TypeDB without TLS encryption")
+    parser.add_argument("--db-name", type=str, help="STIX database name", default=DB_NAME)
+
+    subparsers = parser.add_subparsers(
+        title="subcommands",
+        dest="command",
+        required=True
+    )
+
+    parser_setup = subparsers.add_parser("setup", help="Create or reset the state of the TypeDB STIX database")
+
+    parser_ingest = subparsers.add_parser("ingest", help="Ingest a STIX bundle into TypeDB")
+    parser_ingest.add_argument("bundle", help="A STIX bundle JSON file")
+
+    parser_fetch = subparsers.add_parser("fetch", help="Fetch a STIX object")
+    parser_fetch.add_argument("--id", help="STIX object ID")
+    parser_fetch.add_argument("--type", help="STIX object type")
+
     args = parser.parse_args()
-    # Example usage
-    (insert_queries, inserted) = load_stix_bundle(args.bundle)
-    driver = setup()
-    with driver.transaction(DB_NAME, TransactionType.WRITE) as transaction:
-        for insert_query in insert_queries:
-            transaction.query(insert_query)
-        transaction.commit()
+
+    driver = TypeDB.driver(args.address, Credentials(args.username, args.password), DriverOptions(not args.tls_disabled, None))
+
+    if args.command == "setup":
+        setup(driver, args.db_name)
+    elif args.command == "ingest":
+        (insert_queries, inserted) = load_stix_bundle(args.bundle)
+        with driver.transaction(args.db_name, TransactionType.WRITE) as transaction:
+            for insert_query in insert_queries:
+                transaction.query(insert_query)
+            transaction.commit()
+    elif args.command == "fetch":
+        loader = LOADER_MAP.get(args.type)
+        fetch_query = loader.match('x', args.id) + " fetch " + loader.fetch('x') + ";"
+        with driver.transaction(args.db_name, TransactionType.READ) as transaction:
+            stream = transaction.query(fetch_query).resolve()
+            try:
+                print(json.dumps(next(stream), indent=True, sort_keys=True))
+            except StopIteration:
+                sys.stderr.write(f"STIX object `{args.type}` id {args.id} not found\n")
