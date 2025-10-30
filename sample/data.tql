@@ -1,0 +1,484 @@
+
+### Put object of type 'identity'
+put
+$identity isa identity;
+$identity has id 'identity--b1c2d3e4-5f6a-7b8c-9d0e-1f2a3b4c5d6e';
+insert
+$identity has type 'identity';
+$identity has spec-version '2.1';
+$identity has created 2025-09-30T13:55:00.000Z;
+$identity has modified 2025-09-30T13:55:00.000Z;
+$identity has name 'Salt Typhoon';
+$identity has description 'Chinese state‑corporate APT that runs a large domain‑registration pipeline.';
+$identity has identity-class 'intrusion-set';
+
+### Load complete player from property 'external_references' and link via relation 'external-reference-ownership' with role 'owner'
+
+### Put object of type 'external-reference'
+insert
+$identity_0_external-reference isa external-reference;
+insert
+$identity_0_external-reference has source-name 'Inside Salt Typhoon: China’s State‑Corporate Advanced Persistent Threat – DomainTools Investigations';
+$identity_0_external-reference has description 'Primary source.';
+$identity_0_external-reference has url-value 'https://dti.domaintools.com/inside-salt-typhoon-chinas-state-corporate-advanced-persistent-threat/';
+
+insert external-reference-ownership (owner: $identity, external-reference: $identity_0_external-reference);
+end;
+
+### Put object of type 'threat-actor'
+put
+$threat-actor isa threat-actor;
+$threat-actor has id 'threat-actor--c3d4e5f6-7a8b-9c0d-1e2f-3a4b5c6d7e8f';
+insert
+$threat-actor has type 'threat-actor';
+$threat-actor has spec-version '2.1';
+$threat-actor has created 2025-09-30T13:55:00.000Z;
+$threat-actor has modified 2025-09-30T13:55:00.000Z;
+$threat-actor has name 'Salt Typhoon';
+$threat-actor has description 'State‑aligned threat actor behind the campaign.';
+
+### Load complete player from property 'external_references' and link via relation 'external-reference-ownership' with role 'owner'
+
+### Put object of type 'external-reference'
+insert
+$threat-actor_0_external-reference isa external-reference;
+insert
+$threat-actor_0_external-reference has source-name 'Inside Salt Typhoon: China’s State‑Corporate Advanced Persistent Threat – DomainTools Investigations';
+$threat-actor_0_external-reference has description 'Attribution source.';
+$threat-actor_0_external-reference has url-value 'https://dti.domaintools.com/inside-salt-typhoon-chinas-state-corporate-advanced-persistent-threat/';
+
+insert external-reference-ownership (owner: $threat-actor, external-reference: $threat-actor_0_external-reference);
+end;
+
+### Put object of type 'campaign'
+put
+$campaign isa campaign;
+$campaign has id 'campaign--d4e5f6a7-8b9c-0d1e-2f3a-4b5c6d7e8f9a';
+insert
+$campaign has type 'campaign';
+$campaign has spec-version '2.1';
+$campaign has created 2025-09-30T13:55:00.000Z;
+$campaign has modified 2025-09-30T13:55:00.000Z;
+$campaign has label_ 'campaign';
+$campaign has name 'Salt Typhoon Campaign (2020‑2025)';
+$campaign has description 'Large‑scale domain‑centric APT targeting telecom and network infrastructure.';
+$campaign has first-seen 2020-01-01T00:00:00Z;
+$campaign has last-seen 2025-09-01T00:00:00Z;
+
+### Load complete player from property 'external_references' and link via relation 'external-reference-ownership' with role 'owner'
+
+### Put object of type 'external-reference'
+insert
+$campaign_0_external-reference isa external-reference;
+insert
+$campaign_0_external-reference has source-name 'Inside Salt Typhoon: China’s State‑Corporate Advanced Persistent Threat – DomainTools Investigations';
+$campaign_0_external-reference has description 'Campaign overview.';
+$campaign_0_external-reference has url-value 'https://dti.domaintools.com/inside-salt-typhoon-chinas-state-corporate-advanced-persistent-threat/';
+
+insert external-reference-ownership (owner: $campaign, external-reference: $campaign_0_external-reference);
+end;
+
+### Put object of type 'attack-pattern'
+put
+$attack-pattern isa attack-pattern;
+$attack-pattern has id 'attack-pattern--e5f6a7b8-9c0d-1e2f-3a4b-5c6d7e8f9a0b';
+insert
+$attack-pattern has type 'attack-pattern';
+$attack-pattern has spec-version '2.1';
+$attack-pattern has created 2025-09-30T13:55:00.000Z;
+$attack-pattern has modified 2025-09-30T13:55:00.000Z;
+$attack-pattern has name 'Exploitation of Public‑Facing Application (T1190)';
+$attack-pattern has description 'Use of router firmware, firewalls, and SIP vulnerabilities for initial access.';
+
+### Load complete player from property 'external_references' and link via relation 'external-reference-ownership' with role 'owner'
+
+### Put object of type 'external-reference'
+insert
+$attack-pattern_0_external-reference isa external-reference;
+insert
+$attack-pattern_0_external-reference has source-name 'ATT&CK';
+$attack-pattern_0_external-reference has url-value 'https://attack.mitre.org/techniques/T1190/';
+$attack-pattern_0_external-reference has external-id 'T1190';
+
+insert external-reference-ownership (owner: $attack-pattern, external-reference: $attack-pattern_0_external-reference);
+end;
+
+### Put object of type 'attack-pattern'
+put
+$attack-pattern isa attack-pattern;
+$attack-pattern has id 'attack-pattern--f6a7b8c9-0d1e-2f3a-4b5c-6d7e8f9a0b1c';
+insert
+$attack-pattern has type 'attack-pattern';
+$attack-pattern has spec-version '2.1';
+$attack-pattern has created 2025-09-30T13:55:00.000Z;
+$attack-pattern has modified 2025-09-30T13:55:00.000Z;
+$attack-pattern has name 'Use of Stolen Credentials (T1078)';
+$attack-pattern has description 'Use of stolen VPN/SSO credentials for lateral movement.';
+
+### Load complete player from property 'external_references' and link via relation 'external-reference-ownership' with role 'owner'
+
+### Put object of type 'external-reference'
+insert
+$attack-pattern_0_external-reference isa external-reference;
+insert
+$attack-pattern_0_external-reference has source-name 'ATT&CK';
+$attack-pattern_0_external-reference has url-value 'https://attack.mitre.org/techniques/T1078/';
+$attack-pattern_0_external-reference has external-id 'T1078';
+
+insert external-reference-ownership (owner: $attack-pattern, external-reference: $attack-pattern_0_external-reference);
+end;
+
+### Put object of type 'indicator'
+put
+$indicator isa indicator;
+$indicator has id 'indicator--a7b8c9d0-e1f2-3a4b-5c6d-7e8f9a0b1c2d';
+insert
+$indicator has type 'indicator';
+$indicator has spec-version '2.1';
+$indicator has created 2025-09-30T13:55:00.000Z;
+$indicator has modified 2025-09-30T13:55:00.000Z;
+$indicator has confidence 100;
+$indicator has name 'Salt Typhoon Domain – gesturefavo.com';
+$indicator has description 'Domain registered under OrderBox name‑servers with privacy protection.';
+$indicator has indicator-type 'domain';
+$indicator has pattern '[domain-name:value = \'gesturefavo.com\']';
+$indicator has pattern-type 'stix';
+$indicator has valid-from 2020-01-01T00:00:00Z;
+
+### Load complete player from property 'external_references' and link via relation 'external-reference-ownership' with role 'owner'
+
+### Put object of type 'external-reference'
+insert
+$indicator_0_external-reference isa external-reference;
+insert
+$indicator_0_external-reference has source-name 'Inside Salt Typhoon: China’s State‑Corporate Advanced Persistent Threat – DomainTools Investigations';
+$indicator_0_external-reference has description 'Domain example.';
+$indicator_0_external-reference has url-value 'https://dti.domaintools.com/inside-salt-typhoon-chinas-state-corporate-advanced-persistent-threat/';
+
+insert external-reference-ownership (owner: $indicator, external-reference: $indicator_0_external-reference);
+end;
+
+### Put object of type 'indicator'
+put
+$indicator isa indicator;
+$indicator has id 'indicator--b8c9d0e1-f2a3-4b5c-6d7e-8f9a0b1c2d3e';
+insert
+$indicator has type 'indicator';
+$indicator has spec-version '2.1';
+$indicator has created 2025-09-30T13:55:00.000Z;
+$indicator has modified 2025-09-30T13:55:00.000Z;
+$indicator has confidence 100;
+$indicator has name 'Salt Typhoon Domain – example.com';
+$indicator has description 'Generic domain example used by the campaign.';
+$indicator has indicator-type 'domain';
+$indicator has pattern '[domain-name:value = \'example.com\']';
+$indicator has pattern-type 'stix';
+$indicator has valid-from 2020-01-01T00:00:00Z;
+
+### Load complete player from property 'external_references' and link via relation 'external-reference-ownership' with role 'owner'
+
+### Put object of type 'external-reference'
+insert
+$indicator_0_external-reference isa external-reference;
+insert
+$indicator_0_external-reference has source-name 'Inside Salt Typhoon: China’s State‑Corporate Advanced Persistent Threat – DomainTools Investigations';
+$indicator_0_external-reference has description 'Domain IOC.';
+$indicator_0_external-reference has url-value 'https://dti.domaintools.com/inside-salt-typhoon-chinas-state-corporate-advanced-persistent-threat/';
+
+insert external-reference-ownership (owner: $indicator, external-reference: $indicator_0_external-reference);
+end;
+
+### Put object of type 'indicator'
+put
+$indicator isa indicator;
+$indicator has id 'indicator--c9d0e1f2-a3b4-5c6d-7e8f-9a0b1c2d3e4f';
+insert
+$indicator has type 'indicator';
+$indicator has spec-version '2.1';
+$indicator has created 2025-09-30T13:55:00.000Z;
+$indicator has modified 2025-09-30T13:55:00.000Z;
+$indicator has confidence 100;
+$indicator has name 'Salt Typhoon IP – 162.251.82.125';
+$indicator has description 'IP cluster hosting multiple campaign domains.';
+$indicator has indicator-type 'ipv4-addr';
+$indicator has pattern '[ipv4-addr:value = \'162.251.82.125\']';
+$indicator has pattern-type 'stix';
+$indicator has valid-from 2020-01-01T00:00:00Z;
+
+### Load complete player from property 'external_references' and link via relation 'external-reference-ownership' with role 'owner'
+
+### Put object of type 'external-reference'
+insert
+$indicator_0_external-reference isa external-reference;
+insert
+$indicator_0_external-reference has source-name 'Inside Salt Typhoon: China’s State‑Corporate Advanced Persistent Threat – DomainTools Investigations';
+$indicator_0_external-reference has description 'IP IOC.';
+$indicator_0_external-reference has url-value 'https://dti.domaintools.com/inside-salt-typhoon-chinas-state-corporate-advanced-persistent-threat/';
+
+insert external-reference-ownership (owner: $indicator, external-reference: $indicator_0_external-reference);
+end;
+
+### Put object of type 'indicator'
+put
+$indicator isa indicator;
+$indicator has id 'indicator--d0e1f2a3-b4c5-6d7e-8f9a-0b1c2d3e4f5a';
+insert
+$indicator has type 'indicator';
+$indicator has spec-version '2.1';
+$indicator has created 2025-09-30T13:55:00.000Z;
+$indicator has modified 2025-09-30T13:55:00.000Z;
+$indicator has confidence 100;
+$indicator has name 'Salt Typhoon IP – 162.251.82.252';
+$indicator has description 'IP cluster hosting multiple campaign domains.';
+$indicator has indicator-type 'ipv4-addr';
+$indicator has pattern '[ipv4-addr:value = \'162.251.82.252\']';
+$indicator has pattern-type 'stix';
+$indicator has valid-from 2020-01-01T00:00:00Z;
+
+### Load complete player from property 'external_references' and link via relation 'external-reference-ownership' with role 'owner'
+
+### Put object of type 'external-reference'
+insert
+$indicator_0_external-reference isa external-reference;
+insert
+$indicator_0_external-reference has source-name 'Inside Salt Typhoon: China’s State‑Corporate Advanced Persistent Threat – DomainTools Investigations';
+$indicator_0_external-reference has description 'IP IOC.';
+$indicator_0_external-reference has url-value 'https://dti.domaintools.com/inside-salt-typhoon-chinas-state-corporate-advanced-persistent-threat/';
+
+insert external-reference-ownership (owner: $indicator, external-reference: $indicator_0_external-reference);
+end;
+
+### Put object of type 'indicator'
+put
+$indicator isa indicator;
+$indicator has id 'indicator--e1f2a3b4-c5d6-7e8f-9a0b-1c2d3e4f5a6b';
+insert
+$indicator has type 'indicator';
+$indicator has spec-version '2.1';
+$indicator has created 2025-09-30T13:55:00.000Z;
+$indicator has modified 2025-09-30T13:55:00.000Z;
+$indicator has confidence 100;
+$indicator has name 'Salt Typhoon IP – 162.251.82.253';
+$indicator has description 'IP cluster hosting multiple campaign domains.';
+$indicator has indicator-type 'ipv4-addr';
+$indicator has pattern '[ipv4-addr:value = \'162.251.82.253\']';
+$indicator has pattern-type 'stix';
+$indicator has valid-from 2020-01-01T00:00:00Z;
+
+### Load complete player from property 'external_references' and link via relation 'external-reference-ownership' with role 'owner'
+
+### Put object of type 'external-reference'
+insert
+$indicator_0_external-reference isa external-reference;
+insert
+$indicator_0_external-reference has source-name 'Inside Salt Typhoon: China’s State‑Corporate Advanced Persistent Threat – DomainTools Investigations';
+$indicator_0_external-reference has description 'IP IOC.';
+$indicator_0_external-reference has url-value 'https://dti.domaintools.com/inside-salt-typhoon-chinas-state-corporate-advanced-persistent-threat/';
+
+insert external-reference-ownership (owner: $indicator, external-reference: $indicator_0_external-reference);
+end;
+
+### Put object of type 'course-of-action'
+put
+$course-of-action isa course-of-action;
+$course-of-action has id 'course-of-action--f2a3b4c5-d6e7-8f9a-0b1c-2d3e4f5a6b7c';
+insert
+$course-of-action has type 'course-of-action';
+$course-of-action has spec-version '2.1';
+$course-of-action has created 2025-09-30T13:55:00.000Z;
+$course-of-action has modified 2025-09-30T13:55:00.000Z;
+$course-of-action has confidence 100;
+$course-of-action has name 'Block OrderBox IPs';
+$course-of-action has description 'Block all IPs that belong to the OrderBox registration pipeline.';
+
+### Load complete player from property 'external_references' and link via relation 'external-reference-ownership' with role 'owner'
+
+### Put object of type 'external-reference'
+insert
+$course-of-action_0_external-reference isa external-reference;
+insert
+$course-of-action_0_external-reference has source-name 'Threat‑Intel Guide';
+$course-of-action_0_external-reference has description 'Recommended mitigation.';
+
+insert external-reference-ownership (owner: $course-of-action, external-reference: $course-of-action_0_external-reference);
+end;
+
+### Put object of type 'attributed-to'
+put
+$attributed-to isa attributed-to;
+$attributed-to has id 'relationship--a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d';
+insert
+$attributed-to has type 'relationship';
+$attributed-to has spec-version '2.1';
+$attributed-to has created 2025-09-30T13:55:00.000Z;
+$attributed-to has modified 2025-09-30T13:55:00.000Z;
+$attributed-to has relationship-type 'attributed-to';
+
+### Relation 'attributed-to' links player using property source_ref with role attributing-source
+put $player_source_ref_0 isa campaign, has id 'campaign--d4e5f6a7-8b9c-0d1e-2f3a-4b5c6d7e8f9a';
+insert $attributed-to links (attributing-source: $player_source_ref_0);
+
+### Relation 'attributed-to' links player using property target_ref with role attributed-target
+put $player_target_ref_0 isa threat-actor, has id 'threat-actor--c3d4e5f6-7a8b-9c0d-1e2f-3a4b5c6d7e8f';
+insert $attributed-to links (attributed-target: $player_target_ref_0);
+end;
+
+### Put object of type 'uses'
+put
+$uses isa uses;
+$uses has id 'relationship--b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e';
+insert
+$uses has type 'relationship';
+$uses has spec-version '2.1';
+$uses has created 2025-09-30T13:55:00.000Z;
+$uses has modified 2025-09-30T13:55:00.000Z;
+$uses has relationship-type 'uses';
+
+### Relation 'uses' links player using property source_ref with role using-source
+put $player_source_ref_0 isa campaign, has id 'campaign--d4e5f6a7-8b9c-0d1e-2f3a-4b5c6d7e8f9a';
+insert $uses links (using-source: $player_source_ref_0);
+
+### Relation 'uses' links player using property target_ref with role used-target
+put $player_target_ref_0 isa attack-pattern, has id 'attack-pattern--e5f6a7b8-9c0d-1e2f-3a4b-5c6d7e8f9a0b';
+insert $uses links (used-target: $player_target_ref_0);
+end;
+
+### Put object of type 'uses'
+put
+$uses isa uses;
+$uses has id 'relationship--c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f';
+insert
+$uses has type 'relationship';
+$uses has spec-version '2.1';
+$uses has created 2025-09-30T13:55:00.000Z;
+$uses has modified 2025-09-30T13:55:00.000Z;
+$uses has relationship-type 'uses';
+
+### Relation 'uses' links player using property source_ref with role using-source
+put $player_source_ref_0 isa campaign, has id 'campaign--d4e5f6a7-8b9c-0d1e-2f3a-4b5c6d7e8f9a';
+insert $uses links (using-source: $player_source_ref_0);
+
+### Relation 'uses' links player using property target_ref with role used-target
+put $player_target_ref_0 isa attack-pattern, has id 'attack-pattern--f6a7b8c9-0d1e-2f3a-4b5c-6d7e8f9a0b1c';
+insert $uses links (used-target: $player_target_ref_0);
+end;
+
+### Put object of type 'targets'
+put
+$targets isa targets;
+$targets has id 'relationship--d4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f9a';
+insert
+$targets has type 'relationship';
+$targets has spec-version '2.1';
+$targets has created 2025-09-30T13:55:00.000Z;
+$targets has modified 2025-09-30T13:55:00.000Z;
+$targets has relationship-type 'targets';
+
+### Relation 'targets' links player using property source_ref with role targeting-source
+put $player_source_ref_0 isa campaign, has id 'campaign--d4e5f6a7-8b9c-0d1e-2f3a-4b5c6d7e8f9a';
+insert $targets links (targeting-source: $player_source_ref_0);
+
+### Relation 'targets' links player using property target_ref with role targeted-target
+put $player_target_ref_0 isa identity, has id 'identity--b1c2d3e4-5f6a-7b8c-9d0e-1f2a3b4c5d6e';
+insert $targets links (targeted-target: $player_target_ref_0);
+end;
+
+### Put object of type 'indicates'
+put
+$indicates isa indicates;
+$indicates has id 'relationship--e5f6a7b8-9c0d-1e2f-3a4b-5c6d7e8f9a0b';
+insert
+$indicates has type 'relationship';
+$indicates has spec-version '2.1';
+$indicates has created 2025-09-30T13:55:00.000Z;
+$indicates has modified 2025-09-30T13:55:00.000Z;
+$indicates has relationship-type 'indicates';
+
+### Relation 'indicates' links player using property source_ref with role indicating-source
+put $player_source_ref_0 isa indicator, has id 'indicator--a7b8c9d0-e1f2-3a4b-5c6d-7e8f9a0b1c2d';
+insert $indicates links (indicating-source: $player_source_ref_0);
+
+### Relation 'indicates' links player using property target_ref with role indicated-target
+put $player_target_ref_0 isa campaign, has id 'campaign--d4e5f6a7-8b9c-0d1e-2f3a-4b5c6d7e8f9a';
+insert $indicates links (indicated-target: $player_target_ref_0);
+end;
+
+### Put object of type 'indicates'
+put
+$indicates isa indicates;
+$indicates has id 'relationship--f6a7b8c9-0d1e-2f3a-4b5c-6d7e8f9a0b1c';
+insert
+$indicates has type 'relationship';
+$indicates has spec-version '2.1';
+$indicates has created 2025-09-30T13:55:00.000Z;
+$indicates has modified 2025-09-30T13:55:00.000Z;
+$indicates has relationship-type 'indicates';
+
+### Relation 'indicates' links player using property source_ref with role indicating-source
+put $player_source_ref_0 isa indicator, has id 'indicator--b8c9d0e1-f2a3-4b5c-6d7e-8f9a0b1c2d3e';
+insert $indicates links (indicating-source: $player_source_ref_0);
+
+### Relation 'indicates' links player using property target_ref with role indicated-target
+put $player_target_ref_0 isa campaign, has id 'campaign--d4e5f6a7-8b9c-0d1e-2f3a-4b5c6d7e8f9a';
+insert $indicates links (indicated-target: $player_target_ref_0);
+end;
+
+### Put object of type 'indicates'
+put
+$indicates isa indicates;
+$indicates has id 'relationship--a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e';
+insert
+$indicates has type 'relationship';
+$indicates has spec-version '2.1';
+$indicates has created 2025-09-30T13:55:00.000Z;
+$indicates has modified 2025-09-30T13:55:00.000Z;
+$indicates has relationship-type 'indicates';
+
+### Relation 'indicates' links player using property source_ref with role indicating-source
+put $player_source_ref_0 isa indicator, has id 'indicator--c9d0e1f2-a3b4-5c6d-7e8f-9a0b1c2d3e4f';
+insert $indicates links (indicating-source: $player_source_ref_0);
+
+### Relation 'indicates' links player using property target_ref with role indicated-target
+put $player_target_ref_0 isa campaign, has id 'campaign--d4e5f6a7-8b9c-0d1e-2f3a-4b5c6d7e8f9a';
+insert $indicates links (indicated-target: $player_target_ref_0);
+end;
+
+### Put object of type 'indicates'
+put
+$indicates isa indicates;
+$indicates has id 'relationship--b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7f';
+insert
+$indicates has type 'relationship';
+$indicates has spec-version '2.1';
+$indicates has created 2025-09-30T13:55:00.000Z;
+$indicates has modified 2025-09-30T13:55:00.000Z;
+$indicates has relationship-type 'indicates';
+
+### Relation 'indicates' links player using property source_ref with role indicating-source
+put $player_source_ref_0 isa indicator, has id 'indicator--d0e1f2a3-b4c5-6d7e-8f9a-0b1c2d3e4f5a';
+insert $indicates links (indicating-source: $player_source_ref_0);
+
+### Relation 'indicates' links player using property target_ref with role indicated-target
+put $player_target_ref_0 isa campaign, has id 'campaign--d4e5f6a7-8b9c-0d1e-2f3a-4b5c6d7e8f9a';
+insert $indicates links (indicated-target: $player_target_ref_0);
+end;
+
+### Put object of type 'indicates'
+put
+$indicates isa indicates;
+$indicates has id 'relationship--c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e80';
+insert
+$indicates has type 'relationship';
+$indicates has spec-version '2.1';
+$indicates has created 2025-09-30T13:55:00.000Z;
+$indicates has modified 2025-09-30T13:55:00.000Z;
+$indicates has relationship-type 'indicates';
+
+### Relation 'indicates' links player using property source_ref with role indicating-source
+put $player_source_ref_0 isa indicator, has id 'indicator--e1f2a3b4-c5d6-7e8f-9a0b-1c2d3e4f5a6b';
+insert $indicates links (indicating-source: $player_source_ref_0);
+
+### Relation 'indicates' links player using property target_ref with role indicated-target
+put $player_target_ref_0 isa campaign, has id 'campaign--d4e5f6a7-8b9c-0d1e-2f3a-4b5c6d7e8f9a';
+insert $indicates links (indicated-target: $player_target_ref_0);
+end;
