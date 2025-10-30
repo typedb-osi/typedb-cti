@@ -28,6 +28,7 @@ from stix_model.relationships import (
     investigates_mapping, mitigates_mapping, ownership_mapping, reference_mapping,
     remediates_mapping, variant_of_mapping
 )
+from stix_model.meta_objects import marking_definition_mapping
 from typedb.driver import TypeDB, TransactionType, Credentials, DriverOptions
 
 # Map of STIX object types to their corresponding loaders
@@ -72,7 +73,10 @@ LOADER_MAP: Dict[str, Any] = {
     "user-account": user_account_mapping,
     "windows-registry-key": windows_registry_key_mapping,
     "windows-registry-value": windows_registry_value_mapping,
-    "x509-certificate": x509_certificate_mapping
+    "x509-certificate": x509_certificate_mapping,
+
+    # STIX meta objects
+    "marking-definition": marking_definition_mapping
 }
 
 RELATIONSHIP_mapping_MAP: Dict[str, Any] = {
@@ -167,22 +171,22 @@ def setup():
         # load all the schema files
         with open("schema/properties.tql", "r") as f:
             query = f.read()
-            transaction.query(query)
-        with open("schema/relationships.tql", "r") as f:
-            query = f.read()
-            transaction.query(query)
+            transaction.query(query).resolve()
         with open("schema/additional_components.tql", "r") as f:
             query = f.read()
-            transaction.query(query)
+            transaction.query(query).resolve()
+        with open("schema/relationships.tql", "r") as f:
+            query = f.read()
+            transaction.query(query).resolve()
         with open("schema/domain_objects.tql", "r") as f:
             query = f.read()
-            transaction.query(query)
+            transaction.query(query).resolve()
         with open("schema/cyber_observable_objects.tql", "r") as f:
             query = f.read()
-            transaction.query(query)
+            transaction.query(query).resolve()
         with open("schema/meta_objects.tql", "r") as f:
             query = f.read()
-            transaction.query(query)
+            transaction.query(query).resolve()
         transaction.commit()
 
     return driver
@@ -200,7 +204,3 @@ if __name__ == "__main__":
         for insert_query in insert_queries:
             transaction.query(insert_query)
         transaction.commit()
-    with driver.transaction(DB_NAME, TransactionType.READ) as transaction:
-        for (oid, loader) in inserted:
-            fetch_query = loader.match('x', oid) + " fetch " + loader.fetch('x') + ";"
-            print(json.dumps(next(transaction.query(fetch_query).resolve())))

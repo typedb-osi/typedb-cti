@@ -12,28 +12,28 @@ relation stix-relationship-object,
   owns modified @card(1),
 
   # optional common properties
-  owns revoked, 
-  owns label_, 
-  owns confidence, 
-  owns lang, 
+  owns revoked,
+  owns label_ @card(0..),
+  owns confidence,
+  owns lang,
 
     # TODO: unimplemented
     # owns extensions,
-  
+
   # specific properties
-  owns relationship-type @card(1), 
-  owns description, 
-  owns start-time, 
+  owns relationship-type @card(1),
+  owns description,
+  owns start-time,
   owns stop-time,
 
   # embedded relationships
   plays created-by:created,
   plays object-marking:object,
-  plays granular-marking:object
+  plays granular-marking:object,
 
-  
-  plays external-reference-ownership:owner,  # TODO not implemented: requires lists, if order is important
-  ;
+
+  plays external-reference-ownership:owner;  # TODO not implemented: requires lists, if order is important
+
 
 # Ternary relation!!
 relation sighting,
@@ -46,11 +46,10 @@ relation sighting,
   owns first-seen,
   owns last-seen,
   owns count,
-  owns summary
-  ;
+  owns summary;
 
 
-# --- Common relationships --- 
+# --- Common relationships ---
 
 # TODO: not encodable - constraint that player of source and player of target must be the same types
 relation derived-from,
@@ -63,10 +62,10 @@ relation derived-from,
  #      but as a separate type that doesn't distinguish source and target and uses a single role with @card(2..)
 relation duplicate-of,
   sub stix-relationship-object,
-  relates duplicating-source as source, 
+  relates duplicating-source as source,
   relates duplicated-target as target;
 
-# TODO: this would be better off not as an SRO subtype 
+# TODO: this would be better off not as an SRO subtype
 #       but as a separate type that doesn't distinguish source and target and uses a single role with @card(2..)
 relation related-to,
 sub stix-relationship-object,
@@ -74,7 +73,7 @@ sub stix-relationship-object,
   relates related-target as target;
 
 
-# --- Relationships used by multiple objects --- 
+# --- Relationships used by multiple objects ---
 relation delivers,
   sub stix-relationship-object,
   relates delivering-source as source,
@@ -211,10 +210,7 @@ relation characterizes,
 	relates characterized-target as target;
 
 
-
-
-
-# TODO 
+# TODO
 relation analysis-of,
 	sub stix-relationship-object,
 	relates analyzing-source as source,
@@ -251,9 +247,9 @@ relation belongs-to,
     sub stix-relationship-object,
 	relates owned-source as source,
 	relates owner-target as target;
-	
 
-# --- Embedded relationships --- 
+
+# --- Embedded relationships ---
 
 relation embedded-relationship,
   relates owner @card(1),
@@ -274,7 +270,7 @@ relation granular-marking,
   sub embedded-relationship,
   relates object as owner,
   relates marking as embedded,
-  
+
   owns lang,
   owns selector @card(0..)   # NOTE: this will be not super usable without ordered properties/plays!
   ;

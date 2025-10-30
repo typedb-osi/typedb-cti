@@ -31,40 +31,24 @@ attribute last-seen, value datetime-tz;
 attribute objective, value string;
 attribute url-value, value string;      # TODO: encode the URL RFC3986
 
-
 # --- Additional common properties ---
 attribute name, value string;
-attribute context, 
-  value string
-  # Uses the "Grouping Context" common vocabulary (10.6)
-  @values("suspicious-activity", "malware-analysis", "unspecified");
-attribute role_, 
-  value string
-  # Uses the "Threat Actor Role" common vocabulary (10.24)
-  @values("agent", "director", "independent", "infrastructure-architect", "infrastructure-operator", "malware-author", "sponsor");
-attribute identity-class, 
-  value string;
-attribute sector, 
-  value string;
+attribute context, value string; # Uses the `grouping-context-ov` open vocabulary (10.6)
+attribute role_, value string; # Uses the `threat-actor-role-ov` open vocabulary (10.24)
+attribute identity-class, value string; # Uses the `identity-class-ov` open vocabulary (10.8)
+attribute sector, value string; # Uses the `industry-sector-ov` open vocabulary (10.11)
 attribute contact-information, value string;
 
 # --- Indicator specific properties (4.7) ---
-attribute indicator-type, 
-  value string;
+attribute indicator-type, value string; # Uses the `indicator-type-ov` open vocabulary (10.10)
 attribute pattern, value string;
-attribute pattern-type, 
-  value string
-  # Uses the "Pattern Type" common vocabulary (10.19)
-  @values("stix", "pcre", "sigma", "snort", "suricata", "yara");
+attribute pattern-type, value string; # Uses the `pattern-type-ov` open vocabulary (10.19)
 attribute pattern-version, value string;
 attribute valid-from, value datetime-tz;
 attribute valid-until, value datetime-tz;
 
 # --- Infrastructure specific properties (4.8) ---
-attribute infrastructure-type, 
-  value string
-  # Uses the "Infrastructure Type" common vocabulary (10.12)
-  @values("amplification", "anonymization", "botnet", "command-and-control", "control-system", "exfiltration", "firewall", "hosting-malware", "hosting-target-lists", "phishing", "reconnaissance", "routers-switches", "staging", "workstation", "unknown");
+attribute infrastructure-type, value string; # Uses the `infrastructure-type-ov` open vocabulary (10.12)
 
 # --- Note-specific properties (4.13) ---
 attribute abstract_, value string;
@@ -78,72 +62,35 @@ attribute number-observed, value integer;
 
 # --- Opinion-specific properties (4.15) ---
 attribute opinion, 
-	# Uses the "Opinion" common vocabulary (10.18)
+	# Uses the `opinion-enum` enumeration (10.18)
 	value string @values("strongly-disagree", "disagree", "neutral", "agree", "strongly-agree");
 attribute explanation, value string;
 
 # --- Report specific properties (4.16) ---
-attribute report-type, 
-  value string
-  # Uses the "Report Type" common vocabulary (10.22)
-  @values("attack-pattern", "campaign", "identity", "indicator", "intrusion-set", "malware", "observed-data", "threat-actor", "threat-report", "tool", "vulnerability");
+attribute report-type, value string; # Uses the `report-type-ov` open vocabulary (10.22)
 attribute published, value datetime-tz;
 
 # --- Threat Actor specific properties (4.17) ---
-attribute threat-actor-type, 
-  value string
-  # Uses the "Threat Actor Type" common vocabulary (10.23)
-  @values("activist", "competitor", "crime-syndicate", "criminal", "hacker", "insider-accidental", "insider-disgruntled", "nation-state", "sensationalist", "spy", "terrorist", "unknown");
+attribute threat-actor-type, value string; # Uses the `threat-actor-type-ov` open vocabulary (10.23)
 attribute goal, value string;
-attribute sophistication, 
-  value string
-  # Uses the "Threat Actor Sophistication" common vocabulary (10.25)
-  @values("none", "minimal", "intermediate", "advanced", "expert", "innovator", "strategic");
-attribute resource-level, 
-  value string
-  # Uses the "Attack Resource Level" common vocabulary (10.3)
-  @values("individual", "club", "contest", "team", "organization", "government");
+attribute sophistication, value string; # Uses the `threat-actor-sophistication-ov` open vocabulary (10.25)
+attribute resource-level, value string; # Uses the `attack-resource-level-ov` open vocabulary (10.3)
 
 # TODO: this attribute hierarchy isn't working?
- attribute motivation @abstract,
-  value string
-  # Uses the "Attack Motivation" common vocabulary (10.2)
-  @values("accidental", "coercion", "dominance", "ideology", "notoriety", "organizational-gain", "personal-gain", "personal-satisfaction", "revenge", "unpredictable");
- attribute primary-motivation, 
-	sub motivation;
- attribute secondary-motivation, 
-  sub motivation;
- attribute personal-motivation,
-  sub motivation;
-
-# attribute primary-motivation, 
-#  value string
-#  # Uses the "Attack Motivation" common vocabulary (10.2)
-#  @values("accidental", "coercion", "dominance", "ideology", "notoriety", "organizational-gain", "personal-gain", "personal-satisfaction", "revenge", "unpredictable");
-#attribute secondary-motivation, 
-#  value string
-#  # Uses the "Attack Motivation" common vocabulary (10.2)
-#  @values("accidental", "coercion", "dominance", "ideology", "notoriety", "organizational-gain", "personal-gain", "personal-satisfaction", "revenge", "unpredictable");
-#attribute personal-motivation,
-#  value string
-#  # Uses the "Attack Motivation" common vocabulary (10.2)
-#  @values("accidental", "coercion", "dominance", "ideology", "notoriety", "organizational-gain", "personal-gain", "personal-satisfaction", "revenge", "unpredictable");
+ attribute motivation @abstract, value string; # Uses the `attack-motivation-ov`open vocabulary (10.2)
+ attribute primary-motivation, sub motivation;
+ attribute secondary-motivation, sub motivation;
+ attribute personal-motivation, sub motivation;
 
 # --- Tool specific properties (4.18) ---
-attribute tool-type, 
-  value string
-  # Uses the "Tool Type" common vocabulary (10.26)
-  @values("denial-of-service", "exploitation", "information-gathering", "network-capture", "credential-exploitation", "remote-access", "vulnerability-scanning", "unknown");
+attribute tool-type, value string; # Uses the `tool-type-ov` open vocabulary (10.26)
 attribute tool-version, value string;
 
 # --- Location specific properties (4.10) ---
 attribute latitude, value double;
 attribute longitude, value double;
 attribute precision, value double;
-attribute region, 
-  value string
-  # Uses the "Region" common vocabulary (10.21)
-  @values("africa", "antarctica", "asia", "central-america", "eastern-africa", "eastern-asia", "eastern-europe", "europe", "latin-america-caribbean", "middle-africa", "north-america", "northern-africa", "northern-america", "northern-europe", "oceania", "south-america", "south-eastern-asia", "southern-africa", "southern-asia", "southern-europe", "western-africa", "western-asia", "western-europe");
+attribute region, value string; # Uses the `region-ov` open vocabulary (10.21)
 attribute country, value string;
 attribute administrative-area, value string;
 attribute city, value string;
@@ -151,27 +98,14 @@ attribute street-address, value string;
 attribute postal-code, value string;
 
 # Malware specific properties (4.11)
-attribute malware-type,
-  value string
-  # Uses the "Malware Type" common vocabulary (10.15)
-  @values("adware", "backdoor", "bot", "bootkit", "ddos", "downloader", "dropper", "exploit-kit", "keylogger", "ransomware", "remote-access-trojan", "resource-exploitation", "rogue-security-software", "rootkit", "screen-capture", "spyware", "trojan", "unknown", "virus", "webshell", "wiper", "worm");
+attribute malware-type, value string; # Uses the `malware-type-ov` open vocabulary (10.15)
 
-attribute is-family,
-  value boolean;
-attribute architecture-execution-env,
-  value string
-  # Uses the "Processor Architecture" common vocabulary (10.20)
-  @values("alpha", "arm", "ia-64", "mips", "powerpc", "sparc", "x86", "x86-64");
+attribute is-family, value boolean;
+attribute architecture-execution-env, value string; # Uses the `processor-architecture-ov` open vocabulary (10.20)
 
-attribute implementation-language,
-  value string
-  # Uses the "Implementation Language" common vocabulary (10.9)
-  @values("applescript", "bash", "c", "c++", "c#", "go", "java", "javascript", "lua", "objective-c", "perl", "php", "powershell", "python", "ruby", "scala", "swift", "typescript", "visual-basic", "x86-32", "x86-64");
+attribute implementation-language, value string; # Uses the `implementation-language-ov` open vocabulary (10.9)
 
-attribute capability,
-  value string
-  # Uses the "Malware Capabilities" common vocabulary (10.14)
-  @values("accesses-remote-machines", "anti-debugging", "anti-disassembly", "anti-emulation", "anti-memory-forensics", "anti-sandbox", "anti-vm", "captures-input-peripherals", "captures-output-peripherals", "captures-system-state-data", "cleans-traces-of-infection", "commits-fraud", "communicates-with-c2", "compromises-data-availability", "compromises-data-integrity", "compromises-system-availability", "controls-local-machine", "degrades-security-software", "degrades-system-updates", "determines-c2-server", "emails-spam", "escalates-privileges", "evades-av", "exfiltrates-data", "fingerprints-host", "hides-artifacts", "hides-executing-code", "infects-files", "infects-remote-machines", "installs-other-components", "persists-after-system-reboot", "prevents-artifact-access", "prevents-artifact-deletion", "probes-network-environment", "self-modifies", "steals-authentication-credentials", "violates-system-operational-integrity");
+attribute capability, value string; # Uses the `malware-capabilities-ov` open vocabulary (10.14)
 
 # Malware Analysis specific properties (4.12)
 attribute product,
@@ -213,10 +147,7 @@ attribute analysis-ended,
 attribute result-name,
   value string;
 
-attribute result,
-  value string
-  # Uses the "Malware Result" common vocabulary (10.13)
-  @values("malicious", "suspicious", "benign", "unknown");
+attribute result, value string; # Uses the `malware-result-ov` open vocabulary (10.13)
 
 attribute analysis-sco-ref,
   value string;
@@ -230,18 +161,13 @@ attribute mime-type, value string;
 attribute payload-bin, value string;
 attribute decryption-key, value string;
 
-attribute hash-algorithm,
-  value string
-  # Uses the "Hash Algorithm" common vocabulary (10.7)
-  @values("MD5", "SHA-1", "SHA-256", "SHA-512", "SHA3-256", "SHA3-512", "SSDEEP", "IMPHASH", "TLSH");
-
-attribute hash,
-  value string; 
+attribute hash-algorithm, value string; # Uses the `hash-algorithm-ov` open vocabulary (10.7)
+attribute hash, value string; 
 
 attribute encryption-algorithm,
   value string
-  # Uses the "Encryption Algorithm" common vocabulary (10.5)
-  @values("aes-128-gcm", "aes-256-gcm", "mime-type-indicated");
+  # Uses the `encryption-algorithm-enum` enumeration (10.5)
+  @values("AES-256-GCM", "ChaCha20-Poly1305", "mime-type-indicated");
 
 # Autonomous System object specific properties (6.2)
 attribute system-number,
@@ -383,11 +309,7 @@ attribute bits-per-pixel,
   value integer;
 
 # Windows PE Binary File Extension attributes (6.7.6) 
-attribute pe-type,
-  value string
-  # Windows PE Binary Vocabulary (10.28)
-  @values("dll", "exe", "sys")
-  ;
+attribute pe-type, value string; # Uses the `windows-pebinary-type-ov` open vocabulary (10.28)
 
 attribute imphash,
   value string;
@@ -538,7 +460,7 @@ attribute icmp-code-hex,
 # Network Socket Extension properties (6.12.4)
 attribute address-family,
   value string
-  # Network Socket Address Family Enumeration (10.16)
+  # Uses the `network-socket-address-family-enum` enumeration (10.16)
   @values("AF-UNSPEC", "AF-INET", "AF-IPX", "AF-APPLETALK", "AF-NETBIOS", "AF-INET6", "AF-IRDA", "AF-BTH");
 
 attribute is-blocking,
@@ -549,7 +471,7 @@ attribute is-listening,
 
 attribute socket-type,
   value string
-  # Network Socket Address Family Enumeration (10.17)
+  # Uses the `network-socket-type-enum` enumeration (10.17)
   @values("SOCK-STREAM", "AF-ISOCK-DGRAMNET", "SOCK-RAW", "SOCK-RDM", "SOCK-SEQPACKET"); 
 
 attribute socket-descriptor,
@@ -609,10 +531,7 @@ attribute vendor, value string;
 attribute user-id, value string;
 attribute credential, value string;
 attribute account-login, value string;
-attribute account-type, 
-  value string
-  # Uses the "Account Type" common vocabulary (10.1)
-  @values("facebook", "ldap", "nis", "openid", "radius", "skype", "tacacs", "twitter", "unix", "windows-local", "windows-domain");
+attribute account-type, value string; # Uses the `account-type-ov` open vocabulary (10.1)
 attribute display-name, value string;
 attribute is-service-account, value boolean;
 attribute is-privileged, value boolean;
@@ -716,8 +635,8 @@ attribute window-title,
   value string;
 attribute integrity-level, 
   value string
-  # Uses the "Windows Integrity Level" common vocabulary (10.27)
-  @values("low", "medium", "high", "system", "trusted-installer", "untrusted", "unknown");
+  # Uses the `windows-integrity-level-enum` enumeration (10.27)
+  @values("low", "medium", "high", "system");
 
 
 # Windows Service Extension properties (6.13.2)
@@ -729,17 +648,17 @@ attribute group-name,
   value string;
 attribute start-type,
   value string
-  # Uses Windows™ Service Start Type Enumeration (10.30)
+  # Uses the `windows-service-start-type-enum` enumeration (10.30)
   @values("SERVICE-AUTO-START", "SERVICE-BOOT-START", "SERVICE-DEMAND-START", "SERVICE-DISABLED", "SERVICE-SYSTEM-ALERT");
 
 attribute service-type,
   value string
-  # Uses Windows™ Service Type Enumeration (10.31)
+  # Uses the `windows-service-type-enum` enumeration (10.31)
   @values("SERVICE-KERNEL-DRIVER", "SERVICE-FILE-SYSTEM-DRIVER", "SERVICE-WIN32-OWN-PROCESS", "SERVICE-WIN32-SHARE-PROCESS");
 
 attribute service-status,
   value string
-  # Uses Windows™ Service Status Enumeration (10.32)
+  # Uses the `windows-service-status-enum` enumeration (10.32)
   @values("SERVICE-STOPPED", "SERVICE-START-PENDING", "SERVICE-STOP-PENDING", "SERVICE-RUNNING", "SERVICE-CONTINUE-PENDING", "SERVICE-PAUSE-PENDING", "SERVICE-PAUSED");
 
 # UNIX Account extension properties (6.16.2)
@@ -761,5 +680,6 @@ attribute registry-value-data,
 
 attribute registry-value-data-type,
   value string
-  @values("REG-NONE", "REG-SZ", "REG-EXPAND-SZ", "REG-BINARY", "REG-DWORD", "REG-DWORD-BIG-ENDIAN", "REG-DWORD-LITTLE-ENDIAN", "REG-LINK", "REG-MULTI-SZ", "REG-RESOURCE-LIST", "REG-FULL-RESOURCE-DESCRIPTION", "REG-RESOURCE-REQUIREMENTS-LIST", "REG-QWORD", "REG-INVALID-TYPE")
-  ;
+  # Uses the `windows-registry-datatype-enum` enumeration (10.29)
+  @values("REG_NONE", "REG_SZ", "REG_EXPAND_SZ", "REG_BINARY", "REG_DWORD", "REG_DWORD_BIG_ENDIAN", "REG_DWORD_LITTLE_ENDIAN", "REG_LINK", "REG_MULTI_SZ", "REG_RESOURCE_LIST",
+  "REG_FULL_RESOURCE_DESCRIPTION", "REG_RESOURCE_REQUIREMENTS_LIST", "REG_QWORD", "REG_INVALID_TYPE");

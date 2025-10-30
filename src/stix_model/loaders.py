@@ -152,7 +152,7 @@ class PropertyMappings:
         self.relation_new_player_mappings = []
         self.relation_existing_player_mappings = []
         self.links_mappings = []
-    
+
     def key(self, doc_key: str, attribute: str, quoted: bool = False):
         self.has_key_mappings.append(KeyMapping(doc_key, attribute, quoted))
         return self
@@ -161,14 +161,14 @@ class PropertyMappings:
         self.has_mappings.append(HasMapping(doc_key, attribute, quoted, single))
         return self
 
-    def relation_and_new_player(self, doc_key: str, other_player_processor: "TypeDBDocumentMapping", relation_type: str, self_role: str, other_player_role: str):
-        self.relation_new_player_mappings.append(RelationNewPlayerMapping(doc_key, other_player_processor, relation_type, self_role, other_player_role))
+    def relation_and_new_player(self, doc_key: str, other_player_mapping: "TypeDBDocumentMapping", relation_type: str, self_role: str, other_player_role: str):
+        self.relation_new_player_mappings.append(RelationNewPlayerMapping(doc_key, other_player_mapping, relation_type, self_role, other_player_role))
         return self
 
     def relation_existing_player(self, player_attribute_doc_key: str, player_attribute: str, relation_type: str, self_role: str, player_role: str, quoted: bool = False, single: bool = False):
         self.relation_existing_player_mappings.append(RelationExistingPlayerMapping(player_attribute_doc_key, player_attribute, relation_type, self_role, player_role, quoted, single))
         return self
-    
+
     def links(self, player_attribute_doc_key: str, player_attribute: str, role: str, quoted: bool = False, single: bool = False):
         self.links_mappings.append(LinksMapping(player_attribute_doc_key, player_attribute, role, quoted, single))
         return self
@@ -179,7 +179,7 @@ class PropertyMappings:
                 if mapping.doc_key == existing_mapping.doc_key:
                     raise ValueError(f"Duplicate key property mapping for {mapping.doc_key}")
         self.has_key_mappings.extend(property_mappings.has_key_mappings)
-        for mapping in property_mappings.has_mappings: 
+        for mapping in property_mappings.has_mappings:
             for existing_mapping in self.has_mappings:
                 if mapping.doc_key == existing_mapping.doc_key:
                     raise ValueError(f"Duplicate has property mapping for {mapping.doc_key}")
@@ -210,6 +210,7 @@ class TypeDBDocumentMapping:
         self.var = f"{type_}"
         self.type_ = type_
         self.property_mappings = PropertyMappings()
+        self.stubs = []
 
     def var_with_prefix(self, prefix: str) -> str:
         return var_with_prefix(self.var, prefix)
@@ -225,7 +226,7 @@ class TypeDBDocumentMapping:
     def relation_and_new_player(self, doc_key: str, other_player_mapping: "TypeDBDocumentMapping", relation_type: str, self_role: str, other_player_role: str):
         self.property_mappings.relation_and_new_player(doc_key, other_player_mapping, relation_type, self_role, other_player_role)
         return self
-    
+
     def relation_existing_player(self, player_attribute_doc_key: str, player_attribute: str, relation_type: str, self_role: str, player_role: str, quoted: bool = False, single: bool = False):
         self.property_mappings.relation_existing_player(player_attribute_doc_key, player_attribute, relation_type, self_role, player_role, quoted, single)
         return self
@@ -234,11 +235,17 @@ class TypeDBDocumentMapping:
         self.property_mappings.links(player_attribute_doc_key, player_attribute, role, quoted, single)
         return self
 
+    def stub(self, doc_key: str):
+        self.stubs.append(doc_key)
+        return self
+
     def include(self, property_mappings: "PropertyMappings"):
         self.property_mappings.include(property_mappings)
         return self
 
     def insert_query(self, doc: JSON, var_prefix: str = "") -> List[str]:
+        unused_keys = set(doc.keys())
+
         pipeline = [f"\n### Put object of type '{self.type_}'"]
         var = self.var_with_prefix(var_prefix)
 
@@ -246,13 +253,14 @@ class TypeDBDocumentMapping:
 
         # # TODO: keys might be inserted with 'put' instead of 'insert' clauses
         for has_key in self.property_mappings.has_key_mappings:
+            unused_keys.discard(has_key.doc_key)
             value = doc.get(has_key.doc_key)
             if type(value) == list:
                 for v in value:
                     write_statements.append(has_key.statement(var, v))
             elif value is not None:
                 write_statements.append(has_key.statement(var, value))
-        
+
         if len(self.property_mappings.has_key_mappings) == 0:
             # keyless, always insert
             pipeline.append("insert\n" + "\n".join(write_statements))
@@ -262,6 +270,7 @@ class TypeDBDocumentMapping:
 
         insert_statements = []
         for has in self.property_mappings.has_mappings:
+            unused_keys.discard(has.doc_key)
             value = doc.get(has.doc_key)
             if type(value) == list:
                 for i, v in enumerate(value):
@@ -274,29 +283,38 @@ class TypeDBDocumentMapping:
             pipeline.append(insert_stage)
 
         for new_relation in self.property_mappings.relation_new_player_mappings:
+            unused_keys.discard(new_relation.doc_key)
             value = doc.get(new_relation.doc_key)
             if type(value) == list:
                 for i, v in enumerate(value):
                     pipeline.extend(new_relation.insert_query(v, var, i))
             elif value is not None:
                 pipeline.extend(new_relation.insert_query(value, var))
-        
+
         for existing_relation in self.property_mappings.relation_existing_player_mappings:
+            unused_keys.discard(existing_relation.player_attribute_doc_key)
             value = doc.get(existing_relation.player_attribute_doc_key)
             if type(value) == list:
                 for i, v in enumerate(value):
                     pipeline.extend(existing_relation.insert_query(v, var, i))
             elif value is not None:
                 pipeline.extend(existing_relation.insert_query(value, var))
-        
+
         for links in self.property_mappings.links_mappings:
+            unused_keys.discard(links.player_attribute_doc_key)
             value = doc.get(links.player_attribute_doc_key)
             if type(value) == list:
                 for i, v in enumerate(value):
                     pipeline.extend(links.insert_query(v, var, self.type_, i))
             elif value is not None:
                 pipeline.extend(links.insert_query(value, var, self.type_))
-        
+
+        for stub in self.stubs:
+            unused_keys.discard(stub)
+
+        if len(unused_keys) != 0:
+            raise ValueError(f'unused keys in STIX object of type {self.type_}: {unused_keys}')
+
         return pipeline
 
     def match(self, var: str, key: str) -> str:
@@ -308,7 +326,7 @@ class TypeDBDocumentMapping:
         # # TODO: keys might be inserted with 'put' instead of 'insert' clauses
         for has_key in self.property_mappings.has_key_mappings:
             query += f'  "{has_key.doc_key}": ${var}.{has_key.attribute},\n'
-        
+
         for has in self.property_mappings.has_mappings:
             query += has.fetch(var)
 
