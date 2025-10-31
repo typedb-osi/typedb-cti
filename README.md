@@ -53,7 +53,7 @@ Here's how to write some basic TypeQL queries to answer some questions:
     };
     ```
 
-2) Is there an infrastructure with a "<infra>", which hosts a tool that delivers a malware, that communicates with an IPV4 address "<ip>"?
+2) Is there an infrastructure with name `"<infra>"`, which hosts a tool that delivers a malware, that communicates with an IPV4 address `"<ip>"`?
     Query:
     ```typeql
     match
