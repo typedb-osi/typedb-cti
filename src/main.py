@@ -163,7 +163,22 @@ def setup(driver, db_name):
     # Create fresh test database
     with driver.transaction(db_name, TransactionType.SCHEMA) as transaction:
         # load all the schema files
-        with open("sample/schema.tql", "r") as f:
+        with open("schema/properties.tql", "r") as f:
+            query = f.read()
+            transaction.query(query).resolve()
+        with open("schema/additional_components.tql", "r") as f:
+            query = f.read()
+            transaction.query(query).resolve()
+        with open("schema/relationships.tql", "r") as f:
+            query = f.read()
+            transaction.query(query).resolve()
+        with open("schema/domain_objects.tql", "r") as f:
+            query = f.read()
+            transaction.query(query).resolve()
+        with open("schema/cyber_observable_objects.tql", "r") as f:
+            query = f.read()
+            transaction.query(query).resolve()
+        with open("schema/meta_objects.tql", "r") as f:
             query = f.read()
             transaction.query(query).resolve()
         transaction.commit()
