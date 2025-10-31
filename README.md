@@ -10,7 +10,7 @@ Set up and run a TypeDB Server instance.
 
 **Initialise Schema**
 
-You can use the demo tool to initialize the database and schema by runnign the following command:
+You can use the demo tool to initialize the database and schema by running the following command:
 
 ```
 python src/main.py --address=<address> --username=<username> --password=<password> setup
