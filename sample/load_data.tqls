@@ -1,0 +1,3 @@
+transaction write stix
+source data.tql
+commit

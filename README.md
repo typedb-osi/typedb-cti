@@ -10,37 +10,46 @@ Set up and run a TypeDB Server instance.
 
 **Initialise Schema**
 
-The easiest way to initialise the schema is through TypeDB Console. Run the setup script:
+You can use the demo tool to initialize the database and schema by runnign the following command:
+
 ```
-typedb console --address=<address> --username=<username> --password=<password> --script=<path to schema/setup_script.tqls
+python src/main.py --address=<address> --username=<username> --password=<password> setup
 ```
 
-The schema files are interdependent (e.g., objects use properties, relationships connect objects). They should typically be loaded into TypeDB in a specific order, often starting with properties, then objects, and finally relationships. The `setup_script.tqls` contains the necessary commands for the loading sequence for the TypeDB console or client.
+You can also initialise the schema through TypeDB Console. Run the setup script:
+```
+typedb console --address=<address> --username=<username> --password=<password> --script=<path to schema/setup_script.tqls>
+```
 
 **Load Sample Data**
 
-TODO properly load the data via python
+`typedb-cti` comes with a loading tool capable of ingesting a STIX bundle from a JSON file. To do so, run this command:
 
-Temporary micro data: load the a single stix object in the root of this project to play with. This is handwritten and not meant to be a scalable solution
-
-You can do it like this:
 ```
-typedb console --address=<address> --username=<username> --password=<password> --script=<path to sample_data_script.tqls
+python src/main.py --address=<address> --username=<username> --password=<password> ingest <path to bundle.json>
+```
+
+Try ingesting `sample/salt_typhoon_stix.json` for a small dataset you can explore.
+
+The Salt Typhoon sample data is also available as a TypeQL script. You can load it by running
+```
+typedb console --address=<address> --username=<username> --password=<password> --script=<path to sample/load_data.tqls>
 ```
 
 ## Sample queries
 
 Here's how to write some basic TypeQL queries to answer some questions:
 
-1) Is this file hash [specific_hash_value] associated with any files that are downloaded by malware?
+1) What threat actor is the attack pattern with designation "T1078" attributed to?
     Query:
     ```typeql
     match
-      $file isa file, has hash "<hash>";
-      $malware isa malware, has name $malware-name;
-      downloads (downloading-source: $malware, downloaded-target: $file);
+      $attack-pattern isa attack-pattern, has name like "T1078";
+      uses ($attack-pattern, $campaign);
+      attributed-to ($threat-actor, $campaign);
     fetch {
-      "malware": $malware-name
+      "threat actor" : $threat-actor.name,
+      "campaign name": $campaign.name
     };
     ```
 
@@ -64,7 +73,6 @@ Here's how to write some basic TypeQL queries to answer some questions:
     ```
 
 
-
 ## Schema Structure
 
 The STIX standard defines various objects and their relationships. This schema maps these concepts into TypeDB's type system using entities, attributes, and relations. The schema is organized into the following files:
@@ -82,29 +90,13 @@ The STIX standard defines various objects and their relationships. This schema m
     *   Examples: `artifact`, `autonomous-system`, `directory`, `domain-name`, `email-addr`, `email-message`, `file`, `ipv4-addr`, `ipv6-addr`, `mac-addr`, `mutex`, `network-traffic`, `process`, `software`, `url`, `user-account`, `windows-registry-key`, `x509-certificate`.
     *   Each SCO entity inherits from a base `stix-cyber-observable-object` and owns relevant properties.
 
-4. ** `meta_objects.tql`
-  * Defines the STIX meta objects
+4. **`meta_objects.tql`**
+   * Defines the STIX meta objects (e.g., `marking-definition`)
 
 5.  **`relationships.tql`**:
     *   Defines the STIX Relationship Objects (SROs), which represent connections between other STIX objects.
     *   Includes the generic `relationship` type and specific relationship types derived from it (e.g., `related-to`, `duplicate-of`).
     *   Also defines TypeDB relations that model the *linking properties* often found on SDOs and SCOs (like `created_by_ref`, `resolves_to_ref`, `belongs_to_ref`). These TypeDB relations provide a more direct and queryable link between entities compared to just storing the target object's ID in an attribute. For instance, the `resolves_to_ref` attribute on `domain-name` is modeled using a `resolves-to` relation connecting a `domain-name` entity to an `ipv4-addr` or `ipv6-addr` entity.
-
-### TODOs
-
-* Object markings (NOT granular)
-  * This one just needs to be done, and isn't dependent on ordering
-
-* Process refs
-    owns opened-connection-refs @card(0..),
-    owns creator-user-ref,
-    owns image-ref,
-    owns parent-ref,
-    owns child-refs @card(0..)
-  * And dicts: environment-variables
-
-* Windows Registry Key
-  * creator_user_ref,
 
 
 ### Missing components
@@ -129,7 +121,7 @@ Consultation with experts has suggested that there be globally unique kill_chain
 
 These are modeled as entities.
 
-TODO: 
+#### Not yet implemented
 
 - Extensions
 
