@@ -244,8 +244,6 @@ class TypeDBDocumentMapping:
         return self
 
     def insert_query(self, doc: JSON, var_prefix: str = "") -> List[str]:
-        unused_keys = set(doc.keys())
-
         pipeline = [f"\n### Put object of type '{self.type_}'"]
         var = self.var_with_prefix(var_prefix)
 
@@ -253,7 +251,6 @@ class TypeDBDocumentMapping:
 
         # # TODO: keys might be inserted with 'put' instead of 'insert' clauses
         for has_key in self.property_mappings.has_key_mappings:
-            unused_keys.discard(has_key.doc_key)
             value = doc.get(has_key.doc_key)
             if type(value) == list:
                 for v in value:
@@ -270,7 +267,6 @@ class TypeDBDocumentMapping:
 
         insert_statements = []
         for has in self.property_mappings.has_mappings:
-            unused_keys.discard(has.doc_key)
             value = doc.get(has.doc_key)
             if type(value) == list:
                 for i, v in enumerate(value):
@@ -283,7 +279,6 @@ class TypeDBDocumentMapping:
             pipeline.append(insert_stage)
 
         for new_relation in self.property_mappings.relation_new_player_mappings:
-            unused_keys.discard(new_relation.doc_key)
             value = doc.get(new_relation.doc_key)
             if type(value) == list:
                 for i, v in enumerate(value):
@@ -292,7 +287,6 @@ class TypeDBDocumentMapping:
                 pipeline.extend(new_relation.insert_query(value, var))
 
         for existing_relation in self.property_mappings.relation_existing_player_mappings:
-            unused_keys.discard(existing_relation.player_attribute_doc_key)
             value = doc.get(existing_relation.player_attribute_doc_key)
             if type(value) == list:
                 for i, v in enumerate(value):
@@ -301,19 +295,12 @@ class TypeDBDocumentMapping:
                 pipeline.extend(existing_relation.insert_query(value, var))
 
         for links in self.property_mappings.links_mappings:
-            unused_keys.discard(links.player_attribute_doc_key)
             value = doc.get(links.player_attribute_doc_key)
             if type(value) == list:
                 for i, v in enumerate(value):
                     pipeline.extend(links.insert_query(v, var, self.type_, i))
             elif value is not None:
                 pipeline.extend(links.insert_query(value, var, self.type_))
-
-        for stub in self.stubs:
-            unused_keys.discard(stub)
-
-        if len(unused_keys) != 0:
-            raise ValueError(f'unused keys in STIX object of type {self.type_}: {unused_keys}')
 
         return pipeline
 
