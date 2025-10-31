@@ -198,6 +198,9 @@ if __name__ == "__main__":
 
     parser_fetch = subparsers.add_parser("fetch", help="Fetch a STIX object")
     parser_fetch.add_argument("--id", help="STIX object ID")
+    group_type = parser_fetch.add_mutually_exclusive_group(required=True)
+    group_type.add_argument("--type", help="STIX object type (except 'relationship')")
+    group_type.add_argument("--relationship-type", help="STIX relationship-type (e.g. 'indicates')")
 
     args = parser.parse_args()
 
@@ -212,13 +215,22 @@ if __name__ == "__main__":
                 transaction.query(insert_query)
             transaction.commit()
     elif args.command == "fetch":
-        type = args.id.split('--')[0]
-        if type in LOADER_MAP:
-            loader = LOADER_MAP[type]
-        elif type in RELATIONSHIP_mapping_MAP:
-            loader = RELATIONSHIP_mapping_MAP[type]
+        if args.type:
+            if args.type in LOADER_MAP:
+                type = args.type
+                loader = LOADER_MAP[args.type]
+            else:
+                sys.stderr.write(f"Error: No loader found for STIX object of type `{type}`\n")
+                sys.exit(1)
+        elif args.relationship_type:
+            if args.relationship_type in RELATIONSHIP_mapping_MAP:
+                type = f"relationship {args.relationship_type}"
+                loader = RELATIONSHIP_mapping_MAP[args.relationship_type]
+            else:
+                sys.stderr.write(f"Error: No loader found for STIX object of type `{type}`\n")
+                sys.exit(1)
         else:
-            sys.stderr.write(f"Warning: No loader found for STIX object of type `{type}`\n")
+            sys.stderr.write("Error: either --type or --relationship-type must be provided")
             sys.exit(1)
         fetch_query = loader.match('x', args.id) + " fetch " + loader.fetch('x') + ";"
         with driver.transaction(args.db_name, TransactionType.READ) as transaction:
@@ -226,4 +238,4 @@ if __name__ == "__main__":
             try:
                 print(json.dumps(next(stream), indent=True, sort_keys=True))
             except StopIteration:
-                sys.stderr.write(f"STIX object id {args.id} not found\n")
+                sys.stderr.write(f"{type} with id {args.id} not found\n")
