@@ -1,1 +1,1 @@
-typedb-driver
+typedb-driver>=3.14

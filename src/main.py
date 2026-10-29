@@ -29,7 +29,7 @@ from stix_model.relationships import (
     remediates_mapping, variant_of_mapping
 )
 from stix_model.meta_objects import marking_definition_mapping
-from typedb.driver import TypeDB, TransactionType, Credentials, DriverOptions
+from typedb.driver import TypeDB, TransactionType, Credentials, DriverOptions, DriverTlsConfig
 
 # Map of STIX object types to their corresponding loaders
 LOADER_MAP: Dict[str, Any] = {
@@ -163,9 +163,10 @@ def setup(driver, db_name):
     # Create fresh test database
     with driver.transaction(db_name, TransactionType.SCHEMA) as transaction:
         # load all the schema files
-        with open("sample/schema.tql", "r") as f:
-            query = f.read()
-            transaction.query(query).resolve()
+        for schema_file in ["properties.tql", "additional_components.tql", "relationships.tql",
+                            "domain_objects.tql", "cyber_observable_objects.tql", "meta_objects.tql"]:
+            with open(f"schema/{schema_file}", "r") as f:
+                transaction.query(f.read()).resolve()
         transaction.commit()
 
     return driver
@@ -204,7 +205,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    driver = TypeDB.driver(args.address, Credentials(args.username, args.password), DriverOptions(not args.tls_disabled, None))
+    driver = TypeDB.driver(args.address, Credentials(args.username, args.password), DriverOptions(DriverTlsConfig.disabled() if args.tls_disabled else DriverTlsConfig.enabled_with_native_root_ca()))
 
     if args.command == "setup":
         setup(driver, args.db_name)

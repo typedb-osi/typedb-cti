@@ -8,9 +8,14 @@ This repository is compatible with TypeDB 3.x
 
 Set up and run a TypeDB Server instance.
 
+The demo tool requires the TypeDB Python driver:
+```
+pip install -r requirements.txt
+```
+
 **Initialise Schema**
 
-You can use the demo tool to initialize the database and schema by running the following command:
+You can use the demo tool to initialize the database and schema by running the following command from the repository root:
 
 ```
 python src/main.py --address=<address> --username=<username> --password=<password> setup
@@ -63,7 +68,7 @@ Here's how to write some basic TypeQL queries to answer some questions:
       hosts (hosting-source: $infra, hosted-target: $tool);
       $malware isa malware, has name $malware-name;
       delivers (delivering-source: $tool, delivered-target: $malware);
-      $ip isa  ipv4-addr, has ipv4_value "<ip>";
+      $ip isa  ipv4-addr, has ipv4-value "<ip>";
       communicates-with (communicating-source: $malware, communicated-target: $ip);
     fetch {
       "infrastructure": $infra-name,
@@ -71,6 +76,16 @@ Here's how to write some basic TypeQL queries to answer some questions:
       "malware": $malware-name
     };
     ```
+
+
+## Running tests
+
+The tests load STIX objects into a `test_stix` database (recreated on each run), fetch them back, and check they round-trip. They need a running TypeDB server without TLS, at `127.0.0.1:1729` by default; set `TYPEDB_ADDRESS`, `TYPEDB_USERNAME` and `TYPEDB_PASSWORD` to override. From the repository root:
+
+```
+pip install pytest
+pytest
+```
 
 
 ## Schema Structure
