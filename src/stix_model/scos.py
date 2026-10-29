@@ -61,14 +61,14 @@ directory_mapping = TypeDBDocumentMapping("directory") \
 
 domain_name_mapping = TypeDBDocumentMapping("domain-name") \
     .include(stix_cyber_observable_object_properties) \
-    .has(doc_key="value", attribute="domain-value", quoted=True) \
+    .has(doc_key="value", attribute="domain-value", quoted=True, single=True) \
     .include(embedded_resolves_to_properties)
 
 
 email_address_mapping = TypeDBDocumentMapping("email-addr") \
     .include(stix_cyber_observable_object_properties) \
-    .has(doc_key="value", attribute="email-value", quoted=True) \
-    .has(doc_key="display_name", attribute="display-name", quoted=True) \
+    .has(doc_key="value", attribute="email-value", quoted=True, single=True) \
+    .has(doc_key="display_name", attribute="display-name", quoted=True, single=True) \
     .include(embedded_belongs_to_properties)
 
 
@@ -220,9 +220,9 @@ windows_registry_key_mapping = TypeDBDocumentMapping("windows-registry-key") \
 
 
 windows_registry_value_mapping = TypeDBDocumentMapping("windows-registry-value") \
-    .has(doc_key="name", attribute="name", quoted=True) \
-    .has(doc_key="data", attribute="registry-value-data", quoted=True) \
-    .has(doc_key="type", attribute="registry-value-data-type", quoted=True)
+    .has(doc_key="name", attribute="name", quoted=True, single=True) \
+    .has(doc_key="data", attribute="registry-value-data", quoted=True, single=True) \
+    .has(doc_key="type", attribute="registry-value-data-type", quoted=True, single=True)
 
 
 x509_certificate_mapping = TypeDBDocumentMapping("x509-certificate") \

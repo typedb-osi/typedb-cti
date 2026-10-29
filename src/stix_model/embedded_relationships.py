@@ -149,6 +149,8 @@ embedded_header_from_properties = PropertyMappings() \
         relation_type="header-from",
         self_role="email",
         player_role="address",
+        quoted=True,
+        single=True,
     )
 
 embedded_header_sender_properties = PropertyMappings() \
@@ -158,6 +160,8 @@ embedded_header_sender_properties = PropertyMappings() \
         relation_type="header-sender",
         self_role="email",
         player_role="address",
+        quoted=True,
+        single=True,
     )
 
 embedded_header_to_properties = PropertyMappings() \
@@ -167,6 +171,7 @@ embedded_header_to_properties = PropertyMappings() \
         relation_type="header-to",
         self_role="email",
         player_role="address",
+        quoted=True
     )
 
 embedded_header_cc_properties = PropertyMappings() \
@@ -176,6 +181,7 @@ embedded_header_cc_properties = PropertyMappings() \
         relation_type="header-cc",
         self_role="email",
         player_role="address",
+        quoted=True
     )
 
 embedded_header_bcc_properties = PropertyMappings() \
@@ -185,6 +191,7 @@ embedded_header_bcc_properties = PropertyMappings() \
         relation_type="header-bcc",
         self_role="email",
         player_role="address",
+        quoted=True
     )
 
 embedded_raw_email_properties = PropertyMappings() \
@@ -194,6 +201,8 @@ embedded_raw_email_properties = PropertyMappings() \
         relation_type="raw-email",
         self_role="email",
         player_role="artifact",
+        quoted=True,
+        single=True,
     )
 
 # TODO: use after http request extension is finished
@@ -204,6 +213,8 @@ embedded_message_body_data_properties = PropertyMappings() \
         relation_type="message-body-data",
         self_role="request",
         player_role="body",
+        quoted=True,
+        single=True,
     )
 
 embedded_file_content_properties = PropertyMappings() \
@@ -213,6 +224,8 @@ embedded_file_content_properties = PropertyMappings() \
         relation_type="file-content",
         self_role="file",
         player_role="content",
+        quoted=True,
+        single=True,
     )
 
 # TODO: after windows-service-ext extension is finished
@@ -223,4 +236,5 @@ embedded_service_dll_properties = PropertyMappings() \
         relation_type="service-dll",
         self_role="service",
         player_role="dll",
+        quoted=True
     )
