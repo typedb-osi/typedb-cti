@@ -1,62 +1,9 @@
 import unittest
-from src.stix_model.sdos import TypeDBDocumentMapping, attack_pattern_loader, campaign_loader, course_of_action_loader, grouping_loader, identity_loader, incident_loader, indicator_loader, infrastructure_loader, intrusion_set_loader, location_loader, malware_loader, malware_analysis_loader, note_loader, observed_data_loader, opinion_loader, report_loader, threat_actor_loader, tool_loader, vulnerability_loader
-from typedb.driver import *
+from tests.stix_model.base import TypeDBTestCase
+from stix_model.sdos import attack_pattern_mapping, campaign_mapping, course_of_action_mapping, grouping_mapping, identity_mapping, incident_mapping, indicator_mapping, infrastructure_mapping, intrusion_set_mapping, location_mapping, malware_mapping, malware_analysis_mapping, note_mapping, observed_data_mapping, opinion_mapping, report_mapping, threat_actor_mapping, tool_mapping, vulnerability_mapping
 
-DB_NAME = "test_stix"
-SERVER_ADDR = "127.0.0.1:1729"
-USERNAME = "admin"
-PASSWORD = "password"
 
-class TestAttackLoader(unittest.TestCase):
-    def setUp(self):
-        self.driver = TypeDB.driver(SERVER_ADDR, Credentials(USERNAME, PASSWORD), DriverOptions(False, None))
-        # Clean up any existing test database
-        if not self.driver.databases.contains(DB_NAME):
-            self.driver.databases.create(DB_NAME)
-        
-        # Create fresh test database
-        with self.driver.transaction(DB_NAME, TransactionType.SCHEMA) as transaction:
-            if len(list(transaction.query("match entity $t;").resolve())) == 0:
-                # load all the schema files
-                with open("schema/properties.tql", "r") as f:
-                    query = f.read()
-                    transaction.query(query)
-                with open("schema/relationships.tql", "r") as f:
-                    query = f.read()
-                    transaction.query(query)
-                with open("schema/additional_components.tql", "r") as f:
-                    query = f.read()
-                    transaction.query(query)
-                with open("schema/domain_objects.tql", "r") as f:
-                    query = f.read()
-                    transaction.query(query)
-                with open("schema/cyber_observable_objects.tql", "r") as f:
-                    query = f.read()
-                    transaction.query(query)
-                transaction.commit()
-        self.assert_empty_database()
-
-    def tearDown(self):
-        self.delete_all_data()
-        self.assert_empty_database()
-
-    def delete_all_data(self):
-        with self.driver.transaction(DB_NAME, TransactionType.WRITE) as transaction:
-            transaction.query("match $x isa! $t; relation $t; delete $x;")
-            transaction.query("match $x isa! $t; entity $t; delete $x;")
-            transaction.query("match $x isa! $t; attribute $t; delete $x;")
-            transaction.commit()
-
-    def assert_empty_database(self):
-        with self.driver.transaction(DB_NAME, TransactionType.READ) as transaction:
-            result = next(transaction.query("match $x isa! $t; reduce $count = count;").resolve())
-            self.assertEqual(result.get("count").get_integer(), 0)
-
-    def commit_query(self, query):
-        with self.driver.transaction(DB_NAME, TransactionType.WRITE) as transaction:
-            transaction.query(query)
-            transaction.commit()
-
+class TestAttackLoader(TypeDBTestCase):
     def test_attack_pattern_loader(self):
         doc = {
             "type": "attack-pattern",
@@ -73,9 +20,7 @@ class TestAttackLoader(unittest.TestCase):
                 }
             ]
         }
-        pipeline = attack_pattern_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(attack_pattern_mapping, doc)
 
     def test_campaign_loader(self):
         doc = {
@@ -88,9 +33,7 @@ class TestAttackLoader(unittest.TestCase):
             "name": "Green Group Attacks Against Finance",
             "description": "Campaign by Green Group against a series of targets in the financial services sector."
         }
-        pipeline = campaign_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(campaign_mapping, doc)
 
     def test_course_of_action_loader(self):
         doc = {
@@ -103,9 +46,7 @@ class TestAttackLoader(unittest.TestCase):
             "name": "Add TCP port 80 Filter Rule to the existing Block UDP 1434 Filter",
             "description": "This is how to add a filter rule to block inbound access to TCP port 80 to the existing UDP 1434 filter ..."
         }
-        pipeline = course_of_action_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(course_of_action_mapping, doc)
 
     def test_grouping_loader(self):
         doc = {
@@ -121,13 +62,10 @@ class TestAttackLoader(unittest.TestCase):
             "object_refs": [
                 "indicator--26ffb872-1dd9-446e-b6f5-d58527e5b5d2",
                 "campaign--83422c77-904c-4dc1-aff5-5c38f3a2c55c",
-                "relationship--f82356ae-fe6c-437c-9c24-6b64314ae68a",
                 "file--0203b5c8-f8b6-4ddb-9ad0-527d727f968b"
             ]
         }
-        pipeline = grouping_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(grouping_mapping, doc)
 
     def test_identity_loader(self):
         doc = {
@@ -140,9 +78,7 @@ class TestAttackLoader(unittest.TestCase):
             "name": "ACME Widget, Inc.",
             "identity_class": "organization"
         }
-        pipeline = identity_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(identity_mapping, doc)
 
     def test_incident_loader(self):
         doc = {
@@ -155,9 +91,7 @@ class TestAttackLoader(unittest.TestCase):
             "name": "Incident 43",
             "description": "This incident addresses APT 28 ..."
         }
-        pipeline = incident_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(incident_mapping, doc)
 
     def test_indicator_loader(self):
         doc = {
@@ -174,9 +108,7 @@ class TestAttackLoader(unittest.TestCase):
             "pattern_type": "stix",
             "valid_from": "2016-01-01T00:00:00Z"
         }
-        pipeline = indicator_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(indicator_mapping, doc)
 
     def test_infrastructure_loader(self):
         doc = {
@@ -188,9 +120,7 @@ class TestAttackLoader(unittest.TestCase):
             "name": "Poison Ivy C2",
             "infrastructure_types": ["command-and-control"]
         }
-        pipeline = infrastructure_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(infrastructure_mapping, doc)
 
     def test_intrusion_set_loader(self):
         doc = {
@@ -205,9 +135,7 @@ class TestAttackLoader(unittest.TestCase):
             "aliases": ["Zookeeper"],
             "goals": ["acquisition-theft", "harassment", "damage"]
         }
-        pipeline = intrusion_set_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(intrusion_set_mapping, doc)
 
     def test_location_loader(self):
         doc = {
@@ -222,9 +150,7 @@ class TestAttackLoader(unittest.TestCase):
             "administrative_area": "Tak",
             "postal_code": "63170"
         }
-        pipeline = location_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(location_mapping, doc)
 
     def test_malware_loader(self):
         doc = {
@@ -241,9 +167,7 @@ class TestAttackLoader(unittest.TestCase):
             "implementation_languages": ["c++"],
             "architecture_execution_envs": ["x86-64"]
         }
-        pipeline = malware_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(malware_mapping, doc)
 
     def test_malware_analysis_loader(self):
         doc = {
@@ -259,9 +183,7 @@ class TestAttackLoader(unittest.TestCase):
             "analysis_ended": "2012-02-11T08:36:14Z",
             "result": "malicious"
         }
-        pipeline = malware_analysis_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(malware_analysis_mapping, doc)
 
     def test_note_loader(self):
         doc = {
@@ -275,9 +197,7 @@ class TestAttackLoader(unittest.TestCase):
             "authors": ["John Doe"],
             "object_refs": ["campaign--8e2e2d2b-17d4-4cbf-938f-98ee46b3cd3f"]
         }
-        pipeline = note_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(note_mapping, doc)
 
     def test_observed_data_loader(self):
         doc = {
@@ -295,9 +215,21 @@ class TestAttackLoader(unittest.TestCase):
                 "domain-name--ecb120bf-2694-4902-a737-62b74539a41b"
             ]
         }
-        pipeline = observed_data_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(observed_data_mapping, doc)
+
+    @unittest.expectedFailure
+    def test_object_refs_to_relationship(self):
+        # STIX relationships are TypeDB relations, but only stix-object entities can play object-reference:referenced
+        doc = {
+            "type": "opinion",
+            "spec_version": "2.1",
+            "id": "opinion--b01efc25-77b4-4003-b18b-f6e24b5cd9f7",
+            "created": "2016-05-12T08:17:27.000Z",
+            "modified": "2016-05-12T08:17:27.000Z",
+            "object_refs": ["relationship--16d2358f-3b0d-4c88-b047-0da2f7ed4471"],
+            "opinion": "strongly-disagree"
+        }
+        self.assert_round_trip(opinion_mapping, doc)
 
     def test_opinion_loader(self):
         doc = {
@@ -307,13 +239,11 @@ class TestAttackLoader(unittest.TestCase):
             "created_by_ref": "identity--f431f809-377b-45e0-aa1c-6a4751cae5ff",
             "created": "2016-05-12T08:17:27.000Z",
             "modified": "2016-05-12T08:17:27.000Z",
-            "object_refs": ["relationship--16d2358f-3b0d-4c88-b047-0da2f7ed4471"],
+            "object_refs": ["indicator--26ffb872-1dd9-446e-b6f5-d58527e5b5d2"],
             "opinion": "strongly-disagree",
             "explanation": "This doesn't seem like it is feasible. We've seen how PandaCat has attacked Spanish infrastructure over the last 3 years, so this change in targeting seems too great to be viable. The methods used are more commonly associated with the FlameDragonCrew."
         }
-        pipeline = opinion_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(opinion_mapping, doc)
 
     def test_report_loader(self):
         doc = {
@@ -329,13 +259,10 @@ class TestAttackLoader(unittest.TestCase):
             "report_types": ["campaign"],
             "object_refs": [
                 "indicator--26ffb872-1dd9-446e-b6f5-d58527e5b5d2",
-                "campaign--83422c77-904c-4dc1-aff5-5c38f3a2c55c",
-                "relationship--f82356ae-fe6c-437c-9c24-6b64314ae68a"
+                "campaign--83422c77-904c-4dc1-aff5-5c38f3a2c55c"
             ]
         }
-        pipeline = report_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(report_mapping, doc)
 
     def test_threat_actor_loader(self):
         doc = {
@@ -355,9 +282,7 @@ class TestAttackLoader(unittest.TestCase):
             "resource_level": "team",
             "primary_motivation": "organizational-gain"
         }
-        pipeline = threat_actor_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(threat_actor_mapping, doc)
 
     def test_tool_loader(self):
         doc = {
@@ -370,9 +295,7 @@ class TestAttackLoader(unittest.TestCase):
             "tool_types": ["remote-access"],
             "name": "VNC"
         }
-        pipeline = tool_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(tool_mapping, doc)
 
     def test_vulnerability_loader(self):
         doc = {
@@ -390,9 +313,7 @@ class TestAttackLoader(unittest.TestCase):
                 }
             ]
         }
-        pipeline = vulnerability_loader.apply(doc)
-        query = "\n".join(pipeline)
-        self.commit_query(query)
+        self.assert_round_trip(vulnerability_mapping, doc)
 
 if __name__ == '__main__':
     unittest.main() 
